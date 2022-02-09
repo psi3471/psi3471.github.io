@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Regressão linear &#8212; PSI3471 - Fundamentos de Sistemas Eletrônicos Inteligentes</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Referências" href="referencias.html" />
+    <link rel="prev" title="Bem-vindo" href="intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">PSI3471 - Fundamentos de Sistemas Eletrônicos Inteligentes</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Pesquise este livro ..." aria-label="Pesquise este livro ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Bem-vindo
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Regressão linear
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="referencias.html">
+   Referências
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Alternar de navegação" aria-controls="site-navigation"
+                title="Alternar de navegação" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Baixe esta página"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/regressao_linear.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Baixar arquivo fonte" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Imprimir em PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Repositório fonte"><i
+                    class="fab fa-github"></i>repositório</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fregressao_linear.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Abra um problema"><i class="fas fa-lightbulb"></i>questão aberta</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Modo tela cheia"
+        title="Modo tela cheia"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Conteúdo
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regressao-linear-univariada">
+   Regressão linear univariada
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Regressão linear</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Conteúdo </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regressao-linear-univariada">
+   Regressão linear univariada
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="regressao-linear">
+<h1>Regressão linear<a class="headerlink" href="#regressao-linear" title="Permalink to this headline">¶</a></h1>
+<p>Whether you write your book’s content in Jupyter Notebooks (<code class="docutils literal notranslate"><span class="pre">.ipynb</span></code>) or
+in regular markdown files (<code class="docutils literal notranslate"><span class="pre">.md</span></code>), you’ll write in the same flavor of markdown
+called <strong>MyST Markdown</strong>.</p>
+<div class="section" id="regressao-linear-univariada">
+<h2>Regressão linear univariada<a class="headerlink" href="#regressao-linear-univariada" title="Permalink to this headline">¶</a></h2>
+<p>Em engenharia, é muito comum buscar um modelo para dados experimentais previamente observados. Buscar um modelo adequado é útil para prever um valor a partir de dados não observados, se tratando de um problema de <em>regressão</em>. Um dos modelos mais simples é o ajuste de uma reta a dados conhecidos, o que leva à solução conhecida como <em>regressão linear univariada</em>.</p>
+<p>Considere que</p>
+<div class="math notranslate nohighlight">
+\[
+\{(x_1,d_1),(x_2,d_2),\cdots, (x_N,d_N)\},
+\]</div>
+<p>seja um conjunto de <span class="math notranslate nohighlight">\(N\)</span> pontos conhecidos previamente que podem ser fruto de um experimento. Vamos obter a melhor reta que se ajusta a esses pontos. Quando dizemos \emph{melhor}, precisamos especificar em que sentido. Como, em geral, os pontos são experimentais, raramente se consegue obter uma reta
+que se ajuste exatamente aos pontos. Por isso, vamos buscar uma aproximação que melhor se ajusta aos dados, considerando o critério dos mínimos quadrados. Assim, deseja-se obter uma relação matemática do tipo</p>
+<div class="math notranslate nohighlight">
+\[
+d=wx+b
+\]</div>
+<p>entre as variáveis <span class="math notranslate nohighlight">\(x\)</span> e <span class="math notranslate nohighlight">\(d\)</span>, em que <span class="math notranslate nohighlight">\(w\)</span> e <span class="math notranslate nohighlight">\(b\)</span> são constantes que se deseja determinar. É comum  chamar <span class="math notranslate nohighlight">\(d\)</span> de sinal desejado ou rótulo, <span class="math notranslate nohighlight">\(x\)</span> de entrada, <span class="math notranslate nohighlight">\(w\)</span> de peso e <span class="math notranslate nohighlight">\(b\)</span> de viés (ou \emph{bias}).</p>
+<p>Quando os pontos experimentais são colineares, a reta passa exatamente por todos os <span class="math notranslate nohighlight">\(n\)</span> pontos e as constantes desconhecidos <span class="math notranslate nohighlight">\(w\)</span> e <span class="math notranslate nohighlight">\(b\)</span> satisfazem</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{c}
+  d_1=w\;x_1+b \\
+  d_2=w\;x_2+b \\
+  \vdots \\
+  d_N=w\;x_N+b.
+\end{array}
+\end{split}\]</div>
+<p>Podemos reescrever esse sistema de equações na forma matricial, ou seja,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\underbrace{\left[
+  \begin{array}{c}
+    d_1 \\
+    d_2 \\
+    \vdots \\
+   d_N \\
+  \end{array}
+\right]}_{\mathbf{d}}=
+\underbrace{\left[
+  \begin{array}{cc}
+    1&amp;x_1 \\
+    1&amp;x_2 \\
+    \vdots&amp;\vdots \\
+    1&amp;x_N
+  \end{array}
+\right]}_{\mathbf{X}}
+\underbrace{\left[
+  \begin{array}{c}
+    b \\
+    w   \end{array}
+\right]}_{\mathbf{w}}.
+\end{split}\]</div>
+<p>Neste caso, como os pontos experimentais são colineares, vale <span class="math notranslate nohighlight">\(\mathbf{d}-\mathbf{X}\mathbf{w}=\mathbf{0}\)</span>.</p>
+<p>Caso os pontos não sejam colineares, o que acontece na maior parte dos casos, <span class="math notranslate nohighlight">\(\mathbf{d}-\mathbf{X}\mathbf{w}\neq\mathbf{0}\)</span>. Dessa forma, para encontrar a reta que melhor se ajusta aos dados, vamos representar a diferença entre os dois vetores por meio do vetor de erros, ou seja,</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{e}=\mathbf{d}-\mathbf{X}\mathbf{w}.
+\]</div>
+<p>Os elementos desse vetor de erros, <span class="math notranslate nohighlight">\(e_i=d_i-b-wx_i\)</span> para <span class="math notranslate nohighlight">\(i=1,\cdots,n\)</span>, representam as distâncias verticais da reta <span class="math notranslate nohighlight">\(d=wx+b\)</span> aos  pontos experimentais <span class="math notranslate nohighlight">\((x_i,d_i)\)</span>, como ilustrado na <a class="reference internal" href="#mv2"><span class="std std-numref">Fig. 1</span></a>, considerando <span class="math notranslate nohighlight">\(n=3\)</span>.</p>
+<div class="figure align-default" id="mv2">
+<a class="reference internal image-reference" href="_images/mmq.png"><img alt="_images/mmq.png" src="_images/mmq.png" style="height: 250px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Distância de um conjunto de pontos a uma determinada reta, considerando <span class="math notranslate nohighlight">\(n=3\)</span></span><a class="headerlink" href="#mv2" title="Permalink to this image">¶</a></p>
+</div>
+<p>A <em>melhor</em> reta segundo o critério dos mínimos quadrados deve minimizar a norma Euclidiana ao quadrado do vetor de erros, ou seja</p>
+<div class="math notranslate nohighlight">
+\[
+\|\mathbf{e}\|^2=\sum_{i=1}^n e_i^2=\|\mathbf{d}-\mathbf{X}\mathbf{w}\|^2=\sum_{i=1}^n(y_i-b-wx_i)^2.
+\]</div>
+<p>Para minimizar essa norma quadrática, devemos derivá-la em relação às constantes <span class="math notranslate nohighlight">\(w\)</span> e <span class="math notranslate nohighlight">\(b\)</span> que se deseja determinar e igualar essas derivadas a zero. Assim, obtemos as seguintes derivadas</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+ \begin{array}{cccc}
+   \displaystyle\frac{\displaystyle\partial\sum_{i=1}^n e_i^2}{\partial w} &amp; = &amp; 2\displaystyle\sum_{i=1}^n e_i\displaystyle\frac{\partial e_i}{\partial w} &amp;
+  = -2\displaystyle\sum_{i=1}^n e_i x_i\\
+   \displaystyle\frac{\displaystyle\partial\sum_{i=1}^n e_i^2}{\partial b} &amp; = &amp; 2\displaystyle\sum_{i=1}^n e_i\displaystyle\frac{\partial e_i}{\partial b} &amp;
+  = - 2\displaystyle\sum_{i=1}^n e_i,
+ \end{array}
+\end{split}\]</div>
+<p>que podem ser escritas de forma compacta como</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\displaystyle\frac{\displaystyle\partial\sum_{i=1}^n e_i^2}{\partial \mathbf{w}}=
+ -2\displaystyle\sum_{i=1}^n \left[
+                                  \begin{array}{c}
+                                    x_i \\
+                                    1 \\
+                                  \end{array}
+                                \right] e_i=-2\mathbf{X}^{{\rm T}}\mathbf{e}=-2\mathbf{X}^{{\rm T}}(\mathbf{d}-\mathbf{X}\mathbf{w}),
+\end{split}\]</div>
+<p>em que <span class="math notranslate nohighlight">\((\cdot)^{{\rm T}}\)</span> representa a operação de transposição da matriz <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>. Igualando essa derivada ao vetor nulo, obtemos</p>
+<div class="math notranslate nohighlight">
+\[
+-2\mathbf{X}^{{\rm T}}(\mathbf{d}-\mathbf{X}\mathbf{w}^{\rm o})=\mathbf{0},
+\]</div>
+<p>ou ainda</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{X}^{{\rm T}}\mathbf{X}\mathbf{w}^{\rm o}=\mathbf{X}^{{\rm T}}\mathbf{d}.
+\]</div>
+<p>Portanto, o vetor de coeficientes <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> que satisfaz  essa equação, denotado como <span class="math notranslate nohighlight">\(\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w^{\rm o}\,]^{{\rm T}}\)</span>, minimiza a norma quadrática do vetor do erros e $<span class="math notranslate nohighlight">\(d=w^{\rm o}x+b^{\rm o}\)</span>$ é a melhor reta que se ajusta aos pontos experimentais segundo o critério dos mínimos quadrados.</p>
+<p>Se <span class="math notranslate nohighlight">\(\mathbf{X}^{{\rm T}}\mathbf{X}\)</span> for invertível, <span class="math notranslate nohighlight">\(\mathbf{w}^{\rm o}\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{w}^{\rm o}=(\mathbf{X}^{{\rm T}}\mathbf{X})^{-1}\mathbf{X}^{{\rm T}}\mathbf{d}\nonumber.
+\]</div>
+<p>Essa equação expressa a unicidade da solução. Assim, se os pontos experimentais são não colineares, existe uma única reta que se ajusta a esses pontos segundo o critério dos mínimos quadrados.</p>
+<p>Observações importantes:</p>
+<ul class="simple">
+<li><p>O modelo <span class="math notranslate nohighlight">\(d=w^{\rm o}x+b^{\rm o}\)</span> é de fato linear apenas quando <span class="math notranslate nohighlight">\(b^{\rm o}\neq 0\)</span>, pois neste caso <span class="math notranslate nohighlight">\(x=0\)</span> leva a <span class="math notranslate nohighlight">\(d=0\)</span>. No entanto, o termo \emph{linear} é frequentemente usado na literatura neste caso para se referir ao modelo dado por uma reta.</p></li>
+<li><p>Os dados <span class="math notranslate nohighlight">\(\{(x_1,d_1),(x_2,d_2),\cdots, (x_N,d_N)\}\)</span> conhecidos previamente foram totalmente usados aqui para se obter o modelo da reta. Neste caso, eles podem ser chamados de dados de {\rm T}extbf{treinamento} do modelo.</p></li>
+<li><p>A matriz <span class="math notranslate nohighlight">\((\mathbf{X}^{{\rm T}}\mathbf{X})^{-1}\mathbf{X}^{{\rm T}}\)</span> é conhecida na literatura como a pseudoinversa de <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>.</p></li>
+</ul>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Bem-vindo</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="referencias.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Referências</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      De Magno T. M. Silva e Renato Candido<br/>
+    
+        &copy; direito autoral 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
