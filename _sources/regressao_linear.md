@@ -18,7 +18,7 @@ $$
 d=wx+b
 $$
 
-entre as variáveis $x$ e $d$, em que $w$ e $b$ são constantes que se deseja determinar. É comum  chamar $d$ de sinal desejado ou rótulo, $x$ de entrada, $w$ de peso e $b$ de viés (ou \emph{bias}).
+entre as variáveis $x$ e $d$, em que $w$ e $b$ são constantes que se deseja determinar. É comum  chamar $d$ de sinal desejado ou rótulo, $x$ de entrada, $w$ de peso e $b$ de viés (ou *bias*).
 
 Quando os pontos experimentais são colineares, a reta passa exatamente por todos os $n$ pontos e as constantes desconhecidos $w$ e $b$ satisfazem
 
@@ -121,14 +121,14 @@ Portanto, o vetor de coeficientes $\mathbf{w}$ que satisfaz  essa equação, den
 Se $\mathbf{X}^{{\rm T}}\mathbf{X}$ for invertível, $\mathbf{w}^{\rm o}$
 
 $$
-\mathbf{w}^{\rm o}=(\mathbf{X}^{{\rm T}}\mathbf{X})^{-1}\mathbf{X}^{{\rm T}}\mathbf{d}\nonumber.
+\mathbf{w}^{\rm o}=(\mathbf{X}^{{\rm T}}\mathbf{X})^{-1}\mathbf{X}^{{\rm T}}\mathbf{d}.
 $$
 
 Essa equação expressa a unicidade da solução. Assim, se os pontos experimentais são não colineares, existe uma única reta que se ajusta a esses pontos segundo o critério dos mínimos quadrados.
 
 Observações importantes:
 
-- O modelo $d=w^{\rm o}x+b^{\rm o}$ é de fato linear apenas quando $b^{\rm o}\neq 0$, pois neste caso $x=0$ leva a $d=0$. No entanto, o termo \emph{linear} é frequentemente usado na literatura neste caso para se referir ao modelo dado por uma reta.
+- O modelo $d=w^{\rm o}x+b^{\rm o}$ é de fato linear apenas quando $b^{\rm o}\neq 0$, pois neste caso $x=0$ leva a $d=0$. No entanto, o termo *linear* é frequentemente usado na literatura neste caso para se referir ao modelo dado por uma reta.
 
 - Os dados $\{(x_1,d_1),(x_2,d_2),\cdots, (x_N,d_N)\}$ conhecidos previamente foram totalmente usados aqui para se obter o modelo da reta. Neste caso, eles podem ser chamados de dados de **treinamento** do modelo.
 
@@ -198,7 +198,7 @@ $$
 Generalizando os passos para obtenção da reta que se ajusta aos dados, chega-se a
 
 $$
-\mathbf{w}^{\rm o}=(\mathbf{X}^{\rm T}\mathbf{X})^{-1}\mathbf{X}^{\rm T}\mathbf{d}\nonumber
+\mathbf{w}^{\rm o}=(\mathbf{X}^{\rm T}\mathbf{X})^{-1}\mathbf{X}^{\rm T}\mathbf{d}
 $$
 
 em que $\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w_1^{\rm o}\;\;w_2^{\rm o}\;\;\cdots\;\;w_M^{\rm o}\,]^{\rm T}$ é o vetor que contém o viés e pesos ótimos que minimizam $\|\mathbf{e}\|^2$.
@@ -262,13 +262,12 @@ Observações importantes:
     em que $f_0$ é uma frequência pré-determinada. Um outro exemplo útil em Engenharia Elétrica é aproximar uma função $f(t)$ periódica com período $T_0=1/f_0$ por uma soma de
 senos e cossenos, ou seja,
 
-    \begin{align}
+    ```{math}
     {f}(t)\approx \;b&+w_{11}\cos(2\pi f_0 t)+ w_{12}{\rm sen}\,(2\pi f_0 t)\nonumber\\
     &+w_{21}\cos(2\pi 2 f_0 t)+ w_{22}{\rm sen}\,(2\pi 2 f_0 t)\nonumber\\
     &+\cdots\nonumber\\
     &+w_{M1}\cos(2\pi f_0 M t)+ w_{M2}{\rm sen}\,(2\pi f_0 M t).\nonumber
-    \end{align}
-
+    ```
     Os coeficientes $b, w_{11}, w_{12}, w_{21}, w_{22}, \cdots, w_{M1}, w_{M2}$ são conhecidos como coeficientes da série de Fourier e os dados usados para obter essa aproximação são obtidos a partir da amostragem da função $f(t)$.
 
 ## *Overfitting*
@@ -313,4 +312,3 @@ name: RL2
 ---
 Regressão linear polinomial; valor médio do módulo do erro de predição levando em conta o conjunto de treinamento e o conjunto de teste.
 ```
-

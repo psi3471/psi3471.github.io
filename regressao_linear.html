@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="pt_BR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,6 +28,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -40,6 +41,7 @@
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script src="_static/translations.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
@@ -51,12 +53,12 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Referências" href="referencias.html" />
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Buscar" href="search.html" />
+    <link rel="next" title="O algoritmo LMS" href="lms.html" />
     <link rel="prev" title="Bem-vindo" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="pt_BR">
     
 
     <!-- Google Analytics -->
@@ -105,8 +107,18 @@
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="lms.html">
+   O algoritmo LMS
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="referencias.html">
    Referências
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="FA_minibatch.html">
+   FA minibatch
   </a>
  </li>
 </ul>
@@ -260,9 +272,9 @@
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="regressao-linear">
-<h1>Regressão linear<a class="headerlink" href="#regressao-linear" title="Permalink to this headline">¶</a></h1>
+<h1>Regressão linear<a class="headerlink" href="#regressao-linear" title="Link permanente para este título">¶</a></h1>
 <div class="section" id="regressao-linear-univariada">
-<h2>Regressão linear univariada<a class="headerlink" href="#regressao-linear-univariada" title="Permalink to this headline">¶</a></h2>
+<h2>Regressão linear univariada<a class="headerlink" href="#regressao-linear-univariada" title="Link permanente para este título">¶</a></h2>
 <p>Em engenharia, é muito comum buscar um modelo para dados experimentais previamente observados. Buscar um modelo adequado é útil para prever um valor a partir de dados não observados, se tratando de um problema de <em>regressão</em>. Um dos modelos mais simples é o ajuste de uma reta a dados conhecidos, o que leva à solução conhecida como <em>regressão linear univariada</em>.</p>
 <p>Considere que</p>
 <div class="math notranslate nohighlight">
@@ -275,7 +287,7 @@ que se ajuste exatamente aos pontos. Por isso, vamos buscar uma aproximação qu
 \[
 d=wx+b
 \]</div>
-<p>entre as variáveis <span class="math notranslate nohighlight">\(x\)</span> e <span class="math notranslate nohighlight">\(d\)</span>, em que <span class="math notranslate nohighlight">\(w\)</span> e <span class="math notranslate nohighlight">\(b\)</span> são constantes que se deseja determinar. É comum  chamar <span class="math notranslate nohighlight">\(d\)</span> de sinal desejado ou rótulo, <span class="math notranslate nohighlight">\(x\)</span> de entrada, <span class="math notranslate nohighlight">\(w\)</span> de peso e <span class="math notranslate nohighlight">\(b\)</span> de viés (ou \emph{bias}).</p>
+<p>entre as variáveis <span class="math notranslate nohighlight">\(x\)</span> e <span class="math notranslate nohighlight">\(d\)</span>, em que <span class="math notranslate nohighlight">\(w\)</span> e <span class="math notranslate nohighlight">\(b\)</span> são constantes que se deseja determinar. É comum  chamar <span class="math notranslate nohighlight">\(d\)</span> de sinal desejado ou rótulo, <span class="math notranslate nohighlight">\(x\)</span> de entrada, <span class="math notranslate nohighlight">\(w\)</span> de peso e <span class="math notranslate nohighlight">\(b\)</span> de viés (ou <em>bias</em>).</p>
 <p>Quando os pontos experimentais são colineares, a reta passa exatamente por todos os <span class="math notranslate nohighlight">\(n\)</span> pontos e as constantes desconhecidos <span class="math notranslate nohighlight">\(w\)</span> e <span class="math notranslate nohighlight">\(b\)</span> satisfazem</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -320,7 +332,7 @@ d=wx+b
 <p>Os elementos desse vetor de erros, <span class="math notranslate nohighlight">\(e_i=d_i-b-wx_i\)</span> para <span class="math notranslate nohighlight">\(i=1,\cdots,n\)</span>, representam as distâncias verticais da reta <span class="math notranslate nohighlight">\(d=wx+b\)</span> aos  pontos experimentais <span class="math notranslate nohighlight">\((x_i,d_i)\)</span>, como ilustrado na <a class="reference internal" href="#mv2"><span class="std std-numref">Fig. 1</span></a>, considerando <span class="math notranslate nohighlight">\(n=3\)</span>.</p>
 <div class="figure align-default" id="mv2">
 <a class="reference internal image-reference" href="_images/mmq.png"><img alt="_images/mmq.png" src="_images/mmq.png" style="height: 250px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Distância de um conjunto de pontos a uma determinada reta, considerando <span class="math notranslate nohighlight">\(n=3\)</span></span><a class="headerlink" href="#mv2" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Distância de um conjunto de pontos a uma determinada reta, considerando <span class="math notranslate nohighlight">\(n=3\)</span></span><a class="headerlink" href="#mv2" title="Link Permanente para essa imagem">¶</a></p>
 </div>
 <p>A <em>melhor</em> reta segundo o critério dos mínimos quadrados deve minimizar a norma Euclidiana ao quadrado do vetor de erros, ou seja</p>
 <div class="math notranslate nohighlight">
@@ -362,18 +374,18 @@ d=wx+b
 <p>Se <span class="math notranslate nohighlight">\(\mathbf{X}^{{\rm T}}\mathbf{X}\)</span> for invertível, <span class="math notranslate nohighlight">\(\mathbf{w}^{\rm o}\)</span></p>
 <div class="math notranslate nohighlight">
 \[
-\mathbf{w}^{\rm o}=(\mathbf{X}^{{\rm T}}\mathbf{X})^{-1}\mathbf{X}^{{\rm T}}\mathbf{d}\nonumber.
+\mathbf{w}^{\rm o}=(\mathbf{X}^{{\rm T}}\mathbf{X})^{-1}\mathbf{X}^{{\rm T}}\mathbf{d}.
 \]</div>
 <p>Essa equação expressa a unicidade da solução. Assim, se os pontos experimentais são não colineares, existe uma única reta que se ajusta a esses pontos segundo o critério dos mínimos quadrados.</p>
 <p>Observações importantes:</p>
 <ul class="simple">
-<li><p>O modelo <span class="math notranslate nohighlight">\(d=w^{\rm o}x+b^{\rm o}\)</span> é de fato linear apenas quando <span class="math notranslate nohighlight">\(b^{\rm o}\neq 0\)</span>, pois neste caso <span class="math notranslate nohighlight">\(x=0\)</span> leva a <span class="math notranslate nohighlight">\(d=0\)</span>. No entanto, o termo \emph{linear} é frequentemente usado na literatura neste caso para se referir ao modelo dado por uma reta.</p></li>
+<li><p>O modelo <span class="math notranslate nohighlight">\(d=w^{\rm o}x+b^{\rm o}\)</span> é de fato linear apenas quando <span class="math notranslate nohighlight">\(b^{\rm o}\neq 0\)</span>, pois neste caso <span class="math notranslate nohighlight">\(x=0\)</span> leva a <span class="math notranslate nohighlight">\(d=0\)</span>. No entanto, o termo <em>linear</em> é frequentemente usado na literatura neste caso para se referir ao modelo dado por uma reta.</p></li>
 <li><p>Os dados <span class="math notranslate nohighlight">\(\{(x_1,d_1),(x_2,d_2),\cdots, (x_N,d_N)\}\)</span> conhecidos previamente foram totalmente usados aqui para se obter o modelo da reta. Neste caso, eles podem ser chamados de dados de <strong>treinamento</strong> do modelo.</p></li>
 <li><p>A matriz <span class="math notranslate nohighlight">\((\mathbf{X}^{{\rm T}}\mathbf{X})^{-1}\mathbf{X}^{{\rm T}}\)</span> é conhecida na literatura como a pseudoinversa de <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>.</p></li>
 </ul>
 </div>
 <div class="section" id="regressao-linear-multivariada">
-<h2>Regressão linear multivariada<a class="headerlink" href="#regressao-linear-multivariada" title="Permalink to this headline">¶</a></h2>
+<h2>Regressão linear multivariada<a class="headerlink" href="#regressao-linear-multivariada" title="Link permanente para este título">¶</a></h2>
 <p>Suponha agora que os dados não sejam mais compostos por duplas do tipo <span class="math notranslate nohighlight">\((x_i, d_i)\)</span>, mas por uma sequência de <span class="math notranslate nohighlight">\(M\)</span> valores de <span class="math notranslate nohighlight">\(x\)</span>, seguida do valor de <span class="math notranslate nohighlight">\(d\)</span>, ou seja,</p>
 <div class="math notranslate nohighlight">
 \[
@@ -431,7 +443,7 @@ d=b+w_1x_1+w_2x_2+\cdots+w_Mx_M.
 <p>Generalizando os passos para obtenção da reta que se ajusta aos dados, chega-se a</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbf{w}^{\rm o}=(\mathbf{X}^{\rm T}\mathbf{X})^{-1}\mathbf{X}^{\rm T}\mathbf{d}\nonumber
+\mathbf{w}^{\rm o}=(\mathbf{X}^{\rm T}\mathbf{X})^{-1}\mathbf{X}^{\rm T}\mathbf{d}
 \]</div>
 <p>em que <span class="math notranslate nohighlight">\(\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w_1^{\rm o}\;\;w_2^{\rm o}\;\;\cdots\;\;w_M^{\rm o}\,]^{\rm T}\)</span> é o vetor que contém o viés e pesos ótimos que minimizam <span class="math notranslate nohighlight">\(\|\mathbf{e}\|^2\)</span>.</p>
 <p>Observações importantes:</p>
@@ -484,19 +496,17 @@ d=b+w_1x_1+w_2x_2+\cdots+w_Mx_M.
     \]</div>
 <p>em que <span class="math notranslate nohighlight">\(f_0\)</span> é uma frequência pré-determinada. Um outro exemplo útil em Engenharia Elétrica é aproximar uma função <span class="math notranslate nohighlight">\(f(t)\)</span> periódica com período <span class="math notranslate nohighlight">\(T_0=1/f_0\)</span> por uma soma de
 senos e cossenos, ou seja,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-429beef8-9db8-4ce8-bda1-43045340e747">
-<span class="eqno">(1)<a class="headerlink" href="#equation-429beef8-9db8-4ce8-bda1-43045340e747" title="Permalink to this equation">¶</a></span>\[\begin{align}
-    {f}(t)\approx \;b&amp;+w_{11}\cos(2\pi f_0 t)+ w_{12}{\rm sen}\,(2\pi f_0 t)\nonumber\\
-    &amp;+w_{21}\cos(2\pi 2 f_0 t)+ w_{22}{\rm sen}\,(2\pi 2 f_0 t)\nonumber\\
-    &amp;+\cdots\nonumber\\
-    &amp;+w_{M1}\cos(2\pi f_0 M t)+ w_{M2}{\rm sen}\,(2\pi f_0 M t).\nonumber
-    \end{align}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}{f}(t)\approx \;b&amp;+w_{11}\cos(2\pi f_0 t)+ w_{12}{\rm sen}\,(2\pi f_0 t)\nonumber\\
+&amp;+w_{21}\cos(2\pi 2 f_0 t)+ w_{22}{\rm sen}\,(2\pi 2 f_0 t)\nonumber\\
+&amp;+\cdots\nonumber\\
+&amp;+w_{M1}\cos(2\pi f_0 M t)+ w_{M2}{\rm sen}\,(2\pi f_0 M t).\nonumber\end{split}\]</div>
 <p>Os coeficientes <span class="math notranslate nohighlight">\(b, w_{11}, w_{12}, w_{21}, w_{22}, \cdots, w_{M1}, w_{M2}\)</span> são conhecidos como coeficientes da série de Fourier e os dados usados para obter essa aproximação são obtidos a partir da amostragem da função <span class="math notranslate nohighlight">\(f(t)\)</span>.</p>
 </li>
 </ol>
 </div>
 <div class="section" id="overfitting">
-<h2><em>Overfitting</em><a class="headerlink" href="#overfitting" title="Permalink to this headline">¶</a></h2>
+<h2><em>Overfitting</em><a class="headerlink" href="#overfitting" title="Link permanente para este título">¶</a></h2>
 <p>Um conceito que aparece de forma recorrente em redes neurais é o chamado <em>overfitting</em>. Apesar de nem termos falado em redes neurais ainda, é possível já introduzir esse conceito considerando regressão linear. Antes de falar de <em>overfitting</em>, precisamos fazer algumas considerações importantes.</p>
 <p>Suponha que se deseja criar um modelo de regressão para prever o valor de venda de um automóvel usado. Dispomos de um banco de dados que contém várias informações sobre diferentes automóveis usados como ano de fabricação, modelo, estado de conservação, valor da tabela Fipe, valor médio de venda no mercado, etc. Utilizando esse banco de dados, podemos obter um modelo de regressão linear, que neste caso será multivariada, pois dispomos de muitas variáveis. Poderíamos usar todos os dados disponíveis para gerar o modelo. Se fizéssemos isso, como conseguiríamos avaliar se o modelo obtido é bom? Como saber se o modelo é capaz de prever adequadamente o valor de venda de um determinado carro que não aparece no banco de dados? Por isso, é importante reservar uma parte dos dados para avaliar a qualidade do modelo. Assim, é uma prática comum separar os dados de forma aleatória em dois conjuntos independentes e sem sobreposição:
 (1) conjunto de <strong>treinamento</strong> (ou aprendizado) e (2) conjunto de <strong>teste</strong><a class="footnote-reference brackets" href="#fteste" id="id1">1</a>. Os dados do conjunto de treinamento são efetivamente usados para gerar o modelo. Os dados do conjunto de teste são então usados para avaliar a qualidade do modelo gerado. Os dados usados para avaliação não devem aparecer no treinamento e vice-versa. Se o modelo se sair bem no teste, costuma-se dizer que ele tem uma boa capacidade de <strong>generalização</strong>.</p>
@@ -514,12 +524,12 @@ d=0,5+0,25\cos(2\pi x)+v,
 <p>Como o valor de <span class="math notranslate nohighlight">\(d\)</span> depende do ruído, se não fixarmos uma semente, cada vez que gerarmos os dados teremos valores distintos. O objetivo é encontrar uma função (um modelo) polinomial de grau <span class="math notranslate nohighlight">\(M\)</span> que melhor se aproxima dos pontos do conjunto de treinamento, levando em conta a forma da cossenóide sem ruído. Na <a class="reference internal" href="#rl1"><span class="std std-numref">Fig. 2</span></a>, são mostrados os pontos disponíveis no treinamento (em vermelho), as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão. Foram considerados polinômios com graus <span class="math notranslate nohighlight">\(M=1\)</span> (reta), <span class="math notranslate nohighlight">\(M=2\)</span> (parábola) até <span class="math notranslate nohighlight">\(M=9\)</span>. É possível ver que para <span class="math notranslate nohighlight">\(M=1\)</span> e <span class="math notranslate nohighlight">\(M=2\)</span> ocorre o <em>underfitting</em>, ou seja, as distâncias dos pontos de treinamento aos pontos gerados pelos polinômios dos modelos são elevadas, o que indica que eles não são adequados. A medida em que o valor do grau do polinômio aumenta, observa-se um melhor ajuste entre os pontos vermelhos e as curvas azuis, até o caso extremo de <span class="math notranslate nohighlight">\(M=9\)</span>. Neste caso, o polinômio obtido passa exatamente em todos os pontos do treinamento, mas claramente a curva azul fica distante da cossenóide sem ruído em alguns trechos como pode ser visto pelas flutuações indesejadas. Isso indica que pode ter ocorrido <em>overfitting</em> devido ao número excessivo de parâmetros do modelo.</p>
 <div class="figure align-default" id="rl1">
 <a class="reference internal image-reference" href="_images/RL1.png"><img alt="_images/RL1.png" src="_images/RL1.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Regressão linear polinomial; <span class="math notranslate nohighlight">\(M\)</span> representa o grau do polinômio, os pontos do conjunto de treinamento estão representados em vermelho; as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão.</span><a class="headerlink" href="#rl1" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Regressão linear polinomial; <span class="math notranslate nohighlight">\(M\)</span> representa o grau do polinômio, os pontos do conjunto de treinamento estão representados em vermelho; as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão.</span><a class="headerlink" href="#rl1" title="Link Permanente para essa imagem">¶</a></p>
 </div>
 <p>Para analisar o <em>overfitting</em>, geramos um conjunto de teste com 1401 valores de <span class="math notranslate nohighlight">\(x\)</span> igualmente espaçados no intervalo <span class="math notranslate nohighlight">\([0,1,\;1,5]\)</span> e calculamos o valor de <span class="math notranslate nohighlight">\(d\)</span>. Como há ruído na geração de <span class="math notranslate nohighlight">\(d\)</span>, os pontos gerados no teste foram diferente dos de treinamento. Para cada valor de <span class="math notranslate nohighlight">\(M\)</span>, medimos o valor absoluto médio do erro de predição, levando em conta o conjunto de treinamento e de teste. Na <a class="reference internal" href="#rl2"><span class="std std-numref">Fig. 3</span></a>, são mostrados os valores desses erros em função do grau do polinômio. Como esperado, o erro de aprendizagem (com os dados do treinamento) diminuem monotonicamente, chegando a zero para <span class="math notranslate nohighlight">\(M=9\)</span>. Esse  comportamento é típico sempre que o modelo ajustado varia do mais simples para o mais complexo. Em contrapartida, o erro do teste diminui até  <span class="math notranslate nohighlight">\(M=5\)</span> e depois aumenta, indicando que modelos com muitos parâmetros têm baixas capacidades de generalização.</p>
 <div class="figure align-default" id="rl2">
 <a class="reference internal image-reference" href="_images/RL2.png"><img alt="_images/RL2.png" src="_images/RL2.png" style="height: 300px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Regressão linear polinomial; valor médio do módulo do erro de predição levando em conta o conjunto de treinamento e o conjunto de teste.</span><a class="headerlink" href="#rl2" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Regressão linear polinomial; valor médio do módulo do erro de predição levando em conta o conjunto de treinamento e o conjunto de teste.</span><a class="headerlink" href="#rl2" title="Link Permanente para essa imagem">¶</a></p>
 </div>
 <hr class="footnotes docutils" />
 <dl class="footnote brackets">
@@ -555,17 +565,17 @@ d=0,5+0,25\cos(2\pi x)+v,
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="intro.html" title="anterior página">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-subtitle">anterior</p>
             <p class="prev-next-title">Bem-vindo</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="referencias.html" title="next page">
+    <a class='right-next' id="next-link" href="lms.html" title="próximo página">
     <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Referências</p>
+        <p class="prev-next-subtitle">próximo</p>
+        <p class="prev-next-title">O algoritmo LMS</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

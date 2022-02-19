@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="pt_BR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,6 +28,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -40,6 +41,7 @@
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script src="_static/translations.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
@@ -49,11 +51,11 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Buscar" href="search.html" />
     <link rel="next" title="Regressão linear" href="regressao_linear.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="pt_BR">
     
 
     <!-- Google Analytics -->
@@ -102,8 +104,18 @@
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="lms.html">
+   O algoritmo LMS
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="referencias.html">
    Referências
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="FA_minibatch.html">
+   FA minibatch
   </a>
  </li>
 </ul>
@@ -207,7 +219,7 @@
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="bem-vindo">
-<h1>Bem-vindo<a class="headerlink" href="#bem-vindo" title="Permalink to this headline">¶</a></h1>
+<h1>Bem-vindo<a class="headerlink" href="#bem-vindo" title="Link permanente para este título">¶</a></h1>
 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 :::{note}
 Here is a note!
@@ -241,9 +253,9 @@ Here is a note!
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="regressao_linear.html" title="next page">
+    <a class='right-next' id="next-link" href="regressao_linear.html" title="próximo página">
     <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-subtitle">próximo</p>
         <p class="prev-next-title">Regressão linear</p>
     </div>
     <i class="fas fa-angle-right"></i>
