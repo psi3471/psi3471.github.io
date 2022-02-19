@@ -170,12 +170,6 @@ $$
 
 Esse algoritmo iterativo é conhecido na literatura como \textit{steepest descent algorithm} ou algoritmo do gradiente exato. O passo de adaptação $\eta$ tem um papel fundamental em sua convergência. É possível demonstrar que se o intervalo $0<\eta<2/{\lambda_{\max}}$ for atendido, em que $\lambda_{\max}$ é o autovalor máximo da matriz $\mathbf{R}$, essa equação converge exatamente para a solução de Wiener. Apesar de chegar exatamente à solução que minimiza o MSE, ele não é adequado porque é necessário conhecer  $\mathbf{R}$ e  $\mathbf{p}$. A única vantagem é evitar calcular a inversa da matriz $\mathbf{R}$, o que representa uma economia em custo computacional.
 
-
-```{math}
-w_{t+2} &= (1 + r_{t+1}) s(w_t) + y_{t+1}\\
-&= 3
-```
-
 ## O algoritmo LMS
 
 Uma maneira de simplificar os cálculos para evitar ter de conhecer $\mathbf{R}$ e  $\mathbf{p}$, é estimar essas grandezas instantâneamente, o que leva  respectivamente a

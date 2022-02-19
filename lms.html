@@ -452,9 +452,6 @@ obtemos</p>
 \mathbf{w}(n)=\mathbf{w}(n-1)+\eta\left[\mathbf{p}-\mathbf{R}\mathbf{w}(n-1)\right].
 \]</div>
 <p>Esse algoritmo iterativo é conhecido na literatura como \textit{steepest descent algorithm} ou algoritmo do gradiente exato. O passo de adaptação <span class="math notranslate nohighlight">\(\eta\)</span> tem um papel fundamental em sua convergência. É possível demonstrar que se o intervalo <span class="math notranslate nohighlight">\(0&lt;\eta&lt;2/{\lambda_{\max}}\)</span> for atendido, em que <span class="math notranslate nohighlight">\(\lambda_{\max}\)</span> é o autovalor máximo da matriz <span class="math notranslate nohighlight">\(\mathbf{R}\)</span>, essa equação converge exatamente para a solução de Wiener. Apesar de chegar exatamente à solução que minimiza o MSE, ele não é adequado porque é necessário conhecer  <span class="math notranslate nohighlight">\(\mathbf{R}\)</span> e  <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>. A única vantagem é evitar calcular a inversa da matriz <span class="math notranslate nohighlight">\(\mathbf{R}\)</span>, o que representa uma economia em custo computacional.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}w_{t+2} &amp;= (1 + r_{t+1}) s(w_t) + y_{t+1}\\
-&amp;= 3\end{split}\]</div>
 </div>
 <div class="section" id="id1">
 <h2>O algoritmo LMS<a class="headerlink" href="#id1" title="Link permanente para este título">¶</a></h2>
