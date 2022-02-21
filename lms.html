@@ -116,11 +116,6 @@
    Referências
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="FA_minibatch.html">
-   FA minibatch
-  </a>
- </li>
 </ul>
 
     </div>
@@ -160,7 +155,10 @@
 
     <div class="dropdown-buttons">
         <!-- ipynb file if we had a myst markdown file -->
-        
+        <a class="dropdown-buttons"
+            href="_sources/lms.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Baixar arquivo de notebook" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
         <!-- Download raw file -->
         <a class="dropdown-buttons" href="_sources/lms.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Baixar arquivo fonte" data-toggle="tooltip"
@@ -197,6 +195,23 @@
             class="fas fa-expand"></i></button></a>
 
             <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/lms.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Lançamento Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
 
         </div>
 
@@ -326,10 +341,12 @@ d=b+w_1x_1+w_2x_2+\cdots+w_Mx_M,
 <p>em que <span class="math notranslate nohighlight">\(N_t\)</span> é o número de dados utilizados no treinamento,  <span class="math notranslate nohighlight">\(b\)</span> o viés (<em>bias</em>), <span class="math notranslate nohighlight">\(d\)</span> o sinal desejado,  <span class="math notranslate nohighlight">\(x\)</span> o sinal de entrada e <span class="math notranslate nohighlight">\(w_k\)</span>, <span class="math notranslate nohighlight">\(k=1,\cdots, M\)</span> os pesos do regressor.</p>
 <p>Para obter o modelo, utilizamos os dados de treinamento e calculamos
 a solução</p>
-<div class="math notranslate nohighlight">
-\[
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
 \mathbf{w}^{\rm o}=(\mathbf{X}^{\rm T}\mathbf{X})^{-1}\mathbf{X}^{\rm T}\mathbf{d}
-\]</div>
+$}
+\end{equation*}\]</div>
 <p>em que</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -420,10 +437,12 @@ J_{\rm MSE}(\mathbf{w})={\rm E}\{e^2(n)\},
 \[\begin{split}&amp;{\rm E}\{\mathbf{x}(n)[d(n)-\mathbf{x}^{\rm T}(n)\mathbf{w}(n-1)]\}=\boldsymbol{0}\Rightarrow \nonumber\\
 &amp;\underbrace{{\rm E}\{\mathbf{x}(n)\mathbf{x}^{\rm T}(n)\}}_{\mathbf{R}}\mathbf{w}^{\rm wiener}=\underbrace{{\rm E}\{d(n)\mathbf{x}(n)\}}_{\mathbf{p}}.\nonumber\end{split}\]</div>
 <p>A solução dessa equação leva ao MSE mínimo e é conhecida na literatura como solução de Wiener-Hopf, ou simplesmente, solução de Wiener. Por isso, vamos denotá-la como <span class="math notranslate nohighlight">\(\mathbf{w}^{\rm wiener}\)</span>, ou seja,</p>
-<div class="math notranslate nohighlight">
-\[
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
 \mathbf{w}^{\rm wiener}=\mathbf{R}^{-1}\mathbf{p},
-\]</div>
+$}
+\end{equation*}\]</div>
 <p>em que <span class="math notranslate nohighlight">\(\mathbf{R}\)</span> é a matriz de autocorrelação dos dados de entrada e <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> o vetor de correlação cruzada entre o sinal desejado <span class="math notranslate nohighlight">\(d(n)\)</span> e os dados de entrada. Tanto a matriz <span class="math notranslate nohighlight">\(\mathbf{R}\)</span> como  o vetor <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> têm em suas definições o operador esperança matemática. Podemos estimar <span class="math notranslate nohighlight">\(\mathbf{R}\)</span> e  <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> utilizando todos os dados de treinamento, o que leva respectivamente a</p>
 <div class="math notranslate nohighlight">
 \[
@@ -447,10 +466,12 @@ J_{\rm MSE}(\mathbf{w})={\rm E}\{e^2(n)\},
 \]</div>
 <p>Identificando a matriz <span class="math notranslate nohighlight">\(\mathbf{R}\)</span> e o vetor <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> na equação acima,
 obtemos</p>
-<div class="math notranslate nohighlight">
-\[
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
 \mathbf{w}(n)=\mathbf{w}(n-1)+\eta\left[\mathbf{p}-\mathbf{R}\mathbf{w}(n-1)\right].
-\]</div>
+$}
+\end{equation*}\]</div>
 <p>Esse algoritmo iterativo é conhecido na literatura como \textit{steepest descent algorithm} ou algoritmo do gradiente exato. O passo de adaptação <span class="math notranslate nohighlight">\(\eta\)</span> tem um papel fundamental em sua convergência. É possível demonstrar que se o intervalo <span class="math notranslate nohighlight">\(0&lt;\eta&lt;2/{\lambda_{\max}}\)</span> for atendido, em que <span class="math notranslate nohighlight">\(\lambda_{\max}\)</span> é o autovalor máximo da matriz <span class="math notranslate nohighlight">\(\mathbf{R}\)</span>, essa equação converge exatamente para a solução de Wiener. Apesar de chegar exatamente à solução que minimiza o MSE, ele não é adequado porque é necessário conhecer  <span class="math notranslate nohighlight">\(\mathbf{R}\)</span> e  <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>. A única vantagem é evitar calcular a inversa da matriz <span class="math notranslate nohighlight">\(\mathbf{R}\)</span>, o que representa uma economia em custo computacional.</p>
 </div>
 <div class="section" id="id1">
@@ -461,10 +482,12 @@ obtemos</p>
 \widehat{\mathbf{R}}(n)=\mathbf{x}(n)\mathbf{x}^{{\rm T}}(n)\;\;\;\text{e}\;\;\;\widehat{\mathbf{p}}(n)=d(n)\mathbf{x}(n).
 \]</div>
 <p>Substituindo essas aproximações no algoritmo \textit{steepest descent}, chega-se a</p>
-<div class="math notranslate nohighlight">
-\[
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
 \mathbf{w}(n)=\mathbf{w}(n-1)+\eta e(n)\mathbf{x}(n),
-\]</div>
+$}
+\end{equation*}\]</div>
 <p>que é a equação de atualização do conhecido algoritmo LMS (<em>least-mean-square</em>), cujo sumário está mostrado na <a class="reference internal" href="#tab-lms"><span class="std std-numref">Tabela 1</span></a>. O fluxo de sinal do LMS é mostrado na <a class="reference internal" href="#fig-lms"><span class="std std-numref">Fig. 4</span></a>. Novamente, o passo de adaptação <span class="math notranslate nohighlight">\(\eta\)</span> tem um papel fundamental na convergência desse algoritmo. Quanto menor o valor de <span class="math notranslate nohighlight">\(\eta\)</span>, mais próximo da solução de Wiener o algoritmo LMS estará quando atingir o regime estacionário. No entanto, quanto menor o passo, mais lentamente o algoritmo atingirá o regime. Em contrapartida, passos grandes podem representar convergências rápidas, mas também podem levar o algoritmo à divergência. Neste caso, os pesos podem ir para infinito\footnote{Infinito aqui significa valor acima do maior valor representável em um software numérico ou hardware.}. Diante disso, deve-se atentar ao compromisso entre precisão da solução e velocidade de convergência. O problema é que o intervalo <span class="math notranslate nohighlight">\(0&lt;\eta&lt;2/{\lambda_{\max}}\)</span> que vale para o algoritmo exato, é em geral  maior do que o intervalo de passo admitido no algoritmo aproximado. Pode-se demonstrar que <span class="math notranslate nohighlight">\(0&lt;\eta&lt;2/(3{\lambda_{\max}})\)</span> é um intervalo mais razoável para o algoritmo LMS, mas ainda não garante sua convergência. Devido à sua simplicidade, ele é muito usado em diversas aplicações de filtragem adaptativa que exigem solução em  tempo real. As principais aplicações  incluem cancelamento de eco acústico, equalização de canais de comunicação, controle ativo de ruído e identificação de sistemas.</p>
 <p>Para finalizar esta seção, é importante observar que em várias aplicações de filtragem adaptativa não se considera o viés. Além disso, o vetor de entrada <span class="math notranslate nohighlight">\(\mathbf{x}(n)\)</span> muitas vezes é extraído de uma  sequência de números, considerando uma linha de atrasos. Neste caso, ele é chamado de vetor regressor.
 Para exemplificar, vamos supor que temos a seguinte sequência de números</p>
@@ -584,12 +607,12 @@ Durante a época <span class="math notranslate nohighlight">\(k\)</span>,  estim
 \]</div>
 <p>em que <span class="math notranslate nohighlight">\(k=1,2,\cdots,N_e\)</span>, sendo <span class="math notranslate nohighlight">\(N_e\)</span> o número de épocas.</p>
 <p>Cabem aqui algumas observações:</p>
-<ul class="simple">
+<ol class="simple">
 <li><p>O treinamento em modo <em>batch</em> não é utilizado em aplicações de tempo real, pois gera um atraso inaceitável em aplicações desse tipo.</p></li>
 <li><p>O índice <span class="math notranslate nohighlight">\(n\)</span> neste modo de treinamento não representa iteração e sim a posição do dado. Dessa forma, para <span class="math notranslate nohighlight">\(n=5\)</span> temos <span class="math notranslate nohighlight">\(\mathbf{x}(5)\)</span>, que  representa o quinto dado do conjunto de treinamento, que por sua vez, contém ao todo <span class="math notranslate nohighlight">\(N_t\)</span> dados.</p></li>
 <li><p>Como os dados são misturados de uma época para outra, o vetor <span class="math notranslate nohighlight">\(\mathbf{x}(5)\)</span> da época <span class="math notranslate nohighlight">\(k\)</span> pode ser o vetor <span class="math notranslate nohighlight">\(\mathbf{x}(200)\)</span> da época <span class="math notranslate nohighlight">\(k-1\)</span>.
 \item Na formulação anterior, a iteração foi representada por <span class="math notranslate nohighlight">\(k\)</span>, que coincide com as épocas do treinamento.</p></li>
-</ul>
+</ol>
 <p>Dadas essas observações, na formulação do modo de treinamento <em>batch</em>, é  mais conveniente usar  a notação matricial, similar à da  regressão linear multivariada.
 Assim, definindo-se na iteração (ou época) <span class="math notranslate nohighlight">\(k\)</span> os vetores</p>
 <div class="math notranslate nohighlight">
@@ -652,10 +675,12 @@ Assim, definindo-se na iteração (ou época) <span class="math notranslate nohi
 \widehat{\boldsymbol{\nabla}}_{\mathbf{w}}J_{\rm MSE}(\mathbf{w}(k-1))=-\frac{2}{N_t}\mathbf{X}^{{\rm T}}(k)\mathbf{e}(k).
 \]</div>
 <p>Essa estimativa do gradiente leva à seguinte atualização dos pesos:</p>
-<div class="math notranslate nohighlight">
-\[
-\mathbf{w}(k)=\mathbf{w}(k-1)+\frac{\eta}{N_t}\mathbf{X}^{{\rm T}}(k)\mathbf{e}(k)
-\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+\mathbf{w}(k)=\mathbf{w}(k-1)+\frac{\eta}{N_t}\mathbf{X}^{{\rm T}}(k)\mathbf{e}(k).
+$}
+\end{equation*}\]</div>
 <p>Com essa notação, a aproximação da função custo que o LMS busca minimizar neste modo pode ser reescrita como</p>
 <div class="math notranslate nohighlight">
 \[
@@ -723,10 +748,12 @@ Assim, definindo-se na iteração (ou época) <span class="math notranslate nohi
 \widehat{\boldsymbol{\nabla}}_{\mathbf{w}}J_{\rm MSE}(\mathbf{w}(\ell))=-\frac{2}{N_b}\mathbf{X}^{{\rm T}}(\ell)\mathbf{e}(\ell).
 \]</div>
 <p>Essa estimativa do gradiente leva à seguinte atualização dos pesos:</p>
-<div class="math notranslate nohighlight">
-\[
-\mathbf{w}(\ell+1)=\mathbf{w}(\ell)+\frac{\eta}{N_b}\mathbf{X}^{{\rm T}}(\ell)\mathbf{e}(\ell)
-\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+\mathbf{w}(\ell+1)=\mathbf{w}(\ell)+\frac{\eta}{N_b}\mathbf{X}^{{\rm T}}(\ell)\mathbf{e}(\ell).
+$}
+\end{equation*}\]</div>
 <p>Por fim, a aproximação da função custo que o LMS busca minimizar a cada época no modo <em>mini-batch</em> pode ser reescrita como</p>
 <div class="math notranslate nohighlight">
 \[

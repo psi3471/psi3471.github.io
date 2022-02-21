@@ -1,3 +1,15 @@
+---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
+
 # O algoritmo LMS
 
 ## O algoritmo *steepest descent*
@@ -19,9 +31,11 @@ em que $N_t$ é o número de dados utilizados no treinamento,  $b$ o viés (*bia
 Para obter o modelo, utilizamos os dados de treinamento e calculamos
 a solução
 
-$$
+\begin{equation*}
+\fbox{$\displaystyle
 \mathbf{w}^{\rm o}=(\mathbf{X}^{\rm T}\mathbf{X})^{-1}\mathbf{X}^{\rm T}\mathbf{d}
-$$
+$}
+\end{equation*}
 
 em que
 
@@ -130,9 +144,11 @@ ou ainda
 
 A solução dessa equação leva ao MSE mínimo e é conhecida na literatura como solução de Wiener-Hopf, ou simplesmente, solução de Wiener. Por isso, vamos denotá-la como $\mathbf{w}^{\rm wiener}$, ou seja,
 
-$$
+\begin{equation*}
+\fbox{$\displaystyle
 \mathbf{w}^{\rm wiener}=\mathbf{R}^{-1}\mathbf{p},
-$$
+$}
+\end{equation*}
 
 em que $\mathbf{R}$ é a matriz de autocorrelação dos dados de entrada e $\mathbf{p}$ o vetor de correlação cruzada entre o sinal desejado $d(n)$ e os dados de entrada. Tanto a matriz $\mathbf{R}$ como  o vetor $\mathbf{p}$ têm em suas definições o operador esperança matemática. Podemos estimar $\mathbf{R}$ e  $\mathbf{p}$ utilizando todos os dados de treinamento, o que leva respectivamente a
 
@@ -164,9 +180,11 @@ $$
 Identificando a matriz $\mathbf{R}$ e o vetor $\mathbf{p}$ na equação acima,
 obtemos
 
-$$
+\begin{equation*}
+\fbox{$\displaystyle
 \mathbf{w}(n)=\mathbf{w}(n-1)+\eta\left[\mathbf{p}-\mathbf{R}\mathbf{w}(n-1)\right].
-$$
+$}
+\end{equation*}
 
 Esse algoritmo iterativo é conhecido na literatura como \textit{steepest descent algorithm} ou algoritmo do gradiente exato. O passo de adaptação $\eta$ tem um papel fundamental em sua convergência. É possível demonstrar que se o intervalo $0<\eta<2/{\lambda_{\max}}$ for atendido, em que $\lambda_{\max}$ é o autovalor máximo da matriz $\mathbf{R}$, essa equação converge exatamente para a solução de Wiener. Apesar de chegar exatamente à solução que minimiza o MSE, ele não é adequado porque é necessário conhecer  $\mathbf{R}$ e  $\mathbf{p}$. A única vantagem é evitar calcular a inversa da matriz $\mathbf{R}$, o que representa uma economia em custo computacional.
 
@@ -180,9 +198,11 @@ $$
 
 Substituindo essas aproximações no algoritmo \textit{steepest descent}, chega-se a
 
-$$
+\begin{equation*}
+\fbox{$\displaystyle
 \mathbf{w}(n)=\mathbf{w}(n-1)+\eta e(n)\mathbf{x}(n),
-$$
+$}
+\end{equation*}
 
 que é a equação de atualização do conhecido algoritmo LMS (*least-mean-square*), cujo sumário está mostrado na {numref}`tab_lms`. O fluxo de sinal do LMS é mostrado na {numref}`fig_lms`. Novamente, o passo de adaptação $\eta$ tem um papel fundamental na convergência desse algoritmo. Quanto menor o valor de $\eta$, mais próximo da solução de Wiener o algoritmo LMS estará quando atingir o regime estacionário. No entanto, quanto menor o passo, mais lentamente o algoritmo atingirá o regime. Em contrapartida, passos grandes podem representar convergências rápidas, mas também podem levar o algoritmo à divergência. Neste caso, os pesos podem ir para infinito\footnote{Infinito aqui significa valor acima do maior valor representável em um software numérico ou hardware.}. Diante disso, deve-se atentar ao compromisso entre precisão da solução e velocidade de convergência. O problema é que o intervalo $0<\eta<2/{\lambda_{\max}}$ que vale para o algoritmo exato, é em geral  maior do que o intervalo de passo admitido no algoritmo aproximado. Pode-se demonstrar que $0<\eta<2/(3{\lambda_{\max}})$ é um intervalo mais razoável para o algoritmo LMS, mas ainda não garante sua convergência. Devido à sua simplicidade, ele é muito usado em diversas aplicações de filtragem adaptativa que exigem solução em  tempo real. As principais aplicações  incluem cancelamento de eco acústico, equalização de canais de comunicação, controle ativo de ruído e identificação de sistemas.
 
@@ -341,9 +361,9 @@ em que $k=1,2,\cdots,N_e$, sendo $N_e$ o número de épocas.
 
 Cabem aqui algumas observações:
 
-- O treinamento em modo *batch* não é utilizado em aplicações de tempo real, pois gera um atraso inaceitável em aplicações desse tipo.
-- O índice $n$ neste modo de treinamento não representa iteração e sim a posição do dado. Dessa forma, para $n=5$ temos $\mathbf{x}(5)$, que  representa o quinto dado do conjunto de treinamento, que por sua vez, contém ao todo $N_t$ dados.
-- Como os dados são misturados de uma época para outra, o vetor $\mathbf{x}(5)$ da época $k$ pode ser o vetor $\mathbf{x}(200)$ da época $k-1$.
+1. O treinamento em modo *batch* não é utilizado em aplicações de tempo real, pois gera um atraso inaceitável em aplicações desse tipo.
+2. O índice $n$ neste modo de treinamento não representa iteração e sim a posição do dado. Dessa forma, para $n=5$ temos $\mathbf{x}(5)$, que  representa o quinto dado do conjunto de treinamento, que por sua vez, contém ao todo $N_t$ dados.
+3. Como os dados são misturados de uma época para outra, o vetor $\mathbf{x}(5)$ da época $k$ pode ser o vetor $\mathbf{x}(200)$ da época $k-1$.
 \item Na formulação anterior, a iteração foi representada por $k$, que coincide com as épocas do treinamento.
 
 Dadas essas observações, na formulação do modo de treinamento *batch*, é  mais conveniente usar  a notação matricial, similar à da  regressão linear multivariada.
@@ -413,9 +433,11 @@ $$
 
 Essa estimativa do gradiente leva à seguinte atualização dos pesos:
 
-$$
-\mathbf{w}(k)=\mathbf{w}(k-1)+\frac{\eta}{N_t}\mathbf{X}^{{\rm T}}(k)\mathbf{e}(k)
-$$
+\begin{equation*}
+\fbox{$\displaystyle
+\mathbf{w}(k)=\mathbf{w}(k-1)+\frac{\eta}{N_t}\mathbf{X}^{{\rm T}}(k)\mathbf{e}(k).
+$}
+\end{equation*}
 
 Com essa notação, a aproximação da função custo que o LMS busca minimizar neste modo pode ser reescrita como
 
@@ -491,9 +513,11 @@ $$
 
 Essa estimativa do gradiente leva à seguinte atualização dos pesos:
 
-$$
-\mathbf{w}(\ell+1)=\mathbf{w}(\ell)+\frac{\eta}{N_b}\mathbf{X}^{{\rm T}}(\ell)\mathbf{e}(\ell)
-$$
+\begin{equation*}
+\fbox{$\displaystyle
+\mathbf{w}(\ell+1)=\mathbf{w}(\ell)+\frac{\eta}{N_b}\mathbf{X}^{{\rm T}}(\ell)\mathbf{e}(\ell).
+$}
+\end{equation*}
 
 Por fim, a aproximação da função custo que o LMS busca minimizar a cada época no modo *mini-batch* pode ser reescrita como
 

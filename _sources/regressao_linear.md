@@ -118,11 +118,13 @@ $$
 
 Portanto, o vetor de coeficientes $\mathbf{w}$ que satisfaz  essa equação, denotado como $\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w^{\rm o}\,]^{{\rm T}}$, minimiza a norma quadrática do vetor de erros e $d=w^{\rm o}x+b^{\rm o}$ é a melhor reta que se ajusta aos pontos experimentais segundo o critério dos mínimos quadrados.
 
-Se $\mathbf{X}^{{\rm T}}\mathbf{X}$ for invertível, $\mathbf{w}^{\rm o}$
+Se $\mathbf{X}^{{\rm T}}\mathbf{X}$ for invertível,
 
-$$
+\begin{equation*}
+\fbox{$\displaystyle
 \mathbf{w}^{\rm o}=(\mathbf{X}^{{\rm T}}\mathbf{X})^{-1}\mathbf{X}^{{\rm T}}\mathbf{d}.
-$$
+$}
+\end{equation*}
 
 Essa equação expressa a unicidade da solução. Assim, se os pontos experimentais são não colineares, existe uma única reta que se ajusta a esses pontos segundo o critério dos mínimos quadrados.
 
@@ -197,9 +199,11 @@ $$
 
 Generalizando os passos para obtenção da reta que se ajusta aos dados, chega-se a
 
-$$
+\begin{equation*}
+\fbox{$\displaystyle
 \mathbf{w}^{\rm o}=(\mathbf{X}^{\rm T}\mathbf{X})^{-1}\mathbf{X}^{\rm T}\mathbf{d}
-$$
+$}
+\end{equation*}
 
 em que $\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w_1^{\rm o}\;\;w_2^{\rm o}\;\;\cdots\;\;w_M^{\rm o}\,]^{\rm T}$ é o vetor que contém o viés e pesos ótimos que minimizam $\|\mathbf{e}\|^2$.
 
@@ -293,22 +297,20 @@ $$
 \{(0,1000,\;0.7055),\;\;(0,2556,\;0.4357),\;\;(0.4111,\;0,3264),\;\;\cdots,\;\;(1,5000,\;0.2514)\}.
 $$ 
 
-Como o valor de $d$ depende do ruído, se não fixarmos uma semente, cada vez que gerarmos os dados teremos valores distintos. O objetivo é encontrar uma função (um modelo) polinomial de grau $M$ que melhor se aproxima dos pontos do conjunto de treinamento, levando em conta a forma da cossenóide sem ruído. Na {numref}`RL1`, são mostrados os pontos disponíveis no treinamento (em vermelho), as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão. Foram considerados polinômios com graus $M=1$ (reta), $M=2$ (parábola) até $M=9$. É possível ver que para $M=1$ e $M=2$ ocorre o *underfitting*, ou seja, as distâncias dos pontos de treinamento aos pontos gerados pelos polinômios dos modelos são elevadas, o que indica que eles não são adequados. A medida em que o valor do grau do polinômio aumenta, observa-se um melhor ajuste entre os pontos vermelhos e as curvas azuis, até o caso extremo de $M=9$. Neste caso, o polinômio obtido passa exatamente em todos os pontos do treinamento, mas claramente a curva azul fica distante da cossenóide sem ruído em alguns trechos como pode ser visto pelas flutuações indesejadas. Isso indica que pode ter ocorrido *overfitting* devido ao número excessivo de parâmetros do modelo.
+Como o valor de $d$ depende do ruído, se não fixarmos uma semente, cada vez que gerarmos os dados teremos valores distintos. O objetivo é encontrar uma função (um modelo) polinomial de grau $M$ que melhor se aproxima dos pontos do conjunto de treinamento, levando em conta a forma da cossenóide sem ruído. Na {numref}`fig_RL_fit_M`, são mostrados os pontos disponíveis no treinamento (em vermelho), as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão. Foram considerados polinômios com graus $M=1$ (reta), $M=2$ (parábola) até $M=9$. É possível ver que para $M=1$ e $M=2$ ocorre o *underfitting*, ou seja, as distâncias dos pontos de treinamento aos pontos gerados pelos polinômios dos modelos são elevadas, o que indica que eles não são adequados. A medida em que o valor do grau do polinômio aumenta, observa-se um melhor ajuste entre os pontos vermelhos e as curvas azuis, até o caso extremo de $M=9$. Neste caso, o polinômio obtido passa exatamente em todos os pontos do treinamento, mas claramente a curva azul fica distante da cossenóide sem ruído em alguns trechos como pode ser visto pelas flutuações indesejadas. Isso indica que pode ter ocorrido *overfitting* devido ao número excessivo de parâmetros do modelo.
 
-```{figure} ./images/RL1.png
----
-width: 100%
-name: RL1
----
-Regressão linear polinomial; $M$ representa o grau do polinômio, os pontos do conjunto de treinamento estão representados em vermelho; as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão.
+```{glue:figure} fig_RL_fit_M
+:figwidth: 100%
+:name: "fig_RL_fit_M"
+
+Regressão linear polinomial; $M$ representa o grau do polinômio, os pontos do conjunto de treinamento estão representados em vermelho; as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão [(código)](./regressao_linear_jupyter.html#fig_RL_fit_M).
 ```
 
-Para analisar o *overfitting*, geramos um conjunto de teste com 1401 valores de $x$ igualmente espaçados no intervalo $[0,1,\;1,5]$ e calculamos o valor de $d$. Como há ruído na geração de $d$, os pontos gerados no teste foram diferente dos de treinamento. Para cada valor de $M$, medimos o valor absoluto médio do erro de predição, levando em conta o conjunto de treinamento e de teste. Na {numref}`RL2`, são mostrados os valores desses erros em função do grau do polinômio. Como esperado, o erro de aprendizagem (com os dados do treinamento) diminuem monotonicamente, chegando a zero para $M=9$. Esse  comportamento é típico sempre que o modelo ajustado varia do mais simples para o mais complexo. Em contrapartida, o erro do teste diminui até  $M=5$ e depois aumenta, indicando que modelos com muitos parâmetros têm baixas capacidades de generalização.
+Para analisar o *overfitting*, geramos um conjunto de teste com 1401 valores de $x$ igualmente espaçados no intervalo $[0,1,\;1,5]$ e calculamos o valor de $d$. Como há ruído na geração de $d$, os pontos gerados no teste foram diferente dos de treinamento. Para cada valor de $M$, medimos o valor absoluto médio do erro de predição, levando em conta o conjunto de treinamento e de teste. Na {numref}`fig_RL_modulo_e_pred`, são mostrados os valores desses erros em função do grau do polinômio. Como esperado, o erro de aprendizagem (com os dados do treinamento) diminuem monotonicamente, chegando a zero para $M=9$. Esse  comportamento é típico sempre que o modelo ajustado varia do mais simples para o mais complexo. Em contrapartida, o erro do teste diminui até  $M=5$ e depois aumenta, indicando que modelos com muitos parâmetros têm baixas capacidades de generalização.
 
-```{figure} ./images/RL2.png
----
-height: 300px
-name: RL2
----
-Regressão linear polinomial; valor médio do módulo do erro de predição levando em conta o conjunto de treinamento e o conjunto de teste.
+
+```{glue:figure} fig_RL_modulo_e_pred
+:name: "fig_RL_modulo_e_pred"
+
+Regressão linear polinomial; valor médio do módulo do erro de predição levando em conta o conjunto de treinamento e o conjunto de teste. [(código)](./regressao_linear_jupyter.html#fig_RL_modulo_e_pred).
 ```

@@ -116,11 +116,6 @@
    Referências
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="FA_minibatch.html">
-   FA minibatch
-  </a>
- </li>
 </ul>
 
     </div>
@@ -371,11 +366,13 @@ d=wx+b
 \mathbf{X}^{{\rm T}}\mathbf{X}\mathbf{w}^{\rm o}=\mathbf{X}^{{\rm T}}\mathbf{d}.
 \]</div>
 <p>Portanto, o vetor de coeficientes <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> que satisfaz  essa equação, denotado como <span class="math notranslate nohighlight">\(\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w^{\rm o}\,]^{{\rm T}}\)</span>, minimiza a norma quadrática do vetor de erros e <span class="math notranslate nohighlight">\(d=w^{\rm o}x+b^{\rm o}\)</span> é a melhor reta que se ajusta aos pontos experimentais segundo o critério dos mínimos quadrados.</p>
-<p>Se <span class="math notranslate nohighlight">\(\mathbf{X}^{{\rm T}}\mathbf{X}\)</span> for invertível, <span class="math notranslate nohighlight">\(\mathbf{w}^{\rm o}\)</span></p>
-<div class="math notranslate nohighlight">
-\[
+<p>Se <span class="math notranslate nohighlight">\(\mathbf{X}^{{\rm T}}\mathbf{X}\)</span> for invertível,</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
 \mathbf{w}^{\rm o}=(\mathbf{X}^{{\rm T}}\mathbf{X})^{-1}\mathbf{X}^{{\rm T}}\mathbf{d}.
-\]</div>
+$}
+\end{equation*}\]</div>
 <p>Essa equação expressa a unicidade da solução. Assim, se os pontos experimentais são não colineares, existe uma única reta que se ajusta a esses pontos segundo o critério dos mínimos quadrados.</p>
 <p>Observações importantes:</p>
 <ul class="simple">
@@ -441,10 +438,12 @@ d=b+w_1x_1+w_2x_2+\cdots+w_Mx_M.
 \|\mathbf{e}\|^2=\|\mathbf{d}-\mathbf{X}\mathbf{w}\|^2.
 \]</div>
 <p>Generalizando os passos para obtenção da reta que se ajusta aos dados, chega-se a</p>
-<div class="math notranslate nohighlight">
-\[
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
 \mathbf{w}^{\rm o}=(\mathbf{X}^{\rm T}\mathbf{X})^{-1}\mathbf{X}^{\rm T}\mathbf{d}
-\]</div>
+$}
+\end{equation*}\]</div>
 <p>em que <span class="math notranslate nohighlight">\(\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w_1^{\rm o}\;\;w_2^{\rm o}\;\;\cdots\;\;w_M^{\rm o}\,]^{\rm T}\)</span> é o vetor que contém o viés e pesos ótimos que minimizam <span class="math notranslate nohighlight">\(\|\mathbf{e}\|^2\)</span>.</p>
 <p>Observações importantes:</p>
 <ol>
@@ -521,15 +520,19 @@ d=0,5+0,25\cos(2\pi x)+v,
 \[
 \{(0,1000,\;0.7055),\;\;(0,2556,\;0.4357),\;\;(0.4111,\;0,3264),\;\;\cdots,\;\;(1,5000,\;0.2514)\}.
 \]</div>
-<p>Como o valor de <span class="math notranslate nohighlight">\(d\)</span> depende do ruído, se não fixarmos uma semente, cada vez que gerarmos os dados teremos valores distintos. O objetivo é encontrar uma função (um modelo) polinomial de grau <span class="math notranslate nohighlight">\(M\)</span> que melhor se aproxima dos pontos do conjunto de treinamento, levando em conta a forma da cossenóide sem ruído. Na <a class="reference internal" href="#rl1"><span class="std std-numref">Fig. 2</span></a>, são mostrados os pontos disponíveis no treinamento (em vermelho), as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão. Foram considerados polinômios com graus <span class="math notranslate nohighlight">\(M=1\)</span> (reta), <span class="math notranslate nohighlight">\(M=2\)</span> (parábola) até <span class="math notranslate nohighlight">\(M=9\)</span>. É possível ver que para <span class="math notranslate nohighlight">\(M=1\)</span> e <span class="math notranslate nohighlight">\(M=2\)</span> ocorre o <em>underfitting</em>, ou seja, as distâncias dos pontos de treinamento aos pontos gerados pelos polinômios dos modelos são elevadas, o que indica que eles não são adequados. A medida em que o valor do grau do polinômio aumenta, observa-se um melhor ajuste entre os pontos vermelhos e as curvas azuis, até o caso extremo de <span class="math notranslate nohighlight">\(M=9\)</span>. Neste caso, o polinômio obtido passa exatamente em todos os pontos do treinamento, mas claramente a curva azul fica distante da cossenóide sem ruído em alguns trechos como pode ser visto pelas flutuações indesejadas. Isso indica que pode ter ocorrido <em>overfitting</em> devido ao número excessivo de parâmetros do modelo.</p>
-<div class="figure align-default" id="rl1">
-<a class="reference internal image-reference" href="_images/RL1.png"><img alt="_images/RL1.png" src="_images/RL1.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Regressão linear polinomial; <span class="math notranslate nohighlight">\(M\)</span> representa o grau do polinômio, os pontos do conjunto de treinamento estão representados em vermelho; as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão.</span><a class="headerlink" href="#rl1" title="Link Permanente para essa imagem">¶</a></p>
+<p>Como o valor de <span class="math notranslate nohighlight">\(d\)</span> depende do ruído, se não fixarmos uma semente, cada vez que gerarmos os dados teremos valores distintos. O objetivo é encontrar uma função (um modelo) polinomial de grau <span class="math notranslate nohighlight">\(M\)</span> que melhor se aproxima dos pontos do conjunto de treinamento, levando em conta a forma da cossenóide sem ruído. Na <a class="reference internal" href="#fig-rl-fit-m"><span class="std std-numref">Fig. 2</span></a>, são mostrados os pontos disponíveis no treinamento (em vermelho), as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão. Foram considerados polinômios com graus <span class="math notranslate nohighlight">\(M=1\)</span> (reta), <span class="math notranslate nohighlight">\(M=2\)</span> (parábola) até <span class="math notranslate nohighlight">\(M=9\)</span>. É possível ver que para <span class="math notranslate nohighlight">\(M=1\)</span> e <span class="math notranslate nohighlight">\(M=2\)</span> ocorre o <em>underfitting</em>, ou seja, as distâncias dos pontos de treinamento aos pontos gerados pelos polinômios dos modelos são elevadas, o que indica que eles não são adequados. A medida em que o valor do grau do polinômio aumenta, observa-se um melhor ajuste entre os pontos vermelhos e as curvas azuis, até o caso extremo de <span class="math notranslate nohighlight">\(M=9\)</span>. Neste caso, o polinômio obtido passa exatamente em todos os pontos do treinamento, mas claramente a curva azul fica distante da cossenóide sem ruído em alguns trechos como pode ser visto pelas flutuações indesejadas. Isso indica que pode ter ocorrido <em>overfitting</em> devido ao número excessivo de parâmetros do modelo.</p>
+<div class="figure align-default" id="fig-rl-fit-m" style="width: 100%">
+<div class="cell_output docutils container">
+<img alt="_images/regressao_linear_jupyter_7_0.png" src="_images/regressao_linear_jupyter_7_0.png" />
 </div>
-<p>Para analisar o <em>overfitting</em>, geramos um conjunto de teste com 1401 valores de <span class="math notranslate nohighlight">\(x\)</span> igualmente espaçados no intervalo <span class="math notranslate nohighlight">\([0,1,\;1,5]\)</span> e calculamos o valor de <span class="math notranslate nohighlight">\(d\)</span>. Como há ruído na geração de <span class="math notranslate nohighlight">\(d\)</span>, os pontos gerados no teste foram diferente dos de treinamento. Para cada valor de <span class="math notranslate nohighlight">\(M\)</span>, medimos o valor absoluto médio do erro de predição, levando em conta o conjunto de treinamento e de teste. Na <a class="reference internal" href="#rl2"><span class="std std-numref">Fig. 3</span></a>, são mostrados os valores desses erros em função do grau do polinômio. Como esperado, o erro de aprendizagem (com os dados do treinamento) diminuem monotonicamente, chegando a zero para <span class="math notranslate nohighlight">\(M=9\)</span>. Esse  comportamento é típico sempre que o modelo ajustado varia do mais simples para o mais complexo. Em contrapartida, o erro do teste diminui até  <span class="math notranslate nohighlight">\(M=5\)</span> e depois aumenta, indicando que modelos com muitos parâmetros têm baixas capacidades de generalização.</p>
-<div class="figure align-default" id="rl2">
-<a class="reference internal image-reference" href="_images/RL2.png"><img alt="_images/RL2.png" src="_images/RL2.png" style="height: 300px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Regressão linear polinomial; valor médio do módulo do erro de predição levando em conta o conjunto de treinamento e o conjunto de teste.</span><a class="headerlink" href="#rl2" title="Link Permanente para essa imagem">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Regressão linear polinomial; <span class="math notranslate nohighlight">\(M\)</span> representa o grau do polinômio, os pontos do conjunto de treinamento estão representados em vermelho; as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão <a class="reference external" href="./regressao_linear_jupyter.html#fig_RL_fit_M">(código)</a>.</span><a class="headerlink" href="#fig-rl-fit-m" title="Link Permanente para essa imagem">¶</a></p>
+</div>
+<p>Para analisar o <em>overfitting</em>, geramos um conjunto de teste com 1401 valores de <span class="math notranslate nohighlight">\(x\)</span> igualmente espaçados no intervalo <span class="math notranslate nohighlight">\([0,1,\;1,5]\)</span> e calculamos o valor de <span class="math notranslate nohighlight">\(d\)</span>. Como há ruído na geração de <span class="math notranslate nohighlight">\(d\)</span>, os pontos gerados no teste foram diferente dos de treinamento. Para cada valor de <span class="math notranslate nohighlight">\(M\)</span>, medimos o valor absoluto médio do erro de predição, levando em conta o conjunto de treinamento e de teste. Na <a class="reference internal" href="#fig-rl-modulo-e-pred"><span class="std std-numref">Fig. 3</span></a>, são mostrados os valores desses erros em função do grau do polinômio. Como esperado, o erro de aprendizagem (com os dados do treinamento) diminuem monotonicamente, chegando a zero para <span class="math notranslate nohighlight">\(M=9\)</span>. Esse  comportamento é típico sempre que o modelo ajustado varia do mais simples para o mais complexo. Em contrapartida, o erro do teste diminui até  <span class="math notranslate nohighlight">\(M=5\)</span> e depois aumenta, indicando que modelos com muitos parâmetros têm baixas capacidades de generalização.</p>
+<div class="figure align-default" id="fig-rl-modulo-e-pred">
+<div class="cell_output docutils container">
+<img alt="_images/regressao_linear_jupyter_9_0.png" src="_images/regressao_linear_jupyter_9_0.png" />
+</div>
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Regressão linear polinomial; valor médio do módulo do erro de predição levando em conta o conjunto de treinamento e o conjunto de teste. <a class="reference external" href="./regressao_linear_jupyter.html#fig_RL_modulo_e_pred">(código)</a>.</span><a class="headerlink" href="#fig-rl-modulo-e-pred" title="Link Permanente para essa imagem">¶</a></p>
 </div>
 <hr class="footnotes docutils" />
 <dl class="footnote brackets">
