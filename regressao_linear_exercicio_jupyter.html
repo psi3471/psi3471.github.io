@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+
+<html lang="pt_BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercício &#8212; PSI3471 - Fundamentos de Sistemas Eletrônicos Inteligentes</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/translations.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Buscar" href="search.html" />
+    <link rel="next" title="O algoritmo LMS" href="lms.html" />
+    <link rel="prev" title="Regressão linear" href="regressao_linear.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="pt_BR">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">PSI3471 - Fundamentos de Sistemas Eletrônicos Inteligentes</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Pesquise este livro ..." aria-label="Pesquise este livro ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Bem-vindo
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="regressao_linear.html">
+   Regressão linear
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Exercício
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lms.html">
+   O algoritmo LMS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="referencias.html">
+   Referências
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Alternar de navegação" aria-controls="site-navigation"
+                title="Alternar de navegação" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Baixe esta página"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/regressao_linear_exercicio_jupyter.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Baixar arquivo fonte" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Imprimir em PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Repositório fonte"><i
+                    class="fab fa-github"></i>repositório</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fregressao_linear_exercicio_jupyter.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Abra um problema"><i class="fas fa-lightbulb"></i>questão aberta</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Modo tela cheia"
+        title="Modo tela cheia"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/regressao_linear_exercicio_jupyter.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Lançamento Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Exercício</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="exercicio">
+<h1>Exercício<a class="headerlink" href="#exercicio" title="Link permanente para este título">¶</a></h1>
+<p>Neste exercício, você vai construir um modelo usando a técnica de mínimos quadrados para prever o preço de carros usados usando os dados do <a class="reference external" href="https://www.kaggle.com/austinreese/craigslist-carstrucks-data"><em>Used Cars Dataset</em></a>. Este banco de dados é uma enorme lista com 957 MB de informações de veículos anunciados no site <em>Craigslist.org</em>, incluindo diversos tipos de veículos.</p>
+<p>Ao trabalhar com dados reais, muitas vezes é necessário realizar algumas etapas de filtragem e limpeza para usar os dados para construir um modelo. No caso desse banco de dados, é necessário restringir os tipos de veículos que serão considerados, para obter melhores resultados com o modelo.</p>
+<p>Como o foco principal do exercício é usar a técnica de mínimos quadrados para construir o modelo, você vai trabalhar com um conjunto de dados limpo, que é um pequeno subconjunto do banco de dados original. Dessa forma, antes de começar a trabalhar no código, certifique-se de ter baixado o <a class="reference external" href="https://raw.githubusercontent.com/psi3471/psi3471/main/datasets/vehicles_cleaned.csv">arquivo CSV de dados limpos</a> do repositório de materiais.</p>
+<p>Para carregar um arquivo CSV e processar os dados, você pode usar a biblioteca <a class="reference external" href="https://pandas.pydata.org/">Pandas</a>. Após a instalação da biblioteca e o download do arquivo CSV, é possível carregar os dados com os seguintes comandos:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">cars_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;vehicles_cleaned.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Com esses comandos, você vai criar um <em>DataFrame</em> do Pandas chamado <code class="docutils literal notranslate"><span class="pre">cars_data</span></code> contendo os dados do arquivo CSV. A partir deste <em>DataFrame</em>, você pode gerar os <em>arrays</em> NumPy que serão usados para calcular os parâmtros do modelo de regressão linear.</p>
+<p>Para ver algumas linhas do banco de dados, você pode usar o método <code class="docutils literal notranslate"><span class="pre">.head()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cars_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>price</th>
+      <th>year</th>
+      <th>condition</th>
+      <th>cylinders</th>
+      <th>fuel</th>
+      <th>odometer</th>
+      <th>transmission</th>
+      <th>size</th>
+      <th>type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7000</td>
+      <td>2011</td>
+      <td>good</td>
+      <td>4 cylinders</td>
+      <td>gas</td>
+      <td>76202</td>
+      <td>automatic</td>
+      <td>compact</td>
+      <td>sedan</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10900</td>
+      <td>2014</td>
+      <td>excellent</td>
+      <td>4 cylinders</td>
+      <td>gas</td>
+      <td>63000</td>
+      <td>manual</td>
+      <td>compact</td>
+      <td>sedan</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>13300</td>
+      <td>2012</td>
+      <td>excellent</td>
+      <td>6 cylinders</td>
+      <td>gas</td>
+      <td>96000</td>
+      <td>automatic</td>
+      <td>mid-size</td>
+      <td>sedan</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>14900</td>
+      <td>2016</td>
+      <td>excellent</td>
+      <td>4 cylinders</td>
+      <td>gas</td>
+      <td>48900</td>
+      <td>automatic</td>
+      <td>mid-size</td>
+      <td>sedan</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>18900</td>
+      <td>2016</td>
+      <td>excellent</td>
+      <td>6 cylinders</td>
+      <td>gas</td>
+      <td>58112</td>
+      <td>automatic</td>
+      <td>mid-size</td>
+      <td>sedan</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Conforme você pode notar pela saída do comando acima, o banco de dados tem 9 colunas. A descrição dos dados é a seguinte:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Coluna</p></th>
+<th class="head"><p>Descrição</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">price</span></code></p></td>
+<td><p>O preço do carro. É o dado que você deseja obter com o modelo.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">year</span></code></p></td>
+<td><p>O ano do carro.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">condition</span></code></p></td>
+<td><p>Variável categórica que indica a condição do carro. Pode ter os valores <code class="docutils literal notranslate"><span class="pre">good</span></code>, <code class="docutils literal notranslate"><span class="pre">fair</span></code>, <code class="docutils literal notranslate"><span class="pre">excellent</span></code>, <code class="docutils literal notranslate"><span class="pre">like</span> <span class="pre">new</span></code>, <code class="docutils literal notranslate"><span class="pre">salvage</span></code>, ou <code class="docutils literal notranslate"><span class="pre">new</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cylinders</span></code></p></td>
+<td><p>Variável categórica que indica o número de cilindros do motor. Pode ter os valore <code class="docutils literal notranslate"><span class="pre">4</span> <span class="pre">cylinders</span></code> ou <code class="docutils literal notranslate"><span class="pre">6</span> <span class="pre">cylinders</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">fuel</span></code></p></td>
+<td><p>Variável categórica que indica o combustível do carro. Pode ter os valores <code class="docutils literal notranslate"><span class="pre">gas</span></code> ou <code class="docutils literal notranslate"><span class="pre">diesel</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">odometer</span></code></p></td>
+<td><p>Valor registrado no odômetro, em milhas.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">transmission</span></code></p></td>
+<td><p>Variável categórica que indica o tipo de transmissão. Pode ter os valores <code class="docutils literal notranslate"><span class="pre">automatic</span></code> ou <code class="docutils literal notranslate"><span class="pre">manual</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code></p></td>
+<td><p>Variável categórica que indica o tamanho do carro. Pode ter os valores <code class="docutils literal notranslate"><span class="pre">compact</span></code>, <code class="docutils literal notranslate"><span class="pre">mid-size</span></code>, <code class="docutils literal notranslate"><span class="pre">sub-compact</span></code> ou <code class="docutils literal notranslate"><span class="pre">full-size</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">type</span></code></p></td>
+<td><p>Variável categórica que indica o tipo do carro. Pode ter os valores<code class="docutils literal notranslate"><span class="pre">sedan</span></code>, <code class="docutils literal notranslate"><span class="pre">coupe</span></code>, <code class="docutils literal notranslate"><span class="pre">wagon</span></code>, or <code class="docutils literal notranslate"><span class="pre">hatchback</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Para usar esses dados para construir o modelo, você vai precisar representar os dados categóricos de forma numérica. Na maioria dos casos, cada variável categórica é transformada em um conjunto de <a class="reference external" href="https://en.wikipedia.org/wiki/Dummy_variable_(statistics)">variáveis <em>dummy</em></a>, que são variáveis que podem assumir o valor 0 ou 1. Como exemplo dessa transformação, considere a coluna <code class="docutils literal notranslate"><span class="pre">fuel</span></code>, que pode assumir os valores <code class="docutils literal notranslate"><span class="pre">gas</span></code> ou <code class="docutils literal notranslate"><span class="pre">diesel</span></code>. Nesse caso, a variável categórica pode ser transformada em uma variável <em>dummy</em> chamada <code class="docutils literal notranslate"><span class="pre">fuel_gas</span></code> que assume o valor 1, quando <code class="docutils literal notranslate"><span class="pre">fuel</span></code> for igual a <code class="docutils literal notranslate"><span class="pre">gas</span></code> e 0, quando <code class="docutils literal notranslate"><span class="pre">fuel</span></code> for igual a <code class="docutils literal notranslate"><span class="pre">diesel</span></code>. Vale notar que você vai precisar de apenas uma variável <em>dummy</em> para representar uma variável categórica que pode assumir dois valores diferentes. Da mesma forma, para uma variável categórica que pode assumir <span class="math notranslate nohighlight">\(N\)</span> valores distintos, você precisará de <span class="math notranslate nohighlight">\(N-1\)</span> variáveis <em>dummy</em>, pois um dos valores será assumido como o padrão.</p>
+<p>Além disso, lembre-se que você também pode criar outras variáveis, a partir de transformações e combinações das variáveis originais. Por exemplo, você poderia calcular o <span class="math notranslate nohighlight">\(\rm log\)</span> ou a raiz quadrada de alguma variável numérica, ou ainda calcular uma nova variável que é igual ao produto de duas variáveis originais. Uma prática comum é considerar uma variável adicional, sempre igual a <span class="math notranslate nohighlight">\(1\)</span>, o que faz com que o modelo inclua um termo constante, independente dos dados de entrada, conhecida como <em>intercepto</em> na terminologia de estatística ou <em>bias</em> no contexto de redes neurais.</p>
+<p>A proposta do exercício é que você construa um modelo de regressão linear para prever o valor da coluna <code class="docutils literal notranslate"><span class="pre">price</span></code> a partir dos dados das demais variáveis. Para tanto, você pode gerar novas variáveis a partir das originais e/ou descartar variáveis caso julgue que não contribuam para o modelo.</p>
+<p>Em resumo, para obter o vetor <span class="math notranslate nohighlight">\(\mathbf{w}_o\)</span> com os coeficientes do modelo de regressão linear, você deve seguir os seguintes passos:</p>
+<ol class="simple">
+<li><p>Selecionar o conjunto de variáveis originais que vocễ vai utilizar no modelo. Lembre-se que a variável <code class="docutils literal notranslate"><span class="pre">price</span></code> não pode ser utilizada pois é a variável que você deseja prever com o modelo;</p></li>
+<li><p>Substituir cada variável categórica de sua seleção por um conjunto de variáveis <em>dummy</em>, conforme descrito anteriormente. Para tanto, você pode usar a função <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.get_dummies.html">get_dummies() do Pandas</a> ou escrever a sua própria função para fazer a transformação;</p></li>
+<li><p>Transformar as variáveis originais de sua seleção e / ou incluir combinações, caso julgue necessário;</p></li>
+<li><p>A partir de sua seleção de dados, obter a matriz <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> e o vetor <span class="math notranslate nohighlight">\(\mathbf{d}\)</span>, que podem ser representados como <em>arrays</em> do NumPy. Caso você tenha usado um <em>DataFrame</em> do Pandas para organizar a sua seleção de variáveis, você pode obter um <em>array</em> do NumPy usando o método <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_numpy.html">.to_numpy()</a>.</p></li>
+<li><p>Usando a matriz <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> e o vetor <span class="math notranslate nohighlight">\(\mathbf{d}\)</span>, calcular o vetor <span class="math notranslate nohighlight">\(\mathbf{w}_o\)</span> conforme mostrado na aula.</p></li>
+</ol>
+<p>Após obter os coeficientes <span class="math notranslate nohighlight">\(\mathbf{w}_o\)</span> do modelo de regressão linear, utilize-os para prever o valor de cada carro do banco de dados e calcule o erro em relação à coluna <code class="docutils literal notranslate"><span class="pre">price</span></code>. Calcule também o erro quadrático médio considerando todo o banco de dados.</p>
+<p>Ao final do exercício, você deverá entregar:</p>
+<ol class="simple">
+<li><p>Uma descrição das variáveis de entrada que você utilizou como entrada e as justificativas para descartar variáveis ou utilizar transformações e combinações;</p></li>
+<li><p>Os códigos utilizados para calcular o vetor <span class="math notranslate nohighlight">\(\mathbf{w}_o\)</span> e erro quadrático médio de seu modelo;</p></li>
+<li><p>O valor obtido para o erro quadrático médio de seu modelo. Esse valor será utilizado para fazer um <em>ranking</em> dos melhores modelos.</p></li>
+</ol>
+<p>A sugestão é que o relatório seja elaborado utilizando um Jupyter Notebook e a linguagem Python, já que essas são as ferramentas que estamos utilizando neste bloco do curso. No entanto, isso não é obrigatório e você pode usar outra linguagem de programação, caso queira.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="regressao_linear.html" title="anterior página">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">anterior</p>
+            <p class="prev-next-title">Regressão linear</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="lms.html" title="próximo página">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">próximo</p>
+        <p class="prev-next-title">O algoritmo LMS</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      De Magno T. M. Silva e Renato Candido<br/>
+    
+        &copy; direito autoral 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

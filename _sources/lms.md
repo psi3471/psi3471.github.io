@@ -1,15 +1,3 @@
----
-jupytext:
-  formats: md:myst
-  text_representation:
-    extension: .md
-    format_name: myst
-kernelspec:
-  display_name: Python 3
-  language: python
-  name: python3
----
-
 # O algoritmo LMS
 
 ## O algoritmo *steepest descent*
@@ -364,7 +352,7 @@ Cabem aqui algumas observações:
 1. O treinamento em modo *batch* não é utilizado em aplicações de tempo real, pois gera um atraso inaceitável em aplicações desse tipo.
 2. O índice $n$ neste modo de treinamento não representa iteração e sim a posição do dado. Dessa forma, para $n=5$ temos $\mathbf{x}(5)$, que  representa o quinto dado do conjunto de treinamento, que por sua vez, contém ao todo $N_t$ dados.
 3. Como os dados são misturados de uma época para outra, o vetor $\mathbf{x}(5)$ da época $k$ pode ser o vetor $\mathbf{x}(200)$ da época $k-1$.
-\item Na formulação anterior, a iteração foi representada por $k$, que coincide com as épocas do treinamento.
+4. Na formulação anterior, a iteração foi representada por $k$, que coincide com as épocas do treinamento.
 
 Dadas essas observações, na formulação do modo de treinamento *batch*, é  mais conveniente usar  a notação matricial, similar à da  regressão linear multivariada.
 Assim, definindo-se na iteração (ou época) $k$ os vetores

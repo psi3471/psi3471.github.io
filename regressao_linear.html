@@ -55,7 +55,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Buscar" href="search.html" />
-    <link rel="next" title="O algoritmo LMS" href="lms.html" />
+    <link rel="next" title="Exercício" href="regressao_linear_exercicio_jupyter.html" />
     <link rel="prev" title="Bem-vindo" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="pt_BR">
@@ -101,10 +101,22 @@
  </li>
 </ul>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
+ <li class="toctree-l1 current active has-children">
   <a class="current reference internal" href="#">
    Regressão linear
   </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="regressao_linear_exercicio_jupyter.html">
+     Exercício
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="lms.html">
@@ -507,8 +519,7 @@ senos e cossenos, ou seja,</p>
 <div class="section" id="overfitting">
 <h2><em>Overfitting</em><a class="headerlink" href="#overfitting" title="Link permanente para este título">¶</a></h2>
 <p>Um conceito que aparece de forma recorrente em redes neurais é o chamado <em>overfitting</em>. Apesar de nem termos falado em redes neurais ainda, é possível já introduzir esse conceito considerando regressão linear. Antes de falar de <em>overfitting</em>, precisamos fazer algumas considerações importantes.</p>
-<p>Suponha que se deseja criar um modelo de regressão para prever o valor de venda de um automóvel usado. Dispomos de um banco de dados que contém várias informações sobre diferentes automóveis usados como ano de fabricação, modelo, estado de conservação, valor da tabela Fipe, valor médio de venda no mercado, etc. Utilizando esse banco de dados, podemos obter um modelo de regressão linear, que neste caso será multivariada, pois dispomos de muitas variáveis. Poderíamos usar todos os dados disponíveis para gerar o modelo. Se fizéssemos isso, como conseguiríamos avaliar se o modelo obtido é bom? Como saber se o modelo é capaz de prever adequadamente o valor de venda de um determinado carro que não aparece no banco de dados? Por isso, é importante reservar uma parte dos dados para avaliar a qualidade do modelo. Assim, é uma prática comum separar os dados de forma aleatória em dois conjuntos independentes e sem sobreposição:
-(1) conjunto de <strong>treinamento</strong> (ou aprendizado) e (2) conjunto de <strong>teste</strong><a class="footnote-reference brackets" href="#fteste" id="id1">1</a>. Os dados do conjunto de treinamento são efetivamente usados para gerar o modelo. Os dados do conjunto de teste são então usados para avaliar a qualidade do modelo gerado. Os dados usados para avaliação não devem aparecer no treinamento e vice-versa. Se o modelo se sair bem no teste, costuma-se dizer que ele tem uma boa capacidade de <strong>generalização</strong>.</p>
+<p>Suponha que se deseja criar um modelo de regressão para prever o valor de venda de um automóvel usado. Dispomos de um banco de dados que contém várias informações sobre diferentes automóveis usados como ano de fabricação, modelo, estado de conservação, valor da tabela Fipe, valor médio de venda no mercado, etc. Utilizando esse banco de dados, podemos obter um modelo de regressão linear, que neste caso será multivariada, pois dispomos de muitas variáveis. Poderíamos usar todos os dados disponíveis para gerar o modelo. Se fizéssemos isso, como conseguiríamos avaliar se o modelo obtido é bom? Como saber se o modelo é capaz de prever adequadamente o valor de venda de um determinado carro que não aparece no banco de dados? Por isso, é importante reservar uma parte dos dados para avaliar a qualidade do modelo. Assim, é uma prática comum separar os dados de forma aleatória em dois conjuntos independentes e sem sobreposição: (1) conjunto de <strong>treinamento</strong> (ou aprendizado) e (2) conjunto de <strong>teste</strong><a class="footnote-reference brackets" href="#fteste" id="id1">1</a>. Os dados do conjunto de treinamento são efetivamente usados para gerar o modelo. Os dados do conjunto de teste são então usados para avaliar a qualidade do modelo gerado. Os dados usados para avaliação não devem aparecer no treinamento e vice-versa. Se o modelo se sair bem no teste, costuma-se dizer que ele tem uma boa capacidade de <strong>generalização</strong>.</p>
 <p>Em qualquer problema de regressão, deseja-se que o modelo tenha uma boa capacidade de generalização. No exemplo do automóvel usado, é importante que o modelo consiga prever com o menor erro possível o valor de venda de um carro que não constava no banco de dados. No entanto, um modelo com muitos parâmetros pode ter um ótimo desempenho do treinamento, mas uma baixa capacidade de generalização, o que leva a um erro elevado na fase de teste. Isso é chamado de <em><strong>overfitting</strong></em>.  Modelos com baixa capacidade de generalização não são desejáveis, uma vez que na prática serão apresentados a dados que não foram usados no treinamento e deveriam ser capazes de realizar uma predição ou classificação de maneira adequada. Diante isso, existem várias técnicas em aprendizado de máquina que foram propostas para evitar o <em>overfitting</em>. Por ora, vamos apenas entender melhor esse conceito com um exemplo.</p>
 <p>Considere que dispomos de apenas dez valores igualmente espaçados de <span class="math notranslate nohighlight">\(x\)</span> no intervalo <span class="math notranslate nohighlight">\([0,1,\;1,5]\)</span>. Os valores de <span class="math notranslate nohighlight">\(d\)</span> são gerados utilizando a função</p>
 <div class="math notranslate nohighlight">
@@ -540,6 +551,8 @@ d=0,5+0,25\cos(2\pi x)+v,
 <dd><p>Na realidade, é comum reservar também uma parte dos dados em um conjunto de <strong>validação</strong>, mas isso será abordado posteriormente. No momento, considere apenas os conjuntos de treinamento e teste.</p>
 </dd>
 </dl>
+</div>
+<div class="toctree-wrapper compound">
 </div>
 </div>
 
@@ -575,10 +588,10 @@ d=0,5+0,25\cos(2\pi x)+v,
             <p class="prev-next-title">Bem-vindo</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="lms.html" title="próximo página">
+    <a class='right-next' id="next-link" href="regressao_linear_exercicio_jupyter.html" title="próximo página">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">próximo</p>
-        <p class="prev-next-title">O algoritmo LMS</p>
+        <p class="prev-next-title">Exercício</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

@@ -56,7 +56,7 @@
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Buscar" href="search.html" />
     <link rel="next" title="Referências" href="referencias.html" />
-    <link rel="prev" title="Regressão linear" href="regressao_linear.html" />
+    <link rel="prev" title="Exercício" href="regressao_linear_exercicio_jupyter.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="pt_BR">
     
@@ -101,10 +101,22 @@
  </li>
 </ul>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="regressao_linear.html">
    Regressão linear
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="regressao_linear_exercicio_jupyter.html">
+     Exercício
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
@@ -155,10 +167,7 @@
 
     <div class="dropdown-buttons">
         <!-- ipynb file if we had a myst markdown file -->
-        <a class="dropdown-buttons"
-            href="_sources/lms.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Baixar arquivo de notebook" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+        
         <!-- Download raw file -->
         <a class="dropdown-buttons" href="_sources/lms.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Baixar arquivo fonte" data-toggle="tooltip"
@@ -195,23 +204,6 @@
             class="fas fa-expand"></i></button></a>
 
             <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/lms.md"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Lançamento Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
 
         </div>
 
@@ -610,8 +602,8 @@ Durante a época <span class="math notranslate nohighlight">\(k\)</span>,  estim
 <ol class="simple">
 <li><p>O treinamento em modo <em>batch</em> não é utilizado em aplicações de tempo real, pois gera um atraso inaceitável em aplicações desse tipo.</p></li>
 <li><p>O índice <span class="math notranslate nohighlight">\(n\)</span> neste modo de treinamento não representa iteração e sim a posição do dado. Dessa forma, para <span class="math notranslate nohighlight">\(n=5\)</span> temos <span class="math notranslate nohighlight">\(\mathbf{x}(5)\)</span>, que  representa o quinto dado do conjunto de treinamento, que por sua vez, contém ao todo <span class="math notranslate nohighlight">\(N_t\)</span> dados.</p></li>
-<li><p>Como os dados são misturados de uma época para outra, o vetor <span class="math notranslate nohighlight">\(\mathbf{x}(5)\)</span> da época <span class="math notranslate nohighlight">\(k\)</span> pode ser o vetor <span class="math notranslate nohighlight">\(\mathbf{x}(200)\)</span> da época <span class="math notranslate nohighlight">\(k-1\)</span>.
-\item Na formulação anterior, a iteração foi representada por <span class="math notranslate nohighlight">\(k\)</span>, que coincide com as épocas do treinamento.</p></li>
+<li><p>Como os dados são misturados de uma época para outra, o vetor <span class="math notranslate nohighlight">\(\mathbf{x}(5)\)</span> da época <span class="math notranslate nohighlight">\(k\)</span> pode ser o vetor <span class="math notranslate nohighlight">\(\mathbf{x}(200)\)</span> da época <span class="math notranslate nohighlight">\(k-1\)</span>.</p></li>
+<li><p>Na formulação anterior, a iteração foi representada por <span class="math notranslate nohighlight">\(k\)</span>, que coincide com as épocas do treinamento.</p></li>
 </ol>
 <p>Dadas essas observações, na formulação do modo de treinamento <em>batch</em>, é  mais conveniente usar  a notação matricial, similar à da  regressão linear multivariada.
 Assim, definindo-se na iteração (ou época) <span class="math notranslate nohighlight">\(k\)</span> os vetores</p>
@@ -870,11 +862,11 @@ d(n)=w_0^{\text{wiener}}x(n)+w_1^{\text{wiener}}x(n-1)+v(n)=2x(n)-3x(n-1)+v(n),
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="regressao_linear.html" title="anterior página">
+    <a class='left-prev' id="prev-link" href="regressao_linear_exercicio_jupyter.html" title="anterior página">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">anterior</p>
-            <p class="prev-next-title">Regressão linear</p>
+            <p class="prev-next-title">Exercício</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="referencias.html" title="próximo página">
