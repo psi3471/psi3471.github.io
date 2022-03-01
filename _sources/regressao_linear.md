@@ -75,13 +75,13 @@ name: MV2
 Distância de um conjunto de pontos a uma determinada reta, considerando $n=3$
 ```
 
-A *melhor* reta segundo o critério dos mínimos quadrados deve minimizar a norma Euclidiana ao quadrado do vetor de erros, ou seja
+A *melhor* reta segundo o critério dos mínimos quadrados deve minimizar o quadrado da norma Euclidiana do vetor de erros, ou seja
 
 $$
 \|\mathbf{e}\|^2=\sum_{i=1}^n e_i^2=\|\mathbf{d}-\mathbf{X}\mathbf{w}\|^2=\sum_{i=1}^n(y_i-b-wx_i)^2.
 $$
 
-Para minimizar essa norma quadrática, devemos derivá-la em relação às constantes $w$ e $b$ que se deseja determinar e igualar essas derivadas a zero. Assim, obtemos as seguintes derivadas
+Para minimizar essa norma quadrática, devemos derivá-la em relação às constantes $w$ e $b$ que se deseja determinar e igualar essas derivadas a zero. Assim, obtemos as seguintes derivadas:
 
 $$
  \begin{array}{cccc}
@@ -98,8 +98,8 @@ $$
 \displaystyle\frac{\displaystyle\partial\sum_{i=1}^n e_i^2}{\partial \mathbf{w}}=
  -2\displaystyle\sum_{i=1}^n \left[
                                   \begin{array}{c}
-                                    x_i \\
                                     1 \\
+                                    x_i1 \\
                                   \end{array}
                                 \right] e_i=-2\mathbf{X}^{{\rm T}}\mathbf{e}=-2\mathbf{X}^{{\rm T}}(\mathbf{d}-\mathbf{X}\mathbf{w}),
 $$
@@ -191,7 +191,7 @@ $$
 \right]}_{\mathbf{w}}
 $$
 
-Como no caso da reta, o melhor hiperplano que se ajusta aos dados segundo o critério dos mínimos quadrados é o que minimiza a norma Euclidiana ao quadrado do vetor de erros, dada por
+Como no caso da reta, o melhor hiperplano que se ajusta aos dados segundo o critério dos mínimos quadrados é o que minimiza o quadrado da norma Euclidiana do vetor de erros, dada por
 
 $$
 \|\mathbf{e}\|^2=\|\mathbf{d}-\mathbf{X}\mathbf{w}\|^2.
@@ -209,13 +209,13 @@ em que $\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w_1^{\rm o}\;\;w_2^{\rm o}\;\;\cdots\
 
 Observações importantes:
 
-1. Calcular a inversa da matriz $\mathbf{X}^{\rm T}\mathbf{X}$ diretamente pode levar a problemas numéricos, dependendo do valor de $M$. Isso ocorre usando, por exemplo, usando a função `inv.m` no Matlab. Algo semelhante também ocorre em Python e é pior ao se considerar precisão de 32 bits em ponto flutuante. Procure evitar isso, resolvendo o sistema linear
+1. Calcular a inversa da matriz $\mathbf{X}^{\rm T}\mathbf{X}$ diretamente pode levar a problemas numéricos, dependendo do valor de $M$. Isso ocorre, por exemplo, quando se utiliza a função [`inv.m`](https://www.mathworks.com/help/matlab/ref/inv.html) no Matlab. Algo semelhante também ocorre em Python e é pior ao se considerar precisão de 32 bits em ponto flutuante. Procure evitar isso, resolvendo o sistema linear
 
     $$
     \mathbf{X}^{\rm T}\mathbf{X}\mathbf{w}^{\rm o}=\mathbf{X}^{\rm T}\mathbf{d}
     $$
 
-    para encontrar $\mathbf{w}^{\rm o}$. No Matlab, basta fazer $(\mathbf{X}^{\rm T}\mathbf{X})\backslash(\mathbf{X}^{\rm T}\mathbf{d})$. Em Python, pode-se, por exemplo, usar a função `np.linalg.solve` do NumPy.
+    para encontrar $\mathbf{w}^{\rm o}$. No Matlab, basta fazer $(\mathbf{X}^{\rm T}\mathbf{X})\backslash(\mathbf{X}^{\rm T}\mathbf{d})$. Em Python, pode-se, por exemplo, usar a função [`np.linalg.solve`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html) do NumPy.
 
 2. A matriz $\mathbf{X}^{\rm T}\mathbf{X}$ é uma estimativa da matriz de autocorrelação dos dados de entrada $x$.
 
@@ -284,7 +284,7 @@ Suponha que se deseja criar um modelo de regressão para prever o valor de venda
 
 Em qualquer problema de regressão, deseja-se que o modelo tenha uma boa capacidade de generalização. No exemplo do automóvel usado, é importante que o modelo consiga prever com o menor erro possível o valor de venda de um carro que não constava no banco de dados. No entanto, um modelo com muitos parâmetros pode ter um ótimo desempenho do treinamento, mas uma baixa capacidade de generalização, o que leva a um erro elevado na fase de teste. Isso é chamado de ***overfitting***.  Modelos com baixa capacidade de generalização não são desejáveis, uma vez que na prática serão apresentados a dados que não foram usados no treinamento e deveriam ser capazes de realizar uma predição ou classificação de maneira adequada. Diante isso, existem várias técnicas em aprendizado de máquina que foram propostas para evitar o *overfitting*. Por ora, vamos apenas entender melhor esse conceito com um exemplo.
 
-Considere que dispomos de apenas dez valores igualmente espaçados de $x$ no intervalo $[0,1,\;1,5]$. Os valores de $d$ são gerados utilizando a função 
+Considere que dispomos de apenas dez valores igualmente espaçados de $x$ no intervalo $[0,1;\;1,5]$. Os valores de $d$ são gerados utilizando a função 
 
 $$
 d=0,5+0,25\cos(2\pi x)+v,
@@ -305,7 +305,7 @@ Como o valor de $d$ depende do ruído, se não fixarmos uma semente, cada vez qu
 Regressão linear polinomial; $M$ representa o grau do polinômio, os pontos do conjunto de treinamento estão representados em vermelho; as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão [(código)](./regressao_linear_jupyter.html#fig_RL_fit_M).
 ```
 
-Para analisar o *overfitting*, geramos um conjunto de teste com 1401 valores de $x$ igualmente espaçados no intervalo $[0,1,\;1,5]$ e calculamos o valor de $d$. Como há ruído na geração de $d$, os pontos gerados no teste foram diferente dos de treinamento. Para cada valor de $M$, medimos o valor absoluto médio do erro de predição, levando em conta o conjunto de treinamento e de teste. Na {numref}`fig_RL_modulo_e_pred`, são mostrados os valores desses erros em função do grau do polinômio. Como esperado, o erro de aprendizagem (com os dados do treinamento) diminuem monotonicamente, chegando a zero para $M=9$. Esse  comportamento é típico sempre que o modelo ajustado varia do mais simples para o mais complexo. Em contrapartida, o erro do teste diminui até  $M=5$ e depois aumenta, indicando que modelos com muitos parâmetros têm baixas capacidades de generalização.
+Para analisar o *overfitting*, geramos um conjunto de teste com 1401 valores de $x$ igualmente espaçados no intervalo $[0,1;\;1,5]$ e calculamos o valor de $d$. Como há ruído na geração de $d$, os pontos gerados no teste foram diferente dos de treinamento. Para cada valor de $M$, medimos o valor absoluto médio do erro de predição, levando em conta o conjunto de treinamento e de teste. Na {numref}`fig_RL_modulo_e_pred`, são mostrados os valores desses erros em função do grau do polinômio. Como esperado, o erro de aprendizagem (com os dados do treinamento) diminuem monotonicamente, chegando a zero para $M=9$. Esse  comportamento é típico sempre que o modelo ajustado varia do mais simples para o mais complexo. Em contrapartida, o erro do teste diminui até  $M=5$ e depois aumenta, indicando que modelos com muitos parâmetros têm baixas capacidades de generalização.
 
 
 ```{glue:figure} fig_RL_modulo_e_pred

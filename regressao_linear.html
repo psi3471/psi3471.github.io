@@ -44,15 +44,14 @@
     <script src="_static/translations.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Buscar" href="search.html" />
     <link rel="next" title="Exercício" href="regressao_linear_exercicio_jupyter.html" />
@@ -121,6 +120,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="lms.html">
    O algoritmo LMS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="neuronio.html">
+   O modelo do neurônio
   </a>
  </li>
  <li class="toctree-l1">
@@ -341,12 +345,12 @@ d=wx+b
 <a class="reference internal image-reference" href="_images/mmq.png"><img alt="_images/mmq.png" src="_images/mmq.png" style="height: 250px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Distância de um conjunto de pontos a uma determinada reta, considerando <span class="math notranslate nohighlight">\(n=3\)</span></span><a class="headerlink" href="#mv2" title="Link Permanente para essa imagem">¶</a></p>
 </div>
-<p>A <em>melhor</em> reta segundo o critério dos mínimos quadrados deve minimizar a norma Euclidiana ao quadrado do vetor de erros, ou seja</p>
+<p>A <em>melhor</em> reta segundo o critério dos mínimos quadrados deve minimizar o quadrado da norma Euclidiana do vetor de erros, ou seja</p>
 <div class="math notranslate nohighlight">
 \[
 \|\mathbf{e}\|^2=\sum_{i=1}^n e_i^2=\|\mathbf{d}-\mathbf{X}\mathbf{w}\|^2=\sum_{i=1}^n(y_i-b-wx_i)^2.
 \]</div>
-<p>Para minimizar essa norma quadrática, devemos derivá-la em relação às constantes <span class="math notranslate nohighlight">\(w\)</span> e <span class="math notranslate nohighlight">\(b\)</span> que se deseja determinar e igualar essas derivadas a zero. Assim, obtemos as seguintes derivadas</p>
+<p>Para minimizar essa norma quadrática, devemos derivá-la em relação às constantes <span class="math notranslate nohighlight">\(w\)</span> e <span class="math notranslate nohighlight">\(b\)</span> que se deseja determinar e igualar essas derivadas a zero. Assim, obtemos as seguintes derivadas:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
  \begin{array}{cccc}
@@ -362,8 +366,8 @@ d=wx+b
 \displaystyle\frac{\displaystyle\partial\sum_{i=1}^n e_i^2}{\partial \mathbf{w}}=
  -2\displaystyle\sum_{i=1}^n \left[
                                   \begin{array}{c}
-                                    x_i \\
                                     1 \\
+                                    x_i1 \\
                                   \end{array}
                                 \right] e_i=-2\mathbf{X}^{{\rm T}}\mathbf{e}=-2\mathbf{X}^{{\rm T}}(\mathbf{d}-\mathbf{X}\mathbf{w}),
 \end{split}\]</div>
@@ -444,7 +448,7 @@ d=b+w_1x_1+w_2x_2+\cdots+w_Mx_M.
   \end{array}
 \right]}_{\mathbf{w}}
 \end{split}\]</div>
-<p>Como no caso da reta, o melhor hiperplano que se ajusta aos dados segundo o critério dos mínimos quadrados é o que minimiza a norma Euclidiana ao quadrado do vetor de erros, dada por</p>
+<p>Como no caso da reta, o melhor hiperplano que se ajusta aos dados segundo o critério dos mínimos quadrados é o que minimiza o quadrado da norma Euclidiana do vetor de erros, dada por</p>
 <div class="math notranslate nohighlight">
 \[
 \|\mathbf{e}\|^2=\|\mathbf{d}-\mathbf{X}\mathbf{w}\|^2.
@@ -459,12 +463,12 @@ $}
 <p>em que <span class="math notranslate nohighlight">\(\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w_1^{\rm o}\;\;w_2^{\rm o}\;\;\cdots\;\;w_M^{\rm o}\,]^{\rm T}\)</span> é o vetor que contém o viés e pesos ótimos que minimizam <span class="math notranslate nohighlight">\(\|\mathbf{e}\|^2\)</span>.</p>
 <p>Observações importantes:</p>
 <ol>
-<li><p>Calcular a inversa da matriz <span class="math notranslate nohighlight">\(\mathbf{X}^{\rm T}\mathbf{X}\)</span> diretamente pode levar a problemas numéricos, dependendo do valor de <span class="math notranslate nohighlight">\(M\)</span>. Isso ocorre usando, por exemplo, usando a função <code class="docutils literal notranslate"><span class="pre">inv.m</span></code> no Matlab. Algo semelhante também ocorre em Python e é pior ao se considerar precisão de 32 bits em ponto flutuante. Procure evitar isso, resolvendo o sistema linear</p>
+<li><p>Calcular a inversa da matriz <span class="math notranslate nohighlight">\(\mathbf{X}^{\rm T}\mathbf{X}\)</span> diretamente pode levar a problemas numéricos, dependendo do valor de <span class="math notranslate nohighlight">\(M\)</span>. Isso ocorre, por exemplo, quando se utiliza a função <a class="reference external" href="https://www.mathworks.com/help/matlab/ref/inv.html"><code class="docutils literal notranslate"><span class="pre">inv.m</span></code></a> no Matlab. Algo semelhante também ocorre em Python e é pior ao se considerar precisão de 32 bits em ponto flutuante. Procure evitar isso, resolvendo o sistema linear</p>
 <div class="math notranslate nohighlight">
 \[
     \mathbf{X}^{\rm T}\mathbf{X}\mathbf{w}^{\rm o}=\mathbf{X}^{\rm T}\mathbf{d}
     \]</div>
-<p>para encontrar <span class="math notranslate nohighlight">\(\mathbf{w}^{\rm o}\)</span>. No Matlab, basta fazer <span class="math notranslate nohighlight">\((\mathbf{X}^{\rm T}\mathbf{X})\backslash(\mathbf{X}^{\rm T}\mathbf{d})\)</span>. Em Python, pode-se, por exemplo, usar a função <code class="docutils literal notranslate"><span class="pre">np.linalg.solve</span></code> do NumPy.</p>
+<p>para encontrar <span class="math notranslate nohighlight">\(\mathbf{w}^{\rm o}\)</span>. No Matlab, basta fazer <span class="math notranslate nohighlight">\((\mathbf{X}^{\rm T}\mathbf{X})\backslash(\mathbf{X}^{\rm T}\mathbf{d})\)</span>. Em Python, pode-se, por exemplo, usar a função <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html"><code class="docutils literal notranslate"><span class="pre">np.linalg.solve</span></code></a> do NumPy.</p>
 </li>
 <li><p>A matriz <span class="math notranslate nohighlight">\(\mathbf{X}^{\rm T}\mathbf{X}\)</span> é uma estimativa da matriz de autocorrelação dos dados de entrada <span class="math notranslate nohighlight">\(x\)</span>.</p></li>
 <li><p>O vetor <span class="math notranslate nohighlight">\(\mathbf{X}^{\rm T}\mathbf{d}\)</span> é uma estimativa da correlação cruzada entre os dados de entrada <span class="math notranslate nohighlight">\(x\)</span> e o sinal desejado <span class="math notranslate nohighlight">\(d\)</span>.</p></li>
@@ -521,7 +525,7 @@ senos e cossenos, ou seja,</p>
 <p>Um conceito que aparece de forma recorrente em redes neurais é o chamado <em>overfitting</em>. Apesar de nem termos falado em redes neurais ainda, é possível já introduzir esse conceito considerando regressão linear. Antes de falar de <em>overfitting</em>, precisamos fazer algumas considerações importantes.</p>
 <p>Suponha que se deseja criar um modelo de regressão para prever o valor de venda de um automóvel usado. Dispomos de um banco de dados que contém várias informações sobre diferentes automóveis usados como ano de fabricação, modelo, estado de conservação, valor da tabela Fipe, valor médio de venda no mercado, etc. Utilizando esse banco de dados, podemos obter um modelo de regressão linear, que neste caso será multivariada, pois dispomos de muitas variáveis. Poderíamos usar todos os dados disponíveis para gerar o modelo. Se fizéssemos isso, como conseguiríamos avaliar se o modelo obtido é bom? Como saber se o modelo é capaz de prever adequadamente o valor de venda de um determinado carro que não aparece no banco de dados? Por isso, é importante reservar uma parte dos dados para avaliar a qualidade do modelo. Assim, é uma prática comum separar os dados de forma aleatória em dois conjuntos independentes e sem sobreposição: (1) conjunto de <strong>treinamento</strong> (ou aprendizado) e (2) conjunto de <strong>teste</strong><a class="footnote-reference brackets" href="#fteste" id="id1">1</a>. Os dados do conjunto de treinamento são efetivamente usados para gerar o modelo. Os dados do conjunto de teste são então usados para avaliar a qualidade do modelo gerado. Os dados usados para avaliação não devem aparecer no treinamento e vice-versa. Se o modelo se sair bem no teste, costuma-se dizer que ele tem uma boa capacidade de <strong>generalização</strong>.</p>
 <p>Em qualquer problema de regressão, deseja-se que o modelo tenha uma boa capacidade de generalização. No exemplo do automóvel usado, é importante que o modelo consiga prever com o menor erro possível o valor de venda de um carro que não constava no banco de dados. No entanto, um modelo com muitos parâmetros pode ter um ótimo desempenho do treinamento, mas uma baixa capacidade de generalização, o que leva a um erro elevado na fase de teste. Isso é chamado de <em><strong>overfitting</strong></em>.  Modelos com baixa capacidade de generalização não são desejáveis, uma vez que na prática serão apresentados a dados que não foram usados no treinamento e deveriam ser capazes de realizar uma predição ou classificação de maneira adequada. Diante isso, existem várias técnicas em aprendizado de máquina que foram propostas para evitar o <em>overfitting</em>. Por ora, vamos apenas entender melhor esse conceito com um exemplo.</p>
-<p>Considere que dispomos de apenas dez valores igualmente espaçados de <span class="math notranslate nohighlight">\(x\)</span> no intervalo <span class="math notranslate nohighlight">\([0,1,\;1,5]\)</span>. Os valores de <span class="math notranslate nohighlight">\(d\)</span> são gerados utilizando a função</p>
+<p>Considere que dispomos de apenas dez valores igualmente espaçados de <span class="math notranslate nohighlight">\(x\)</span> no intervalo <span class="math notranslate nohighlight">\([0,1;\;1,5]\)</span>. Os valores de <span class="math notranslate nohighlight">\(d\)</span> são gerados utilizando a função</p>
 <div class="math notranslate nohighlight">
 \[
 d=0,5+0,25\cos(2\pi x)+v,
@@ -534,14 +538,14 @@ d=0,5+0,25\cos(2\pi x)+v,
 <p>Como o valor de <span class="math notranslate nohighlight">\(d\)</span> depende do ruído, se não fixarmos uma semente, cada vez que gerarmos os dados teremos valores distintos. O objetivo é encontrar uma função (um modelo) polinomial de grau <span class="math notranslate nohighlight">\(M\)</span> que melhor se aproxima dos pontos do conjunto de treinamento, levando em conta a forma da cossenóide sem ruído. Na <a class="reference internal" href="#fig-rl-fit-m"><span class="std std-numref">Fig. 2</span></a>, são mostrados os pontos disponíveis no treinamento (em vermelho), as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão. Foram considerados polinômios com graus <span class="math notranslate nohighlight">\(M=1\)</span> (reta), <span class="math notranslate nohighlight">\(M=2\)</span> (parábola) até <span class="math notranslate nohighlight">\(M=9\)</span>. É possível ver que para <span class="math notranslate nohighlight">\(M=1\)</span> e <span class="math notranslate nohighlight">\(M=2\)</span> ocorre o <em>underfitting</em>, ou seja, as distâncias dos pontos de treinamento aos pontos gerados pelos polinômios dos modelos são elevadas, o que indica que eles não são adequados. A medida em que o valor do grau do polinômio aumenta, observa-se um melhor ajuste entre os pontos vermelhos e as curvas azuis, até o caso extremo de <span class="math notranslate nohighlight">\(M=9\)</span>. Neste caso, o polinômio obtido passa exatamente em todos os pontos do treinamento, mas claramente a curva azul fica distante da cossenóide sem ruído em alguns trechos como pode ser visto pelas flutuações indesejadas. Isso indica que pode ter ocorrido <em>overfitting</em> devido ao número excessivo de parâmetros do modelo.</p>
 <div class="figure align-default" id="fig-rl-fit-m" style="width: 100%">
 <div class="cell_output docutils container">
-<img alt="_images/regressao_linear_jupyter_7_0.png" src="_images/regressao_linear_jupyter_7_0.png" />
+<img alt="_images/regressao_linear_jupyter_8_0.png" src="_images/regressao_linear_jupyter_8_0.png" />
 </div>
 <p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Regressão linear polinomial; <span class="math notranslate nohighlight">\(M\)</span> representa o grau do polinômio, os pontos do conjunto de treinamento estão representados em vermelho; as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão <a class="reference external" href="./regressao_linear_jupyter.html#fig_RL_fit_M">(código)</a>.</span><a class="headerlink" href="#fig-rl-fit-m" title="Link Permanente para essa imagem">¶</a></p>
 </div>
-<p>Para analisar o <em>overfitting</em>, geramos um conjunto de teste com 1401 valores de <span class="math notranslate nohighlight">\(x\)</span> igualmente espaçados no intervalo <span class="math notranslate nohighlight">\([0,1,\;1,5]\)</span> e calculamos o valor de <span class="math notranslate nohighlight">\(d\)</span>. Como há ruído na geração de <span class="math notranslate nohighlight">\(d\)</span>, os pontos gerados no teste foram diferente dos de treinamento. Para cada valor de <span class="math notranslate nohighlight">\(M\)</span>, medimos o valor absoluto médio do erro de predição, levando em conta o conjunto de treinamento e de teste. Na <a class="reference internal" href="#fig-rl-modulo-e-pred"><span class="std std-numref">Fig. 3</span></a>, são mostrados os valores desses erros em função do grau do polinômio. Como esperado, o erro de aprendizagem (com os dados do treinamento) diminuem monotonicamente, chegando a zero para <span class="math notranslate nohighlight">\(M=9\)</span>. Esse  comportamento é típico sempre que o modelo ajustado varia do mais simples para o mais complexo. Em contrapartida, o erro do teste diminui até  <span class="math notranslate nohighlight">\(M=5\)</span> e depois aumenta, indicando que modelos com muitos parâmetros têm baixas capacidades de generalização.</p>
+<p>Para analisar o <em>overfitting</em>, geramos um conjunto de teste com 1401 valores de <span class="math notranslate nohighlight">\(x\)</span> igualmente espaçados no intervalo <span class="math notranslate nohighlight">\([0,1;\;1,5]\)</span> e calculamos o valor de <span class="math notranslate nohighlight">\(d\)</span>. Como há ruído na geração de <span class="math notranslate nohighlight">\(d\)</span>, os pontos gerados no teste foram diferente dos de treinamento. Para cada valor de <span class="math notranslate nohighlight">\(M\)</span>, medimos o valor absoluto médio do erro de predição, levando em conta o conjunto de treinamento e de teste. Na <a class="reference internal" href="#fig-rl-modulo-e-pred"><span class="std std-numref">Fig. 3</span></a>, são mostrados os valores desses erros em função do grau do polinômio. Como esperado, o erro de aprendizagem (com os dados do treinamento) diminuem monotonicamente, chegando a zero para <span class="math notranslate nohighlight">\(M=9\)</span>. Esse  comportamento é típico sempre que o modelo ajustado varia do mais simples para o mais complexo. Em contrapartida, o erro do teste diminui até  <span class="math notranslate nohighlight">\(M=5\)</span> e depois aumenta, indicando que modelos com muitos parâmetros têm baixas capacidades de generalização.</p>
 <div class="figure align-default" id="fig-rl-modulo-e-pred">
 <div class="cell_output docutils container">
-<img alt="_images/regressao_linear_jupyter_9_0.png" src="_images/regressao_linear_jupyter_9_0.png" />
+<img alt="_images/regressao_linear_jupyter_11_0.png" src="_images/regressao_linear_jupyter_11_0.png" />
 </div>
 <p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Regressão linear polinomial; valor médio do módulo do erro de predição levando em conta o conjunto de treinamento e o conjunto de teste. <a class="reference external" href="./regressao_linear_jupyter.html#fig_RL_modulo_e_pred">(código)</a>.</span><a class="headerlink" href="#fig-rl-modulo-e-pred" title="Link Permanente para essa imagem">¶</a></p>
 </div>
