@@ -184,22 +184,6 @@ const thebe_selector_output = ".output, .cell_output"
 
             <!-- Source interaction buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Repositório fonte"><i
-                    class="fab fa-github"></i>repositório</button></a>
-        <a class="issues-button"
-            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fregressao_linear_exercicio_jupyter.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Abra um problema"><i class="fas fa-lightbulb"></i>questão aberta</button></a>
-        
-    </div>
-</div>
-
             <!-- Full screen (wrap in <a> to have style consistency -->
 
 <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -208,23 +192,6 @@ const thebe_selector_output = ".output, .cell_output"
             class="fas fa-expand"></i></button></a>
 
             <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/regressao_linear_exercicio_jupyter.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Lançamento Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
 
         </div>
 
@@ -253,12 +220,12 @@ const thebe_selector_output = ".output, .cell_output"
 <h1>Exercício<a class="headerlink" href="#exercicio" title="Link permanente para este título">¶</a></h1>
 <p>Neste exercício, você vai construir um modelo usando a técnica de mínimos quadrados para prever o preço de carros usados usando os dados do <a class="reference external" href="https://www.kaggle.com/austinreese/craigslist-carstrucks-data"><em>Used Cars Dataset</em></a>. Este banco de dados é uma enorme lista com 957 MB de informações de veículos anunciados no site <em>Craigslist.org</em>, incluindo diversos tipos de veículos.</p>
 <p>Ao trabalhar com dados reais, muitas vezes é necessário realizar algumas etapas de filtragem e limpeza para usar os dados para construir um modelo. No caso desse banco de dados, é necessário restringir os tipos de veículos que serão considerados, para obter melhores resultados com o modelo.</p>
-<p>Como o foco principal do exercício é usar a técnica de mínimos quadrados para construir o modelo, você vai trabalhar com um conjunto de dados limpo, que é um pequeno subconjunto do banco de dados original. Dessa forma, antes de começar a trabalhar no código, certifique-se de ter baixado o <a class="reference external" href="https://raw.githubusercontent.com/psi3471/psi3471/main/datasets/vehicles_cleaned.csv">arquivo CSV de dados limpos</a> do repositório de materiais.</p>
+<p>Como o foco principal do exercício é usar a técnica de mínimos quadrados para construir o modelo, você vai trabalhar com um conjunto de dados limpo, que é um pequeno subconjunto do banco de dados original. Dessa forma, antes de começar a trabalhar no código, certifique-se de ter baixado o <a href="./datasets/used_cars_dataset//vehicles_cleaned_train.csv">arquivo CSV de dados limpos</a> do repositório de materiais.</p>
 <p>Para carregar um arquivo CSV e processar os dados, você pode usar a biblioteca <a class="reference external" href="https://pandas.pydata.org/">Pandas</a>. Após a instalação da biblioteca e o download do arquivo CSV, é possível carregar os dados com os seguintes comandos:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">cars_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;vehicles_cleaned.csv&quot;</span><span class="p">)</span>
+<span class="n">cars_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;vehicles_cleaned_train.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -304,60 +271,60 @@ const thebe_selector_output = ".output, .cell_output"
   <tbody>
     <tr>
       <th>0</th>
-      <td>7000</td>
+      <td>10400</td>
       <td>2011</td>
-      <td>good</td>
+      <td>excellent</td>
       <td>4 cylinders</td>
       <td>gas</td>
-      <td>76202</td>
+      <td>81300</td>
       <td>automatic</td>
-      <td>compact</td>
+      <td>mid-size</td>
       <td>sedan</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>10900</td>
-      <td>2014</td>
+      <td>6900</td>
+      <td>2007</td>
       <td>excellent</td>
-      <td>4 cylinders</td>
+      <td>6 cylinders</td>
       <td>gas</td>
-      <td>63000</td>
-      <td>manual</td>
-      <td>compact</td>
+      <td>79000</td>
+      <td>automatic</td>
+      <td>full-size</td>
       <td>sedan</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>13300</td>
-      <td>2012</td>
-      <td>excellent</td>
-      <td>6 cylinders</td>
+      <td>18900</td>
+      <td>2018</td>
+      <td>like new</td>
+      <td>4 cylinders</td>
       <td>gas</td>
-      <td>96000</td>
+      <td>5000</td>
       <td>automatic</td>
-      <td>mid-size</td>
+      <td>full-size</td>
       <td>sedan</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>14900</td>
-      <td>2016</td>
+      <td>6000</td>
+      <td>2010</td>
       <td>excellent</td>
       <td>4 cylinders</td>
       <td>gas</td>
-      <td>48900</td>
+      <td>97600</td>
       <td>automatic</td>
       <td>mid-size</td>
-      <td>sedan</td>
+      <td>hatchback</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>18900</td>
-      <td>2016</td>
-      <td>excellent</td>
+      <td>19995</td>
+      <td>2013</td>
+      <td>good</td>
       <td>6 cylinders</td>
       <td>gas</td>
-      <td>58112</td>
+      <td>95782</td>
       <td>automatic</td>
       <td>mid-size</td>
       <td>sedan</td>
@@ -414,12 +381,13 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>A partir de sua seleção de dados, obter a matriz <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> e o vetor <span class="math notranslate nohighlight">\(\mathbf{d}\)</span>, que podem ser representados como <em>arrays</em> do NumPy. Caso você tenha usado um <em>DataFrame</em> do Pandas para organizar a sua seleção de variáveis, você pode obter um <em>array</em> do NumPy usando o método <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_numpy.html">.to_numpy()</a>.</p></li>
 <li><p>Usando a matriz <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> e o vetor <span class="math notranslate nohighlight">\(\mathbf{d}\)</span>, calcular o vetor <span class="math notranslate nohighlight">\(\mathbf{w}_o\)</span> conforme mostrado na aula.</p></li>
 </ol>
-<p>Após obter os coeficientes <span class="math notranslate nohighlight">\(\mathbf{w}_o\)</span> do modelo de regressão linear, utilize-os para prever o valor de cada carro do banco de dados e calcule o erro em relação à coluna <code class="docutils literal notranslate"><span class="pre">price</span></code>. Calcule também o erro quadrático médio considerando todo o banco de dados.</p>
+<p>Após obter os coeficientes <span class="math notranslate nohighlight">\(\mathbf{w}_o\)</span> do modelo de regressão linear, você vai utilizá-los para prever o valor de venda de carros de um <a href="./datasets/used_cars_dataset//vehicles_cleaned_test.csv">conjunto de dados de teste disponível em um arquivo CSV</a> do repositório de materiais. Após fazer o download do arquivo, repita as transformações que você fez no conjunto de treinamento, obtendo a matriz <span class="math notranslate nohighlight">\(\mathbf{X}_{\rm teste}\)</span> e o vetor <span class="math notranslate nohighlight">\(\mathbf{d}_{\rm teste}\)</span>.</p>
+<p>Para cada carro do banco de dados de teste, calcule o valor predito pelo seu modelo e o erro em relação ao valor da coluna <code class="docutils literal notranslate"><span class="pre">price</span></code>. Calcule também o erro quadrático médio considerando todo o banco de dados de teste.</p>
 <p>Ao final do exercício, você deverá entregar:</p>
 <ol class="simple">
 <li><p>Uma descrição das variáveis de entrada que você utilizou como entrada e as justificativas para descartar variáveis ou utilizar transformações e combinações;</p></li>
-<li><p>Os códigos utilizados para calcular o vetor <span class="math notranslate nohighlight">\(\mathbf{w}_o\)</span> e erro quadrático médio de seu modelo;</p></li>
-<li><p>O valor obtido para o erro quadrático médio de seu modelo. Esse valor será utilizado para fazer um <em>ranking</em> dos melhores modelos.</p></li>
+<li><p>Os códigos utilizados para calcular o vetor <span class="math notranslate nohighlight">\(\mathbf{w}_o\)</span> e o erro quadrático médio de seu modelo, considerando os dados de teste;</p></li>
+<li><p>O valor obtido para o erro quadrático médio de seu modelo, considerando os dados de teste. Esse valor será utilizado para fazer um <em>ranking</em> dos melhores modelos.</p></li>
 </ol>
 <p>A sugestão é que o relatório seja elaborado utilizando um Jupyter Notebook e a linguagem Python, já que essas são as ferramentas que estamos utilizando neste bloco do curso. No entanto, isso não é obrigatório e você pode usar outra linguagem de programação, caso queira.</p>
 </div>
