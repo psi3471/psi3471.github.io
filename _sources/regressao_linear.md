@@ -15,7 +15,7 @@ seja um conjunto de $N$ pontos conhecidos previamente que podem ser fruto de um 
  que se ajuste exatamente aos pontos. Por isso, vamos buscar uma aproximação que melhor se ajusta aos dados, considerando o critério dos mínimos quadrados. Assim, deseja-se obter uma relação matemática do tipo
  
 $$
-d=wx+b
+d=b+wx
 $$
 
 entre as variáveis $x$ e $d$, em que $w$ e $b$ são constantes que se deseja determinar. É comum  chamar $d$ de sinal desejado ou rótulo, $x$ de entrada, $w$ de peso e $b$ de viés (ou *bias*).
@@ -24,10 +24,10 @@ Quando os pontos experimentais são colineares, a reta passa exatamente por todo
 
 $$
 \begin{array}{c}
-  d_1=w\;x_1+b \\
-  d_2=w\;x_2+b \\
+  d_1=b+w\;x_1 \\
+  d_2=b+w\;x_2 \\
   \vdots \\
-  d_N=w\;x_N+b.
+  d_N=b+w\;x_N.
 \end{array}
 $$
 
@@ -99,7 +99,7 @@ $$
  -2\displaystyle\sum_{i=1}^n \left[
                                   \begin{array}{c}
                                     1 \\
-                                    x_i1 \\
+                                    x_i \\
                                   \end{array}
                                 \right] e_i=-2\mathbf{X}^{{\rm T}}\mathbf{e}=-2\mathbf{X}^{{\rm T}}(\mathbf{d}-\mathbf{X}\mathbf{w}),
 $$
@@ -116,7 +116,13 @@ $$
 \mathbf{X}^{{\rm T}}\mathbf{X}\mathbf{w}^{\rm o}=\mathbf{X}^{{\rm T}}\mathbf{d}.
 $$
 
-Portanto, o vetor de coeficientes $\mathbf{w}$ que satisfaz  essa equação, denotado como $\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w^{\rm o}\,]^{{\rm T}}$, minimiza a norma quadrática do vetor de erros e $d=w^{\rm o}x+b^{\rm o}$ é a melhor reta que se ajusta aos pontos experimentais segundo o critério dos mínimos quadrados.
+Portanto, o vetor de coeficientes $\mathbf{w}$ que satisfaz  essa equação, denotado como $\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w^{\rm o}\,]^{{\rm T}}$, minimiza a norma quadrática do vetor de erros e
+
+$$
+y=w^{\rm o}x+b^{\rm o}\approx d
+$$
+
+é a melhor reta que se ajusta aos pontos experimentais segundo o critério dos mínimos quadrados.
 
 Se $\mathbf{X}^{{\rm T}}\mathbf{X}$ for invertível,
 
@@ -126,7 +132,7 @@ Se $\mathbf{X}^{{\rm T}}\mathbf{X}$ for invertível,
 $}
 \end{equation*}
 
-Essa equação expressa a unicidade da solução. Assim, se os pontos experimentais são não colineares, existe uma única reta que se ajusta a esses pontos segundo o critério dos mínimos quadrados.
+Essa equação expressa a unicidade da solução. Assim, existe uma única reta que se ajusta a esses pontos segundo o critério dos mínimos quadrados.
 
 Observações importantes:
 
@@ -150,7 +156,7 @@ Trata-se de uma generalização do resultado anterior. Em vez de se obter a melh
 Assim, o modelo se torna
 
 $$
-d=b+w_1x_1+w_2x_2+\cdots+w_Mx_M.
+y=b+w_1x_1+w_2x_2+\cdots+w_Mx_M\approx d.
 $$
 
 Considerando os $N$ conjuntos de dados, obtemos o seguinte vetor de erros
@@ -205,7 +211,7 @@ Generalizando os passos para obtenção da reta que se ajusta aos dados, chega-s
 $}
 \end{equation*}
 
-em que $\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w_1^{\rm o}\;\;w_2^{\rm o}\;\;\cdots\;\;w_M^{\rm o}\,]^{\rm T}$ é o vetor que contém o viés e pesos ótimos que minimizam $\|\mathbf{e}\|^2$.
+em que $\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w_1^{\rm o}\;\;w_2^{\rm o}\;\;\cdots\;\;w_M^{\rm o}\,]^{\rm T}$ é o vetor que contém o *bias* e pesos ótimos que minimizam $\|\mathbf{e}\|^2$.
 
 Observações importantes:
 
@@ -236,7 +242,7 @@ Observações importantes:
     Isso leva à seguinte aproximação
 
     $$
-    d=b+w_1x+w_2x^2+\cdots+w_Mx^M.
+    y=b+w_1x+w_2x^2+\cdots+w_Mx^M\approx d.
     $$
 
     Neste caso a matrix $\mathbf{X}$ se torna
@@ -254,13 +260,13 @@ Observações importantes:
 5. O resultado do item anterior pode ser usado para aproximar os dados não só por polinômios, mas também por outras funções. Por exemplo, poderíamos calcular as seguintes aproximações para os dados
 
     $$
-    d=b+w_1\ln(x+5)+w_2\exp(x-2)
+    y=b+w_1\ln(x+5)+w_2\exp(x-2)\approx d
     $$
 
     ou
 
     $$
-    d=b+w_1\cos(2\pi f_0 x)+w_2{\rm sen}(2\pi f_0 x)
+    y=b+w_1\cos(2\pi f_0 x)+w_2{\rm sen}(2\pi f_0 x)\approx d
     $$
 
     em que $f_0$ é uma frequência pré-determinada. Um outro exemplo útil em Engenharia Elétrica é aproximar uma função $f(t)$ periódica com período $T_0=1/f_0$ por uma soma de

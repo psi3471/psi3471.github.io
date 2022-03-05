@@ -280,17 +280,17 @@ const thebe_selector_output = ".output, .cell_output"
 que se ajuste exatamente aos pontos. Por isso, vamos buscar uma aproximação que melhor se ajusta aos dados, considerando o critério dos mínimos quadrados. Assim, deseja-se obter uma relação matemática do tipo</p>
 <div class="math notranslate nohighlight">
 \[
-d=wx+b
+d=b+wx
 \]</div>
 <p>entre as variáveis <span class="math notranslate nohighlight">\(x\)</span> e <span class="math notranslate nohighlight">\(d\)</span>, em que <span class="math notranslate nohighlight">\(w\)</span> e <span class="math notranslate nohighlight">\(b\)</span> são constantes que se deseja determinar. É comum  chamar <span class="math notranslate nohighlight">\(d\)</span> de sinal desejado ou rótulo, <span class="math notranslate nohighlight">\(x\)</span> de entrada, <span class="math notranslate nohighlight">\(w\)</span> de peso e <span class="math notranslate nohighlight">\(b\)</span> de viés (ou <em>bias</em>).</p>
 <p>Quando os pontos experimentais são colineares, a reta passa exatamente por todos os <span class="math notranslate nohighlight">\(n\)</span> pontos e as constantes desconhecidos <span class="math notranslate nohighlight">\(w\)</span> e <span class="math notranslate nohighlight">\(b\)</span> satisfazem</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{array}{c}
-  d_1=w\;x_1+b \\
-  d_2=w\;x_2+b \\
+  d_1=b+w\;x_1 \\
+  d_2=b+w\;x_2 \\
   \vdots \\
-  d_N=w\;x_N+b.
+  d_N=b+w\;x_N.
 \end{array}
 \end{split}\]</div>
 <p>Podemos reescrever esse sistema de equações na forma matricial, ou seja,</p>
@@ -351,7 +351,7 @@ d=wx+b
  -2\displaystyle\sum_{i=1}^n \left[
                                   \begin{array}{c}
                                     1 \\
-                                    x_i1 \\
+                                    x_i \\
                                   \end{array}
                                 \right] e_i=-2\mathbf{X}^{{\rm T}}\mathbf{e}=-2\mathbf{X}^{{\rm T}}(\mathbf{d}-\mathbf{X}\mathbf{w}),
 \end{split}\]</div>
@@ -365,7 +365,12 @@ d=wx+b
 \[
 \mathbf{X}^{{\rm T}}\mathbf{X}\mathbf{w}^{\rm o}=\mathbf{X}^{{\rm T}}\mathbf{d}.
 \]</div>
-<p>Portanto, o vetor de coeficientes <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> que satisfaz  essa equação, denotado como <span class="math notranslate nohighlight">\(\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w^{\rm o}\,]^{{\rm T}}\)</span>, minimiza a norma quadrática do vetor de erros e <span class="math notranslate nohighlight">\(d=w^{\rm o}x+b^{\rm o}\)</span> é a melhor reta que se ajusta aos pontos experimentais segundo o critério dos mínimos quadrados.</p>
+<p>Portanto, o vetor de coeficientes <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> que satisfaz  essa equação, denotado como <span class="math notranslate nohighlight">\(\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w^{\rm o}\,]^{{\rm T}}\)</span>, minimiza a norma quadrática do vetor de erros e</p>
+<div class="math notranslate nohighlight">
+\[
+y=w^{\rm o}x+b^{\rm o}\approx d
+\]</div>
+<p>é a melhor reta que se ajusta aos pontos experimentais segundo o critério dos mínimos quadrados.</p>
 <p>Se <span class="math notranslate nohighlight">\(\mathbf{X}^{{\rm T}}\mathbf{X}\)</span> for invertível,</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
@@ -373,7 +378,7 @@ d=wx+b
 \mathbf{w}^{\rm o}=(\mathbf{X}^{{\rm T}}\mathbf{X})^{-1}\mathbf{X}^{{\rm T}}\mathbf{d}.
 $}
 \end{equation*}\]</div>
-<p>Essa equação expressa a unicidade da solução. Assim, se os pontos experimentais são não colineares, existe uma única reta que se ajusta a esses pontos segundo o critério dos mínimos quadrados.</p>
+<p>Essa equação expressa a unicidade da solução. Assim, existe uma única reta que se ajusta a esses pontos segundo o critério dos mínimos quadrados.</p>
 <p>Observações importantes:</p>
 <ul class="simple">
 <li><p>O modelo <span class="math notranslate nohighlight">\(d=w^{\rm o}x+b^{\rm o}\)</span> é de fato linear apenas quando <span class="math notranslate nohighlight">\(b^{\rm o}\neq 0\)</span>, pois neste caso <span class="math notranslate nohighlight">\(x=0\)</span> leva a <span class="math notranslate nohighlight">\(d=0\)</span>. No entanto, o termo <em>linear</em> é frequentemente usado na literatura neste caso para se referir ao modelo dado por uma reta.</p></li>
@@ -393,7 +398,7 @@ Trata-se de uma generalização do resultado anterior. Em vez de se obter a melh
 <p>Assim, o modelo se torna</p>
 <div class="math notranslate nohighlight">
 \[
-d=b+w_1x_1+w_2x_2+\cdots+w_Mx_M.
+y=b+w_1x_1+w_2x_2+\cdots+w_Mx_M\approx d.
 \]</div>
 <p>Considerando os <span class="math notranslate nohighlight">\(N\)</span> conjuntos de dados, obtemos o seguinte vetor de erros</p>
 <div class="math notranslate nohighlight">
@@ -444,7 +449,7 @@ d=b+w_1x_1+w_2x_2+\cdots+w_Mx_M.
 \mathbf{w}^{\rm o}=(\mathbf{X}^{\rm T}\mathbf{X})^{-1}\mathbf{X}^{\rm T}\mathbf{d}
 $}
 \end{equation*}\]</div>
-<p>em que <span class="math notranslate nohighlight">\(\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w_1^{\rm o}\;\;w_2^{\rm o}\;\;\cdots\;\;w_M^{\rm o}\,]^{\rm T}\)</span> é o vetor que contém o viés e pesos ótimos que minimizam <span class="math notranslate nohighlight">\(\|\mathbf{e}\|^2\)</span>.</p>
+<p>em que <span class="math notranslate nohighlight">\(\mathbf{w}^{\rm o}=[\,b^{\rm o}\;\;w_1^{\rm o}\;\;w_2^{\rm o}\;\;\cdots\;\;w_M^{\rm o}\,]^{\rm T}\)</span> é o vetor que contém o <em>bias</em> e pesos ótimos que minimizam <span class="math notranslate nohighlight">\(\|\mathbf{e}\|^2\)</span>.</p>
 <p>Observações importantes:</p>
 <ol>
 <li><p>Calcular a inversa da matriz <span class="math notranslate nohighlight">\(\mathbf{X}^{\rm T}\mathbf{X}\)</span> diretamente pode levar a problemas numéricos, dependendo do valor de <span class="math notranslate nohighlight">\(M\)</span>. Isso ocorre, por exemplo, quando se utiliza a função <a class="reference external" href="https://www.mathworks.com/help/matlab/ref/inv.html"><code class="docutils literal notranslate"><span class="pre">inv.m</span></code></a> no Matlab. Algo semelhante também ocorre em Python e é pior ao se considerar precisão de 32 bits em ponto flutuante. Procure evitar isso, resolvendo o sistema linear</p>
@@ -469,7 +474,7 @@ $}
 <p>Isso leva à seguinte aproximação</p>
 <div class="math notranslate nohighlight">
 \[
-    d=b+w_1x+w_2x^2+\cdots+w_Mx^M.
+    y=b+w_1x+w_2x^2+\cdots+w_Mx^M\approx d.
     \]</div>
 <p>Neste caso a matrix <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> se torna</p>
 <div class="math notranslate nohighlight">
@@ -486,12 +491,12 @@ $}
 <li><p>O resultado do item anterior pode ser usado para aproximar os dados não só por polinômios, mas também por outras funções. Por exemplo, poderíamos calcular as seguintes aproximações para os dados</p>
 <div class="math notranslate nohighlight">
 \[
-    d=b+w_1\ln(x+5)+w_2\exp(x-2)
+    y=b+w_1\ln(x+5)+w_2\exp(x-2)\approx d
     \]</div>
 <p>ou</p>
 <div class="math notranslate nohighlight">
 \[
-    d=b+w_1\cos(2\pi f_0 x)+w_2{\rm sen}(2\pi f_0 x)
+    y=b+w_1\cos(2\pi f_0 x)+w_2{\rm sen}(2\pi f_0 x)\approx d
     \]</div>
 <p>em que <span class="math notranslate nohighlight">\(f_0\)</span> é uma frequência pré-determinada. Um outro exemplo útil em Engenharia Elétrica é aproximar uma função <span class="math notranslate nohighlight">\(f(t)\)</span> periódica com período <span class="math notranslate nohighlight">\(T_0=1/f_0\)</span> por uma soma de
 senos e cossenos, ou seja,</p>
