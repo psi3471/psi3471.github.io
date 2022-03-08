@@ -11,10 +11,10 @@ $$
 o objetivo da regressão linear multivariada é obter um modelo de hiperplano do tipo
 
 $$
-d=b+w_1x_1+w_2x_2+\cdots+w_Mx_M,
+y=b+w_1x_1+w_2x_2+\cdots+w_Mx_M\approx d,
 $$
 
-em que $N_t$ é o número de dados utilizados no treinamento,  $b$ o viés (*bias*), $d$ o sinal desejado,  $x$ o sinal de entrada e $w_k$, $k=1,\cdots, M$ os pesos do regressor.
+em que $N_t$ é o número de dados utilizados no treinamento,  $b$ o viés (*bias*), $d$ o sinal desejado, $y$ a estimativa de $d$, $x$ o sinal de entrada e $w_k$, $k=1,\cdots, M$ os pesos do regressor.
 
 Para obter o modelo, utilizamos os dados de treinamento e calculamos
 a solução
@@ -61,9 +61,9 @@ $$
 J(\mathbf{w})=\|\mathbf{e}\|^2=\|\mathbf{d}-\mathbf{X}\mathbf{w}\|^2,
 $$
 
-de modo que $\mathbf{w}^{\rm o}=\min_{\mathbf{w}} J(\mathbf{w})$.
+de modo que $\mathbf{w}^{\rm o}={\rm argmin}_{\mathbf{w}} J(\mathbf{w})$.
 
-Cabe observar que o regressor é obtido a partir da matriz $\mathbf{X}$ e do vetor $\mathbf{d}$ que levam em conta todos os dados de treinamento,  $N_t$ no caso. O regressor também pode ser obtido a partir de um treinamento iterativo, em que cada amostra $(x_{1k}, x_{2k}, \cdots, x_{Mk} ,d_k),$ $k=1,2,\cdots, N_t$ é apresentada a um algoritmo por vez. Para obter esse algoritmo, vamos primeiramente atribuir um índice ao vetor de pesos que se pretende obter. Assim,
+Cabe observar que o regressor é obtido a partir da matriz $\mathbf{X}$ e do vetor $\mathbf{d}$ que levam em conta todos os $N_t$ exemplos de treinamento. O regressor também pode ser obtido a partir de um treinamento iterativo, em que cada amostra $(x_{1k}, x_{2k}, \cdots, x_{Mk} ,d_k),$ $k=1,2,\cdots, N_t$ é apresentada a um algoritmo por vez. Para obter esse algoritmo, vamos primeiramente atribuir um índice ao vetor de pesos que se pretende obter. Assim,
 
 $$
 \mathbf{w}(n) = [\,b(n)\;w_1(n)\;\cdots\;w_M(n)\,]^{\rm T}
@@ -83,10 +83,10 @@ $$
 
 em que $\mathbf{w}(0)=\mathbf{0}$. É importante observar que como se trata de um algoritmo iterativo, precisamos inicializar o vetor de pesos. Uma possibilidade é considerar o vetor nulo, embora também seja possível inicializar os pesos de forma aleatória.
 
-Na regressão linear multivariada, o melhor hiperplano é obtido ao se minimizar a norma ao quadrado do vetor de erros, ou seja, $J(\mathbf{w})=\|\mathbf{e}\|^2$, que é comumente chamada de *função custo*. Aqui, devemos fazer algo semelhante. No entanto, não dispomos de um vetor de erros, pois estamos buscando uma solução de forma iterativa, mas podemos calcular o erro de ``estimação'' em cada iteração, ou seja,
+Na regressão linear multivariada, o melhor hiperplano é obtido ao se minimizar o quadrado da norma do vetor de erros, ou seja, $J(\mathbf{w})=\|\mathbf{e}\|^2$, que é comumente chamada de *função custo*. Aqui, devemos fazer algo semelhante. No entanto, não dispomos de um vetor de erros, pois estamos buscando uma solução de forma iterativa, mas podemos calcular o erro de ``estimação'' em cada iteração, ou seja,
 
 $$
-e(n)=d(n)-\mathbf{x}^{\rm T}(n)\mathbf{w}(n-1)=d(n)-y(n)=d(n)- b(n-1)-\sum_{k=1}^{M}x_{kn}w_k(n-1).
+e(n)=d(n)-y(n)=d(n)-\mathbf{x}^{\rm T}(n)\mathbf{w}(n-1)=d(n)- b(n-1)-\sum_{k=1}^{M}x_{kn}w_k(n-1).
 $$
 
 Assim, podemos ajustar os pesos para minimizar  o erro quadrático médio (do inglês *mean-square error* - MSE), definido como
@@ -192,9 +192,11 @@ Substituindo essas aproximações no algoritmo \textit{steepest descent}, chega-
 $}
 \end{equation*}
 
-que é a equação de atualização do conhecido algoritmo LMS (*least-mean-square*), cujo sumário está mostrado na {numref}`tab_lms`. O fluxo de sinal do LMS é mostrado na {numref}`fig_lms`. Novamente, o passo de adaptação $\eta$ tem um papel fundamental na convergência desse algoritmo. Quanto menor o valor de $\eta$, mais próximo da solução de Wiener o algoritmo LMS estará quando atingir o regime estacionário. No entanto, quanto menor o passo, mais lentamente o algoritmo atingirá o regime. Em contrapartida, passos grandes podem representar convergências rápidas, mas também podem levar o algoritmo à divergência. Neste caso, os pesos podem ir para infinito\footnote{Infinito aqui significa valor acima do maior valor representável em um software numérico ou hardware.}. Diante disso, deve-se atentar ao compromisso entre precisão da solução e velocidade de convergência. O problema é que o intervalo $0<\eta<2/{\lambda_{\max}}$ que vale para o algoritmo exato, é em geral  maior do que o intervalo de passo admitido no algoritmo aproximado. Pode-se demonstrar que $0<\eta<2/(3{\lambda_{\max}})$ é um intervalo mais razoável para o algoritmo LMS, mas ainda não garante sua convergência. Devido à sua simplicidade, ele é muito usado em diversas aplicações de filtragem adaptativa que exigem solução em  tempo real. As principais aplicações  incluem cancelamento de eco acústico, equalização de canais de comunicação, controle ativo de ruído e identificação de sistemas.
+que é a equação de atualização do conhecido algoritmo LMS (*least-mean-square*), cujo sumário está mostrado na {numref}`tab_lms`. O fluxo de sinal do LMS é mostrado na {numref}`fig_lms`. Novamente, o passo de adaptação $\eta$ tem um papel fundamental na convergência desse algoritmo. Quanto menor o valor de $\eta$, mais próximo da solução de Wiener o algoritmo LMS estará quando atingir o regime estacionário. No entanto, quanto menor o passo, mais lentamente o algoritmo atingirá o regime. Em contrapartida, passos grandes podem representar convergências rápidas, mas também podem levar o algoritmo à divergência. Neste caso, os pesos podem ir para infinito[^finfinito]. Diante disso, deve-se atentar ao compromisso entre precisão da solução e velocidade de convergência. O problema é que o intervalo $0<\eta<2/{\lambda_{\max}}$ que vale para o algoritmo exato, é em geral  maior do que o intervalo de passo admitido no algoritmo aproximado. Pode-se demonstrar que $0<\eta<2/(3{\lambda_{\max}})$ é um intervalo mais razoável para o algoritmo LMS, mas ainda não garante sua convergência. Devido à sua simplicidade, ele é muito usado em diversas aplicações de filtragem adaptativa que exigem solução em  tempo real. As principais aplicações  incluem cancelamento de eco acústico, equalização de canais de comunicação, controle ativo de ruído e identificação de sistemas.
 
-Para finalizar esta seção, é importante observar que em várias aplicações de filtragem adaptativa não se considera o viés. Além disso, o vetor de entrada $\mathbf{x}(n)$ muitas vezes é extraído de uma  sequência de números, considerando uma linha de atrasos. Neste caso, ele é chamado de vetor regressor.
+[^finfinito]: Infinito aqui significa valor acima do maior valor representável em um software numérico ou hardware.}
+
+Para finalizar esta seção, é importante observar que em várias aplicações de filtragem adaptativa não se considera o *bias*. Além disso, o vetor de entrada $\mathbf{x}(n)$ muitas vezes é extraído de uma  sequência de números, considerando uma linha de atrasos. Neste caso, ele é chamado de vetor regressor.
 Para exemplificar, vamos supor que temos a seguinte sequência de números
 
 $$
@@ -221,7 +223,7 @@ $$
 \mathbf{x}(n)=[\,x(n)\;\;x(n-1)\;\;\cdots\;\;x(n-M+1)\,]^{{\rm T}}.
 $$
 
-Para quem já estudou Processamento de Sinais, o LMS com esse vetor de entrada pode ser interpretado como um filtro com resposta ao impulso de duração finita (FIR - *finite impulse response), cujos coeficientes que variam ao longo do tempo.
+Para quem já estudou Processamento de Sinais, o LMS com esse vetor de entrada pode ser interpretado como um filtro com resposta ao impulso de duração finita (FIR - *finite impulse response), cujos coeficientes variam ao longo do tempo.
 
 
 ```{list-table} Sumário do algoritmo LMS
@@ -350,7 +352,7 @@ em que $k=1,2,\cdots,N_e$, sendo $N_e$ o número de épocas.
 Cabem aqui algumas observações:
 
 1. O treinamento em modo *batch* não é utilizado em aplicações de tempo real, pois gera um atraso inaceitável em aplicações desse tipo.
-2. O índice $n$ neste modo de treinamento não representa iteração e sim a posição do dado. Dessa forma, para $n=5$ temos $\mathbf{x}(5)$, que  representa o quinto dado do conjunto de treinamento, que por sua vez, contém ao todo $N_t$ dados.
+2. O índice $n$ neste modo de treinamento não representa iteração e sim a posição do dado no banco de dados de treinamento. Dessa forma, para $n=5$ temos $\mathbf{x}(5)$, que  representa o quinto dado do conjunto de treinamento, que por sua vez, contém ao todo $N_t$ dados.
 3. Como os dados são misturados de uma época para outra, o vetor $\mathbf{x}(5)$ da época $k$ pode ser o vetor $\mathbf{x}(200)$ da época $k-1$.
 4. Na formulação anterior, a iteração foi representada por $k$, que coincide com as épocas do treinamento.
 
@@ -435,7 +437,9 @@ $$
 
 Como o treinamento em modo *batch* não é utilizado em aplicações de tempo real e todos os dados de treinamento estão disponíveis, é mais eficiente atualizar os pesos de forma matricial, o que permite que as contas sejam feitas em paralelo. Na formulação não matricial,  o erro $e(n)=d(n)-\mathbf{x}^{{\rm T}}(n)\mathbf{w}(k-1)$ é calculado para cada dado de treinamento e utilizado no cálculo $e(n)\mathbf{x}(n)$ para estimar o gradiente em um *loop*, o que torna o cálculo não eficiente.
 
-Ainda é possível encontrar uma solução intermediária. Considere que, em toda época, os dados de treinamento sejam divididos em conjuntos de tamanho $N_b<N_t$, que é chamado na literatura de tamanho do ***mini-batch***. Neste caso, teremos $\lfloor N_t/N_b \rfloor$ conjuntos de dados a cada época\footnote{Considera-se o arredondamento para baixo para que o número de conjuntos de dados por época seja sempre inteiro. Assim, por exemplo, se $N_t=1233$ e $N_b=50$, considera-se $\lfloor Nt/N_b \rfloor=24$ conjuntos de dados por época. Como os dados são misturados a dada época, os  33 dados desprezados em uma determinada época aparecerão em outras.}. Considere que o algoritmo utilize cada um desses conjuntos para estimar o vetor gradiente e com essa estimativa atualiza os pesos. Dessa forma, os pesos serão atualizados $\lfloor N_t/N_b \rfloor$ vezes por época,  a cada $N_b$ dados de treinamento. Em outras palavras, o algoritmo terá $\lfloor N_t/N_b \rfloor$ iterações por época. Apesar dos pesos serem atualizados mais vezes  por época que no modo de treinamento *batch*, o modo *mini-batch* também não é usado em aplicações de tempo real, o que faz com que a formulação matricial seja mais eficiente. Assim, vamos definir na iteração $\ell$ os vetores
+Ainda é possível encontrar uma solução intermediária. Considere que, em toda época, os dados de treinamento sejam divididos em conjuntos de tamanho $N_b<N_t$, que é chamado na literatura de tamanho do ***mini-batch***. Neste caso, teremos $\lfloor N_t/N_b \rfloor$ conjuntos de dados a cada época[^fepoca]. Considere que o algoritmo utilize cada um desses conjuntos para estimar o vetor gradiente e com essa estimativa atualize os pesos. Dessa forma, os pesos serão atualizados $\lfloor N_t/N_b \rfloor$ vezes por época,  a cada $N_b$ dados de treinamento. Em outras palavras, o algoritmo terá $\lfloor N_t/N_b \rfloor$ iterações por época. Apesar dos pesos serem atualizados mais vezes  por época que no modo de treinamento *batch*, o modo *mini-batch* também não é usado em aplicações de tempo real, o que faz com que a formulação matricial seja mais eficiente. Assim, vamos definir na iteração $\ell$ os vetores
+
+[^fepoca]: Considera-se o arredondamento para baixo para que o número de conjuntos de dados por época seja sempre inteiro. Assim, por exemplo, se $N_t=1233$ e $N_b=50$, considera-se $\lfloor Nt/N_b \rfloor=24$ conjuntos de dados por época. Como os dados são misturados a dada época, os  33 dados desprezados em uma determinada época aparecerão em outras.
 
 $$
 \mathbf{w}(\ell)=\left[
@@ -544,7 +548,7 @@ $$
 \{x(0),\; x(1),\:x(2),\;\cdots,\;x(N_t-1)\}.
 $$
 
-Neste caso, não é necessário o viés e apenas dois pesos são suficientes para identificar o sistema. Dessa forma, dada essa sequência de entrada, podemos organizar as amostras
+Neste caso, não é necessário o *bias* e apenas dois pesos são suficientes para identificar o sistema. Dessa forma, dada essa sequência de entrada, podemos organizar as amostras
 na matriz
 
 $$
@@ -598,7 +602,7 @@ name: fig_wb
 Pesos do algoritmo LMS no modo de treinamento *batch* ($M=2$, $\eta=0,25$, $N_t=500$, $N_e=40$ e $N_b=N_t=500$). Identificação do sistema $\mathbf{w}^{\text{wiener}}=[\,2\;\;-3\,]^{\rm T}$ com $\sigma_v^2=0,01$.
 ```
 
-As trajetórias dos pesos do algoritmo LMS nesses três modos de treinamento está mostrada na {numref}`fig_caminho`. Pela trajetórias, é possível ver que o caminho do  *batch* é mais direto e atinge exatamente a solução ótima. Já o caminho do *mini-batch* é menos direto e varia mais em torno da solução ótima. Por fim, o estocástico é o que mais varia ao longo do caminho e também quando se aproxima da solução ótima. Comparando esses três modos de treinamento, o modo *mini-batch* é o que apresenta o melhor compromisso entre custo computacional e precisão da resposta e por isso é o mais utilizado em aplicações de aprendizado de máquina.
+As trajetórias dos pesos do algoritmo LMS nesses três modos de treinamento estão mostradas na {numref}`fig_caminho`. Pelas trajetórias, é possível ver que o caminho do  *batch* é mais direto e atinge exatamente a solução ótima. Já o caminho do *mini-batch* é menos direto e varia mais em torno da solução ótima. Por fim, o estocástico é o que mais varia ao longo do caminho e também quando se aproxima da solução ótima. Comparando esses três modos de treinamento, o modo *mini-batch* é o que apresenta o melhor compromisso entre custo computacional e precisão da resposta e por isso é o mais utilizado em aplicações de aprendizado de máquina.
 
 ```{figure} ./images/caminho.png
 ---
