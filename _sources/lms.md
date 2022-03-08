@@ -211,7 +211,7 @@ x(n+1)=9\\
   \end{array},
 $$
 
-em que $n$ representa um instante de tempo  ou uma posição. Considerando $M=3$ e levando em conta a linha de atrasos sem viés, os vetores de entrada do LMS nos instantes $n-1$, $n$ e $n+1$ são dados respectivamente por
+em que $n$ representa um instante de tempo  ou uma posição. Considerando $M=3$ e levando em conta a linha de atrasos sem o *bias*, os vetores de entrada do LMS nos instantes $n-1$, $n$ e $n+1$ são dados respectivamente por
 
 $$
 \mathbf{x}(n-1)=[\,2\;\; 3\;\;4\,]^{{\rm T}},\;\;\;\mathbf{x}(n)=[\,1\;\; 2\;\;3\,]^{{\rm T}}\;\;\;\text{e}\;\;\;\mathbf{x}(n+1)=[\,9\;\; 1\;\;2\,]^{{\rm T}}.
