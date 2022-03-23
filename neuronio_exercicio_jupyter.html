@@ -52,7 +52,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Buscar" href="search.html" />
-    <link rel="next" title="Referências" href="referencias.html" />
+    <link rel="next" title="A rede perceptron multicamada" href="mlp.html" />
     <link rel="prev" title="O modelo do neurônio" href="neuronio.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="pt_BR">
@@ -136,6 +136,11 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mlp.html">
+   A rede perceptron multicamada
+  </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="referencias.html">
@@ -228,10 +233,10 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="exercicio">
 <h1>Exercício<a class="headerlink" href="#exercicio" title="Link permanente para este título">¶</a></h1>
-<p>Um dos experimentos feitos com o perceptron de Rosenblatt consistia na classificação de caracteres. Um caractere era exposto na frente de uma matriz de sensores, que digitalizava a imagem e os elementos dessa matriz eram utilizados como entradas do Perceptron, conforme mostrado na fotografia abaixo:</p>
+<p>Um dos experimentos feitos com o perceptron de Rosenblatt consistia na classificação de caracteres. Um caractere era exposto na frente de uma matriz de sensores, que digitalizava a imagem e os elementos dessa matriz eram utilizados como entradas do perceptron, conforme mostrado na fotografia abaixo:</p>
 <p><img alt="Rosenblatt's Classifier" src="_images/Rosen_2.png" /></p>
-<p>A ideia consistia em alimentar diversos Perceptrons com essas entradas, que funcionariam em paralelo, de forma independente uns dos outros. Cada um era treinado para classificar um determinado caractere, fornecendo saída igual a 1 no caso da detecção do caractere em questão ou -1, no caso da detecção de qualquer outro caractere. Assim, era possível obter uma estrutura com várias saídas, cada uma representando o reconhecimento de um determinado caractere.</p>
-<p>Neste exercício, você vai trabalhar em uma aplicação semelhante, porém simplificada: um classificador binário usando o Perceptron de Rosenblatt para classificar imagens de círculos ou quadrados.</p>
+<p>A ideia consistia em alimentar diversos perceptrons com essas entradas, que funcionariam em paralelo, de forma independente uns dos outros. Cada um era treinado para classificar um determinado caractere, fornecendo saída igual a 1 no caso da detecção do caractere em questão ou -1, no caso da detecção de qualquer outro caractere. Assim, era possível obter uma estrutura com várias saídas, cada uma representando o reconhecimento de um determinado caractere.</p>
+<p>Neste exercício, você vai trabalhar em uma aplicação semelhante, porém simplificada: um classificador binário usando o perceptron de Rosenblatt para classificar imagens de círculos ou quadrados.</p>
 <p>Antes de começar a trabalhar no código, certifique-se de ter baixado o <a href="./datasets/circles_vs_rects_dataset/circles_and_squares.csv">arquivo CSV com os dados</a> do repositório de materiais.</p>
 <p>Para carregar o arquivo CSV e processar os dados, você pode usar a biblioteca <a class="reference external" href="https://pandas.pydata.org/">Pandas</a>. Após a instalação da biblioteca e o download do arquivo CSV, é possível carregar os dados com os seguintes comandos:</p>
 <div class="cell docutils container">
@@ -442,7 +447,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f5f2cfb9a60&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fe05478cb80&gt;
 </pre></div>
 </div>
 <img alt="_images/neuronio_exercicio_jupyter_10_1.png" src="_images/neuronio_exercicio_jupyter_10_1.png" />
@@ -475,13 +480,13 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f5f2ce70790&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fe05467d310&gt;
 </pre></div>
 </div>
 <img alt="_images/neuronio_exercicio_jupyter_14_2.png" src="_images/neuronio_exercicio_jupyter_14_2.png" />
 </div>
 </div>
-<p>No exercício, você vai utilizar as 800 primeiras linhas do banco de dados para fazer o treinamento do Perceptron, ajustando os valores dos pesos de forma iterativa e as 200 linhas finais para avaliar o desempenho do seu modelo na classificação de círculos e quadrados. Dessa forma, você pode separar os dados em uma matriz <code class="docutils literal notranslate"><span class="pre">Xd</span></code> para o treinamento e <code class="docutils literal notranslate"><span class="pre">Xd_test</span></code> para o teste:</p>
+<p>No exercício, você vai utilizar as 800 primeiras linhas do banco de dados para fazer o treinamento do perceptron, ajustando os valores dos pesos de forma iterativa e as 200 linhas finais para avaliar o desempenho do seu modelo na classificação de círculos e quadrados. Dessa forma, você pode separar os dados em uma matriz <code class="docutils literal notranslate"><span class="pre">Xd</span></code> para o treinamento e <code class="docutils literal notranslate"><span class="pre">Xd_test</span></code> para o teste:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Xd</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:</span><span class="mi">800</span><span class="p">,</span> <span class="p">:]</span>
@@ -490,7 +495,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<p>Você deve implementar uma função para treinar o Perceptron de Rosenblatt de forma iterativa, dados a matriz <code class="docutils literal notranslate"><span class="pre">Xd</span></code>, um passo de adaptação <code class="docutils literal notranslate"><span class="pre">eta</span></code>, o número de épocas <code class="docutils literal notranslate"><span class="pre">Ne</span></code> e o tamanho do <em>mini-batch</em> <code class="docutils literal notranslate"><span class="pre">Nb</span></code>. Após o treinamento, avalie o seu modelo com os dados dos conjuntos de treinamento e de teste, medindo a acurácia do classificador para ambos os casos. A escolha desses hiperparâmetros fica a seu critério, buscando obter um bom desempenho com os dados de teste.</p>
+<p>Você deve implementar uma função para treinar o perceptron de Rosenblatt de forma iterativa, dados a matriz <code class="docutils literal notranslate"><span class="pre">Xd</span></code>, um passo de adaptação <code class="docutils literal notranslate"><span class="pre">eta</span></code>, o número de épocas <code class="docutils literal notranslate"><span class="pre">Ne</span></code> e o tamanho do <em>mini-batch</em> <code class="docutils literal notranslate"><span class="pre">Nb</span></code>. Após o treinamento, avalie o seu modelo com os dados dos conjuntos de treinamento e de teste, medindo a acurácia do classificador para ambos os casos. A escolha desses hiperparâmetros fica a seu critério, buscando obter um bom desempenho com os dados de teste.</p>
 <p>Ao final do exercício, você deverá entregar:</p>
 <ol class="simple">
 <li><p>Os códigos utilizados para treinar o modelo e avaliá-lo com os conjuntos de treinamento e de teste;</p></li>
@@ -531,10 +536,10 @@ const thebe_selector_output = ".output, .cell_output"
             <p class="prev-next-title">O modelo do neurônio</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="referencias.html" title="próximo página">
+    <a class='right-next' id="next-link" href="mlp.html" title="próximo página">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">próximo</p>
-        <p class="prev-next-title">Referências</p>
+        <p class="prev-next-title">A rede perceptron multicamada</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

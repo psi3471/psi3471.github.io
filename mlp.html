@@ -1,0 +1,900 @@
+
+<!DOCTYPE html>
+
+<html lang="pt_BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A rede perceptron multicamada &#8212; PSI3471 - Fundamentos de Sistemas Eletrônicos Inteligentes</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/translations.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Buscar" href="search.html" />
+    <link rel="next" title="Referências" href="referencias.html" />
+    <link rel="prev" title="Exercício" href="neuronio_exercicio_jupyter.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="pt_BR">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">PSI3471 - Fundamentos de Sistemas Eletrônicos Inteligentes</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Pesquise este livro ..." aria-label="Pesquise este livro ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Bem-vindo
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="regressao_linear.html">
+   Regressão linear
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="regressao_linear_exercicio_jupyter.html">
+     Exercício
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lms.html">
+   O algoritmo LMS
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="neuronio.html">
+   O modelo do neurônio
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="neuronio_exercicio_jupyter.html">
+     Exercício
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   A rede perceptron multicamada
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="referencias.html">
+   Referências
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Alternar de navegação" aria-controls="site-navigation"
+                title="Alternar de navegação" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Baixe esta página"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="_sources/mlp.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Baixar arquivo de notebook" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/mlp.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Baixar arquivo fonte" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Imprimir em PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Modo tela cheia"
+        title="Modo tela cheia"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Conteúdo
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#o-modelo-da-rede-e-o-calculo-progressivo">
+   O modelo da rede  e o cálculo progressivo
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#o-algoritmo-de-retropropagacao">
+   O algoritmo de retropropagação
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculo-progressivo">
+     Cálculo progressivo
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculo-regressivo">
+     Cálculo regressivo
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#utilizando-a-rede-mlp-no-problema-das-meias-luas">
+   Utilizando a rede MLP no problema das meias-luas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mlp-como-aproximador-universal-de-funcoes">
+   MLP como aproximador universal de funções
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>A rede perceptron multicamada</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Conteúdo </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#o-modelo-da-rede-e-o-calculo-progressivo">
+   O modelo da rede  e o cálculo progressivo
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#o-algoritmo-de-retropropagacao">
+   O algoritmo de retropropagação
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculo-progressivo">
+     Cálculo progressivo
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculo-regressivo">
+     Cálculo regressivo
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#utilizando-a-rede-mlp-no-problema-das-meias-luas">
+   Utilizando a rede MLP no problema das meias-luas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mlp-como-aproximador-universal-de-funcoes">
+   MLP como aproximador universal de funções
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="a-rede-perceptron-multicamada">
+<h1>A rede perceptron multicamada<a class="headerlink" href="#a-rede-perceptron-multicamada" title="Link permanente para este título">¶</a></h1>
+<div class="section" id="o-modelo-da-rede-e-o-calculo-progressivo">
+<h2>O modelo da rede  e o cálculo progressivo<a class="headerlink" href="#o-modelo-da-rede-e-o-calculo-progressivo" title="Link permanente para este título">¶</a></h2>
+<p>O modelo do neurônio proposto por Rosenblatt é usado até hoje nas redes neurais. A diferença está apenas na função não linear, chamada de função de ativação. No modelo de Rosenblatt, utilizou-se a função sinal que não é derivável em todos os pontos. Em vez dessa função, é comum utilizar funções de ativação deriváveis em todos os pontos, como a função sigmoidal, a tangente hiperbólica, entre outras. Essas funções permitem chegar ao algoritmo de retropropagação (<em>backpropagation</em>) como veremos mais adiante.</p>
+<p>Considerando o <span class="math notranslate nohighlight">\(n\)</span>-ésimo vetor dos dados de treinamento</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}(n)=[\,1\;x_{1n}\; x_{2n}\; \cdots\; x_{Mn}\,]^{\rm T}
+\]</div>
+<p>e o vetor de pesos com dimensão <span class="math notranslate nohighlight">\(M+1\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{w}(n) = [\,b(n)\;w_1(n)\;\cdots\;w_M(n)\,]^{\rm T},
+\]</div>
+<p>a saída do combinador linear pode ser escrita como</p>
+<div class="math notranslate nohighlight">
+\[
+v(n) = \mathbf{x}^{\rm T}(n)\mathbf{w}(n-1)
+\]</div>
+<p>e a saída do neurônio é dada por</p>
+<div class="math notranslate nohighlight">
+\[
+y(n)=\varphi(v(n)),
+\]</div>
+<p>em que <span class="math notranslate nohighlight">\(\varphi(\cdot)\)</span> é a função de ativação. Cabe observar que nesta formulação, o <em>bias</em> aparece na primeira posição do vetor de pesos <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> e por isso, o vetor de entrada <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> tem sempre o valor~<span class="math notranslate nohighlight">\(1\)</span> em sua primeira posição. O diagrama de fluxo de sinal do neurônio está mostrado na <a class="reference internal" href="#fig-neuronio"><span class="std std-numref">Fig. 23</span></a></p>
+<div class="figure align-default" id="fig-neuronio">
+<a class="reference internal image-reference" href="_images/neuronio.png"><img alt="_images/neuronio.png" src="_images/neuronio.png" style="height: 300px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 23 </span><span class="caption-text">Fluxo de sinal do modelo de neurônio.</span><a class="headerlink" href="#fig-neuronio" title="Link Permanente para essa imagem">¶</a></p>
+</div>
+<p>O neurônio da <a class="reference internal" href="#fig-neuronio"><span class="std std-numref">Fig. 23</span></a> é a unidade básica da rede perceptron multicamada (MLP <em>multilayer perceptron</em>). Na maior parte das aplicações, um único neurônio não é suficiente para se obter bons resultados. Dessa forma, a rede MLP organiza os neurônios em camadas, havendo  uma ou mais camadas ocultas (<em>hidden layers</em>) e a camada de saída<a class="footnote-reference brackets" href="#fsaida" id="id1">1</a>. As camadas ocultas são camadas intermediárias entre a entrada e a saída da rede neural. Cada neurônio pertencente a uma camada oculta possui sinapses associadas a pesos, ligando-o a todos os neurônios das camadas anterior e posterior. No caso da primeira camada oculta, em cada neurônio, os valores da entrada da rede são ponderados pelos pesos, que junto com o <em>bias</em>, permitem o cálculo da combinação linear, representada na <a class="reference internal" href="#fig-neuronio"><span class="std std-numref">Fig. 23</span></a> por <span class="math notranslate nohighlight">\(v(n)\)</span>. Na <a class="reference internal" href="#fig-mlpdia"><span class="std std-numref">Fig. 24</span></a>, esquematizamos o fluxo de sinal de uma rede MLP com <span class="math notranslate nohighlight">\(L=3\)</span> camadas, em que cada círculo representa um neurônio. Denotando o número de neurônios da camada <span class="math notranslate nohighlight">\(j\)</span> por <span class="math notranslate nohighlight">\(N_{j}\)</span>, é conveniente introduzir uma notação para a configuração da rede. Assim, uma rede MLP de 3 camadas apresenta configuração <span class="math notranslate nohighlight">\(N_1\)</span>-<span class="math notranslate nohighlight">\(N_2\)</span>-<span class="math notranslate nohighlight">\(N_3\)</span>. Especificamente, a rede da <a class="reference internal" href="#fig-neuronio"><span class="std std-numref">Fig. 23</span></a> tem configuração 3-2-1, ou seja, 3 neurônios na primeira camada oculta, 2 na segunda camada oculta e 1 na camada de saída. Também vamos denotar o número de neurônios da camada de saída por <span class="math notranslate nohighlight">\(L\)</span>. Assim, no exemplo, <span class="math notranslate nohighlight">\(L=N_3=1\)</span>.</p>
+<div class="figure align-default" id="fig-mlpdia">
+<a class="reference internal image-reference" href="_images/MLPdia.png"><img alt="_images/MLPdia.png" src="_images/MLPdia.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 24 </span><span class="caption-text">Representação de uma rede MLP com <span class="math notranslate nohighlight">\(L=3\)</span> camadas (<span class="math notranslate nohighlight">\(L-1=2\)</span> camadas ocultas), cada círculo representa um neurônio.</span><a class="headerlink" href="#fig-mlpdia" title="Link Permanente para essa imagem">¶</a></p>
+</div>
+<p>Vamos usar o exemplo da rede MLP da <a class="reference internal" href="#fig-mlpdia"><span class="std std-numref">Fig. 24</span></a> para calcular a saída da Camada Oculta~2, cujos pesos estão indicados. É importante atentar para a notação: <span class="math notranslate nohighlight">\(\omega_{k\ell}^{(j)}\)</span> representa o peso que liga o Neurônio~<span class="math notranslate nohighlight">\(\ell\)</span> da camada <span class="math notranslate nohighlight">\(j-1\)</span> ao Neurônio <span class="math notranslate nohighlight">\(k\)</span> da camada <span class="math notranslate nohighlight">\(j\)</span>. Se o Neurônio~<span class="math notranslate nohighlight">\(k\)</span> pertencer à primeira camada oculta, devemos trocar “Neurônio~<span class="math notranslate nohighlight">\(\ell\)</span>” na frase anterior por “Entrada <span class="math notranslate nohighlight">\(\ell\)</span>”. Voltando à <a class="reference internal" href="#fig-mlpdia"><span class="std std-numref">Fig. 24</span></a>, observe que a entrada da rede é dada pelo vetor</p>
+<div class="math notranslate nohighlight">
+\[
+[x_{1n}\;\; x_{2n}\;\;\cdots\;\; x_{Mn}]^{\rm T},
+\]</div>
+<p>que corresponde ao <span class="math notranslate nohighlight">\(n\)</span>-ésimo dado do conjunto de treinamento, em que <span class="math notranslate nohighlight">\(M\)</span> é o número de entradas (<span class="math notranslate nohighlight">\(M=3\)</span> no exemplo). É conveniente usar a notação <span class="math notranslate nohighlight">\(y_k^{(0)}\triangleq x_{kn}\)</span>, <span class="math notranslate nohighlight">\(k=1,2,\ldots, M\)</span> para denotar os elementos do vetor de entrada e <span class="math notranslate nohighlight">\(N_0\triangleq M\)</span> para denotar o número de entradas da rede. Dessa forma,  podemos definir o vetor de entrada da rede como</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{y}^{(0)} \triangleq \begin{bmatrix}
+                        y^{(0)}_1 \\
+                        y^{(0)}_2 \\
+                        \vdots \\
+                        y^{(0)}_{N_0}
+                        \end{bmatrix}.
+\end{split}\]</div>
+<p>Para simplificar a notação, o índice <span class="math notranslate nohighlight">\(n\)</span> relacionado ao <span class="math notranslate nohighlight">\(n\)</span>-ésimo dado de treinamento não será levado em conta nesta seção. Em cada neurônio da primeira camada oculta, esse vetor é ponderado e somado ao <em>bias</em>. A saída de cada  neurônio é então calculada aplicando-se a função de ativação <span class="math notranslate nohighlight">\(\varphi(\cdot)\)</span>
+ao  resultado dessa combinação linear. Reunindo as saídas  dos neurônios da primeira camada oculta em um vetor, temos</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{y}^{(1)} = \begin{bmatrix}
+                        y^{(1)}_1 \\
+                        y^{(1)}_2 \\
+                        \vdots \\
+                        y^{(1)}_{N_{1}}
+                        \end{bmatrix},
+\end{split}\]</div>
+<p>em que <span class="math notranslate nohighlight">\(N_1\)</span> representa o número de neurônios dessa camada (<span class="math notranslate nohighlight">\(N_1=3\)</span> no exemplo). Para levar em conta os <em>biases</em> e obter uma formulação matricial, é conveniente definir</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{x}^{(2)}=\left[\begin{array}{c}
+                           1 \\
+                           \mathbf{y}^{(1)}
+                         \end{array}
+\right]
+\end{split}\]</div>
+<p>para denotar o vetor de entrada da Camada~2. A seguir, detalhamos o cálculo do vetor de saída da Camada~2, ou seja, <span class="math notranslate nohighlight">\(\mathbf{y}^{(2)}\)</span>.</p>
+<p>Vamos reunir os <em>biases</em> e os pesos da Camada~2 na seguinte matriz</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\mathbf{W}^{(2)} = \begin{bmatrix}
+	{\color{blue}b^{(2)}_1} &amp; {\color{blue}w_{11}^{(2)}}     &amp; {\color{blue}w_{12}^{(2)}}              &amp; {\color{blue}w_{13}^{(2)}}\\
+	{\color{red}b^{(2)}_2} &amp; {\color{red}w_{21}^{(2)}}     &amp; {\color{red}w_{22}^{(2)}}             &amp;  {\color{red}w_{23}^{(2)}}\\
+	\end{bmatrix}_{2\times 4}
+\triangleq \begin{bmatrix}
+	{\color{blue}\mathbf{w}_{1}^{(2)}} \\ {\color{red}\mathbf{w}_{2}^{(2)}}\\
+	\end{bmatrix}.
+\end{align*}\]</div>
+<p>O <em>bias</em> e os pesos em azul da primeira linha da matriz <span class="math notranslate nohighlight">\(\mathbf{W}^{(2)}\)</span>, que correspondem aos elementos do vetor linha <span class="math notranslate nohighlight">\({\mathbf{w}_{1}^{(2)}}\)</span>, são utilizados no cálculo da saída do Neurônio~1 dessa camada. Já o <em>bias</em> e os pesos em vermelho da segunda linha são utilizados no cálculo da saída do Neurônio~2. Observe que, diferente da formulação do neurônio utilizada até o momento, definimos os vetores contendo o <em>bias</em> e pesos de cada neurônio da camada <span class="math notranslate nohighlight">\(j\)</span>, ou seja, <span class="math notranslate nohighlight">\(\mathbf{w}_k^{(j)}\)</span>, <span class="math notranslate nohighlight">\(k=1, 2, \ldots, N_j\)</span>, como vetores linha e não como vetores coluna. Dessa forma, podemos escrever</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\mathbf{v}^{(2)} = \begin{bmatrix}
+                        {\color{blue}v^{(2)}_1} \\
+                        {\color{red}v^{(2)}_2}\\
+                        \end{bmatrix} =
+                        \begin{bmatrix}
+                        {\color{blue}\mathbf{w}_1^{(2)}}\mathbf{x}^{(2)} \\
+                        {\color{red}\mathbf{w}_2^{(2)}}\mathbf{x}^{(2)}\\
+                        \end{bmatrix}
+                         =\mathbf{W}^{(2)}\mathbf{x}^{(2)}
+                                        \mbox{\;\; e \;\;}
+\mathbf{y}^{(2)} = \varphi(\mathbf{v}^{(2)})=\begin{bmatrix}
+                        {\color{blue}\varphi(v^{(2)}_1)} \\
+                        {\color{red}\varphi(v^{(2)}_2)}\\
+                        \end{bmatrix}= \begin{bmatrix}
+                        {\color{blue}y^{(2)}_1} \\
+                        {\color{red}y^{(2)}_2} \\
+                        \end{bmatrix}. 
+\end{align*}\]</div>
+<p>Generalizando, temos</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\mathbf{v}^{(j)} \triangleq \begin{bmatrix}
+                        v^{(j)}_1 \\
+                        v^{(j)}_2 \\
+                        \vdots \\
+                        v^{(j)}_{N_{j}}
+                        \end{bmatrix},\;\;\;
+\mathbf{y}^{(j)} \triangleq \begin{bmatrix}
+                        y^{(j)}_1 \\
+                        y^{(j)}_2 \\
+                        \vdots \\
+                        y^{(j)}_{N_{j}}
+                        \end{bmatrix}
+                        \;\; e \;\;
+\mathbf{x}^{(j)}\triangleq \begin{bmatrix}
+                        1 \\
+                        \mathbf{y}^{(j-1)}
+                        \end{bmatrix},             
+\end{align*}\]</div>
+<p>em que <span class="math notranslate nohighlight">\(j=1, 2, \ldots, L\)</span>,  <span class="math notranslate nohighlight">\(L\)</span> é o número de camadas a rede e <span class="math notranslate nohighlight">\(\mathbf{y}^{(0)}\)</span> o vetor de entradas da rede.
+Definindo agora a matriz de pesos associados à camada <span class="math notranslate nohighlight">\(j\)</span> como</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\mathbf{W}^{(j)} \triangleq \begin{bmatrix}
+	b^{(j)}_1 &amp; w_{11}^{(j)}     &amp; w_{12}^{(j)}             &amp; \dots  &amp; w_{1N_{j - 1}}^{(j)}\\
+	b^{(j)}_2 &amp; w_{21}^{(j)}     &amp; w_{22}^{(j)}             &amp; \dots  &amp; w_{2N_{j - 1}}^{(j)}\\
+	\vdots           &amp;  \vdots           &amp; \vdots                   &amp; \ddots &amp; \vdots\\
+	b_{N_j}^{(j)} &amp; w_{N_{j}1}^{(j)} &amp; w_{N_{j}2}^{(j)}         &amp; \dots  &amp; w_{N_{j}N_{j - 1}}^{(j)}
+	\end{bmatrix}_{(N_{j})\times (N_{j - 1}+1)}
+= \begin{bmatrix}
+	\mathbf{w}_{1}^{(j)} \\ \mathbf{w}_{2}^{(j)} \\ \vdots \\ \mathbf{w}_{N_{j}}^{(j)}\\
+	\end{bmatrix}.
+\end{align*}\]</div>
+<p>o vetor de saída  dos combinadores lineares da camada <span class="math notranslate nohighlight">\(j\)</span> é dado por</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+    \mathbf{v}^{(j)} = \left[\begin{array}{c}
+                               \mathbf{w}_1^{(j)}\mathbf{x}^{(j)} \\
+                               \mathbf{w}_2^{(j)}\mathbf{x}^{(j)} \\
+                               \vdots \\
+                               \mathbf{w}_{N_j}^{(j)}\mathbf{x}^{(j)}
+                             \end{array}
+    \right]= \mathbf{W}^{(j)}\mathbf{x}^{(j
+\end{equation*}\]</div>
+<p>Por fim, o vetor de saída dessa camada é calculado como</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+    \mathbf{y}^{(j)} = \varphi\left(\mathbf{v}^{(j)}\right),
+\end{equation*}\]</div>
+<p>em que a função de ativação <span class="math notranslate nohighlight">\(\varphi\left(\cdot\right)\)</span> é aplicada a cada elemento do vetor <span class="math notranslate nohighlight">\(\mathbf{v}^{(j)}\)</span>.</p>
+<p>O cálculo apresentado até aqui é utilizado para calcular as saídas dos neurônios de cada camada da rede. Como o cálculo das saídas da camada <span class="math notranslate nohighlight">\(j\)</span> depende das saídas da camada <span class="math notranslate nohighlight">\((j-1)\)</span>, dizemos que  o cálculo é progressivo.
+Uma vez calculada a saída da rede, podemos compará-la com o sinal desejado e utilizar esse resultado para atualizar os pesos e os <em>biases</em> a fim de minimizar uma função custo, como veremos a seguir.</p>
+</div>
+<div class="section" id="o-algoritmo-de-retropropagacao">
+<h2>O algoritmo de retropropagação<a class="headerlink" href="#o-algoritmo-de-retropropagacao" title="Link permanente para este título">¶</a></h2>
+<p>O algoritmo de retropropagação (<em>backpropagation</em>) é o mais utilizado no processo de aprendizado supervisionado das redes neurais. Ele é dividido em duas etapas, descritas a seguir.</p>
+<div class="section" id="calculo-progressivo">
+<h3>Cálculo progressivo<a class="headerlink" href="#calculo-progressivo" title="Link permanente para este título">¶</a></h3>
+<p>Nessa etapa, os pesos e <em>biases</em> são mantidos fixos e o cálculo é realizado progressivamente até se obter o vetor de saída  <span class="math notranslate nohighlight">\(\textbf{y}^{(L)}\)</span>. Nesse cálculo, a entrada é propagada ao longo da rede, camada por camada, com detalhado na seção anterior.</p>
+</div>
+<div class="section" id="calculo-regressivo">
+<h3>Cálculo regressivo<a class="headerlink" href="#calculo-regressivo" title="Link permanente para este título">¶</a></h3>
+<p>Nessa etapa, os pesos e <em>biases</em> são atualizados com o objetivo de minimizar uma função custo. Apesar de existirem diferentes funções custo,  vamos nos concentrar por ora apenas no erro quadrático médio (MSE - <em>mean square error</em>), definido como</p>
+<div class="math notranslate nohighlight">
+\[
+J_{\rm MSE}=\frac{1}{N_L}\sum_{\ell=1}^{N_L}e^2_\ell(n)
+\]</div>
+<p>em que</p>
+<div class="math notranslate nohighlight">
+\[
+e_\ell(n)=d_\ell(n)-y_\ell^{(L)}(n)
+\]</div>
+<p>são os erros dos neurônios da camada de saída da rede. Para simplificar a dedução, vamos considerar o modo de treinamento estocástico em que os pesos e <em>biases</em> são atualizados a cada dado de treinamento <span class="math notranslate nohighlight">\(n=1, 2, \ldots, N_t\)</span>. Os modos <em>batch</em> e <em>mini-batch</em> serão abordados posteriormente.</p>
+<p>Utilizando o método do gradiente estocástico, a matrix de pesos da camada <span class="math notranslate nohighlight">\(j\)</span> pode ser atualizada como</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+  \textbf{W}^{(j)}(n) = \textbf{W}^{(j)}(n-1) - \eta \frac{\partial J_{MSE}}{\partial \textbf{W}^{(j)}(n-1)},
+\end{equation*}\]</div>
+<p>em que <span class="math notranslate nohighlight">\(\eta\)</span> é um passo de adaptação e</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial J_{MSE}}{\partial \textbf{W}^{(j)}(n\!-\!1)}= \begin{bmatrix}
+	\frac{\partial J_{MSE}}{\partial b^{(j)}_1(n\!-\!1)} &amp; \frac{\partial J_{MSE}}{\partial w_{11}^{(j)}(n\!-\!1)}     &amp; \frac{\partial J_{MSE}}{\partial w_{12}^{(j)}(n\!-\!1)}             &amp; \dots  &amp; \frac{\partial J_{MSE}}{\partial w_{1N_{j - 1}}^{(j)}(n\!-\!1)}\\
+	\frac{\partial J_{MSE}}{\partial b^{(j)}_2(n\!-\!1)} &amp; \frac{\partial J_{MSE}}{\partial w_{21}^{(j)}(n\!-\!1)}     &amp; \frac{\partial J_{MSE}}{\partial w_{22}^{(j)}(n\!-\!1)}             &amp; \dots  &amp; \frac{\partial J_{MSE}}{\partial  w_{2N_{j - 1}}^{(j)}(n\!-\!1)}\\
+	\vdots           &amp;  \vdots           &amp; \vdots                   &amp; \ddots &amp; \vdots\\
+	\frac{\partial J_{MSE}}{\partial  b_{N_j}^{(j)}(n\!-\!1)} &amp; \frac{\partial J_{MSE}}{\partial  w_{N_{j}1}^{(j)}(n\!-\!1)} &amp; \frac{\partial J_{MSE}}{\partial w_{N_{j}2}^{(j)}(n\!-\!1)}         &amp; \dots  &amp; \frac{\partial J_{MSE}}{\partial w_{N_{j}N_{j - 1}}^{(j)}(n\!-\!1)}
+	\end{bmatrix}.
+\end{split}\]</div>
+<p>Observe que na <span class="math notranslate nohighlight">\(k\)</span>-ésima linha da matriz <span class="math notranslate nohighlight">\(\frac{\partial J_{MSE}}{\partial \textbf{W}^{(j)}(n\!-\!1)}\)</span> temos o vetor gradiente</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{\nabla}_{\mathbf{w}_k^{(j)}}J_{\rm MSE}=
+\frac{\partial J_{\rm MSE}}{\partial \mathbf{w}_k^{(j)}(n-1)}=
+\begin{bmatrix}
+	\frac{\partial J_{MSE}}{\partial b^{(j)}_k(n\!-\!1)} &amp; \frac{\partial J_{MSE}}{\partial w_{k1}^{(j)}(n\!-\!1)}     &amp; \frac{\partial J_{MSE}}{\partial w_{k2}^{(j)}(n\!-\!1)}             &amp; \dots  &amp; \frac{\partial J_{MSE}}{\partial w_{kN_{j - 1}}^{(j)}(n\!-\!1)}\end{bmatrix}.
+\]</div>
+<p>Assim, podemos escrever</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial J_{MSE}}{\partial \textbf{W}^{(j)}(n\!-\!1)}=\begin{bmatrix} \boldsymbol{\nabla}_{\mathbf{w}_1^{(j)}}J_{MSE} \\ \boldsymbol{\nabla}_{\mathbf{w}_2^{(j)}}J_{MSE} \\ \vdots \\ \boldsymbol{\nabla}_{\mathbf{w}_{N_j}^{(j)}}J_{MSE} \end{bmatrix}.
+\end{split}\]</div>
+<p>Vamos calcular os vetores gradientes considerando os neurônios da camada de saída, ou seja, <span class="math notranslate nohighlight">\(j=L\)</span>. Usando a regra da cadeia sucessivas vezes, obtemos</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+        \begin{aligned}[b]
+            \boldsymbol{\nabla}_{\mathbf{w}_k^{(L)}}J_{MSE}&amp; = \frac{\partial J_{\rm MSE}}{\partial \textbf{w}_k^{(L)}(n-1)}=\frac{1}{N_L}\sum_{\ell=1}^{N_L}\frac{\partial e_{\ell}^2(n)}{\partial \textbf{w}_k^{(L)}(n-1)}=\frac{1}{N_L}\frac{\partial e_{k}^2(n)}{\partial \textbf{w}_k^{(L)}(n-1)}\\
+             &amp;= \frac{1}{N_L}\;\frac{\partial e_k^2(n)}{\partial y_k^{(L)}(n)}\; \frac{\partial y_k^{(L)}(n)}{\partial v^{(L)}_k(n)}\; \frac{\partial v^{(L)}_k(n)}{\partial \textbf{w}_k^{(L)}(n-1)} \\
+            &amp; = \frac{1}{N_L}\; 2 e_k(n)\; \frac{\partial [d_k(n)-y_k^{(L)}(n)]}{\partial y_k^{(L)}(n)}\; \frac{\partial \varphi\left(v^{(L)}_k(n)\right)}{\partial v^{(L)}_k(n)}\; \frac{\partial \textbf{w}^{(L)}_k(n-1)\,\textbf{x}^{(L)}(n)}{\partial \textbf{w}^{(L)}_k(n-1)} \\
+            &amp; = -\frac{2}{N_L}\; e_k(n)\; \varphi'\!\left(v^{(L)}_k(n)\right) \; [\textbf{x}^{(L)}(n)]^{\rm T},
+        \end{aligned}\nonumber
+        \label{chain_rule_w}
+  \end{equation*}\]</div>
+<p>em que <span class="math notranslate nohighlight">\(\varphi'(\cdot)\)</span> representa a derivada da função de ativação <span class="math notranslate nohighlight">\(\varphi(\cdot)\)</span>, o que justifica a importância dessa função ser derivável em todos os pontos.   Definindo o gradiente local da Camada <span class="math notranslate nohighlight">\(L\)</span> como</p>
+<div class="math notranslate nohighlight">
+\[
+  \delta_{k}^{(L)}(n)\triangleq \varphi'(v_{k}^{(L)}(n))e_{k}(n),
+  \]</div>
+<p>o vetor gradiente pode ser reescrito como</p>
+<div class="math notranslate nohighlight">
+\[
+  \boldsymbol{\nabla}_{\mathbf{w}_k^{(L)}}J_{MSE}= -\frac{2}{N_L}\; \delta_{k}^{(L)}(n) \; [\textbf{x}^{(L)}(n)]^{\rm T}.
+\]</div>
+<p>Uma vez calculados os gradientes da camada de saída <span class="math notranslate nohighlight">\(L\)</span>, podemos calcular os gradientes da última camada oculta, ou seja, para <span class="math notranslate nohighlight">\(j=L-1\)</span>. Assim,</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{\nabla}_{\mathbf{w}_k^{(L-1)}}J_{\rm MSE} = \frac{\partial J_{\rm MSE}}{\partial \textbf{w}_k^{(L-1)}(n-1)}= \frac{1}{N_L}\;\sum_{\ell=1}^{L}\frac{\partial  e_\ell^2(n)}{\partial \textbf{w}_k^{(L-1)}(n-1)}.
+\]</div>
+<p>Novamente, usando a regra da cadeia sucessivas vezes, obtemos</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+ \frac{\partial  e_\ell^2(n)}{\partial \textbf{w}_k^{(L-1)}(n-1)}&amp;=2 e_{\ell}(n)\frac{\partial  [d_{\ell}(n)-y_{\ell}^{(L)}(n)]}{\partial y_{\ell}^{(L)}(n)}
+\frac{\partial y_{\ell}^{(L)}(n)}{\partial \textbf{w}_k^{(L-1)}(n-1)}\\
+&amp;=-2e_{\ell}(n)\frac{\partial \varphi(v_{\ell}^{(L)}(n))}{\partial v_{\ell}^{(L)}(n)}\frac{\partial v_{\ell}^{(L)}(n)}{\partial \textbf{w}_k^{(L-1)}(n-1)}.
+\end{align*}\]</div>
+<p>Observe que</p>
+<div class="math notranslate nohighlight">
+\[
+v_{\ell}^{(L)}(n)=\mathbf{w}_{\ell}^{(L)}(n-1)\mathbf{x}^{(L)}(n)=b_{\ell}^{(L)}(n-1)+\sum_{m=1}^{N_{L-1}}w_{\ell m}^{(L)}(n-1)y_m^{(L-1)}(n).
+\]</div>
+<p>No cálculo de <span class="math notranslate nohighlight">\(v_{\ell}^{(L)}(n)\)</span>, o único termo que depende de <span class="math notranslate nohighlight">\(\textbf{w}_k^{(L-1)}(n-1)\)</span> é <span class="math notranslate nohighlight">\(w_{\ell k}^{(L)}(n-1)y_k^{(L-1)}(n)\)</span>. Assim, obtemos</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\frac{\partial  e_\ell^2(n)}{\partial \textbf{w}_k^{(L-1)}(n-1)}&amp;=-2e_{\ell}(n)\varphi'(v_{\ell}^{(L)}(n))w_{\ell k}^{(L)}(n-1)\frac{\partial y_{k}^{(L-1)}(n)}{\partial \textbf{w}_k^{(L-1)}(n-1)}\\
+&amp;=-2e_{\ell}(n)\varphi'(v_{\ell}^{(L)}(n))w_{\ell k}^{(L)}(n-1)\frac{\partial \varphi(v_{k}^{(L-1)}(n))}{\partial v_{k}^{(L-1)}(n)}\frac{\partial v_{k}^{(L-1)}(n)}{\partial \textbf{w}_k^{(L-1)}(n-1)}\\
+&amp;=-2e_{\ell}(n)\varphi'(v_{\ell}^{(L)}(n))w_{\ell k}^{(L)}(n-1)\varphi'(v_{k}^{(L-1)}(n))\frac{\partial \mathbf{w}_{k}^{(L-1)}(n-1)\mathbf{x}^{(L-1)}(n)} {\partial \textbf{w}_k^{(L-1)}(n-1)}.\\
+&amp;=-2e_{\ell}(n)\varphi'(v_{\ell}^{(L)}(n))w_{\ell k}^{(L)}(n-1)\varphi'(v_{k}^{(L-1)}(n))[\mathbf{x}^{(L-1)}(n)]^{\rm T}.
+\end{align*}\]</div>
+<p>Identificando <span class="math notranslate nohighlight">\(\delta^{(L)}_{\ell}(n)\)</span> na expressão anterior e substituindo o resultado na expressão do gradiente, obtém-se</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{\nabla}_{\mathbf{w}_k^{(L-1)}}J_{\rm MSE} =  -\frac{2}{N_L}\;\varphi'(v_{k}^{(L-1)}(n))\;\sum_{\ell=1}^{L}\delta_{\ell}^{(L)}(n)w_{\ell k}^{(L)}(n-1)[\mathbf{x}^{(L-1)}(n)]^{\rm T}.
+\]</div>
+<p>Definindo agora o gradiente local da Camada <span class="math notranslate nohighlight">\(L-1\)</span> como</p>
+<div class="math notranslate nohighlight">
+\[
+\delta_{k}^{(L-1)}(n)\triangleq \varphi'(v_{k}^{(L-1)}(n))\;\sum_{\ell=1}^{L}\delta_{\ell}^{(L)}(n)w_{\ell k}^{(L)}(n-1),
+\]</div>
+<p>o vetor gradiente pode ser reescrito como</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{\nabla}_{\mathbf{w}_k^{(L-1)}}J_{\rm MSE} =  -\frac{2}{N_L}\delta_{k}^{(L-1)}(n)[\mathbf{x}^{(L-1)}(n)]^{\rm T}.
+\]</div>
+<p>Comparando a expressão do gradiente local <span class="math notranslate nohighlight">\(\delta_{k}^{(L-1)}(n)\)</span> da Camada <span class="math notranslate nohighlight">\(L-1\)</span> com a expressão do gradiente local <span class="math notranslate nohighlight">\(\delta_{k}^{(L)}(n)\)</span> da Camada <span class="math notranslate nohighlight">\(L\)</span>, o somatório</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{\ell=1}^{L}\delta_{\ell}^{(L)}(n)w_{\ell k}^{(L)}(n-1)
+\]</div>
+<p>faz o papel de erro  do Neurônio <span class="math notranslate nohighlight">\(k\)</span> da Camada <span class="math notranslate nohighlight">\(L-1\)</span>. Essa retropropagação dos erros deve continuar até a primeira camada oculta. O fluxo do sinal na retropropagação considerando as camadas <span class="math notranslate nohighlight">\(L\)</span> e <span class="math notranslate nohighlight">\(L-1\)</span> está esquematizado na <a class="reference internal" href="#fig-fluxobp"><span class="std std-numref">Fig. 25</span></a>. O erro do Neurônio <span class="math notranslate nohighlight">\(k\)</span> da Camada <span class="math notranslate nohighlight">\(L-1\)</span> é o sinal no círculo azul indicado na figura.</p>
+<div class="figure align-default" id="fig-fluxobp">
+<a class="reference internal image-reference" href="_images/FluxoBP.png"><img alt="_images/FluxoBP.png" src="_images/FluxoBP.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 25 </span><span class="caption-text">Fluxo do sinal na retropropagação considerando as camadas <span class="math notranslate nohighlight">\(L\)</span> e <span class="math notranslate nohighlight">\(L-1\)</span>.</span><a class="headerlink" href="#fig-fluxobp" title="Link Permanente para essa imagem">¶</a></p>
+</div>
+<p>Generalizando, define-se o gradiente local para qualquer camada oculta <span class="math notranslate nohighlight">\(j\)</span> como</p>
+<p>\boxedeqn{\delta_{k}^{(j)}(n)\triangleq \varphi’(v_{k}^{(j)}(n));\sum_{\ell=1}^{N_{j+1}}\delta_{\ell}^{(j+1)}(n)w_{\ell k}^{(j+1)}(n-1).}</p>
+<p>e para a camada de saída <span class="math notranslate nohighlight">\(L\)</span> como</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+\delta_{k}^{(L)}(n)\triangleq \varphi'(v_{k}^{(L)}(n))e_k(n).
+$}
+\end{equation*}\]</div>
+<p>Definindo os vetores</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{\delta}^{(j)}(n)\triangleq
+\left[\begin{array}{c}
+                                    \delta_{1}^{(j)}(n) \\
+                                    \delta_{2}^{(j)}(n) \\
+                                    \vdots \\
+                                    \delta_{N_j}^{(j)}(n)
+                                  \end{array}
+\right],\;\;\;
+\mathbf{e}(n)\triangleq
+\left[\begin{array}{c}
+                                    e_{1}(n) \\
+                                    e_{2}(n) \\
+                                    \vdots \\
+                                    e_{L}(n)
+                                  \end{array}\right],\;\;\;
+\mathbf{d}_{\varphi}^{(j)}(n)\triangleq
+\left[\begin{array}{c}
+                                    \varphi'(v_1^{(j)}(n)) \\
+                                    \varphi'(v_2^{(j)}(n)) \\
+                                    \vdots \\
+                                    \varphi'(v_{N_j}^{(j)}(n))
+                                  \end{array}\right]
+\end{split}\]</div>
+<p>e a matriz <span class="math notranslate nohighlight">\(\mathbf{W}^{(j+1)}(n-1)\)</span> excluído a coluna de <em>biases</em>, ou seja,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\overline{\mathbf{W}}^{(j+1)}(n-1)\triangleq \begin{bmatrix}
+	 w_{11}^{(j+1)}(n-1)     &amp; w_{12}^{(j+1)}(n-1)            &amp; \dots  &amp; w_{1N_{j}}^{(j+1)}(n-1)\\
+	 w_{21}^{(j+1)}(n-1)     &amp; w_{22}^{(j+1)}(n-1)            &amp; \dots  &amp; w_{2N_{j}}^{(j+1)}(n-1)\\
+	  \vdots           &amp; \vdots                   &amp; \ddots &amp; \vdots\\
+	 w_{N_{j+1}1}^{(j+1)}(n-1) &amp; w_{N_{j+1}2}^{(j+1)}(n-1)         &amp; \dots  &amp; w_{N_{j+1}N_{j}}^{(j+1)}(n-1)
+	\end{bmatrix}_{N_{j+1}\times N_{j}}
+\end{split}\]</div>
+<p>podemos escrever para a camada de saída</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+\boldsymbol{\delta}^{(L)}(n)=\nonumber\mathbf{d}_{\varphi}^{(L)}(n)\odot\mathbf{e}(n)
+$}
+\end{equation*}\]</div>
+<p>e para as camadas ocultas</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+\boldsymbol{\delta}^{(j)}(n)=\nonumber\mathbf{d}_{\varphi}^{(j)}(n)\odot\left\{\left[\overline{\mathbf{W}}^{(j+1)}(n-1)\right]^{\rm T}\;\boldsymbol{\delta}^{(j+1)}(n)\right\}\nonumber
+$}
+\end{equation*}\]</div>
+<p>em que <span class="math notranslate nohighlight">\(\odot\)</span> representa a multiplicação elemento por elemento entre dois vetores. Essa forma de calcular os vetores de gradientes locais é mais eficiente, já que todos os elementos são calculados de uma vez em cada camada.</p>
+<p>É comum incorporar a constante <span class="math notranslate nohighlight">\(2/N_L\)</span> que aparece nos cálculos dos gradientes ao passo de adaptação <span class="math notranslate nohighlight">\(\eta\)</span>. Dessa forma, as equações de atualização dos vetores de pesos do Neurônio <span class="math notranslate nohighlight">\(k\)</span> da Camada <span class="math notranslate nohighlight">\(j\)</span> ficam</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+\mathbf{w}_{k}^{(j)}(n)=\mathbf{w}_{k}^{(j)}(n-1)+\eta\delta_{k}^{(j)}(n)[\mathbf{x}^{(j)}(n)]^{\rm T}
+$}
+\end{equation*}\]</div>
+<p><span class="math notranslate nohighlight">\(k=1, 2, \ldots, N_j\)</span>,; <span class="math notranslate nohighlight">\(j=1, 2 \ldots, L\)</span>. Definindo a matrix</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{\Delta}_{\delta}^{(j)}(n)=\boldsymbol{\delta}^{(j)}(n)[\mathbf{x}^{(j)}(n)]^{\rm T}
+\]</div>
+<p>podemos atualizar a matriz de pesos da camada <span class="math notranslate nohighlight">\(j\)</span> como</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+\mathbf{W}^{(j)}(n)=\mathbf{W}^{(j)}(n-1)+\eta\boldsymbol{\Delta}_{\delta}^{(j)}(n).
+$}
+\end{equation*}\]</div>
+<p>Como a implementação matricial é mais eficiente, essa forma de atualização é preferida. Os pesos e <em>biases</em> precisam ser inicializados. No LMS, esses parâmetros são geralmente inicializados com zero. No entanto, se fizermos o mesmo no algoritmo <em>backpropagation</em>, dependendo da função de ativação, esses parâmetros  não serão atualizados. Para exemplificar, vamos considerar a tangente hiperbólica como função de ativação. Essa função é definida como</p>
+<div class="math notranslate nohighlight">
+\[
+\varphi(v)={\rm tanh}(v)=\frac{e^v-e^{-v}}{e^v+e^{-v}}.
+\]</div>
+<p>Note que se inicializarmos os pesos e <em>biases</em> com zero, as saídas dos combinadores lineares dos neurônios  também serão iguais zero e como <span class="math notranslate nohighlight">\({\rm tanh}(0)=0\)</span>, as saídas dos neurônios e consequentemente os gradientes serão nulos. Dessa forma, não ocorre atualização dos pesos e <em>biases</em>. Em geral, não temos nenhuma informação prévia sobre a solução “ótima” dos pesos e <em>biases</em>. Por isso, costuma-se inicializar esses parâmetros a partir de uma distribuição uniforme. O intervalo da distribuição depende do problema. Podemos considerar, por exemplo, valores uniformemente distribuídos no intervalo <span class="math notranslate nohighlight">\([-10^{-2}, 10^{-2}]\)</span>.</p>
+<p>Diferente do que acontece no algoritmo LMS, a função custo minimizada pelo algoritmo <em>backpropagation</em> tem inúmeros mínimos locais devido às não linearidades inseridas pelas funções de ativação. Suponha hipoteticamente que tivéssemos apenas dois parâmetros <span class="math notranslate nohighlight">\(w_0\)</span> e <span class="math notranslate nohighlight">\(w_1\)</span> a serem ajustados. Na <a class="reference internal" href="#fig-custo"><span class="std std-numref">Fig. 26</span></a>(a) temos o MSE a ser minimizado pelo LMS, que apresenta um único ponto de mínimo, que é a solução de Wiener como vimos anteriormente. Já na <a class="reference internal" href="#fig-custo"><span class="std std-numref">Fig. 26</span></a>(b), temos uma função custo com inúmeros mínimos locais. Não temos mais uma função convexa e o gradiente é nulo nesses pontos de mínimo. Isso faz com  que o algoritmo pare de atualizar e atinja uma solução subótima, que por sua vez, pode estar muito distante do mínimo global da função custo. Vários fatores fazem com que o algoritmo <em>backpropagation</em> pare em um mínimo local: o passo de adaptação, a inicialização, determinadas funções de ativação, etc. A solução subótima nem sempre é adequada. Por isso, várias soluções para fazer com que o algoritmo saia dos mínimos locais  foram propostas na literatura como veremos posteriormente.</p>
+<div class="figure align-default" id="fig-custo">
+<a class="reference internal image-reference" href="_images/Custo.png"><img alt="_images/Custo.png" src="_images/Custo.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 26 </span><span class="caption-text">a) Função custo do MSE a ser minimizada pelo LMS;  b) Função custo do MSE, a ser minimizada pelo <em>backpropagation</em>.  Fonte: XXX}</span><a class="headerlink" href="#fig-custo" title="Link Permanente para essa imagem">¶</a></p>
+</div>
+<p>Na <a class="reference internal" href="#tab-bp"><span class="std std-numref">Tabela 4</span></a>, é apresentado o pseudocódigo do algoritmo <em>backpropagation</em> no modo de treinamento estocástico. Apesar da dedução ter sido feita neste modo, ele raramente é utilizado de forma estocástica. Em vez disso, é mais comum considerar os modos de treinamento <em>batch</em> e <em>mini-batch</em>. Como fizemos a formulação desses modos no algoritmo LMS, sua extensão para o <em>backpropagation</em> é direta e deixaremos a cargo do leitor.</p>
+<table class="table" id="tab-bp">
+<caption><span class="caption-number">Tabela 4 </span><span class="caption-text">Sumário do algoritmo <em>backpropagation</em> para treinamento da rede MLP no modo estocástico.  <span class="math notranslate nohighlight">\(N_t\)</span> é o número de dados de treinamento.</span><a class="headerlink" href="#tab-bp" title="Link Permanente para essa tabela">¶</a></caption>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Inicialização:</p>
+<ul class="simple">
+<li><p>As matrizes <span class="math notranslate nohighlight">\(\mathbf{W}^{(j)}(0),\;j=1,2,\ldots, L\)</span> devem ser inicializadas com número aleatórios uniformemente distribuídos</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>Para <span class="math notranslate nohighlight">\(n=1,2,\ldots,\)</span> calcule:</p>
+<ul class="simple">
+<li><p><span style="color:blue">Cálculo progressivo</span></p></li>
+<li><p><span style="color:blue">Para <span class="math notranslate nohighlight">\(j=1,2,\ldots, L,\)</span> calcule:</span>.</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}^{(j)}(n)=\left[\begin{array}{c}
+                                              1 \\
+                                              \mathbf{y}^{(j-1)}(n)\\
+                                            \end{array}
+\right]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{v}^{(j)}(n)=\mathbf{W}^{(j)}(n-1)\mathbf{x}^{(j)}(n)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{y}^{(j)}(n)=\varphi(\mathbf{v}^{(j)}(n))\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{d}_{\varphi}^{(j)}(n)=\varphi'(\mathbf{v}^{(j)}(n))\)</span></p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{e}(n)=\mathbf{d}(n)-\mathbf{y}^{(L)}(n)\)</span></p></li>
+<li><p><span style="color:red">Cálculo regressivo</span></p></li>
+<li><p><span style="color:red">Para <span class="math notranslate nohighlight">\(j=L,L-1,\ldots, 1,\)</span> calcule:</span></p>
+<ul>
+<li><p>Se <span class="math notranslate nohighlight">\(j=L\)</span></p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{\delta}^{(L)}(n)=\mathbf{d}_{\varphi}^{(j)}(n)\odot \mathbf{e}(n)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{\Delta}^{(L)}_{\delta}(n)=\boldsymbol{\delta}^{(L)}(n) [\mathbf{x}^{(L)}(n)]^{T}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{W}^{(L)}(n)=\mathbf{W}^{(L)}(n-1)+\eta\boldsymbol{\Delta}_{\delta}^{(L)}(n)\)</span></p></li>
+</ul>
+</li>
+<li><p>Caso contrário</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{\delta}^{(j)}(n)=\mathbf{d}_{\varphi}^{(j)}(n)\odot\left\{\left[\overline{\mathbf{W}}^{(j+1)}(n-1)\right]^{\rm T}\;\boldsymbol{\delta}^{(j+1)}(n)\right\}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{\Delta}_{\delta}^{(j)}(n)=\boldsymbol{\delta}^{(j)}(n) [\mathbf{x}^{(j)}(n)]^{T}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{W}^{(j)}(n)=\mathbf{W}^{(j)}(n-1)+ \eta\boldsymbol{\Delta}_{\delta}^{(j)}(n)\)</span></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="utilizando-a-rede-mlp-no-problema-das-meias-luas">
+<h2>Utilizando a rede MLP no problema das meias-luas<a class="headerlink" href="#utilizando-a-rede-mlp-no-problema-das-meias-luas" title="Link permanente para este título">¶</a></h2>
+<p>Vamos voltar ao exemplo de classificação das meias-luas com <span class="math notranslate nohighlight">\(r_1=10\)</span>, <span class="math notranslate nohighlight">\(r_2=-4\)</span> e <span class="math notranslate nohighlight">\(r_3=6\)</span>. Vimos que essa situação exigia uma curva de separação não linear que tanto o algoritmo LMS quanto o perceptron de Rosenblatt não são capazes de fornecer. Vamos considerar agora a solução obtida por uma rede MLP com três camadas (3-2-1) no modo de treinamento <em>mini-batch</em> (<span class="math notranslate nohighlight">\(N_0=2\)</span>, <span class="math notranslate nohighlight">\(N_t=10^3\)</span>, <span class="math notranslate nohighlight">\(N_b=50\)</span> e <span class="math notranslate nohighlight">\(N_e=10^4\)</span>). Os pesos e <em>biases</em> foram inicializados com números aleatórios gerados a partir de uma distribuição uniforme no intervalo  <span class="math notranslate nohighlight">\([-10^{-2}, 10^{-2}]\)</span> e o passo de adaptação foi considerado fixo e igual a <span class="math notranslate nohighlight">\(\eta=0,1\)</span>. Considerou-se ainda a tangente hiperbólica como função de ativação de todos os neurônios e a função custo do erro quadrático médio (MSE).</p>
+<p>Na <a class="reference internal" href="#fig-mlpboa"><span class="std std-numref">Fig. 27</span></a> são mostradas a função custo ao longo das épocas, a classificação dos dados de teste  e a curva de separação das regiões. Observa-se que a função custo não terminou de convergir apesar das <span class="math notranslate nohighlight">\(N_e=10^4\)</span> épocas. No entanto, o valor que ela atinge na última época é de aproximadamente  <span class="math notranslate nohighlight">\(J_{\rm MSE}\approx 7 \times 10^{-6}\)</span>, o que corresponde a <span class="math notranslate nohighlight">\(-51,5\)</span>~dB. Caso não tenha ocorrido <em>overfitting</em>, esse valor é baixo o suficiente para conseguir separar adequadamente as regiões. Para comprovar, foram gerados <span class="math notranslate nohighlight">\(N_{\rm teste}=2\times 10^3\)</span> dados de teste que foram classificados pela MLP considerando os pesos e e <em>biases</em> da última iteração. Podemos observar na figura que não há erros de classificação (taxa de erros igual a zero) e a curva de separação obtida é não linear, como esperado.</p>
+<div class="figure align-default" id="fig-mlpboa">
+<a class="reference internal image-reference" href="_images/MLPBoa.png"><img alt="_images/MLPBoa.png" src="_images/MLPBoa.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 27 </span><span class="caption-text">O problema de classificação das meias-luas (<span class="math notranslate nohighlight">\(r_1=10\)</span>, <span class="math notranslate nohighlight">\(r_2=-4\)</span> e <span class="math notranslate nohighlight">\(r_3=6\)</span>). Função custo ao longo das épocas de treinamento (figura à esquerda); Dados de teste (<span class="math notranslate nohighlight">\(N_{\text{teste}}=2\times 10^3\)</span>) e curva de separação das regiões (figura à direita) obtida com uma rede MLP (3–2–1) treinada em <em>mini-batch</em> com o algoritmo <em>backpropagation</em> (<span class="math notranslate nohighlight">\(N_0=2\)</span>, <span class="math notranslate nohighlight">\(\eta=0,1\)</span>, <span class="math notranslate nohighlight">\(N_t=10^3\)</span>, <span class="math notranslate nohighlight">\(N_b=50\)</span> e <span class="math notranslate nohighlight">\(N_e=10^4\)</span>); função de ativação tangente hiperbólica e pesos e <em>biases</em> inicializados com números aleatórios gerados a partir de uma distribuição uniforme no intervalo  <span class="math notranslate nohighlight">\([-10^{-2}, 10^{-2}]\)</span></span><a class="headerlink" href="#fig-mlpboa" title="Link Permanente para essa imagem">¶</a></p>
+</div>
+<p>Para ilustrar a evolução da fronteira de decisão ao longo das épocas,
+a classificação dos dados de teste e a curva de separação das regiões são mostradas na <a class="reference internal" href="#fig-mlpboas"><span class="std std-numref">Fig. 28</span></a> para diferentes valores de <span class="math notranslate nohighlight">\(N_e\)</span>.</p>
+<div class="figure align-default" id="fig-mlpboas">
+<a class="reference internal image-reference" href="_images/MLPBoas.png"><img alt="_images/MLPBoas.png" src="_images/MLPBoas.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 28 </span><span class="caption-text">O problema de classificação das meias-luas (<span class="math notranslate nohighlight">\(r_1=10\)</span>, <span class="math notranslate nohighlight">\(r_2=-4\)</span> e <span class="math notranslate nohighlight">\(r_3=6\)</span>).  Classificação dos dados de teste  (<span class="math notranslate nohighlight">\(N_{\text{teste}}=2\times 10^3\)</span>) e curva de separação das regiões ao longo das épocas obtidas com uma rede MLP (3–2–1) treinada em <em>mini-batch</em> com o algoritmo <em>backpropagation</em> (<span class="math notranslate nohighlight">\(N_0=2\)</span>, <span class="math notranslate nohighlight">\(\eta=0,1\)</span>, <span class="math notranslate nohighlight">\(N_t=10^3\)</span>, <span class="math notranslate nohighlight">\(N_b=50\)</span>); função de ativação tangente hiperbólica e pesos e <em>biases</em> inicializados com números aleatórios gerados a partir de uma distribuição uniforme no intervalo  <span class="math notranslate nohighlight">\([-10^{-2}, 10^{-2}]\)</span>.</span><a class="headerlink" href="#fig-mlpboas" title="Link Permanente para essa imagem">¶</a></p>
+</div>
+<p>Para cada caso, os pesos obtidos na época em questão foram considerados fixos e usados para classificação dos dados de teste. As respectivas taxas de erro estão mostradas na <a class="reference internal" href="#tab-taxas"><span class="std std-numref">Tabela 5</span></a>. Nota-se que <span class="math notranslate nohighlight">\(N_e=5\)</span> épocas é muito pouco para que a MLP consiga classificar os dados. A medida que o número de épocas aumenta, a curva de separação vai tomando uma forma mais adequada, o que faz com que  a taxa de erros diminua, como esperado. Para <span class="math notranslate nohighlight">\(N_e=100\)</span>, a taxa de erros é de 1,55% e para <span class="math notranslate nohighlight">\(N_e=500\)</span> não há mais erros de classificação. Diante disso, <span class="math notranslate nohighlight">\(500\)</span> épocas são suficientes para que a MLP consiga classificar corretamente os dados.</p>
+<table class="table" id="tab-taxas">
+<caption><span class="caption-number">Tabela 5 </span><span class="caption-text">Taxas de erro das classificações da figura anterior.</span><a class="headerlink" href="#tab-taxas" title="Link Permanente para essa tabela">¶</a></caption>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(N_e\)</span></p></td>
+<td><p>5</p></td>
+<td><p>50</p></td>
+<td><p>75</p></td>
+<td><p>77</p></td>
+<td><p>80</p></td>
+<td><p>90</p></td>
+<td><p>100</p></td>
+<td><p>500</p></td>
+</tr>
+<tr class="row-even"><td><p>Taxa de erro (%)</p></td>
+<td><p>50,00</p></td>
+<td><p>10,20</p></td>
+<td><p>9,35</p></td>
+<td><p>4,85</p></td>
+<td><p>2,85</p></td>
+<td><p>2,20</p></td>
+<td><p>1,55</p></td>
+<td><p>0,00</p></td>
+</tr>
+</tbody>
+</table>
+<p>Apesar do excelente resultado da <a class="reference internal" href="#fig-mlpboa"><span class="std std-numref">Fig. 27</span></a>, nenhuma técnica foi utilizada para fazer com que o  algoritmo <em>backpropagation</em> não ficasse parado em mínimos locais. Ao inicializar os pesos e <em>biases</em> considerando a mesma distribuição mas sorteando valores diferentes, é possível que o algoritmo fique parado em mínimos locais que levam a soluções subótimas. Essa situação pode ser observada na <a class="reference internal" href="#fig-mlpruim"><span class="std std-numref">Fig. 29</span></a>. Na <a class="reference internal" href="#fig-mlpruim"><span class="std std-numref">Fig. 29</span></a>(a) e na <a class="reference internal" href="#fig-mlpruim"><span class="std std-numref">Fig. 29</span></a>(c), observa-se que a função custo atinge aproximadamente <span class="math notranslate nohighlight">\(J_{\rm MSE}\approx 5\)</span>, o que corresponde a <span class="math notranslate nohighlight">\(-7\)</span>~dB. As respectivas curvas de separação e as classificações dos dados de teste estão mostradas na <a class="reference internal" href="#fig-mlpruim"><span class="std std-numref">Fig. 29</span></a>(b) e na <a class="reference internal" href="#fig-mlpruim"><span class="std std-numref">Fig. 29</span></a>(d). No caso da <a class="reference internal" href="#fig-mlpruim"><span class="std std-numref">Fig. 29</span></a>(b), a MLP obteve uma curva de separação que é uma reta, semelhante às soluções obtidas com o LMS e o perceptron de Rosenblatt, o que leva a uma taxa de erros de 10,4%. Já no caso da <a class="reference internal" href="#fig-mlpruim"><span class="std std-numref">Fig. 29</span></a>(d), a MLP obteve uma curva de separação não linear. No entanto, há vários pontos da Região A (azul) classificados erroneamente como pertencentes à Região B (vermelha), o que leva a uma taxa de erros de 7,6%.</p>
+<div class="figure align-default" id="fig-mlpruim">
+<a class="reference internal image-reference" href="_images/MLPRuim.png"><img alt="_images/MLPRuim.png" src="_images/MLPRuim.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 29 </span><span class="caption-text">O problema de classificação das meias-luas (<span class="math notranslate nohighlight">\(r_1=10\)</span>, <span class="math notranslate nohighlight">\(r_2=-4\)</span> e <span class="math notranslate nohighlight">\(r_3=6\)</span>).
+(a) e (c) Função custo ao longo das épocas de treinamento; (b) e (d) Dados de teste  (<span class="math notranslate nohighlight">\(N_{\text{teste}}=2\times 10^3\)</span>) e curva de separação das regiões (correspondentes às curvas do custo à esquerda) obtida com uma rede MLP (3–2–1) treinada em <em>mini-batch</em> com o algoritmo <em>backpropagation</em> (<span class="math notranslate nohighlight">\(N_0=2\)</span>, <span class="math notranslate nohighlight">\(\eta=0,1\)</span>, <span class="math notranslate nohighlight">\(N_t=10^3\)</span>, <span class="math notranslate nohighlight">\(N_b=50\)</span> e <span class="math notranslate nohighlight">\(N_e=10^4\)</span>); função de ativação tangente hiperbólica e pesos e <em>biases</em> inicializados com números aleatórios gerados a partir de uma distribuição uniforme no intervalo  <span class="math notranslate nohighlight">\([-10^{-2}, 10^{-2}]\)</span>.</span><a class="headerlink" href="#fig-mlpruim" title="Link Permanente para essa imagem">¶</a></p>
+</div>
+<p>A conclusão desse exemplo é que a rede MLP é capaz de proporcionar soluções não lineares que podem ser adequadas a vários problemas de classificação e regressão. No entanto, é importe utilizar técnicas que façam com que o algoritmo <em>backpropagation</em> não fique parado em mínimos locais. Antes de discutirmos essas técnicas, vamos abordar a seguir o Teorema de Cybenko que diz que a MLP é um aproximador universal de funções.</p>
+</div>
+<div class="section" id="mlp-como-aproximador-universal-de-funcoes">
+<h2>MLP como aproximador universal de funções<a class="headerlink" href="#mlp-como-aproximador-universal-de-funcoes" title="Link permanente para este título">¶</a></h2>
+<p>Uma rede MLP treinada com o algoritmo <em>backpropagation</em> pode ser vista como um sistema capaz de realizar um mapeamento  entrada-saída de forma não linear. Considere uma rede MLP com  <span class="math notranslate nohighlight">\(N_0\)</span> entradas e <span class="math notranslate nohighlight">\(L\)</span> saídas. A relação entrada-saída da rede define um mapeamento de um espaço Euclidiano de entrada de dimensão <span class="math notranslate nohighlight">\(N_0\)</span> a um espaço Euclidiano de saída de dimensão <span class="math notranslate nohighlight">\(L\)</span>, que é infinitamente e continuamente diferenciável desde que a função de ativação também seja. Neste contexto, cabe a seguinte pergunta: qual o número mínimo de camadas ocultas que a rede MLP precisa ter para  fornecer uma aproximação  de qualquer mapeamento contínuo? A resposta para essa pergunta envolve o Teorema da Aproximação Universal, enunciado a seguir.</p>
+<div class="admonition-teorema-da-aproximacao-universal admonition">
+<p class="admonition-title">Teorema da Aproximação Universal</p>
+<p>Seja <span class="math notranslate nohighlight">\(\varphi(\cdot)\)</span>
+uma função contínua, não constante, limitada e monotônica crescente. Vamos, utilizar, <span class="math notranslate nohighlight">\(I_{N_0}\)</span> para denotar o hipercubo unitário <span class="math notranslate nohighlight">\([0,\;1]^{N_0}\)</span> de dimensão <span class="math notranslate nohighlight">\(N_0\)</span>. O espaço de funções contínuas em <span class="math notranslate nohighlight">\(I_{N_0}\)</span> é denotado por <span class="math notranslate nohighlight">\(C(I_{N_0})\)</span>. Então, dada qualquer função <span class="math notranslate nohighlight">\(f \ni C(I_{N_0})\)</span> e <span class="math notranslate nohighlight">\(\varepsilon&gt;0\)</span>, existe um inteiro <span class="math notranslate nohighlight">\(N_1\)</span> e conjuntos de constantes, reais <span class="math notranslate nohighlight">\(\alpha_i\)</span>, <span class="math notranslate nohighlight">\(b_i\)</span> e <span class="math notranslate nohighlight">\(w_{ij}\)</span>, <span class="math notranslate nohighlight">\(i=1, 2, \ldots, N_1\)</span> e <span class="math notranslate nohighlight">\(j = 1, 2, \ldots, N_0 \)</span> tal que se pode definir</p>
+<div class="math notranslate nohighlight">
+\[
+F(x_1, x_2, \ldots, x_{N_0})=\displaystyle\sum_{i=1}^{N_1}\alpha_i\varphi\left(\displaystyle\sum_{j=1}^{N_0}w_{ij}x_j+b_i\right)
+\]</div>
+<p>como uma aproximação da função <span class="math notranslate nohighlight">\(f(\cdot)\)</span>, ou seja,</p>
+<div class="math notranslate nohighlight">
+\[
+|F(x_1, x_2, \ldots, x_{N_0})-f(x_1, x_2, \ldots, x_{N_0})|&lt;\varepsilon
+\]</div>
+<p>para todos <span class="math notranslate nohighlight">\(x_1, x_2, \ldots, x_{N_0}\)</span> do espaço de entrada.</p>
+</div>
+<p>O Teorema da Aproximação Universal é diretamente aplicável à rede MLP. Primeiramente, cabe observar que a tangente hiperbólica, comumente usada como função de ativação, é não constante, limitada e monotonicamente crescente. Portanto, ela satisfaz as condições impostas para a função <span class="math notranslate nohighlight">\(\varphi(\cdot)\)</span>. Além disso,</p>
+<div class="math notranslate nohighlight">
+\[
+\displaystyle\sum_{i=1}^{N_1}\alpha_i\varphi\left(\displaystyle\sum_{j=1}^{N_0}w_{ij}x_j+b_i\right)
+\]</div>
+<p>representa a saída de uma MLP descrita a seguir:</p>
+<ol class="simple">
+<li><p>a rede possui <span class="math notranslate nohighlight">\(N_0\)</span> entradas, indicadas por  <span class="math notranslate nohighlight">\(x_1, x_2, \ldots, x_{N_0}\)</span>, e uma única camada oculta composta por <span class="math notranslate nohighlight">\(N_1\)</span> neurônios;</p></li>
+<li><p>o neurônio oculto <span class="math notranslate nohighlight">\(i\)</span> tem pesos <span class="math notranslate nohighlight">\(w_{i1}, w_{i2}, \ldots, w_{iN_0}\)</span> e <em>bias</em> <span class="math notranslate nohighlight">\(b_i\)</span>;</p></li>
+<li><p>a saída da rede é uma combinação linear das saídas dos neurônios ocultos,
+com <span class="math notranslate nohighlight">\(\alpha_1\)</span>, <span class="math notranslate nohighlight">\(\alpha_2, \ldots,\)</span> <span class="math notranslate nohighlight">\(\alpha_{N_1}\)</span> sendo os pesos da saída.</p></li>
+</ol>
+<p>A partir desse teorema, pode-se afirmar que uma única camada oculta é suficiente para que uma rede MLP obtenha uma aproximação uniforme para um determinado conjunto de treinamento, representado pelas entradas <span class="math notranslate nohighlight">\(x_1, x_2, \ldots, x_{N_0}\)</span>, e uma saída desejada <span class="math notranslate nohighlight">\(f(x_1, x_2, \ldots, x_{N_0})\)</span>. Por isso, as redes MLP são conhecidas como <strong>aproximadores universais de funções</strong>. Esse resultado foi demonstrado pela primeira vez por Cybenko em 1988 e por isso, também é chamado de Teorema de Cybenko na literatura de redes neurais. Apesar desse resultado interessante, o teorema não nos diz que uma única camada oculta é ótima no sentido de tempo de aprendizado, simplicidade de implementação ou capacidade de generalização. Mais detalhes podem ser encontrados, por exemplo, em (Haykin, 2009).</p>
+<hr class="footnotes docutils" />
+<dl class="footnote brackets">
+<dt class="label" id="fsaida"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Em alguns livros, considera-se também a entrada como uma camada, como é o caso, por exemplo, da formulação de  (Haykin, 2009). Aqui, vamos considerar camadas apenas as que possuem neurônios. Dessa forma, a primeira camada da rede MLP será sempre oculta.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="neuronio_exercicio_jupyter.html" title="anterior página">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">anterior</p>
+            <p class="prev-next-title">Exercício</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="referencias.html" title="próximo página">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">próximo</p>
+        <p class="prev-next-title">Referências</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      De Magno T. M. Silva e Renato Candido<br/>
+    
+        &copy; direito autoral 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
