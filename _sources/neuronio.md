@@ -188,7 +188,7 @@ Em julho de 1958, o escritório de Pesquisa Naval dos EUA revelou uma invenção
 width: 100%
 name: fig_Rosen
 ---
-Publicação de Rosenblatt de 1958 (à esquerda) e foto de  Rosenblatt e seu perceptron chamado de Mark I em 1960 (à direita). Fonte: [https://paslongtemps.net/blog/2020/05/29/frank-rosenblatt-mark-i-perceptron-1960-dnvdk/](https://paslongtemps.net/blog/2020/05/29/frank-rosenblatt-mark-i-perceptron-1960-dnvdk/).
+Publicação de Rosenblatt de 1958 (à esquerda) e foto de  Rosenblatt e seu perceptron chamado de Mark I em 1960 (à direita) [[Fonte]](https://paslongtemps.net/blog/2020/05/29/frank-rosenblatt-mark-i-perceptron-1960-dnvdk/).
 ```
 
 Desde 1960, muita pesquisa foi feita com o objetivo de melhorar o modelo do cérebro humano. Apesar dos inúmeros avanços, ainda estamos longe de termos um sistema que consiga modelar de maneira precisa o cérebro, devido à sua alta complexidade e eficiência. Apesar das redes neurais artificiais serem inspiradas no funcionamento do cérebro, vamos encará-las como sistemas não lineares que podem ser aplicados como soluções eficientes
