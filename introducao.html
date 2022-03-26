@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+
+<html lang="pt_BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introdução &#8212; PSI3471 - Fundamentos de Sistemas Eletrônicos Inteligentes</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/translations.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Buscar" href="search.html" />
+    <link rel="next" title="Regressão linear" href="regressao_linear.html" />
+    <link rel="prev" title="Home" href="intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="pt_BR">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">PSI3471 - Fundamentos de Sistemas Eletrônicos Inteligentes</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Pesquise este livro ..." aria-label="Pesquise este livro ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Home
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference external" href="https://edisciplinas.usp.br/course/view.php?id=97671">
+   Página no Moodle
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Introdução
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="regressao_linear.html">
+   Regressão linear
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="regressao_linear_exercicio_jupyter.html">
+     Exercício 1
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lms.html">
+   O algoritmo LMS
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Alternar de navegação" aria-controls="site-navigation"
+                title="Alternar de navegação" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Baixe esta página"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/introducao.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Baixar arquivo fonte" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Imprimir em PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Modo tela cheia"
+        title="Modo tela cheia"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Conteúdo
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aproximacao-de-funcoes">
+   Aproximação de funções
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#classificacao">
+     Classificação
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#regressao">
+     Regressão
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Introdução</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Conteúdo </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aproximacao-de-funcoes">
+   Aproximação de funções
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#classificacao">
+     Classificação
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#regressao">
+     Regressão
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="introducao">
+<h1>Introdução<a class="headerlink" href="#introducao" title="Link permanente para este título">¶</a></h1>
+<p>O <strong>Aprendizado de Máquina</strong> (<em>Machine Learning</em>) surgiu dentro de um campo da Ciência da Computação conhecido como <strong>Inteligência Artificial</strong>  (IA).
+O objetivo da IA é tornar máquinas inteligentes, capazes de “pensar racionalmente como humanos” e resolver problemas. Já o aprendizado de máquina busca criar sistemas computacionais e algoritmos para possibilitar máquinas a “aprender” a partir de uma experiência prévia. Como a inteligência e o aprendizado andam juntos, o aprendizado de máquina tem um papel dominante em IA. Uma máquina aprende quando ela é capaz de acumular experiência (por meio de dados, programas, etc.) e desenvolver novo conhecimento de modo a fazer com que seu desempenho em tarefas específicas melhore com o tempo. A ideia de aprender a partir da experiência é central em vários problemas de aprendizado de máquina como os de classificação, cujo objetivo é encontrar uma forma sistemática de classificar um exemplo novo.</p>
+<p>As <strong>redes neurais</strong>, também chamadas de <strong>redes neurais artificiais</strong>,
+fazem parte de um subconjunto de técnicas de aprendizado de máquina. Na literatura, o termo “aprendizado de máquina” é muitas vezes confundido com o termo “aprendizado profundo” (<em>deep learning</em>). No entanto, uma rede neural só é considerada profunda se  tiver duas ou mais camadas ocultas, conceito que será abordado posteriormente. Pode-se dizer que a maioria das redes neurais usadas na prática considera atualmente o aprendizado profundo. Na <a class="reference internal" href="#fig-campos"><span class="std std-numref">Fig. 1</span></a>, fica claro que as redes neurais profundas são um subconjunto das redes neurais, que por sua vez são um subconjunto de técnicas de aprendizado de máquina. Todas as técnicas de aprendizado de máquina fazem parte do campo de IA.</p>
+<div class="figure align-default" id="fig-campos">
+<a class="reference internal image-reference" href="_images/campos.png"><img alt="_images/campos.png" src="_images/campos.png" style="width: 60%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Diagrama indicando o subcampo das redes neurais profundas dentro da IA.</span><a class="headerlink" href="#fig-campos" title="Link Permanente para essa imagem">¶</a></p>
+</div>
+<p>Desde o surgimento dos computadores, os cientistas têm buscado  maneiras de permitir que as máquinas produzam uma saída desejada a partir de entradas para tarefas como classificação e regressão. As redes neurais são sistemas não lineares que podem ser usados para essas tarefas. Elas surgiram na década de 1940, mas o algoritmo utilizado no seu treinamento, chamado de algoritmo de retropropagação (<em>backpropagation</em>), foi proposto apenas em 1986. Nas décadas de 1990 e 2000, muitos problemas foram observados no treinamento das redes neurais, que dificultavam sua capacidade de generalização e sua utilização em problemas práticos. No entanto, na década de 2010 diferentes abordagens foram propostas para melhorar seu treinamento, incluindo o treinamento das redes profundas. Essas abordagens fizeram com que as redes passassem a ganhar competições em diferentes problemas de classificação e regressão. Desde então, as redes neurais estão em ascensão  devido à sua habilidade de resolver problemas anteriormente considerados insolúveis. Atualmente, elas têm sido consideradas em diferentes áreas como carros autônomos, cálculo de risco, detecção de fraude, detecção precoce de câncer, classificação de arritmias cardíacas, classificação de mosquitos,  entre muitos outros.</p>
+<p>O aprendizado de máquina pode ser classificado em dois tipos: supervisionado e não supervisionado. No caso supervisionado, existem dados rotulados que são usados no treinamento. Por exemplo, suponha que desejamos classificar o tipo de arritmia cardíaca. Nesse tipo de aplicação, é comum considerar o aprendizado supervisionado: existem  bancos de dados com sinais de eletrocardiograma (ECG), cujas arritmias foram  analisadas e classificadas <em>a priori</em> por um grupo de especialistas. Parte desses sinais é utilizada no treinamento: para cada batimento cardíaco a saída da máquina é comparada com a classificação conhecida. A comparação entre a saída e a classificação desejada é usada para ajustar os parâmetros da máquina a fim de minimizar uma função dessa diferença. Parte dos dados que não foi utilizada no treinamento é reservada para o teste. Neste caso, os parâmetros da máquina são mantidos fixos para verificar se a máquina tem uma boa capacidade de generalização. Em outras palavras, verifica-se se a máquina treinada é capaz de classificar dados que não foram utilizados no treinamento, possibilitando medir a acurácia que se obtém nessa classificação. No aprendizado não supervisionado, a máquina deve ser capaz de ajustar seus parâmetros sem utilizar dados com a classificação ou regressão desejada, ou seja,  os rótulos não são conhecidos. Esse tipo de aprendizado é adequado para problemas que exigem que a máquina identifique e extraia semelhanças entre as entradas para que entradas semelhantes possam ser categorizadas juntas. Os dois tipos fundamentais de métodos de aprendizado não supervisionado são o agrupamento e a estimativa de densidade. O primeiro, que é o mais utilizado na prática, envolve problemas em que se necessita agrupar os dados em categorias específicas conhecidas como <em>clusters</em>, enquanto o último envolve estimar a distribuição estatística dos dados. Alguns exemplos de algoritmos de aprendizado de máquina não supervisionado incluem <span class="math notranslate nohighlight">\(k\)</span>-means, análise de componentes principais e clusterização hierárquica.</p>
+<p>A seguir vamos abordar os dois tipos de problema que as redes neurais são capazes de resolver: classificação e regressão.</p>
+<div class="section" id="aproximacao-de-funcoes">
+<h2>Aproximação de funções<a class="headerlink" href="#aproximacao-de-funcoes" title="Link permanente para este título">¶</a></h2>
+<p>A modelagem preditiva consiste em desenvolver um modelo usando dados históricos para fazer uma previsão sobre novos dados para os quais não temos resposta. Ela pode ser descrita pelo problema matemático de aproximar uma função de mapeamento de variáveis de entrada  para variáveis de saída, que é chamado de aproximação de funções. O trabalho do algoritmo de modelagem é encontrar a melhor função de mapeamento possível, considerando o tempo e os recursos disponíveis. Podemos dividir a aproximação de funções em problemas de classificação ou de regressão.</p>
+<div class="section" id="classificacao">
+<h3>Classificação<a class="headerlink" href="#classificacao" title="Link permanente para este título">¶</a></h3>
+<p>A modelagem preditiva de classificação é a tarefa de aproximar uma função de mapeamento de variáveis de entrada  para variáveis de saída discretas.
+As variáveis de saída são frequentemente chamadas de rótulos ou categorias. A função de mapeamento prevê a classe ou categoria para uma determinada observação. Por exemplo, um e-mail de texto pode ser classificado como pertencente a uma das duas classes: “<em>spam</em>” e “não <em>spam</em>”.</p>
+<p>Algumas observações sobre o problema de classificação:</p>
+<ol class="simple">
+<li><p>Um problema de classificação requer que os exemplos sejam classificados em uma de duas ou mais classes;</p></li>
+<li><p>Uma classificação pode ter variáveis de entrada discretas ou contínuas. Variáveis contínuas são aquelas que assumem qualquer valor em um intervalo da reta real, e.g. qualquer valor real do intervalo <span class="math notranslate nohighlight">\([-1,\; 1]\)</span>.</p></li>
+<li><p>Um problema com duas classes é frequentemente chamado de problema de classificação binária;</p></li>
+<li><p>Um problema com mais de duas classes é frequentemente chamado de problema de classificação multiclasse;</p></li>
+<li><p>Um problema em que um exemplo é atribuído a várias classes é chamado de problema de classificação multirrótulo.</p></li>
+</ol>
+<p>É comum que os modelos de classificação prevejam um valor contínuo como a probabilidade de um dado exemplo pertencer a cada classe de saída. Uma probabilidade prevista pode ser convertida em um valor de classe selecionando o rótulo da classe que tem a probabilidade mais alta. Por exemplo, um e-mail específico de texto pode receber as probabilidades de <span class="math notranslate nohighlight">\(0,1\)</span> de ser “<em>spam</em>” e <span class="math notranslate nohighlight">\(0,9\)</span> de ser “não <em>spam</em>”. Podemos converter essas probabilidades em um rótulo de classe selecionando o rótulo “não <em>spam</em>”, pois ele tem a maior probabilidade prevista.</p>
+<p>Existem muitas maneiras de estimar a habilidade do classificador, sendo a mais comum  calcular a acurácia da classificação. A acurácia da classificação é a porcentagem de exemplos classificados corretamente de todas as previsões feitas. Por exemplo, se um modelo preditivo de classificação fizer 5 previsões e 3 delas estiverem corretas e 2  incorretas, a acurácia da classificação do modelo com base apenas nessas previsões seria <span class="math notranslate nohighlight">\((3/5)\times 100= 60\%\)</span>.</p>
+<p>Como exemplo de problema de classificação, considere as 20 imagens da <a class="reference internal" href="#fig-gato-cachorro"><span class="std std-numref">Fig. 2</span></a>. Observe que cada imagem contém a foto de um  gato ou de um cachorro. Pode-se usar uma técnica de aprendizado de máquina para classificar cada uma dessas imagens entre as duas classes possíveis: gato ou cachorro. Esse problema de classificação binária será abordado em um exercício da disciplina “PSI3472 - Concepção e implementação de Sistemas Eletrônicos Inteligentes”.</p>
+<div class="figure align-default" id="fig-gato-cachorro">
+<a class="reference internal image-reference" href="_images/gato_cachorro.png"><img alt="_images/gato_cachorro.png" src="_images/gato_cachorro.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Imagens de gatos e cachorros.</span><a class="headerlink" href="#fig-gato-cachorro" title="Link Permanente para essa imagem">¶</a></p>
+</div>
+</div>
+<div class="section" id="regressao">
+<h3>Regressão<a class="headerlink" href="#regressao" title="Link permanente para este título">¶</a></h3>
+<p>A modelagem preditiva de regressão é a tarefa de aproximar uma função de mapeamento de variáveis de entrada para variáveis de saída contínuas.
+Por exemplo, pode-se prever que um apartamento seja vendido por um valor específico em reais, talvez na faixa de R$<span class="math notranslate nohighlight">\(500.000\)</span>.</p>
+<p>Algumas observações sobre o problema de regressão:</p>
+<ol class="simple">
+<li><p>Um problema de regressão requer a previsão de uma quantidade;</p></li>
+<li><p>Uma regressão pode ter variáveis de entrada discretas ou contínuas;</p></li>
+<li><p>Um problema com múltiplas variáveis de entrada é frequentemente chamado de problema de regressão multivariada;</p></li>
+<li><p>Um problema de regressão em que as variáveis de entrada são ordenadas por tempo é chamado de problema de previsão de séries temporais.</p></li>
+</ol>
+<p>Como o modelo preditivo de regressão prevê uma quantidade, a habilidade do modelo deve ser descrita pelo erro de predição calculado como a diferença entre a previsão do regressor e o valor desejado. Existem muitas maneiras de estimar a habilidade do regressor, sendo a mais comum calcular a raiz quadrada do erro quadrático médio (<em>root mean squared error</em> - RMSE), que  tem a mesma unidade do valor predito. Por exemplo, se um modelo preditivo de regressão fez 2 previsões, uma de 1,5 em que o valor esperado é 1,0 e outra de 3,3 em que o valor esperado é 3,0, então o RMSE seria</p>
+<div class="math notranslate nohighlight">
+\[
+{\rm RMSE}=\sqrt{\frac{(1,0-1,5)^2+(3,0-3,3)^2}{2}}=0,412.
+\]</div>
+<p>Como exemplo de problema de regressão, considere  a evolução do índice Bovespa (Ibovespa) de dezembro de 1967 a dezembro de 2017 mostrado na <a class="reference internal" href="#fig-ibovespa"><span class="std std-numref">Fig. 3</span></a>. O Ibovespa é o  indicador de desempenho mais importante das ações negociadas na B3 e reúne as empresas mais importantes do mercado de capitais brasileiro. Suponha que se deseja usar uma técnica de aprendizado de máquina para prever o valor desse índice no ano seguinte, ou seja de janeiro a dezembro de 2018. Para isso, pode-se considerar os dados sequenciais desde dezembro de 1967 e usar os dados do ano seguinte como resposta desejada. Assim, no treinamento pode-se considerar, por exemplo, os dados de 1968 para prever os dados de 1969 e assim por diante. O valor do índice a ser previsto é qualquer valor contínuo no intervalo <span class="math notranslate nohighlight">\([0,\; 131.000]\)</span> já que em 2018 esse índice não tinha atingido seu recorde nominal histórico que  ocorreu em 07/06/2021, fechando em 130.776 pontos.</p>
+<div class="figure align-default" id="fig-ibovespa">
+<a class="reference internal image-reference" href="_images/ibovespa.png"><img alt="_images/ibovespa.png" src="_images/ibovespa.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Evolução do Ibovespa de dezembro de 1967 a dezembro de 2017.</span><a class="headerlink" href="#fig-ibovespa" title="Link Permanente para essa imagem">¶</a></p>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="intro.html" title="anterior página">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">anterior</p>
+            <p class="prev-next-title">Home</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="regressao_linear.html" title="próximo página">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">próximo</p>
+        <p class="prev-next-title">Regressão linear</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      De Magno T. M. Silva e Renato Candido<br/>
+    
+        &copy; direito autoral 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

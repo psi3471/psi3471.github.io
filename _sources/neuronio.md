@@ -125,7 +125,7 @@ Assim, os pesos são atualizados apenas quando $e(n)\neq 0$, ou seja, quando  $y
     - $\mathbf{w}(0)=\boldsymbol{0}$, $m=0$
 * - Para $k=1, 2, \ldots, N_e$ calcule:
     - Misture os dados de treinamento
-    - Para $\ell=0, 1, 2, \ldots, \lfloor N_t/N_b \rfloor$ calcule:
+    - Para $\ell=0, 1, 2, \ldots, \lfloor N_t/N_b \rfloor - 1$ calcule:
       - $\mathbf{v}(\ell)=\mathbf{X}(\ell)\mathbf{w}(\ell)$
       - $\mathbf{y}(\ell)=\text{sgn}(\mathbf{v}(\ell))$
       - $\mathbf{e}(\ell)=\mathbf{d}(\ell)-\mathbf{y}(\ell)$

@@ -72,31 +72,31 @@ Os elementos desse vetor de erros, $e_i=d_i-b-wx_i$ para $i=1,\cdots,n$, represe
 height: 250px
 name: MV2
 ---
-Distância de um conjunto de pontos a uma determinada reta, considerando $n=3$
+Distância de um conjunto de pontos a uma determinada reta, considerando $N=3$
 ```
 
 A *melhor* reta segundo o critério dos mínimos quadrados deve minimizar o quadrado da norma Euclidiana do vetor de erros, ou seja
 
 $$
-\|\mathbf{e}\|^2=\sum_{i=1}^n e_i^2=\|\mathbf{d}-\mathbf{X}\mathbf{w}\|^2=\sum_{i=1}^n(y_i-b-wx_i)^2.
+\|\mathbf{e}\|^2=\sum_{i=1}^N e_i^2=\|\mathbf{d}-\mathbf{X}\mathbf{w}\|^2=\sum_{i=1}^N(d_i-b-wx_i)^2.
 $$
 
 Para minimizar essa norma quadrática, devemos derivá-la em relação às constantes $w$ e $b$ que se deseja determinar e igualar essas derivadas a zero. Assim, obtemos as seguintes derivadas:
 
 $$
  \begin{array}{cccc}
-   \displaystyle\frac{\displaystyle\partial\sum_{i=1}^n e_i^2}{\partial w} & = & 2\displaystyle\sum_{i=1}^n e_i\displaystyle\frac{\partial e_i}{\partial w} &
-  = -2\displaystyle\sum_{i=1}^n e_i x_i\\
-   \displaystyle\frac{\displaystyle\partial\sum_{i=1}^n e_i^2}{\partial b} & = & 2\displaystyle\sum_{i=1}^n e_i\displaystyle\frac{\partial e_i}{\partial b} &
-  = - 2\displaystyle\sum_{i=1}^n e_i,
+   \displaystyle\frac{\displaystyle\partial\sum_{i=1}^N e_i^2}{\partial w} & = & 2\displaystyle\sum_{i=1}^N e_i\displaystyle\frac{\partial e_i}{\partial w} &
+  = -2\displaystyle\sum_{i=1}^N e_i x_i\\
+   \displaystyle\frac{\displaystyle\partial\sum_{i=1}^N e_i^2}{\partial b} & = & 2\displaystyle\sum_{i=1}^N e_i\displaystyle\frac{\partial e_i}{\partial b} &
+  = - 2\displaystyle\sum_{i=1}^N e_i,
  \end{array}
 $$
 
 que podem ser escritas de forma compacta como
 
 $$
-\displaystyle\frac{\displaystyle\partial\sum_{i=1}^n e_i^2}{\partial \mathbf{w}}=
- -2\displaystyle\sum_{i=1}^n \left[
+\displaystyle\frac{\displaystyle\partial\sum_{i=1}^N e_i^2}{\partial \mathbf{w}}=
+ -2\displaystyle\sum_{i=1}^N \left[
                                   \begin{array}{c}
                                     1 \\
                                     x_i \\
@@ -136,7 +136,7 @@ Essa equação expressa a unicidade da solução. Assim, existe uma única reta 
 
 Observações importantes:
 
-- O modelo $d=w^{\rm o}x+b^{\rm o}$ é de fato linear apenas quando $b^{\rm o}\neq 0$, pois neste caso $x=0$ leva a $d=0$. No entanto, o termo *linear* é frequentemente usado na literatura neste caso para se referir ao modelo dado por uma reta.
+- O modelo $y=w^{\rm o}x+b^{\rm o}$ é de fato linear apenas quando $b^{\rm o}\neq 0$, pois neste caso $x=0$ leva a $y=0$. No entanto, o termo *linear* é frequentemente usado na literatura neste caso para se referir ao modelo dado por uma reta.
 
 - Os dados $\{(x_1,d_1),(x_2,d_2),\cdots, (x_N,d_N)\}$ conhecidos previamente foram totalmente usados aqui para se obter o modelo da reta. Neste caso, eles podem ser chamados de dados de **treinamento** do modelo.
 
@@ -302,7 +302,7 @@ $$
 \{(0,1000,\;0.7055),\;\;(0,2556,\;0.4357),\;\;(0.4111,\;0,3264),\;\;\cdots,\;\;(1,5000,\;0.2514)\}.
 $$ 
 
-Como o valor de $d$ depende do ruído, se não fixarmos uma semente, cada vez que gerarmos os dados teremos valores distintos. O objetivo é encontrar uma função (um modelo) polinomial de grau $M$ que melhor se aproxima dos pontos do conjunto de treinamento, levando em conta a forma da cossenóide sem ruído. Na {numref}`fig_RL_fit_M`, são mostrados os pontos disponíveis no treinamento (em vermelho), as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão. Foram considerados polinômios com graus $M=1$ (reta), $M=2$ (parábola) até $M=9$. É possível ver que para $M=1$ e $M=2$ ocorre o *underfitting*, ou seja, as distâncias dos pontos de treinamento aos pontos gerados pelos polinômios dos modelos são elevadas, o que indica que eles não são adequados. A medida em que o valor do grau do polinômio aumenta, observa-se um melhor ajuste entre os pontos vermelhos e as curvas azuis, até o caso extremo de $M=9$. Neste caso, o polinômio obtido passa exatamente em todos os pontos do treinamento, mas claramente a curva azul fica distante da cossenóide sem ruído em alguns trechos como pode ser visto pelas flutuações indesejadas. Isso indica que pode ter ocorrido *overfitting* devido ao número excessivo de parâmetros do modelo.
+Como o valor de $d$ depende do ruído, se não fixarmos uma semente, cada vez que gerarmos os dados teremos valores distintos. O objetivo é encontrar uma função (um modelo) polinomial de grau $M$ que melhor se aproxima dos pontos do conjunto de treinamento, levando em conta a forma da cossenóide sem ruído. Na {numref}`fig_RL_fit_M`, são mostrados os pontos disponíveis no treinamento (em vermelho), as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão. Foram considerados polinômios com graus $M=1$ (reta), $M=2$ (parábola) até $M=9$. É possível ver que para $M=1$ e $M=2$ ocorre o *underfitting*, ou seja, as distâncias dos pontos de treinamento aos pontos gerados pelos polinômios dos modelos são elevadas, o que indica que eles não são adequados. À medida em que o valor do grau do polinômio aumenta, observa-se um melhor ajuste entre os pontos vermelhos e as curvas azuis, até o caso extremo de $M=9$. Neste caso, o polinômio obtido passa exatamente em todos os pontos do treinamento, mas claramente a curva azul fica distante da cossenóide sem ruído em alguns trechos como pode ser visto pelas flutuações indesejadas. Isso indica que pode ter ocorrido *overfitting* devido ao número excessivo de parâmetros do modelo.
 
 ```{glue:figure} fig_RL_fit_M
 :figwidth: 100%

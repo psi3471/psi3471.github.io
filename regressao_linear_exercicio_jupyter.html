@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Exercício &#8212; PSI3471 - Fundamentos de Sistemas Eletrônicos Inteligentes</title>
+    <title>Exercício 1 &#8212; PSI3471 - Fundamentos de Sistemas Eletrônicos Inteligentes</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -95,11 +95,21 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   Bem-vindo
+   Home
   </a>
  </li>
 </ul>
 <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference external" href="https://edisciplinas.usp.br/course/view.php?id=97671">
+   Página no Moodle
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="introducao.html">
+   Introdução
+  </a>
+ </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="regressao_linear.html">
    Regressão linear
@@ -112,7 +122,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul class="current">
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     Exercício
+     Exercício 1
     </a>
    </li>
   </ul>
@@ -120,33 +130,6 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="lms.html">
    O algoritmo LMS
-  </a>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="neuronio.html">
-   O modelo do neurônio
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="neuronio_exercicio_jupyter.html">
-     Exercício
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="mlp.html">
-   A rede perceptron multicamada
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="referencias.html">
-   Referências
   </a>
  </li>
 </ul>
@@ -222,7 +205,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Exercício</h1>
+                <h1>Exercício 1</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -233,8 +216,8 @@ const thebe_selector_output = ".output, .cell_output"
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="exercicio">
-<h1>Exercício<a class="headerlink" href="#exercicio" title="Link permanente para este título">¶</a></h1>
+  <div class="tex2jax_ignore mathjax_ignore section" id="exercicio-1">
+<h1>Exercício 1<a class="headerlink" href="#exercicio-1" title="Link permanente para este título">¶</a></h1>
 <p>Neste exercício, você vai construir um modelo usando a técnica de mínimos quadrados para prever o preço de carros usados usando os dados do <a class="reference external" href="https://www.kaggle.com/austinreese/craigslist-carstrucks-data"><em>Used Cars Dataset</em></a>. Este banco de dados é uma enorme lista com 957 MB de informações de veículos anunciados no site <em>Craigslist.org</em>, incluindo diversos tipos de veículos.</p>
 <p>Ao trabalhar com dados reais, muitas vezes é necessário realizar algumas etapas de filtragem e limpeza para usar os dados para construir um modelo. No caso desse banco de dados, é necessário restringir os tipos de veículos que serão considerados, para obter melhores resultados com o modelo.</p>
 <p>Como o foco principal do exercício é usar a técnica de mínimos quadrados para construir o modelo, você vai trabalhar com um conjunto de dados limpo, que é um pequeno subconjunto do banco de dados original. Dessa forma, antes de começar a trabalhar no código, certifique-se de ter baixado o <a href="./datasets/used_cars_dataset/vehicles_cleaned_train.csv">arquivo CSV de dados limpos</a> do repositório de materiais.</p>
@@ -400,13 +383,13 @@ const thebe_selector_output = ".output, .cell_output"
 </ol>
 <p>Após obter os coeficientes <span class="math notranslate nohighlight">\(\mathbf{w}_o\)</span> do modelo de regressão linear, você vai utilizá-los para prever o valor de venda de carros de um <a href="./datasets/used_cars_dataset//vehicles_cleaned_test.csv">conjunto de dados de teste disponível em um arquivo CSV</a> do repositório de materiais. Após fazer o download do arquivo, repita as transformações que você fez no conjunto de treinamento, obtendo a matriz <span class="math notranslate nohighlight">\(\mathbf{X}_{\rm teste}\)</span> e o vetor <span class="math notranslate nohighlight">\(\mathbf{d}_{\rm teste}\)</span>.</p>
 <p>Para cada carro do banco de dados de teste, calcule o valor predito pelo seu modelo e o erro em relação ao valor da coluna <code class="docutils literal notranslate"><span class="pre">price</span></code>. Calcule também o erro quadrático médio considerando todo o banco de dados de teste.</p>
-<p>Ao final do exercício, você deverá entregar:</p>
+<p>Ao final do exercício, você deverá apresentar:</p>
 <ol class="simple">
 <li><p>Uma descrição das variáveis de entrada que você utilizou como entrada e as justificativas para descartar variáveis ou utilizar transformações e combinações;</p></li>
 <li><p>Os códigos utilizados para calcular o vetor <span class="math notranslate nohighlight">\(\mathbf{w}_o\)</span> e o erro quadrático médio de seu modelo, considerando os dados de teste;</p></li>
 <li><p>O valor obtido para o erro quadrático médio de seu modelo, considerando os dados de teste. Esse valor será utilizado para fazer um <em>ranking</em> dos melhores modelos.</p></li>
 </ol>
-<p>A sugestão é que o relatório seja elaborado utilizando um Jupyter Notebook e a linguagem Python, já que essas são as ferramentas que estamos utilizando neste bloco do curso. No entanto, isso não é obrigatório e você pode usar outra linguagem de programação, caso queira.</p>
+<p>A sugestão é que seja apresentado um Jupyter Notebook usando a linguagem Python, já que essas são as ferramentas que estamos utilizando nesta parte do curso. No entanto, isso não é obrigatório e você pode usar outra linguagem de programação, caso queira.</p>
 </div>
 
     <script type="text/x-thebe-config">

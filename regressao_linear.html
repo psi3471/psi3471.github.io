@@ -54,8 +54,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Buscar" href="search.html" />
-    <link rel="next" title="Exercício" href="regressao_linear_exercicio_jupyter.html" />
-    <link rel="prev" title="Bem-vindo" href="intro.html" />
+    <link rel="next" title="Exercício 1" href="regressao_linear_exercicio_jupyter.html" />
+    <link rel="prev" title="Introdução" href="introducao.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="pt_BR">
     
@@ -95,11 +95,21 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   Bem-vindo
+   Home
   </a>
  </li>
 </ul>
 <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference external" href="https://edisciplinas.usp.br/course/view.php?id=97671">
+   Página no Moodle
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="introducao.html">
+   Introdução
+  </a>
+ </li>
  <li class="toctree-l1 current active has-children">
   <a class="current reference internal" href="#">
    Regressão linear
@@ -112,7 +122,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="regressao_linear_exercicio_jupyter.html">
-     Exercício
+     Exercício 1
     </a>
    </li>
   </ul>
@@ -120,33 +130,6 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="lms.html">
    O algoritmo LMS
-  </a>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="neuronio.html">
-   O modelo do neurônio
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="neuronio_exercicio_jupyter.html">
-     Exercício
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="mlp.html">
-   A rede perceptron multicamada
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="referencias.html">
-   Referências
   </a>
  </li>
 </ul>
@@ -341,31 +324,31 @@ d=b+wx
 \[
 \mathbf{e}=\mathbf{d}-\mathbf{X}\mathbf{w}.
 \]</div>
-<p>Os elementos desse vetor de erros, <span class="math notranslate nohighlight">\(e_i=d_i-b-wx_i\)</span> para <span class="math notranslate nohighlight">\(i=1,\cdots,n\)</span>, representam as distâncias verticais da reta <span class="math notranslate nohighlight">\(d=wx+b\)</span> aos  pontos experimentais <span class="math notranslate nohighlight">\((x_i,d_i)\)</span>, como ilustrado na <a class="reference internal" href="#mv2"><span class="std std-numref">Fig. 1</span></a>, considerando <span class="math notranslate nohighlight">\(n=3\)</span>.</p>
+<p>Os elementos desse vetor de erros, <span class="math notranslate nohighlight">\(e_i=d_i-b-wx_i\)</span> para <span class="math notranslate nohighlight">\(i=1,\cdots,n\)</span>, representam as distâncias verticais da reta <span class="math notranslate nohighlight">\(d=wx+b\)</span> aos  pontos experimentais <span class="math notranslate nohighlight">\((x_i,d_i)\)</span>, como ilustrado na <a class="reference internal" href="#mv2"><span class="std std-numref">Fig. 4</span></a>, considerando <span class="math notranslate nohighlight">\(n=3\)</span>.</p>
 <div class="figure align-default" id="mv2">
 <a class="reference internal image-reference" href="_images/mmq.png"><img alt="_images/mmq.png" src="_images/mmq.png" style="height: 250px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Distância de um conjunto de pontos a uma determinada reta, considerando <span class="math notranslate nohighlight">\(n=3\)</span></span><a class="headerlink" href="#mv2" title="Link Permanente para essa imagem">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Distância de um conjunto de pontos a uma determinada reta, considerando <span class="math notranslate nohighlight">\(N=3\)</span></span><a class="headerlink" href="#mv2" title="Link Permanente para essa imagem">¶</a></p>
 </div>
 <p>A <em>melhor</em> reta segundo o critério dos mínimos quadrados deve minimizar o quadrado da norma Euclidiana do vetor de erros, ou seja</p>
 <div class="math notranslate nohighlight">
 \[
-\|\mathbf{e}\|^2=\sum_{i=1}^n e_i^2=\|\mathbf{d}-\mathbf{X}\mathbf{w}\|^2=\sum_{i=1}^n(y_i-b-wx_i)^2.
+\|\mathbf{e}\|^2=\sum_{i=1}^N e_i^2=\|\mathbf{d}-\mathbf{X}\mathbf{w}\|^2=\sum_{i=1}^N(d_i-b-wx_i)^2.
 \]</div>
 <p>Para minimizar essa norma quadrática, devemos derivá-la em relação às constantes <span class="math notranslate nohighlight">\(w\)</span> e <span class="math notranslate nohighlight">\(b\)</span> que se deseja determinar e igualar essas derivadas a zero. Assim, obtemos as seguintes derivadas:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
  \begin{array}{cccc}
-   \displaystyle\frac{\displaystyle\partial\sum_{i=1}^n e_i^2}{\partial w} &amp; = &amp; 2\displaystyle\sum_{i=1}^n e_i\displaystyle\frac{\partial e_i}{\partial w} &amp;
-  = -2\displaystyle\sum_{i=1}^n e_i x_i\\
-   \displaystyle\frac{\displaystyle\partial\sum_{i=1}^n e_i^2}{\partial b} &amp; = &amp; 2\displaystyle\sum_{i=1}^n e_i\displaystyle\frac{\partial e_i}{\partial b} &amp;
-  = - 2\displaystyle\sum_{i=1}^n e_i,
+   \displaystyle\frac{\displaystyle\partial\sum_{i=1}^N e_i^2}{\partial w} &amp; = &amp; 2\displaystyle\sum_{i=1}^N e_i\displaystyle\frac{\partial e_i}{\partial w} &amp;
+  = -2\displaystyle\sum_{i=1}^N e_i x_i\\
+   \displaystyle\frac{\displaystyle\partial\sum_{i=1}^N e_i^2}{\partial b} &amp; = &amp; 2\displaystyle\sum_{i=1}^N e_i\displaystyle\frac{\partial e_i}{\partial b} &amp;
+  = - 2\displaystyle\sum_{i=1}^N e_i,
  \end{array}
 \end{split}\]</div>
 <p>que podem ser escritas de forma compacta como</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\displaystyle\frac{\displaystyle\partial\sum_{i=1}^n e_i^2}{\partial \mathbf{w}}=
- -2\displaystyle\sum_{i=1}^n \left[
+\displaystyle\frac{\displaystyle\partial\sum_{i=1}^N e_i^2}{\partial \mathbf{w}}=
+ -2\displaystyle\sum_{i=1}^N \left[
                                   \begin{array}{c}
                                     1 \\
                                     x_i \\
@@ -398,7 +381,7 @@ $}
 <p>Essa equação expressa a unicidade da solução. Assim, existe uma única reta que se ajusta a esses pontos segundo o critério dos mínimos quadrados.</p>
 <p>Observações importantes:</p>
 <ul class="simple">
-<li><p>O modelo <span class="math notranslate nohighlight">\(d=w^{\rm o}x+b^{\rm o}\)</span> é de fato linear apenas quando <span class="math notranslate nohighlight">\(b^{\rm o}\neq 0\)</span>, pois neste caso <span class="math notranslate nohighlight">\(x=0\)</span> leva a <span class="math notranslate nohighlight">\(d=0\)</span>. No entanto, o termo <em>linear</em> é frequentemente usado na literatura neste caso para se referir ao modelo dado por uma reta.</p></li>
+<li><p>O modelo <span class="math notranslate nohighlight">\(y=w^{\rm o}x+b^{\rm o}\)</span> é de fato linear apenas quando <span class="math notranslate nohighlight">\(b^{\rm o}\neq 0\)</span>, pois neste caso <span class="math notranslate nohighlight">\(x=0\)</span> leva a <span class="math notranslate nohighlight">\(y=0\)</span>. No entanto, o termo <em>linear</em> é frequentemente usado na literatura neste caso para se referir ao modelo dado por uma reta.</p></li>
 <li><p>Os dados <span class="math notranslate nohighlight">\(\{(x_1,d_1),(x_2,d_2),\cdots, (x_N,d_N)\}\)</span> conhecidos previamente foram totalmente usados aqui para se obter o modelo da reta. Neste caso, eles podem ser chamados de dados de <strong>treinamento</strong> do modelo.</p></li>
 <li><p>A matriz <span class="math notranslate nohighlight">\((\mathbf{X}^{{\rm T}}\mathbf{X})^{-1}\mathbf{X}^{{\rm T}}\)</span> é conhecida na literatura como a pseudoinversa de <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>.</p></li>
 </ul>
@@ -541,19 +524,19 @@ d=0,5+0,25\cos(2\pi x)+v,
 \[
 \{(0,1000,\;0.7055),\;\;(0,2556,\;0.4357),\;\;(0.4111,\;0,3264),\;\;\cdots,\;\;(1,5000,\;0.2514)\}.
 \]</div>
-<p>Como o valor de <span class="math notranslate nohighlight">\(d\)</span> depende do ruído, se não fixarmos uma semente, cada vez que gerarmos os dados teremos valores distintos. O objetivo é encontrar uma função (um modelo) polinomial de grau <span class="math notranslate nohighlight">\(M\)</span> que melhor se aproxima dos pontos do conjunto de treinamento, levando em conta a forma da cossenóide sem ruído. Na <a class="reference internal" href="#fig-rl-fit-m"><span class="std std-numref">Fig. 2</span></a>, são mostrados os pontos disponíveis no treinamento (em vermelho), as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão. Foram considerados polinômios com graus <span class="math notranslate nohighlight">\(M=1\)</span> (reta), <span class="math notranslate nohighlight">\(M=2\)</span> (parábola) até <span class="math notranslate nohighlight">\(M=9\)</span>. É possível ver que para <span class="math notranslate nohighlight">\(M=1\)</span> e <span class="math notranslate nohighlight">\(M=2\)</span> ocorre o <em>underfitting</em>, ou seja, as distâncias dos pontos de treinamento aos pontos gerados pelos polinômios dos modelos são elevadas, o que indica que eles não são adequados. A medida em que o valor do grau do polinômio aumenta, observa-se um melhor ajuste entre os pontos vermelhos e as curvas azuis, até o caso extremo de <span class="math notranslate nohighlight">\(M=9\)</span>. Neste caso, o polinômio obtido passa exatamente em todos os pontos do treinamento, mas claramente a curva azul fica distante da cossenóide sem ruído em alguns trechos como pode ser visto pelas flutuações indesejadas. Isso indica que pode ter ocorrido <em>overfitting</em> devido ao número excessivo de parâmetros do modelo.</p>
+<p>Como o valor de <span class="math notranslate nohighlight">\(d\)</span> depende do ruído, se não fixarmos uma semente, cada vez que gerarmos os dados teremos valores distintos. O objetivo é encontrar uma função (um modelo) polinomial de grau <span class="math notranslate nohighlight">\(M\)</span> que melhor se aproxima dos pontos do conjunto de treinamento, levando em conta a forma da cossenóide sem ruído. Na <a class="reference internal" href="#fig-rl-fit-m"><span class="std std-numref">Fig. 5</span></a>, são mostrados os pontos disponíveis no treinamento (em vermelho), as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão. Foram considerados polinômios com graus <span class="math notranslate nohighlight">\(M=1\)</span> (reta), <span class="math notranslate nohighlight">\(M=2\)</span> (parábola) até <span class="math notranslate nohighlight">\(M=9\)</span>. É possível ver que para <span class="math notranslate nohighlight">\(M=1\)</span> e <span class="math notranslate nohighlight">\(M=2\)</span> ocorre o <em>underfitting</em>, ou seja, as distâncias dos pontos de treinamento aos pontos gerados pelos polinômios dos modelos são elevadas, o que indica que eles não são adequados. À medida em que o valor do grau do polinômio aumenta, observa-se um melhor ajuste entre os pontos vermelhos e as curvas azuis, até o caso extremo de <span class="math notranslate nohighlight">\(M=9\)</span>. Neste caso, o polinômio obtido passa exatamente em todos os pontos do treinamento, mas claramente a curva azul fica distante da cossenóide sem ruído em alguns trechos como pode ser visto pelas flutuações indesejadas. Isso indica que pode ter ocorrido <em>overfitting</em> devido ao número excessivo de parâmetros do modelo.</p>
 <div class="figure align-default" id="fig-rl-fit-m" style="width: 100%">
 <div class="cell_output docutils container">
 <img alt="_images/regressao_linear_jupyter_8_0.png" src="_images/regressao_linear_jupyter_8_0.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Regressão linear polinomial; <span class="math notranslate nohighlight">\(M\)</span> representa o grau do polinômio, os pontos do conjunto de treinamento estão representados em vermelho; as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão <a class="reference external" href="./regressao_linear_jupyter.html#fig_RL_fit_M">(código)</a>.</span><a class="headerlink" href="#fig-rl-fit-m" title="Link Permanente para essa imagem">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Regressão linear polinomial; <span class="math notranslate nohighlight">\(M\)</span> representa o grau do polinômio, os pontos do conjunto de treinamento estão representados em vermelho; as curvas pretas representam o sinal senoidal sem ruído e as azuis o polinômio obtido com a regressão <a class="reference external" href="./regressao_linear_jupyter.html#fig_RL_fit_M">(código)</a>.</span><a class="headerlink" href="#fig-rl-fit-m" title="Link Permanente para essa imagem">¶</a></p>
 </div>
-<p>Para analisar o <em>overfitting</em>, geramos um conjunto de teste com 1401 valores de <span class="math notranslate nohighlight">\(x\)</span> igualmente espaçados no intervalo <span class="math notranslate nohighlight">\([0,1;\;1,5]\)</span> e calculamos o valor de <span class="math notranslate nohighlight">\(d\)</span>. Como há ruído na geração de <span class="math notranslate nohighlight">\(d\)</span>, os pontos gerados no teste foram diferente dos de treinamento. Para cada valor de <span class="math notranslate nohighlight">\(M\)</span>, medimos o valor absoluto médio do erro de predição, levando em conta o conjunto de treinamento e de teste. Na <a class="reference internal" href="#fig-rl-modulo-e-pred"><span class="std std-numref">Fig. 3</span></a>, são mostrados os valores desses erros em função do grau do polinômio. Como esperado, o erro de aprendizagem (com os dados do treinamento) diminuem monotonicamente, chegando a zero para <span class="math notranslate nohighlight">\(M=9\)</span>. Esse  comportamento é típico sempre que o modelo ajustado varia do mais simples para o mais complexo. Em contrapartida, o erro do teste diminui até  <span class="math notranslate nohighlight">\(M=5\)</span> e depois aumenta, indicando que modelos com muitos parâmetros têm baixas capacidades de generalização.</p>
+<p>Para analisar o <em>overfitting</em>, geramos um conjunto de teste com 1401 valores de <span class="math notranslate nohighlight">\(x\)</span> igualmente espaçados no intervalo <span class="math notranslate nohighlight">\([0,1;\;1,5]\)</span> e calculamos o valor de <span class="math notranslate nohighlight">\(d\)</span>. Como há ruído na geração de <span class="math notranslate nohighlight">\(d\)</span>, os pontos gerados no teste foram diferente dos de treinamento. Para cada valor de <span class="math notranslate nohighlight">\(M\)</span>, medimos o valor absoluto médio do erro de predição, levando em conta o conjunto de treinamento e de teste. Na <a class="reference internal" href="#fig-rl-modulo-e-pred"><span class="std std-numref">Fig. 6</span></a>, são mostrados os valores desses erros em função do grau do polinômio. Como esperado, o erro de aprendizagem (com os dados do treinamento) diminuem monotonicamente, chegando a zero para <span class="math notranslate nohighlight">\(M=9\)</span>. Esse  comportamento é típico sempre que o modelo ajustado varia do mais simples para o mais complexo. Em contrapartida, o erro do teste diminui até  <span class="math notranslate nohighlight">\(M=5\)</span> e depois aumenta, indicando que modelos com muitos parâmetros têm baixas capacidades de generalização.</p>
 <div class="figure align-default" id="fig-rl-modulo-e-pred">
 <div class="cell_output docutils container">
 <img alt="_images/regressao_linear_jupyter_11_0.png" src="_images/regressao_linear_jupyter_11_0.png" />
 </div>
-<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Regressão linear polinomial; valor médio do módulo do erro de predição levando em conta o conjunto de treinamento e o conjunto de teste. <a class="reference external" href="./regressao_linear_jupyter.html#fig_RL_modulo_e_pred">(código)</a>.</span><a class="headerlink" href="#fig-rl-modulo-e-pred" title="Link Permanente para essa imagem">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">Regressão linear polinomial; valor médio do módulo do erro de predição levando em conta o conjunto de treinamento e o conjunto de teste. <a class="reference external" href="./regressao_linear_jupyter.html#fig_RL_modulo_e_pred">(código)</a>.</span><a class="headerlink" href="#fig-rl-modulo-e-pred" title="Link Permanente para essa imagem">¶</a></p>
 </div>
 <hr class="footnotes docutils" />
 <dl class="footnote brackets">
@@ -591,17 +574,17 @@ d=0,5+0,25\cos(2\pi x)+v,
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="intro.html" title="anterior página">
+    <a class='left-prev' id="prev-link" href="introducao.html" title="anterior página">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">anterior</p>
-            <p class="prev-next-title">Bem-vindo</p>
+            <p class="prev-next-title">Introdução</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="regressao_linear_exercicio_jupyter.html" title="próximo página">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">próximo</p>
-        <p class="prev-next-title">Exercício</p>
+        <p class="prev-next-title">Exercício 1</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
