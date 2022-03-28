@@ -146,7 +146,7 @@ $$
 
 Neste caso, a solução obtida com a regressão linear multivariada coincide com a solução de Wiener, ou seja,  $\mathbf{w}^{\rm o}=\mathbf{w}^{\rm wiener}$. Além disso, essa solução é única para um dado conjunto de treinamento.
 
-Ao acompanhar esse cálculo, você pode estar se perguntando: onde está o  algoritmo iterativo para o cálculo dos pesos? Ele pode ser obtido utilizado o método do gradiente. Em Cálculo, aprendemos que o gradiente de uma função aponta para a direção de maior variação da função. Como a solução é única, basta considerar o sentido contrário do gradiente, o que leva a
+Ao acompanhar esse cálculo, você pode estar se perguntando: onde está o  algoritmo iterativo para o cálculo dos pesos? Ele pode ser obtido utilizando o método do gradiente. Em Cálculo, aprendemos que o gradiente de uma função aponta para a direção de maior variação da função. Como a solução é única, basta considerar o sentido contrário do gradiente, o que leva a
 
 $$
 \mathbf{w}(n)=\mathbf{w}(n-1)-\frac{\eta}{2}\boldsymbol{\nabla}_{\mathbf{w}}J_{\rm MSE}(\mathbf{w}(n-1)),
@@ -320,7 +320,7 @@ name: fig_MLdm4_fig3
 
 ## Época, *batch*, *mini-batch* e iteração
 
-Em diversas aplicações, o banco de dados é limitado. Esse é o caso, por exemplo, do problema de classificação de arritmias cardíacas utilizado sinais de eletrocardiograma (ECG). A aquisição de novos sinais deve seguir o  padrão do banco de dados existente: os sinais precisam ser amostrados com a mesma frequência, os sensores devem ser os mesmos, o exame deve seguir o mesmo protocolo, etc. Vamos supor que seja possível garantir o mesmo padrão de aquisição dos sinais. Depois de serem adquiridos, os novos sinais de ECG precisam ser classificados por especialistas. Para manter o padrão, é ideal ter os mesmos especialistas que trabalharam na classificação dos sinais do banco de dados existente. Dá para notar que o aumento de alguns bancos de dados é complexo. Deve ser  por isso que o banco de dados de ECG do MIT-BIH (*Massachusetts Institute of Technology - Boston's Beth Israel Hospital  Arrhythmia Database*) não recebe novos sinais desde 1980.
+Em diversas aplicações, o banco de dados é limitado. Esse é o caso, por exemplo, do problema de classificação de arritmias cardíacas utilizando sinais de eletrocardiograma (ECG). A aquisição de novos sinais deve seguir o  padrão do banco de dados existente: os sinais precisam ser amostrados com a mesma frequência, os sensores devem ser os mesmos, o exame deve seguir o mesmo protocolo, etc. Vamos supor que seja possível garantir o mesmo padrão de aquisição dos sinais. Depois de serem adquiridos, os novos sinais de ECG precisam ser classificados por especialistas. Para manter o padrão, é ideal ter os mesmos especialistas que trabalharam na classificação dos sinais do banco de dados existente. Dá para notar que o aumento de alguns bancos de dados é complexo. Deve ser  por isso que o banco de dados de ECG do MIT-BIH (*Massachusetts Institute of Technology - Boston's Beth Israel Hospital  Arrhythmia Database*) não recebe novos sinais desde 1980.
 
 O que fazer quando a quantidade de dados é limitada e insuficiente para possibilitar a convergência dos algoritmos no treinamento? A solução é utilizar os dados de treinamento mais de uma vez. O treinamento realizado com o conjunto completo dos dados é chamado de **época**. Os algoritmos podem levar
 várias épocas até convergir. Como os dados utilizados em cada época são os mesmos, para gerar diversidade entre épocas, os dados de treinamento são misturados antes de se iniciar uma nova época.
