@@ -65,7 +65,7 @@ $$
 \mathbf{e}=\mathbf{d}-\mathbf{X}\mathbf{w}.
 $$
 
-Os elementos desse vetor de erros, $e_i=d_i-b-wx_i$ para $i=1,\cdots,n$, representam as distâncias verticais da reta $d=wx+b$ aos  pontos experimentais $(x_i,d_i)$, como ilustrado na {numref}`MV2`, considerando $n=3$.
+Os elementos desse vetor de erros, $e_i=d_i-b-wx_i$ para $i=1,\cdots,n$, representam as distâncias verticais da reta $wx+b$ aos  pontos experimentais $(x_i,d_i)$, como ilustrado na {numref}`MV2`, considerando $n=3$.
 
 ```{figure} ./images/mmq.jpg
 ---
