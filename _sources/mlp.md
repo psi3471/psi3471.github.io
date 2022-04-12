@@ -52,7 +52,7 @@ name: fig_neuronio
 Fluxo de sinal do modelo de neurônio.
 ```
 
-O neurônio da {numref}`fig_neuronio` é a unidade básica da rede perceptron multicamada (MLP *multilayer perceptron*). Na maior parte das aplicações, um único neurônio não é suficiente para se obter bons resultados. Dessa forma, a rede MLP organiza os neurônios em camadas, havendo  uma ou mais camadas ocultas (*hidden layers*) e a camada de saída[^fsaida]. As camadas ocultas são camadas intermediárias entre a entrada e a saída da rede neural. Cada neurônio pertencente a uma camada oculta possui sinapses associadas a pesos, ligando-o a todos os neurônios das camadas anterior e posterior. No caso da primeira camada oculta, em cada neurônio, os valores da entrada da rede são ponderados pelos pesos, que junto com o *bias*, permitem o cálculo da combinação linear, representada na {numref}`fig_neuronio` por $v(n)$. Na {numref}`fig_MLPdia`, esquematizamos o fluxo de sinal de uma rede MLP com $L=3$ camadas, em que cada círculo representa um neurônio. Denotando o número de neurônios da camada $j$ por $N_{j}$, é conveniente introduzir uma notação para a configuração da rede. Assim, uma rede MLP de 3 camadas apresenta configuração $N_1$-$N_2$-$N_3$. Especificamente, a rede da {numref}`fig_neuronio` tem configuração 3-2-1, ou seja, 3 neurônios na primeira camada oculta, 2 na segunda camada oculta e 1 na camada de saída. Também vamos denotar o número de neurônios da camada de saída por $L$. Assim, no exemplo, $L=N_3=1$.
+O neurônio da {numref}`fig_neuronio` é a unidade básica da rede perceptron multicamada (MLP *multilayer perceptron*). Na maior parte das aplicações, um único neurônio não é suficiente para se obter bons resultados. Dessa forma, a rede MLP organiza os neurônios em camadas, havendo  uma ou mais camadas ocultas (*hidden layers*) e a camada de saída[^fsaida]. As camadas ocultas são camadas intermediárias entre a entrada e a saída da rede neural. Cada neurônio pertencente a uma camada oculta possui sinapses associadas a pesos, ligando-o a todos os neurônios da camada anterior. No caso da primeira camada oculta, em cada neurônio, os valores da entrada da rede são ponderados pelos pesos, que junto com o *bias*, permitem o cálculo da combinação linear, representada na {numref}`fig_neuronio` por $v(n)$. Na {numref}`fig_MLPdia`, esquematizamos o fluxo de sinal de uma rede MLP com $L=3$ camadas, em que cada círculo representa um neurônio. Denotando o número de neurônios da camada $j$ por $N_{j}$, é conveniente introduzir uma notação para a configuração da rede. Assim, uma rede MLP de 3 camadas apresenta configuração $N_1$-$N_2$-$N_3$. Especificamente, a rede da {numref}`fig_neuronio` tem configuração 3-2-1, ou seja, 3 neurônios na primeira camada oculta, 2 na segunda camada oculta e 1 na camada de saída. Também vamos denotar o número de neurônios da camada de saída por $N_L$. Assim, no exemplo, $N_L=N_3=1$.
  
  ```{figure} ./images/MLPdia.png
 ---
@@ -185,7 +185,7 @@ o vetor de saída  dos combinadores lineares da camada $j$ é dado por
                                \vdots \\
                                \mathbf{w}_{N_j}^{(j)}\mathbf{x}^{(j)}
                              \end{array}
-    \right]= \mathbf{W}^{(j)}\mathbf{x}^{(j
+    \right]= \mathbf{W}^{(j)}\mathbf{x}^{(j)}.
 \end{equation*}
 
  Por fim, o vetor de saída dessa camada é calculado como
@@ -205,7 +205,7 @@ O algoritmo de retropropagação (*backpropagation*) é o mais utilizado no proc
 
 ### Cálculo progressivo
 
-  Nessa etapa, os pesos e *biases* são mantidos fixos e o cálculo é realizado progressivamente até se obter o vetor de saída  $\textbf{y}^{(L)}$. Nesse cálculo, a entrada é propagada ao longo da rede, camada por camada, com detalhado na seção anterior.
+  Nessa etapa, os pesos e *biases* são mantidos fixos e o cálculo é realizado progressivamente até se obter o vetor de saída  $\textbf{y}^{(L)}$. Nesse cálculo, a entrada é propagada ao longo da rede, camada por camada, como detalhado na seção anterior.
 
 ### Cálculo regressivo
 
@@ -221,9 +221,9 @@ $$
 e_\ell(n)=d_\ell(n)-y_\ell^{(L)}(n)
 $$
 
-são os erros dos neurônios da camada de saída da rede. Para simplificar a dedução, vamos considerar o modo de treinamento estocástico em que os pesos e *biases* são atualizados a cada dado de treinamento $n=1, 2, \ldots, N_t$. Os modos *batch* e *mini-batch* serão abordados posteriormente.
+são os erros dos neurônios da camada de saída da rede. Para simplificar a dedução, vamos considerar o modo de treinamento estocástico em que os pesos e *biases* são atualizados a cada dado de treinamento $n=1, 2, \ldots, N_t$.
 
-Utilizando o método do gradiente estocástico, a matrix de pesos da camada $j$ pode ser atualizada como
+Utilizando o método do gradiente estocástico, a matriz de pesos da camada $j$ pode ser atualizada como
 
 \begin{equation*}
   \textbf{W}^{(j)}(n) = \textbf{W}^{(j)}(n-1) - \eta \frac{\partial J_{MSE}}{\partial \textbf{W}^{(j)}(n-1)},
@@ -299,7 +299,7 @@ $$
 v_{\ell}^{(L)}(n)=\mathbf{w}_{\ell}^{(L)}(n-1)\mathbf{x}^{(L)}(n)=b_{\ell}^{(L)}(n-1)+\sum_{m=1}^{N_{L-1}}w_{\ell m}^{(L)}(n-1)y_m^{(L-1)}(n).
 $$
 
-No cálculo de $v_{\ell}^{(L)}(n)$, o único termo que depende de $\textbf{w}_k^{(L-1)}(n-1)$ é $w_{\ell k}^{(L)}(n-1)y_k^{(L-1)}(n)$. Assim, obtemos
+No cálculo de $v_{\ell}^{(L)}(n)$, o único termo que depende de $\textbf{w}_k^{(L-1)}(n-1)$ é $w_{\ell k}^{(L)}(n-1)y_k^{(L-1)}(n)$, já que a saída $y_k^{(L-1)}(n)$ é calculada utilizando os pesos $\textbf{w}_k^{(L-1)}(n-1)$. Assim, obtemos
 
 \begin{align*}
 \frac{\partial  e_\ell^2(n)}{\partial \textbf{w}_k^{(L-1)}(n-1)}&=-2e_{\ell}(n)\varphi'(v_{\ell}^{(L)}(n))w_{\ell k}^{(L)}(n-1)\frac{\partial y_{k}^{(L-1)}(n)}{\partial \textbf{w}_k^{(L-1)}(n-1)}\\
@@ -332,7 +332,7 @@ $$
 \sum_{\ell=1}^{L}\delta_{\ell}^{(L)}(n)w_{\ell k}^{(L)}(n-1)
 $$
 
-faz o papel de erro  do Neurônio $k$ da Camada $L-1$. Essa retropropagação dos erros deve continuar até a primeira camada oculta. O fluxo do sinal na retropropagação considerando as camadas $L$ e $L-1$ está esquematizado na {numref}`fig_FluxoBP`. O erro do Neurônio $k$ da Camada $L-1$ é o sinal no círculo azul indicado na figura.
+faz o papel de erro  do Neurônio $k$ da Camada $L-1$. Essa retropropagação dos erros deve continuar até a primeira camada oculta. O fluxo do sinal na retropropagação considerando as camadas $L$ e $L-1$ está esquematizado na {numref}`fig_FluxoBP`. O erro do Neurônio $k$ da Camada $L-1$ é o sinal obtido no ponto indicado pelo círculo azul na figura.
 
 ```{figure} ./images/FluxoBP.png
 ---
@@ -344,7 +344,11 @@ Fluxo do sinal na retropropagação considerando as camadas $L$ e $L-1$.
 
 Generalizando, define-se o gradiente local para qualquer camada oculta $j$ como
 
-\boxedeqn{\delta_{k}^{(j)}(n)\triangleq \varphi'(v_{k}^{(j)}(n))\;\sum_{\ell=1}^{N_{j+1}}\delta_{\ell}^{(j+1)}(n)w_{\ell k}^{(j+1)}(n-1).}
+\begin{equation*}
+\fbox{$\displaystyle
+\delta_{k}^{(j)}(n)\triangleq \varphi'(v_{k}^{(j)}(n))\;\sum_{\ell=1}^{N_{j+1}}\delta_{\ell}^{(j+1)}(n)w_{\ell k}^{(j+1)}(n-1).
+$}
+\end{equation*}
 
 e para a camada de saída $L$ como
 
@@ -409,7 +413,7 @@ $}
 
 em que $\odot$ representa a multiplicação elemento por elemento entre dois vetores. Essa forma de calcular os vetores de gradientes locais é mais eficiente, já que todos os elementos são calculados de uma vez em cada camada.
 
-É comum incorporar a constante $2/N_L$ que aparece nos cálculos dos gradientes ao passo de adaptação $\eta$. Dessa forma, as equações de atualização dos vetores de pesos do Neurônio $k$ da Camada $j$ ficam
+É comum incorporar a constante $2/N_L$ que aparece nos cálculos dos gradientes ao passo de adaptação $\eta$. Dessa forma, as equações de atualização dos vetores de pesos do Neurônio $k$ da Camada $j$ podem ser escritas como
 
 \begin{equation*}
 \fbox{$\displaystyle
@@ -417,7 +421,7 @@ em que $\odot$ representa a multiplicação elemento por elemento entre dois vet
 $}
 \end{equation*}
 
-$k=1, 2, \ldots, N_j$,\; $j=1, 2 \ldots, L$. Definindo a matrix
+$k=1, 2, \ldots, N_j$,\; $j=1, 2 \ldots, L$. Definindo a matriz
 
 $$
 \boldsymbol{\Delta}_{\delta}^{(j)}(n)=\boldsymbol{\delta}^{(j)}(n)[\mathbf{x}^{(j)}(n)]^{\rm T}
@@ -446,7 +450,7 @@ Diferente do que acontece no algoritmo LMS, a função custo minimizada pelo alg
 width: 100%
 name: fig_Custo
 ---
-a) Função custo do MSE a ser minimizada pelo LMS;  b) Função custo do MSE, a ser minimizada pelo *backpropagation*.  Fonte: XXX}
+a) Função custo do MSE a ser minimizada pelo LMS;  b) Função custo do MSE, a ser minimizada pelo *backpropagation* [[Fonte]](https://www.youtube.com/watch?v=Suevq-kZdIw)}
 ```
 
 Na {numref}`tab_BP`, é apresentado o pseudocódigo do algoritmo *backpropagation* no modo de treinamento estocástico. Apesar da dedução ter sido feita neste modo, ele raramente é utilizado de forma estocástica. Em vez disso, é mais comum considerar os modos de treinamento *batch* e *mini-batch*. Como fizemos a formulação desses modos no algoritmo LMS, sua extensão para o *backpropagation* é direta e deixaremos a cargo do leitor.
@@ -459,6 +463,7 @@ Na {numref}`tab_BP`, é apresentado o pseudocódigo do algoritmo *backpropagatio
     - As matrizes $\mathbf{W}^{(j)}(0),\;j=1,2,\ldots, L$ devem ser inicializadas com número aleatórios uniformemente distribuídos
 * - Para $n=1,2,\ldots,$ calcule:
     - <span style="color:blue">Cálculo progressivo</span>
+    - $\mathbf{y}^{(0)} = [y_{1}\; y_{2}\;\cdots\; y_{N_0}]^{\rm T} = [x_{1n}\; x_{2n}\;\cdots\; x_{N_0n}]^{\rm T}$
     - <span style="color:blue">Para $j=1,2,\ldots, L,$ calcule:</span>.
       - $\mathbf{x}^{(j)}(n)=\left[\begin{array}{c}
                                                       1 \\
@@ -553,12 +558,12 @@ A conclusão desse exemplo é que a rede MLP é capaz de proporcionar soluções
 
 ## MLP como aproximador universal de funções
 
-Uma rede MLP treinada com o algoritmo *backpropagation* pode ser vista como um sistema capaz de realizar um mapeamento  entrada-saída de forma não linear. Considere uma rede MLP com  $N_0$ entradas e $L$ saídas. A relação entrada-saída da rede define um mapeamento de um espaço Euclidiano de entrada de dimensão $N_0$ a um espaço Euclidiano de saída de dimensão $L$, que é infinitamente e continuamente diferenciável desde que a função de ativação também seja. Neste contexto, cabe a seguinte pergunta: qual o número mínimo de camadas ocultas que a rede MLP precisa ter para  fornecer uma aproximação  de qualquer mapeamento contínuo? A resposta para essa pergunta envolve o Teorema da Aproximação Universal, enunciado a seguir.
+Uma rede MLP treinada com o algoritmo *backpropagation* pode ser vista como um sistema capaz de realizar um mapeamento  entrada-saída de forma não linear. Considere uma rede MLP com $N_0$ entradas e $N_L$ saídas. A relação entrada-saída da rede define um mapeamento de um espaço Euclidiano de entrada de dimensão $N_0$ a um espaço Euclidiano de saída de dimensão $N_L$, que é infinitamente e continuamente diferenciável desde que a função de ativação também seja. Neste contexto, cabe a seguinte pergunta: qual o número mínimo de camadas ocultas que a rede MLP precisa ter para  fornecer uma aproximação  de qualquer mapeamento contínuo? A resposta para essa pergunta envolve o Teorema da Aproximação Universal, enunciado a seguir.
 
 ```{admonition} Teorema da Aproximação Universal
 
 Seja $\varphi(\cdot)$
-uma função contínua, não constante, limitada e monotônica crescente. Vamos\, utilizar\, $I_{N_0}$ para denotar o hipercubo unitário $[0,\;1]^{N_0}$ de dimensão $N_0$. O espaço de funções contínuas em $I_{N_0}$ é denotado por $C(I_{N_0})$. Então, dada qualquer função $f \ni C(I_{N_0})$ e $\varepsilon>0$, existe um inteiro $N_1$ e conjuntos de constantes, reais $\alpha_i$, $b_i$ e $w_{ij}$, $i=1, 2, \ldots, N_1$ e $j = 1, 2, \ldots, N_0 $ tal que se pode definir
+uma função contínua, não constante, limitada e monotônica crescente. Vamos\, utilizar\, $I_{N_0}$ para denotar o hipercubo unitário $[0,\;1]^{N_0}$ de dimensão $N_0$. O espaço de funções contínuas em $I_{N_0}$ é denotado por $C(I_{N_0})$. Então, dada qualquer função $f \in C(I_{N_0})$ e $\varepsilon>0$, existe um inteiro $N_1$ e conjuntos de constantes, reais $\alpha_i$, $b_i$ e $w_{ij}$, $i=1, 2, \ldots, N_1$ e $j = 1, 2, \ldots, N_0 $ tal que se pode definir
 
 $$
 F(x_1, x_2, \ldots, x_{N_0})=\displaystyle\sum_{i=1}^{N_1}\alpha_i\varphi\left(\displaystyle\sum_{j=1}^{N_0}w_{ij}x_j+b_i\right)
