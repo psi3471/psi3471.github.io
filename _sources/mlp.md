@@ -129,7 +129,7 @@ O *bias* e os pesos em azul da primeira linha da matriz $\mathbf{W}^{(2)}$, que 
                         {\color{red}\mathbf{w}_2^{(2)}}\mathbf{x}^{(2)}\\
                         \end{bmatrix}
                          =\mathbf{W}^{(2)}\mathbf{x}^{(2)}
-                                        \mbox{\;\; e \;\;}
+                                        \;\;\textnormal{e}\;\;
 \mathbf{y}^{(2)} = \varphi(\mathbf{v}^{(2)})=\begin{bmatrix}
                         {\color{blue}\varphi(v^{(2)}_1)} \\
                         {\color{red}\varphi(v^{(2)}_2)}\\
@@ -282,7 +282,7 @@ $$
 Uma vez calculados os gradientes da camada de saída $L$, podemos calcular os gradientes da última camada oculta, ou seja, para $j=L-1$. Assim,
 
 $$
-\boldsymbol{\nabla}_{\mathbf{w}_k^{(L-1)}}J_{\rm MSE} = \frac{\partial J_{\rm MSE}}{\partial \textbf{w}_k^{(L-1)}(n-1)}= \frac{1}{N_L}\;\sum_{\ell=1}^{L}\frac{\partial  e_\ell^2(n)}{\partial \textbf{w}_k^{(L-1)}(n-1)}.
+\boldsymbol{\nabla}_{\mathbf{w}_k^{(L-1)}}J_{\rm MSE} = \frac{\partial J_{\rm MSE}}{\partial \mathbf{w}_k^{(L-1)}(n-1)}= \frac{1}{N_L}\;\sum_{\ell=1}^{N_L}\frac{\partial  e_\ell^2(n)}{\partial \mathbf{w}_k^{(L-1)}(n-1)}.
 $$
 
 Novamente, usando a regra da cadeia sucessivas vezes, obtemos
@@ -311,13 +311,13 @@ No cálculo de $v_{\ell}^{(L)}(n)$, o único termo que depende de $\textbf{w}_k^
 Identificando $\delta^{(L)}_{\ell}(n)$ na expressão anterior e substituindo o resultado na expressão do gradiente, obtém-se
 
 $$
-\boldsymbol{\nabla}_{\mathbf{w}_k^{(L-1)}}J_{\rm MSE} =  -\frac{2}{N_L}\;\varphi'(v_{k}^{(L-1)}(n))\;\sum_{\ell=1}^{L}\delta_{\ell}^{(L)}(n)w_{\ell k}^{(L)}(n-1)[\mathbf{x}^{(L-1)}(n)]^{\rm T}.
+\boldsymbol{\nabla}_{\mathbf{w}_k^{(L-1)}}J_{\rm MSE} =  -\frac{2}{N_L}\;\varphi'(v_{k}^{(L-1)}(n))\;\sum_{\ell=1}^{N_L}\delta_{\ell}^{(L)}(n)w_{\ell k}^{(L)}(n-1)[\mathbf{x}^{(L-1)}(n)]^{\rm T}.
 $$
 
 Definindo agora o gradiente local da Camada $L-1$ como
 
 $$
-\delta_{k}^{(L-1)}(n)\triangleq \varphi'(v_{k}^{(L-1)}(n))\;\sum_{\ell=1}^{L}\delta_{\ell}^{(L)}(n)w_{\ell k}^{(L)}(n-1),
+\delta_{k}^{(L-1)}(n)\triangleq \varphi'(v_{k}^{(L-1)}(n))\;\sum_{\ell=1}^{N_L}\delta_{\ell}^{(L)}(n)w_{\ell k}^{(L)}(n-1),
 $$
 
 o vetor gradiente pode ser reescrito como
@@ -329,7 +329,7 @@ $$
 Comparando a expressão do gradiente local $\delta_{k}^{(L-1)}(n)$ da Camada $L-1$ com a expressão do gradiente local $\delta_{k}^{(L)}(n)$ da Camada $L$, o somatório
 
 $$
-\sum_{\ell=1}^{L}\delta_{\ell}^{(L)}(n)w_{\ell k}^{(L)}(n-1)
+\sum_{\ell=1}^{N_L}\delta_{\ell}^{(L)}(n)w_{\ell k}^{(L)}(n-1)
 $$
 
 faz o papel de erro  do Neurônio $k$ da Camada $L-1$. Essa retropropagação dos erros deve continuar até a primeira camada oculta. O fluxo do sinal na retropropagação considerando as camadas $L$ e $L-1$ está esquematizado na {numref}`fig_FluxoBP`. O erro do Neurônio $k$ da Camada $L-1$ é o sinal obtido no ponto indicado pelo círculo azul na figura.
@@ -374,7 +374,7 @@ $$
                                     e_{1}(n) \\
                                     e_{2}(n) \\
                                     \vdots \\
-                                    e_{L}(n)
+                                    e_{N_L}(n)
                                   \end{array}\right],\;\;\;
 \mathbf{d}_{\varphi}^{(j)}(n)\triangleq
 \left[\begin{array}{c}
