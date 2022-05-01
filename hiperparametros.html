@@ -54,7 +54,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Buscar" href="search.html" />
-    <link rel="prev" title="A rede perceptron multicamada" href="mlp.html" />
+    <link rel="next" title="Medidas de desempenho" href="medidas.html" />
+    <link rel="prev" title="Exercício 3" href="mlp_exercicio_jupyter.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="pt_BR">
     
@@ -148,10 +149,22 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
   </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="mlp.html">
    A rede perceptron multicamada
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="mlp_exercicio_jupyter.html">
+     Exercício 3
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
@@ -159,6 +172,11 @@ const thebe_selector_output = ".output, .cell_output"
    <em>
     overfitting
    </em>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="medidas.html">
+   Medidas de desempenho
   </a>
  </li>
 </ul>
@@ -599,13 +617,13 @@ $}
 <div class="section" id="funcao-custo">
 <h2>Função custo<a class="headerlink" href="#funcao-custo" title="Link permanente para este título">¶</a></h2>
 <p>A escolha da função custo depende da finalidade da rede neural. Quando empregada em problemas de regressão, é comum usar o erro quadrático médio (<em>Mean Squared Error</em> - MSE) definido por</p>
-<div class="amsmath math notranslate nohighlight" id="equation-52310607-e766-4e09-a7c6-13adbf34303e">
-<span class="eqno">(1)<a class="headerlink" href="#equation-52310607-e766-4e09-a7c6-13adbf34303e" title="Link permanente para essa equação">¶</a></span>\[\begin{equation}\label{mse}
+<div class="amsmath math notranslate nohighlight" id="equation-49fe15f1-7d3a-4781-8b7b-14a8d8c332c0">
+<span class="eqno">(1)<a class="headerlink" href="#equation-49fe15f1-7d3a-4781-8b7b-14a8d8c332c0" title="Link permanente para essa equação">¶</a></span>\[\begin{equation}\label{mse}
 J_{\rm MSE} = \frac{1}{N_L} \sum_{\ell=1}^{N_L} e_{\ell}^2(n),
 \end{equation}\]</div>
 <p>em que</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c3d8f969-1286-4042-aea4-5e036c47333f">
-<span class="eqno">(2)<a class="headerlink" href="#equation-c3d8f969-1286-4042-aea4-5e036c47333f" title="Link permanente para essa equação">¶</a></span>\[\begin{equation}\label{e_n}
+<div class="amsmath math notranslate nohighlight" id="equation-882ed4c9-92e1-466e-b68e-1304c31f6553">
+<span class="eqno">(2)<a class="headerlink" href="#equation-882ed4c9-92e1-466e-b68e-1304c31f6553" title="Link permanente para essa equação">¶</a></span>\[\begin{equation}\label{e_n}
 e_{\ell}(n) = d_{\ell}(n) - y_{\ell}^{(L)}(n)
 \end{equation}\]</div>
 <p>são os erros dos neurônios da camada de saída da rede. Apesar de não ser a função custo mais adequada para problemas de classificação, o MSE foi utilizado nos problemas das meias-luas apresentados até o momento.</p>
@@ -1018,12 +1036,19 @@ e o processo é repetido.</p></li>
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="mlp.html" title="anterior página">
+    <a class='left-prev' id="prev-link" href="mlp_exercicio_jupyter.html" title="anterior página">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">anterior</p>
-            <p class="prev-next-title">A rede perceptron multicamada</p>
+            <p class="prev-next-title">Exercício 3</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="medidas.html" title="próximo página">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">próximo</p>
+        <p class="prev-next-title">Medidas de desempenho</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             

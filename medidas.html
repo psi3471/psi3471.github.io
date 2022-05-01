@@ -1,0 +1,784 @@
+
+<!DOCTYPE html>
+
+<html lang="pt_BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medidas de desempenho &#8212; PSI3471 - Fundamentos de Sistemas Eletrônicos Inteligentes</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/translations.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Buscar" href="search.html" />
+    <link rel="prev" title="Evitando mínimos locais e overfitting" href="hiperparametros.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="pt_BR">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">PSI3471 - Fundamentos de Sistemas Eletrônicos Inteligentes</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Pesquise este livro ..." aria-label="Pesquise este livro ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Home
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference external" href="https://edisciplinas.usp.br/course/view.php?id=97671">
+   Página no Moodle
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="introducao.html">
+   Introdução
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="regressao_linear.html">
+   Regressão linear
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="regressao_linear_exercicio_jupyter.html">
+     Exercício 1
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lms.html">
+   O algoritmo LMS
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="neuronio.html">
+   O modelo do neurônio
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="neuronio_exercicio_jupyter.html">
+     Exercício 2
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="mlp.html">
+   A rede perceptron multicamada
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="mlp_exercicio_jupyter.html">
+     Exercício 3
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="hiperparametros.html">
+   Evitando mínimos locais e
+   <em>
+    overfitting
+   </em>
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Medidas de desempenho
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Alternar de navegação" aria-controls="site-navigation"
+                title="Alternar de navegação" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Baixe esta página"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="_sources/medidas.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Baixar arquivo de notebook" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/medidas.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Baixar arquivo fonte" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Imprimir em PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Modo tela cheia"
+        title="Modo tela cheia"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Conteúdo
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problemas-de-classificacao">
+   Problemas de classificação
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#matriz-de-confusao">
+   Matriz de confusão
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#acuracia-e-taxa-de-erro">
+   Acurácia e taxa de erro
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#precisao-sensibilidade-e-f-1-score">
+   Precisão, Sensibilidade e
+   <span class="math notranslate nohighlight">
+    \(F_1\)
+   </span>
+   -
+   <em>
+    score
+   </em>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#especificidade-e-taxa-de-falsos-positivos">
+   Especificidade e taxa de falsos positivos
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#coeficiente-de-correlacao-de-matthew">
+   Coeficiente de correlação de Matthew
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#area-sob-a-curva-roc">
+   Área sob a curva ROC
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problemas-de-classificacao-multiclasse">
+   Problemas de classificação multiclasse
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problemas-de-regressao">
+   Problemas de regressão
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#erro-absoluto-medio">
+     Erro absoluto médio
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#erro-quadratico-medio">
+     Erro quadrático médio
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#r-2">
+     <span class="math notranslate nohighlight">
+      \(R^2\)
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Medidas de desempenho</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Conteúdo </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problemas-de-classificacao">
+   Problemas de classificação
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#matriz-de-confusao">
+   Matriz de confusão
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#acuracia-e-taxa-de-erro">
+   Acurácia e taxa de erro
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#precisao-sensibilidade-e-f-1-score">
+   Precisão, Sensibilidade e
+   <span class="math notranslate nohighlight">
+    \(F_1\)
+   </span>
+   -
+   <em>
+    score
+   </em>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#especificidade-e-taxa-de-falsos-positivos">
+   Especificidade e taxa de falsos positivos
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#coeficiente-de-correlacao-de-matthew">
+   Coeficiente de correlação de Matthew
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#area-sob-a-curva-roc">
+   Área sob a curva ROC
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problemas-de-classificacao-multiclasse">
+   Problemas de classificação multiclasse
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problemas-de-regressao">
+   Problemas de regressão
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#erro-absoluto-medio">
+     Erro absoluto médio
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#erro-quadratico-medio">
+     Erro quadrático médio
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#r-2">
+     <span class="math notranslate nohighlight">
+      \(R^2\)
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="medidas-de-desempenho">
+<h1>Medidas de desempenho<a class="headerlink" href="#medidas-de-desempenho" title="Link permanente para este título">¶</a></h1>
+<p>Avaliar o modelo  é  essencial em aprendizado de máquina. Seu modelo pode fornecer resultados satisfatórios quando avaliado por uma determinada métrica, mas  ruins quando avaliado por outra. Em problemas de classificação, a precisão geralmente é usada para medir o desempenho do modelo, porém essa métrica não é suficiente. A seguir, vamos abordar diferentes tipos de métricas de avaliação. As métricas estão divididas de acordo com o tipo de problema.</p>
+<div class="section" id="problemas-de-classificacao">
+<h2>Problemas de classificação<a class="headerlink" href="#problemas-de-classificacao" title="Link permanente para este título">¶</a></h2>
+<p>Vamos voltar ao problema das meias-luas, em que se deseja classificar um determinado ponto como pertencente à Região A ou à Região B.
+Assim, deve-se responder à pergunta: <strong>Dado um determinado ponto, ele pertence à Região A?</strong> Há duas possíveis respostas: <font color='blue'>Sim</font> ou <font color='red'>Não</font>, sendo que quando ocorre a resposta negativa, subentende-se  que o ponto pertence à Região B. Neste caso, os elementos relevantes são os da Região A. Por exemplo, quando se deseja detectar câncer de mama utilizando imagens de mamografia, os exames classificados como “presença de câncer”, ou seja, como positivos,  são os elementos relevantes do problema. Os tipos de erros de classificação estão mostrados na <a class="reference internal" href="#tab-tiposerros"><span class="std std-numref">Tabela 6</span></a>.</p>
+<table class="table" id="tab-tiposerros">
+<caption><span class="caption-number">Tabela 6 </span><span class="caption-text">Tipos de erro de classificação.</span><a class="headerlink" href="#tab-tiposerros" title="Link Permanente para essa tabela">¶</a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Rótulo verdadeiro</p></th>
+<th class="head"><p>Rótulo predito</p></th>
+<th class="head"><p>Tipo de Erro</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><font color='blue'>Sim</font></p></td>
+<td><p><font color='blue'>Sim</font></p></td>
+<td><p>Verdadeiro Positivo (VP)</p></td>
+</tr>
+<tr class="row-odd"><td><p><font color='red'>Não</font></p></td>
+<td><p><font color='red'>Não</font></p></td>
+<td><p>Verdadeiro Negativo (VN)</p></td>
+</tr>
+<tr class="row-even"><td><p><font color='red'>Não</font></p></td>
+<td><p><font color='blue'>Sim</font></p></td>
+<td><p>Falso Positivo (FP)</p></td>
+</tr>
+<tr class="row-odd"><td><p><font color='blue'>Sim</font></p></td>
+<td><p><font color='red'>Não</font></p></td>
+<td><p>Falso Negativo (FN)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Na <a class="reference internal" href="#fig-diagrama"><span class="std std-numref">Fig. 45</span></a>, é mostrado um diagrama dos erros de classificação. Os elementos classificados  como positivos (elementos recuperados) são os que se encontram no interior da circunferência e são divididos em dois grupos: verdadeiros positivos e falsos positivos. Os elementos classificados como negativos estão fora da circunferência e  também são divididos em dois grupos: falsos negativos e verdadeiros negativos.</p>
+<div class="figure align-default" id="fig-diagrama">
+<a class="reference internal image-reference" href="_images/diagrama.png"><img alt="_images/diagrama.png" src="_images/diagrama.png" style="width: 60%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 45 </span><span class="caption-text">Diagrama dos erros de classificação. Fonte: Adaptado de <a class="reference external" href="https://en.wikipedia.org/wiki/Precision_and_recall">https://en.wikipedia.org/wiki/Precision_and_recall</a></span><a class="headerlink" href="#fig-diagrama" title="Link Permanente para essa imagem">¶</a></p>
+</div>
+</div>
+<div class="section" id="matriz-de-confusao">
+<h2>Matriz de confusão<a class="headerlink" href="#matriz-de-confusao" title="Link permanente para este título">¶</a></h2>
+<p>A matriz de confusão é uma tabela que contém o resumo dos resultados de  um problema de classificação. Os números de predições corretas e incorretas são resumidos com valores de contagem e divididos por cada classe. Ela mostra as maneiras pelas quais seu modelo de classificação fica confuso quando faz predições, fornecendo informações sobre  tipos de erros  cometidos pelo classificador.</p>
+<p>Considerando o problema das meias-luas e os tipos de erro de classificação descritos anteriormente a matriz de confusão é dada por</p>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="_images/matrizconfusao.png"><img alt="_images/matrizconfusao.png" src="_images/matrizconfusao.png" style="width: 80%;" /></a>
+</div>
+<p>Para exemplificar, considere o exemplo de classificação da <a class="reference internal" href="#tab-clasex"><span class="std std-numref">Tabela 7</span></a>, em que há 10 predições, sendo <span class="math notranslate nohighlight">\(\text{VP}=3\)</span>, <span class="math notranslate nohighlight">\(\text{VN}=4\)</span>, <span class="math notranslate nohighlight">\(\text{FP}=1\)</span> e <span class="math notranslate nohighlight">\(\text{FN}=2\)</span>.</p>
+<table class="table" id="tab-clasex">
+<caption><span class="caption-number">Tabela 7 </span><span class="caption-text">Exemplo de classificação.</span><a class="headerlink" href="#tab-clasex" title="Link Permanente para essa tabela">¶</a></caption>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Rótulo Correto</p></td>
+<td><p><font color='blue'>S</font></p></td>
+<td><p><font color='red'>N</font></p></td>
+<td><p><font color='red'>N</font></p></td>
+<td><p><font color='blue'>S</font></p></td>
+<td><p><font color='blue'>S</font></p></td>
+<td><p><font color='red'>N</font></p></td>
+<td><p><font color='blue'>S</font></p></td>
+<td><p><font color='blue'>S</font></p></td>
+<td><p><font color='red'>N</font></p></td>
+<td><p><font color='red'>N</font></p></td>
+</tr>
+<tr class="row-even"><td><p>Rótulo Predito</p></td>
+<td><p><font color='red'>N</font></p></td>
+<td><p><font color='red'>N</font></p></td>
+<td><p><font color='red'>N</font></p></td>
+<td><p><font color='blue'>S</font></p></td>
+<td><p><font color='blue'>S</font></p></td>
+<td><p><font color='red'>N</font></p></td>
+<td><p><font color='red'>N</font></p></td>
+<td><p><font color='blue'>S</font></p></td>
+<td><p><font color='red'>N</font></p></td>
+<td><p><font color='blue'>S</font></p></td>
+</tr>
+<tr class="row-odd"><td><p>Tipo de erro</p></td>
+<td><p>FN</p></td>
+<td><p>VN</p></td>
+<td><p>VN</p></td>
+<td><p>VP</p></td>
+<td><p>VP</p></td>
+<td><p>VN</p></td>
+<td><p>FN</p></td>
+<td><p>VP</p></td>
+<td><p>VN</p></td>
+<td><p>FP</p></td>
+</tr>
+</tbody>
+</table>
+<p>A matriz de confusão do exemplo da <a class="reference internal" href="#tab-clasex"><span class="std std-numref">Tabela 7</span></a> é dada por</p>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="_images/matrizconfusao2.png"><img alt="_images/matrizconfusao2.png" src="_images/matrizconfusao2.png" style="width: 80%;" /></a>
+</div>
+<p>Para um bom classificador a matriz de confusão deve ter valores  na diagonal principal muito maiores que os valores da antidiagonal, que idealmente deveriam ser iguais a zero.</p>
+<p>Vale notar que, apesar desta ser a definição mais usual da matriz de confusão, essa definição pode variar em algumas referências ou em algumas bibliotecas de software, como é o caso do <em>scikit-learn</em>, que define a matriz de confusão como a transposta da matriz aqui apresentada, ou seja, com as linhas usadas para representar os valores verdadeiros e as colunas para representar os valores preditos.</p>
+</div>
+<div class="section" id="acuracia-e-taxa-de-erro">
+<h2>Acurácia e taxa de erro<a class="headerlink" href="#acuracia-e-taxa-de-erro" title="Link permanente para este título">¶</a></h2>
+<p>Uma vez determinados os erros de classificação, as seguintes métricas podem ser calculadas:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+\text{Acurácia}=\frac{\# \text{predições corretas}}{\# \text{predições totais}}=\frac{\text{VP}+\text{VN}}{\text{VP}+\text{VN}+\text{FP}+\text{FN}}
+$}
+\end{equation*}\]</div>
+<p>e</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+\text{Taxa de erro}=\frac{\# \text{predições incorretas}}{\# \text{predições totais}}=\frac{\text{FP}+\text{FN}}{\text{VP}+\text{VN}+\text{FP}+\text{FN}}=1-\text{Acurácia}.
+$}
+\end{equation*}\]</div>
+<p>Considerando o exemplo de classificação da <a class="reference internal" href="#tab-clasex"><span class="std std-numref">Tabela 7</span></a>, temos</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Acurácia}=\frac{\text{VP}+\text{VN}}{\text{VP}+\text{VN}+\text{FP}+\text{FN}}=\frac{3+4}{10}=0,7=70\%
+\]</div>
+<p>e</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Taxa de erro}=1-\text{Acurácia}=1-0,7=0,3=30\%.
+\]</div>
+<p>A acurácia não é uma métrica adequada para analisar a classificação quando as classes estão desbalanceadas. Suponha, por exemplo, que <span class="math notranslate nohighlight">\(97\%\)</span> dos exemplos de treinamento sejam da Região B e apenas <span class="math notranslate nohighlight">\(3\%\)</span> da Região A. Se o modelo consegue predizer apenas os pontos da Região B, a acurácia será de <span class="math notranslate nohighlight">\(97\%\)</span> e nenhum ponto da Região A será detectado. Portanto,  o modelo parece ter um ótimo desempenho com base na acurácia, mas  falha ao detectar pontos da Região A.</p>
+</div>
+<div class="section" id="precisao-sensibilidade-e-f-1-score">
+<h2>Precisão, Sensibilidade e <span class="math notranslate nohighlight">\(F_1\)</span>-<em>score</em><a class="headerlink" href="#precisao-sensibilidade-e-f-1-score" title="Link permanente para este título">¶</a></h2>
+<p>Voltando à <a class="reference internal" href="#fig-diagrama"><span class="std std-numref">Fig. 45</span></a>, considerando que os elementos relevantes são os pontos das Região A, a precisão mede a fração dos elementos relevantes entre os elementos recuperados, ou seja,</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+\text{Precisão}=\frac{\# \text{amostras positivas preditas corretamente}}{\# \text{todas as amostras preditas como positivas}}=\frac{\text{VP}}{\text{VP}+\text{FP}}.
+$}
+\end{equation*}\]</div>
+<p>A precisão é uma medida que nos diz qual é a proporção dos pontos que  foram classificados como pertencentes à Região A que de fato são da Região A.</p>
+<p>Em contrapartida, a sensibilidade, também conhecida como taxa de verdadeiros positivos (<em>True Positive Rate</em> - TPR) ou revocação (<em>recall</em>), calcula a fração dos elementos relevantes que foram recuperados, ou seja,</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+\text{Sensibilidade}=\frac{\# \text{amostras positivas preditas corretamente}}{\# \text{todas as amostras com rótulos positivos}}=\frac{\text{VP}}{\text{VP}+\text{FN}}.
+$}
+\end{equation*}\]</div>
+<p>A sensibilidade é uma medida que nos diz qual é a proporção dos pontos que de fato são da Região A que foram classificados como pertencentes a essa região.</p>
+<p>Usando o diagrama da <a class="reference internal" href="#fig-diagrama"><span class="std std-numref">Fig. 45</span></a>, as métricas acima estão ilustradas na <a class="reference internal" href="#fig-ps"><span class="std std-numref">Fig. 46</span></a></p>
+<div class="figure align-default" id="fig-ps">
+<a class="reference internal image-reference" href="_images/PS.png"><img alt="_images/PS.png" src="_images/PS.png" style="width: 60%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 46 </span><span class="caption-text">Ilustração do cálculo da precisão e sensibilidade seguindo o esquema da <a class="reference internal" href="#fig-diagrama"><span class="std std-numref">Fig. 45</span></a>. Fonte: Adaptado de <a class="reference external" href="https://en.wikipedia.org/wiki/Precision_and_recall">https://en.wikipedia.org/wiki/Precision_and_recall</a></span><a class="headerlink" href="#fig-ps" title="Link Permanente para essa imagem">¶</a></p>
+</div>
+<p>A sensibilidade fornece informação sobre o desempenho do classificador com relação aos falsos negativos, enquanto a precisão fornece informação sobre seu desempenho em relação aos falsos positivos. Dessa forma, se desejamos minimizar os falsos negativos, a sensibilidade deve ser o mais próxima possível de 100% sem que a precisão seja muito ruim. Em contrapartida, se desejamos minimizar os falsos positivos, deve-se fazer a precisão tão próxima de 100% quanto possível.</p>
+<p>Vale notar que existe um compromisso entre o desempenho em termos de precisão e sensibilidade. Em geral, quando busca-se aumentar a precisão, diminuindo o número de falsos positivos, diminui-se sensibilidade, pois o número de falsos negativos aumenta e vice-versa. Dependendo do problema, pode ser mais interessante priorizar uma ou outra métrica, alterando-se o limiar utilizado para classificar um exemplo positivo, Um classificador com alta precisão tende a deixar alguns exemplos de fora (falsos negativos) mas aqueles classificados como positivo tem uma alta qualidade (poucos falsos positivos). Já um classificador com uma sensibilidade alta, deixa poucos exemplos de fora (falsos negativos) mas aqueles classificados como positivo não tem tanta qualidade (mais falsos positivos).</p>
+<p>Uma métrica que combina a precisão e a sensibilidade é a <span class="math notranslate nohighlight">\(F_1\textit{-score}\)</span> definida como a média harmônica dessas métricas, isto é,</p>
+<div class="math notranslate nohighlight">
+\[
+F_1\textit{-score}=2\frac{\text{Precisão}\times\text{Sensibilidade}}{\text{Precisão}+\text{Sensibilidade}}.
+\]</div>
+<p>A média harmônica é uma espécie de média quando a precisão e a sensibilidade são iguais. Mas quando elas são diferentes, essa métrica fica mais próxima do menor valor em comparação com o maior. Portanto, se a precisão ou sensibilidade for muito pequenas, o <span class="math notranslate nohighlight">\(F_1\textit{-score}\)</span> levanta uma bandeira e fica mais próximo do  menor valor, dando ao modelo uma pontuação apropriada em vez de apenas uma simples média aritmética.</p>
+<p>No exemplo da <a class="reference internal" href="#tab-clasex"><span class="std std-numref">Tabela 7</span></a>, temos</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Precisão}=\frac{\text{VP}}{\text{VP}+\text{FP}}=\frac{3}{3+1}=0,75=75\%,
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\text{Sensibilidade}=\frac{\text{VP}}{\text{VP}+\text{FN}}=\frac{3}{3+2}=0,6=60\%,
+\]</div>
+<p>e</p>
+<div class="math notranslate nohighlight">
+\[
+F_1\textit{-score}=2\frac{0,75\times 0,60}{0,75+0,60}=0,6667=66,67\%.
+\]</div>
+<p>Na literatura, existem outras medidas do tipo <span class="math notranslate nohighlight">\(F\)</span> que envolvem a precisão e sensibilidade, mas a <span class="math notranslate nohighlight">\(F_1\textit{-score}\)</span> é a mais utilizada.</p>
+</div>
+<div class="section" id="especificidade-e-taxa-de-falsos-positivos">
+<h2>Especificidade e taxa de falsos positivos<a class="headerlink" href="#especificidade-e-taxa-de-falsos-positivos" title="Link permanente para este título">¶</a></h2>
+<p>A especificidade, em contraste à sensibilidade, é uma medida fornece a proporção de pontos que não pertencem à Região A e que foram previstos pelo modelo como não pertencentes à essa região. Os verdadeiros negativos (pontos que de fato não pertencem à Região A são FP e VN) e os pontos classificados corretamente como não pertencentes à Região A são VN. Assim define-se essa métrica como</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+\text{Especificidade}=\frac{\# \text{amostras negativas preditas corretamente}}{\# \text{todas as amostras preditas com rótulos negativos}}=\frac{\text{VN}}{\text{VN}+\text{FP}}.
+$}
+\end{equation*}\]</div>
+<p>Usando o diagrama da <a class="reference internal" href="#fig-diagrama"><span class="std std-numref">Fig. 45</span></a>, a especificidade está ilustrada na <a class="reference internal" href="#fig-ps2"><span class="std std-numref">Fig. 47</span></a>.</p>
+<div class="figure align-default" id="fig-ps2">
+<a class="reference internal image-reference" href="_images/PS2.png"><img alt="_images/PS2.png" src="_images/PS2.png" style="width: 35%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 47 </span><span class="caption-text">Ilustração do cálculo da especificidade seguindo o esquema da <a class="reference internal" href="#fig-diagrama"><span class="std std-numref">Fig. 45</span></a>. Fonte: Adaptado de <a class="reference external" href="https://en.wikipedia.org/wiki/Precision_and_recall">https://en.wikipedia.org/wiki/Precision_and_recall</a></span><a class="headerlink" href="#fig-ps2" title="Link Permanente para essa imagem">¶</a></p>
+</div>
+<p>Também é comum definir a taxa de falsos positivos (<em>False Positive Rate</em> - FPR), ou seja,</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+\text{FPR}=\frac{\text{FP}}{\text{VN}+\text{FP}}=1-\text{Especificidade}.
+$}
+\end{equation*}\]</div>
+<p>Essa taxa fornece a proporção da classe negativa (pontos da Região B no nosso exemplo), que foi classificada incorretamente. Uma FPR baixa é desejável uma vez que se deseja classificar corretamente os elementos da classe negativa.</p>
+<p>No exemplo da <a class="reference internal" href="#tab-clasex"><span class="std std-numref">Tabela 7</span></a>, temos</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Especificidade}=\frac{\text{VN}}{\text{VN}+\text{FP}}=\frac{4}{4+1}=0,8=80\%.
+\]</div>
+</div>
+<div class="section" id="coeficiente-de-correlacao-de-matthew">
+<h2>Coeficiente de correlação de Matthew<a class="headerlink" href="#coeficiente-de-correlacao-de-matthew" title="Link permanente para este título">¶</a></h2>
+<p>Para classificação binária, uma métrica pouco utilizada na prática, mas muito interessante é o coeficiente de correlação de Matthew (<em>Matthews Correlation Coefficient</em> - MCC). Para obter essa métrica, trate a classe verdadeira e a classe prevista como duas variáveis aleatórias binárias e calcule seu coeficiente de correlação. Quanto maior a correlação entre os valores verdadeiros e preditos, melhor a predição.  Esse coeficiente de correlação é chamado de MCC quando aplicado a classificadores e é definido como</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+\text{MCC}=\frac{\text{VP}\times\text{VN}-\text{FP}\times\text{FN}}{\sqrt{(\text{VP}+\text{FP})(\text{VP}+\text{FN})(\text{VN}+\text{FP})(\text{VN}+\text{FN})}}.
+$}
+\end{equation*}\]</div>
+<p>Algumas propriedades interessantes dessa métrica podem ser derivadas de sua definição: quando o classificador é perfeito (<span class="math notranslate nohighlight">\(\text{FP} = \text{FN} = 0\)</span>) o valor de MCC é <span class="math notranslate nohighlight">\(1\)</span>, indicando correlação positiva perfeita. Em contrapartida, quando o classificador  sempre classifica mal (<span class="math notranslate nohighlight">\(\text{VP} = \text{VN} = 0\)</span>), obtemos um valor de <span class="math notranslate nohighlight">\(-1\)</span>, representando uma correlação negativa perfeita (neste caso, você pode simplesmente reverter o resultado do classificador para obter o classificador ideal). O valor do MCC está sempre entre <span class="math notranslate nohighlight">\(-1\)</span> e <span class="math notranslate nohighlight">\(1\)</span>, com <span class="math notranslate nohighlight">\(0\)</span> significando que o classificador não é melhor do que um lançamento aleatório de uma moeda honesta. O MCC também é perfeitamente simétrico, portanto, nenhuma classe é mais importante que a outra. Por fim, o MCC leva em conta os quatro valores da matriz de confusão, e um valor alto (próximo de 1) significa que ambas as classes são bem preditas, mesmo que uma classe esteja sub (ou super) representada.</p>
+<p>No exemplo da <a class="reference internal" href="#tab-clasex"><span class="std std-numref">Tabela 7</span></a>, temos</p>
+<div class="math notranslate nohighlight">
+\[
+\text{MCC}=
+\frac{3\times4-1\times2}{\sqrt{(3+1)(3+2)(4+1)(4+2)}}=\frac{10}{\sqrt{600}}=0,408.
+\]</div>
+</div>
+<div class="section" id="area-sob-a-curva-roc">
+<h2>Área sob a curva ROC<a class="headerlink" href="#area-sob-a-curva-roc" title="Link permanente para este título">¶</a></h2>
+<p>No problema das meias-luas, adotamos o limiar igual a 0. Ou seja, quando a saída do classificador é maior ou igual a zero, o ponto é classificado como pertencente à Região A e quando é menor que zero como pertencente à Região B. Esse limiar é razoável neste caso, uma vez que adotamos <span class="math notranslate nohighlight">\(d\in \{-1, +1\}\)</span>  como sinal desejado. No entanto, suponha que a saída de um determinado classificador treinado para este problema siga duas distribuições gaussianas com variância unitária, mas com médias diferentes: uma igual <span class="math notranslate nohighlight">\(-4\)</span> e outra igual a <span class="math notranslate nohighlight">\(1,5\)</span>, como mostrado na <a class="reference internal" href="#fig-limiar"><span class="std std-numref">Fig. 48</span></a>. A gaussiana com média negativa corresponde aos pontos que devem ser classificados como pertencentes à Região B. Enquanto a gaussiana com média positiva corresponde aos pontos que devem ser classificados como pertencentes à Região A. Neste caso, para minimizar o erro de classificação, o limiar deve ser igual a <span class="math notranslate nohighlight">\(-1,25\)</span> e não <span class="math notranslate nohighlight">\(0\)</span>. O valor do limiar influencia nas medidas de desempenho do classificador. Neste exemplo, qualquer outro limiar diferente de <span class="math notranslate nohighlight">\(-1,25\)</span> levará a um maior erro de classificação. Na escolha do limiar, devem ser feitos testes para cada valor, ou seja, pode-se gerar a matriz de confusão e comparar as métricas discutidas até agora. No entanto, o melhor a se fazer é considerar a área sob a curva ROC como veremos a seguir.</p>
+<div class="figure align-default" id="fig-limiar">
+<a class="reference internal image-reference" href="_images/limiar.png"><img alt="_images/limiar.png" src="_images/limiar.png" style="width: 60%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 48 </span><span class="caption-text">Exemplo de função densidade de probabilidade da saída do classificador. A curva vermelha mostra a distribuição da saída ser negativa e a da direita da saída ser positiva.</span><a class="headerlink" href="#fig-limiar" title="Link Permanente para essa imagem">¶</a></p>
+</div>
+<p>Dado um limiar, a curva ROC (<em>Receiver Operator Characteristic</em>) é um gráfico da taxa de verdadeiros positivos (sensitividade) em função da taxa de falsos positivos (<span class="math notranslate nohighlight">\(\text{FPR}=1-\text{Especificidade}\)</span>). A área sob essa curva (<em>area under the curve</em> - AUC) é uma medida da habilidade do classificador de distinguir entre as classes e é usada frequentemente como métrica. Quanto maior a AUC, melhor o desempenho do classificador. Na <a class="reference internal" href="#fig-rocabc"><span class="std std-numref">Fig. 49</span></a>, são mostrados exemplos de curvas ROC com três valores distintos de AUC: <span class="math notranslate nohighlight">\(1\)</span>, <span class="math notranslate nohighlight">\(0,5\)</span> e <span class="math notranslate nohighlight">\(0,8\)</span>. As áreas sob as curvas ROC estão pintadas de amarelo. Quando <span class="math notranslate nohighlight">\(\text{AUC}=1\)</span> (<a class="reference internal" href="#fig-rocabc"><span class="std std-numref">Fig. 49</span></a>(a)), o classificador é capaz de distinguir perfeitamente os pontos da Região A dos pontos da Região B. Se <span class="math notranslate nohighlight">\(\text{AUC}=0\)</span>, o modelo classifica todos os pontos da Região A como pertencentes a Região B e vice-versa. Quando <span class="math notranslate nohighlight">\(\text{AUC}=0,5\)</span> (<a class="reference internal" href="#fig-rocabc"><span class="std std-numref">Fig. 49</span></a>(b)), o classificador não é capaz de distinguir entre as classes: é como se uma moeda fosse lançada para gerar a classificação. Por fim, para <span class="math notranslate nohighlight">\(0,5 &lt; \text{AUC}&lt; 1\)</span> (<a class="reference internal" href="#fig-rocabc"><span class="std std-numref">Fig. 49</span></a>(c)), há uma grande chance de que o classificador seja capaz de distinguir as classes. Isso ocorre porque o classificador  detecta mais  verdadeiros positivos e verdadeiros negativos do que falsos negativos e falsos positivos.</p>
+<div class="figure align-default" id="fig-rocabc">
+<a class="reference internal image-reference" href="_images/ROCabc.png"><img alt="_images/ROCabc.png" src="_images/ROCabc.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 49 </span><span class="caption-text">Exemplos de curvas ROC com três valores distintos de AUC: (a) <span class="math notranslate nohighlight">\(\text{AUC}=1\)</span>, (b) <span class="math notranslate nohighlight">\(\text{AUC}=0,5\)</span> e (c) <span class="math notranslate nohighlight">\(\text{AUC}=0,8\)</span>.</span><a class="headerlink" href="#fig-rocabc" title="Link Permanente para essa imagem">¶</a></p>
+</div>
+<p>Em uma curva ROC, um valor mais alto do eixo <span class="math notranslate nohighlight">\(x\)</span> indica um maior número  de falsos positivos do que de verdadeiros negativos. Enquanto um valor mais alto do eixo <span class="math notranslate nohighlight">\(y\)</span> indica um maior número  de verdadeiros positivos do que falsos negativos. Assim, a escolha do limiar deve levar em conta um compromisso entre o número de falsos positivos e falsos negativos.</p>
+</div>
+<div class="section" id="problemas-de-classificacao-multiclasse">
+<h2>Problemas de classificação multiclasse<a class="headerlink" href="#problemas-de-classificacao-multiclasse" title="Link permanente para este título">¶</a></h2>
+<p>Até agora, quando abordamos as métricas de desempenho, focamos em problemas de classificação binária. No entanto, essas métricas podem ser estendidas para problemas de classificação multiclasse. Um bom tutorial sobre o assunto pode ser encontrado no artigo</p>
+<ul class="simple">
+<li><p>Margherita Grandini, Enrico Bagli, Giorgio Visani: “Metrics for Multi-Class Classification: an Overview”, ArXiv, 2020, disponível em <a class="reference external" href="https://arxiv.org/abs/2008.05756">https://arxiv.org/abs/2008.05756</a></p></li>
+</ul>
+</div>
+<div class="section" id="problemas-de-regressao">
+<h2>Problemas de regressão<a class="headerlink" href="#problemas-de-regressao" title="Link permanente para este título">¶</a></h2>
+<p>As medidas de desempenho vistas até o momento não servem para problemas de regressão. A seguir vamos abordar três medidas que podem ser usadas para avaliar modelos de regressão.</p>
+<div class="section" id="erro-absoluto-medio">
+<h3>Erro absoluto médio<a class="headerlink" href="#erro-absoluto-medio" title="Link permanente para este título">¶</a></h3>
+<p>O erro absoluto médio (<em>mean absolute error</em> - MAE)  é a média do módulo da diferença entre os valores desejados e os valores preditos. Ele fornece uma medida de quão longe as predições estão dos valores verdadeiro, mas não fornece nenhuma ideia da direção do erro, ou seja, se o modelo está subestimando ou superestimando os dados. O erro absoluto médio é calculado como</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+{\rm MAE}=\frac{1}{N_\text{teste}}\sum_{n=1}^{N_{\text{teste}}}|d_n-y_n|.
+$}
+\end{equation*}\]</div>
+</div>
+<div class="section" id="erro-quadratico-medio">
+<h3>Erro quadrático médio<a class="headerlink" href="#erro-quadratico-medio" title="Link permanente para este título">¶</a></h3>
+<p>O erro quadrático médio (<em>mean square error</em> - MSE) é  semelhante ao erro absoluto médio. A única diferença é que o MSE toma a média do quadrado da diferença entre os valores desejados e os valores preditos. Como se calcula o quadrado do erro,  o efeito de erros maiores se torna mais pronunciado do que o de erros menores. O MSE é calculado como</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+{\rm MSE}=\frac{1}{N_\text{teste}}\sum_{n=1}^{N_{\text{teste}}}(d_n-y_n)^2.
+$}
+\end{equation*}\]</div>
+<p>É comum usar também a raiz quadrada do MSE (<em>root mean square error</em> - RMSE) como métrica, ou seja,</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+{\rm RMSE}=\sqrt{{\rm MSE}}=\sqrt{\frac{1}{N_\text{teste}}\sum_{n=1}^{N_{\text{teste}}}(d_n-y_n)^2}.
+$}
+\end{equation*}\]</div>
+<p>A vantagem é que tanto essa métrica como o MAE possuem a mesma unidade da variável predita, o que torna sua interpretação mais simples.</p>
+</div>
+<div class="section" id="r-2">
+<h3><span class="math notranslate nohighlight">\(R^2\)</span><a class="headerlink" href="#r-2" title="Link permanente para este título">¶</a></h3>
+<p>A métrica <span class="math notranslate nohighlight">\(R^2\)</span> é usada para fins explicativos e fornece uma indicação da qualidade ou ajuste de um conjunto de valores de saída previstos aos valores desejados. Essa métrica é calculada como</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\fbox{$\displaystyle
+R^2=1-\displaystyle\frac{\displaystyle\sum_{n=1}^{N_{\text{teste}}}(d_n-y_n)^2}{\displaystyle\sum_{n=1}^{N_{\text{teste}}}(\overline{d}-d_n)^2},
+$}
+\end{equation*}\]</div>
+<p>em que</p>
+<div class="math notranslate nohighlight">
+\[
+\overline{d}=\frac{1}{N_{\text{teste}}}\sum_{n=1}^{N_{\text{teste}}}d_n
+\]</div>
+<p>é a média dos valores desejados do conjunto de teste. Note que o denominador da fração que aparece na definição de <span class="math notranslate nohighlight">\(R^2\)</span> é proporcional à  variância dos dados de teste. No melhor caso, os valores preditos são exatamente iguais aos valores desejados, o que leva a <span class="math notranslate nohighlight">\(R^2=1\)</span>. Caso o modelo leve a <span class="math notranslate nohighlight">\(y_n=\overline{d}\)</span>, <span class="math notranslate nohighlight">\(n=1, 2, \cdots, N_{\text{teste}}\)</span>, que é conhecido como modelo base,  teremos <span class="math notranslate nohighlight">\(R^2=0\)</span>. Modelos cujas predições são piores que as do modelo base podem levar a <span class="math notranslate nohighlight">\(R^2\)</span> negativo.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="hiperparametros.html" title="anterior página">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">anterior</p>
+            <p class="prev-next-title">Evitando mínimos locais e <em>overfitting</em></p>
+        </div>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      De Magno T. M. Silva e Renato Candido<br/>
+    
+        &copy; direito autoral 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
