@@ -456,10 +456,10 @@ $$
 
 Essa equação nos possibilita entender os efeitos benéficos do *momentum*, enumerados a seguir:
 
-- o ajuste $\boldsymbol{\Delta}\mathbf{W}^{(j)}(n)$ representa a soma de uma série temporal ponderada exponencialmente. Como $0\leq \alpha<1$, considera-se pesos maiores para ajustes recentes e pesos menores para os mais antigos. Dessa forma, $\alpha$ também é chamado na literatura de fator de esquecimento;
-- quando o termo $\boldsymbol{\Delta}_{\delta}^{(j)}(k)$ tem o mesmo sinal algébrico em sucessivas iterações, a matriz
+- o ajuste $\boldsymbol{\Delta}\mathbf{W}^{(j)}(n)$ representa a soma de uma série temporal ponderada exponencialmente. Como $0\leq \alpha<1$, consideram-se pesos maiores para ajustes recentes e pesos menores para os mais antigos. Dessa forma, $\alpha$ também é chamado na literatura de fator de esquecimento;
+- quando o termo $\boldsymbol{\Delta}_{\delta}^{(j)}(n)$ tem o mesmo sinal algébrico em sucessivas iterações, a matriz
 $\boldsymbol{\Delta}\mathbf{W}^{(j)}(n)$ cresce em magnitude e a matriz de pesos $\mathbf{W}^{(j)}(n)$ é ajustada com uma grande quantidade. Diante disso, o *momentum* tende a acelerar a convergência do *backpropagation* em direções de descida mais íngreme;
-- quando o sinal algébrico do termo $\boldsymbol{\Delta}_{\delta}^{(j)}(k)$ muda em sucessivas iterações, a matriz
+- quando o sinal algébrico do termo $\boldsymbol{\Delta}_{\delta}^{(j)}(n)$ muda em sucessivas iterações, a matriz
 $\boldsymbol{\Delta}\mathbf{W}^{(j)}(n)$ diminui em magnitude e a matriz de pesos $\mathbf{W}^{(j)}(n)$ é ajustada com uma pequena quantidade. Diante disso, o *momentum* tem o efeito de estabilizador em direções que oscilam em sinal.
 
 Em suma, a incorporação do *momentum* no algoritmo *backpropagation*  pode trazer alguns efeitos benéficos no  aprendizado, incluindo a possibilidade de  evitar que o algoritmo fique estagnado em um mínimo local.
@@ -496,7 +496,7 @@ Ao introduzir o algoritmo, os autores listam os benefícios de se usar Adam em p
 3) apropriado para problemas não estacionários e problemas com gradientes muito ruidosos e/ou esparsos; e
 4) os hiperparâmetros têm interpretação intuitiva  e são simples de ajustar.
 
-O otimizador Adam atualiza os pesos  e *bias* de uma rede neural a partir dos gradientes calculados na iteração atual e em iterações passadas, de forma a tornar mais estável o processo de aprendizado da rede, evitando-se assim variações excessivas em direções que não são a do mínimo da função custo. Ele combina o  gradiente estocástico com *momentum* com o otimizador RMSprop (*root mean squared propagation*). Para introduzir esse otimizador, vamos antes introduzir o otimizador RMSprop.
+O otimizador Adam atualiza os pesos  e *biases* de uma rede neural a partir dos gradientes calculados na iteração atual e em iterações passadas, de forma a tornar mais estável o processo de aprendizado da rede, evitando-se assim variações excessivas em direções que não são a do mínimo da função custo. Ele combina o  gradiente estocástico com *momentum* com o otimizador RMSprop (*root mean squared propagation*). Para introduzir esse otimizador, vamos antes introduzir o otimizador RMSprop.
 
 À medida que os dados se propagam na rede, os gradientes calculados para atualização dos parâmetros podem ficar muito pequenos ou muito grandes. Gradientes muito pequenos podem levar à estagnação do *backpropagation*. Em contrapartida, gradientes muito grandes podem levar à divergência do algoritmo. O otimizador RMSprop foi proposto por G. Hinton, um dos "pais" do *backpropagation*, para  lidar com esse problema usando uma média móvel dos gradientes ao quadrado. Isso gera uma normalização no algoritmo, que passa a ser encarado como um algoritmo de passo variável. Assim, quando os gradientes são grandes, o método diminui o passo para evitar a divergência e quando os gradientes são pequenos, ele aumenta o passo para evitar a estagnação. A título de curiosidade, o  algoritmo RMSprop foi proposto por Hinton na sexta aula do curso *Neural Networks for Machine Learning*  e diferente do Adam, não foi publicado.
 
@@ -512,13 +512,13 @@ $$
 \mathbf{S}^{(j)}(n) = \beta_2\mathbf{S}^{(j)}(n-1) + (1-\beta_2)\left[\boldsymbol{\Delta}_{\delta}^{(j)}(n)\right]^{\odot 2},
 $$
 
-em que $\textbf{S}^{(j)}(0)=\boldsymbol{0}$, $0\ll \beta_2< 1$ é um hiperparâmetro que faz o papel de um fator de esquecimento e a operação $[\boldsymbol{\Delta}_{\delta}^{(j)}(n)]^{\odot 2}$ indica que cada elemento da matriz $\boldsymbol{\Delta}_{\delta}^{(j)}(n)$ é elevado ao quadrado. Levando em conta a inicialização com valores nulos, a equação recursiva para a matriz  $\mathbf{S}^{(j)}(n)$ pode ser reescrita como
+em que $\mathbf{S}^{(j)}(0)=\boldsymbol{0}$, $0\ll \beta_2< 1$ é um hiperparâmetro que faz o papel de um fator de esquecimento e a operação $[\boldsymbol{\Delta}_{\delta}^{(j)}(n)]^{\odot 2}$ indica que cada elemento da matriz $\boldsymbol{\Delta}_{\delta}^{(j)}(n)$ é elevado ao quadrado. Levando em conta a inicialização com valores nulos, a equação recursiva para a matriz  $\mathbf{S}^{(j)}(n)$ pode ser reescrita como
 
 $$
 \mathbf{S}^{(j)}(n)=(1-\beta_2)\displaystyle \sum_{k=1}^{n}\beta_2^{n-k}\left[\boldsymbol{\Delta}_{\delta}^{(j)}(k)\right]^{\odot 2}.
 $$
 
-A menos da constante $(1-\beta_2)$, observa-se que essa estimativa considera pesos maiores para os gradientes ao quadrado mais recentes e pesos menores para os mais antigos, o que caracteriza uma janela exponencial. Utilizando a matriz $\mathbf{S}^{(j)}(n)$, a atualização dos pesos e *bias* da Camada $j$ da rede segundo o otimizador RMSprop é dada por
+A menos da constante $(1-\beta_2)$, observa-se que essa estimativa considera pesos maiores para os gradientes ao quadrado mais recentes e pesos menores para os mais antigos, o que caracteriza uma janela exponencial. Utilizando a matriz $\mathbf{S}^{(j)}(n)$, a atualização dos pesos e *biases* da Camada $j$ da rede segundo o otimizador RMSprop é dada por
 
 \begin{equation*}
 \fbox{$\displaystyle
@@ -557,7 +557,7 @@ $$
 \mathbf{V}^{(j)}(n) = \beta_1\mathbf{V}^{(j)}(n-1) + (1-\beta_1)\boldsymbol{\Delta}_{\delta}^{(j)}(n)
 $$
 
-em que $\textbf{V}^{(j)}(0)=\boldsymbol{0}$ e $0\ll \beta_1< 1$ é um hiperparâmetro que também faz o papel de um fator de esquecimento. Novamente, levando em conta a inicialização com valores nulos, a equação recursiva para  $\mathbf{V}^{(j)}(n)$ pode ser reescrita como
+em que $\mathbf{V}^{(j)}(0)=\boldsymbol{0}$ e $0\ll \beta_1< 1$ é um hiperparâmetro que também faz o papel de um fator de esquecimento. Novamente, levando em conta a inicialização com valores nulos, a equação recursiva para  $\mathbf{V}^{(j)}(n)$ pode ser reescrita como
 
 $$
 \mathbf{V}^{(j)}(n)=(1-\beta_1)\displaystyle \sum_{k=1}^{n}\beta_1^{n-k}\boldsymbol{\Delta}_{\delta}^{(j)}(k).

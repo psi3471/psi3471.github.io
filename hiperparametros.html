@@ -617,13 +617,13 @@ $}
 <div class="section" id="funcao-custo">
 <h2>Função custo<a class="headerlink" href="#funcao-custo" title="Link permanente para este título">¶</a></h2>
 <p>A escolha da função custo depende da finalidade da rede neural. Quando empregada em problemas de regressão, é comum usar o erro quadrático médio (<em>Mean Squared Error</em> - MSE) definido por</p>
-<div class="amsmath math notranslate nohighlight" id="equation-49fe15f1-7d3a-4781-8b7b-14a8d8c332c0">
-<span class="eqno">(1)<a class="headerlink" href="#equation-49fe15f1-7d3a-4781-8b7b-14a8d8c332c0" title="Link permanente para essa equação">¶</a></span>\[\begin{equation}\label{mse}
+<div class="amsmath math notranslate nohighlight" id="equation-1e4951d8-912b-47b4-a23c-cb7d02cd8778">
+<span class="eqno">(1)<a class="headerlink" href="#equation-1e4951d8-912b-47b4-a23c-cb7d02cd8778" title="Link permanente para essa equação">¶</a></span>\[\begin{equation}\label{mse}
 J_{\rm MSE} = \frac{1}{N_L} \sum_{\ell=1}^{N_L} e_{\ell}^2(n),
 \end{equation}\]</div>
 <p>em que</p>
-<div class="amsmath math notranslate nohighlight" id="equation-882ed4c9-92e1-466e-b68e-1304c31f6553">
-<span class="eqno">(2)<a class="headerlink" href="#equation-882ed4c9-92e1-466e-b68e-1304c31f6553" title="Link permanente para essa equação">¶</a></span>\[\begin{equation}\label{e_n}
+<div class="amsmath math notranslate nohighlight" id="equation-74e3d6e0-c2f3-49f3-8f20-8f5f25631e4f">
+<span class="eqno">(2)<a class="headerlink" href="#equation-74e3d6e0-c2f3-49f3-8f20-8f5f25631e4f" title="Link permanente para essa equação">¶</a></span>\[\begin{equation}\label{e_n}
 e_{\ell}(n) = d_{\ell}(n) - y_{\ell}^{(L)}(n)
 \end{equation}\]</div>
 <p>são os erros dos neurônios da camada de saída da rede. Apesar de não ser a função custo mais adequada para problemas de classificação, o MSE foi utilizado nos problemas das meias-luas apresentados até o momento.</p>
@@ -847,10 +847,10 @@ $}
 \]</div>
 <p>Essa equação nos possibilita entender os efeitos benéficos do <em>momentum</em>, enumerados a seguir:</p>
 <ul class="simple">
-<li><p>o ajuste <span class="math notranslate nohighlight">\(\boldsymbol{\Delta}\mathbf{W}^{(j)}(n)\)</span> representa a soma de uma série temporal ponderada exponencialmente. Como <span class="math notranslate nohighlight">\(0\leq \alpha&lt;1\)</span>, considera-se pesos maiores para ajustes recentes e pesos menores para os mais antigos. Dessa forma, <span class="math notranslate nohighlight">\(\alpha\)</span> também é chamado na literatura de fator de esquecimento;</p></li>
-<li><p>quando o termo <span class="math notranslate nohighlight">\(\boldsymbol{\Delta}_{\delta}^{(j)}(k)\)</span> tem o mesmo sinal algébrico em sucessivas iterações, a matriz
+<li><p>o ajuste <span class="math notranslate nohighlight">\(\boldsymbol{\Delta}\mathbf{W}^{(j)}(n)\)</span> representa a soma de uma série temporal ponderada exponencialmente. Como <span class="math notranslate nohighlight">\(0\leq \alpha&lt;1\)</span>, consideram-se pesos maiores para ajustes recentes e pesos menores para os mais antigos. Dessa forma, <span class="math notranslate nohighlight">\(\alpha\)</span> também é chamado na literatura de fator de esquecimento;</p></li>
+<li><p>quando o termo <span class="math notranslate nohighlight">\(\boldsymbol{\Delta}_{\delta}^{(j)}(n)\)</span> tem o mesmo sinal algébrico em sucessivas iterações, a matriz
 <span class="math notranslate nohighlight">\(\boldsymbol{\Delta}\mathbf{W}^{(j)}(n)\)</span> cresce em magnitude e a matriz de pesos <span class="math notranslate nohighlight">\(\mathbf{W}^{(j)}(n)\)</span> é ajustada com uma grande quantidade. Diante disso, o <em>momentum</em> tende a acelerar a convergência do <em>backpropagation</em> em direções de descida mais íngreme;</p></li>
-<li><p>quando o sinal algébrico do termo <span class="math notranslate nohighlight">\(\boldsymbol{\Delta}_{\delta}^{(j)}(k)\)</span> muda em sucessivas iterações, a matriz
+<li><p>quando o sinal algébrico do termo <span class="math notranslate nohighlight">\(\boldsymbol{\Delta}_{\delta}^{(j)}(n)\)</span> muda em sucessivas iterações, a matriz
 <span class="math notranslate nohighlight">\(\boldsymbol{\Delta}\mathbf{W}^{(j)}(n)\)</span> diminui em magnitude e a matriz de pesos <span class="math notranslate nohighlight">\(\mathbf{W}^{(j)}(n)\)</span> é ajustada com uma pequena quantidade. Diante disso, o <em>momentum</em> tem o efeito de estabilizador em direções que oscilam em sinal.</p></li>
 </ul>
 <p>Em suma, a incorporação do <em>momentum</em> no algoritmo <em>backpropagation</em>  pode trazer alguns efeitos benéficos no  aprendizado, incluindo a possibilidade de  evitar que o algoritmo fique estagnado em um mínimo local.</p>
@@ -879,7 +879,7 @@ $}
 <li><p>apropriado para problemas não estacionários e problemas com gradientes muito ruidosos e/ou esparsos; e</p></li>
 <li><p>os hiperparâmetros têm interpretação intuitiva  e são simples de ajustar.</p></li>
 </ol>
-<p>O otimizador Adam atualiza os pesos  e <em>bias</em> de uma rede neural a partir dos gradientes calculados na iteração atual e em iterações passadas, de forma a tornar mais estável o processo de aprendizado da rede, evitando-se assim variações excessivas em direções que não são a do mínimo da função custo. Ele combina o  gradiente estocástico com <em>momentum</em> com o otimizador RMSprop (<em>root mean squared propagation</em>). Para introduzir esse otimizador, vamos antes introduzir o otimizador RMSprop.</p>
+<p>O otimizador Adam atualiza os pesos  e <em>biases</em> de uma rede neural a partir dos gradientes calculados na iteração atual e em iterações passadas, de forma a tornar mais estável o processo de aprendizado da rede, evitando-se assim variações excessivas em direções que não são a do mínimo da função custo. Ele combina o  gradiente estocástico com <em>momentum</em> com o otimizador RMSprop (<em>root mean squared propagation</em>). Para introduzir esse otimizador, vamos antes introduzir o otimizador RMSprop.</p>
 <p>À medida que os dados se propagam na rede, os gradientes calculados para atualização dos parâmetros podem ficar muito pequenos ou muito grandes. Gradientes muito pequenos podem levar à estagnação do <em>backpropagation</em>. Em contrapartida, gradientes muito grandes podem levar à divergência do algoritmo. O otimizador RMSprop foi proposto por G. Hinton, um dos “pais” do <em>backpropagation</em>, para  lidar com esse problema usando uma média móvel dos gradientes ao quadrado. Isso gera uma normalização no algoritmo, que passa a ser encarado como um algoritmo de passo variável. Assim, quando os gradientes são grandes, o método diminui o passo para evitar a divergência e quando os gradientes são pequenos, ele aumenta o passo para evitar a estagnação. A título de curiosidade, o  algoritmo RMSprop foi proposto por Hinton na sexta aula do curso <em>Neural Networks for Machine Learning</em>  e diferente do Adam, não foi publicado.</p>
 <p>Quando deduzimos o algoritmo <em>backpropagation</em>, definimos a matriz</p>
 <div class="math notranslate nohighlight">
@@ -891,12 +891,12 @@ $}
 \[
 \mathbf{S}^{(j)}(n) = \beta_2\mathbf{S}^{(j)}(n-1) + (1-\beta_2)\left[\boldsymbol{\Delta}_{\delta}^{(j)}(n)\right]^{\odot 2},
 \]</div>
-<p>em que <span class="math notranslate nohighlight">\(\textbf{S}^{(j)}(0)=\boldsymbol{0}\)</span>, <span class="math notranslate nohighlight">\(0\ll \beta_2&lt; 1\)</span> é um hiperparâmetro que faz o papel de um fator de esquecimento e a operação <span class="math notranslate nohighlight">\([\boldsymbol{\Delta}_{\delta}^{(j)}(n)]^{\odot 2}\)</span> indica que cada elemento da matriz <span class="math notranslate nohighlight">\(\boldsymbol{\Delta}_{\delta}^{(j)}(n)\)</span> é elevado ao quadrado. Levando em conta a inicialização com valores nulos, a equação recursiva para a matriz  <span class="math notranslate nohighlight">\(\mathbf{S}^{(j)}(n)\)</span> pode ser reescrita como</p>
+<p>em que <span class="math notranslate nohighlight">\(\mathbf{S}^{(j)}(0)=\boldsymbol{0}\)</span>, <span class="math notranslate nohighlight">\(0\ll \beta_2&lt; 1\)</span> é um hiperparâmetro que faz o papel de um fator de esquecimento e a operação <span class="math notranslate nohighlight">\([\boldsymbol{\Delta}_{\delta}^{(j)}(n)]^{\odot 2}\)</span> indica que cada elemento da matriz <span class="math notranslate nohighlight">\(\boldsymbol{\Delta}_{\delta}^{(j)}(n)\)</span> é elevado ao quadrado. Levando em conta a inicialização com valores nulos, a equação recursiva para a matriz  <span class="math notranslate nohighlight">\(\mathbf{S}^{(j)}(n)\)</span> pode ser reescrita como</p>
 <div class="math notranslate nohighlight">
 \[
 \mathbf{S}^{(j)}(n)=(1-\beta_2)\displaystyle \sum_{k=1}^{n}\beta_2^{n-k}\left[\boldsymbol{\Delta}_{\delta}^{(j)}(k)\right]^{\odot 2}.
 \]</div>
-<p>A menos da constante <span class="math notranslate nohighlight">\((1-\beta_2)\)</span>, observa-se que essa estimativa considera pesos maiores para os gradientes ao quadrado mais recentes e pesos menores para os mais antigos, o que caracteriza uma janela exponencial. Utilizando a matriz <span class="math notranslate nohighlight">\(\mathbf{S}^{(j)}(n)\)</span>, a atualização dos pesos e <em>bias</em> da Camada <span class="math notranslate nohighlight">\(j\)</span> da rede segundo o otimizador RMSprop é dada por</p>
+<p>A menos da constante <span class="math notranslate nohighlight">\((1-\beta_2)\)</span>, observa-se que essa estimativa considera pesos maiores para os gradientes ao quadrado mais recentes e pesos menores para os mais antigos, o que caracteriza uma janela exponencial. Utilizando a matriz <span class="math notranslate nohighlight">\(\mathbf{S}^{(j)}(n)\)</span>, a atualização dos pesos e <em>biases</em> da Camada <span class="math notranslate nohighlight">\(j\)</span> da rede segundo o otimizador RMSprop é dada por</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
 \fbox{$\displaystyle
@@ -931,7 +931,7 @@ $}
 \[
 \mathbf{V}^{(j)}(n) = \beta_1\mathbf{V}^{(j)}(n-1) + (1-\beta_1)\boldsymbol{\Delta}_{\delta}^{(j)}(n)
 \]</div>
-<p>em que <span class="math notranslate nohighlight">\(\textbf{V}^{(j)}(0)=\boldsymbol{0}\)</span> e <span class="math notranslate nohighlight">\(0\ll \beta_1&lt; 1\)</span> é um hiperparâmetro que também faz o papel de um fator de esquecimento. Novamente, levando em conta a inicialização com valores nulos, a equação recursiva para  <span class="math notranslate nohighlight">\(\mathbf{V}^{(j)}(n)\)</span> pode ser reescrita como</p>
+<p>em que <span class="math notranslate nohighlight">\(\mathbf{V}^{(j)}(0)=\boldsymbol{0}\)</span> e <span class="math notranslate nohighlight">\(0\ll \beta_1&lt; 1\)</span> é um hiperparâmetro que também faz o papel de um fator de esquecimento. Novamente, levando em conta a inicialização com valores nulos, a equação recursiva para  <span class="math notranslate nohighlight">\(\mathbf{V}^{(j)}(n)\)</span> pode ser reescrita como</p>
 <div class="math notranslate nohighlight">
 \[
 \mathbf{V}^{(j)}(n)=(1-\beta_1)\displaystyle \sum_{k=1}^{n}\beta_1^{n-k}\boldsymbol{\Delta}_{\delta}^{(j)}(k).
