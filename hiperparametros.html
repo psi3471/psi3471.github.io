@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Buscar" href="search.html" />
-    <link rel="next" title="Medidas de desempenho" href="medidas.html" />
+    <link rel="next" title="Exercício 4" href="hiperparametros_exercicio_jupyter.html" />
     <link rel="prev" title="Exercício 3" href="mlp_exercicio_jupyter.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="pt_BR">
@@ -166,13 +166,25 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
   </ul>
  </li>
- <li class="toctree-l1 current active">
+ <li class="toctree-l1 current active has-children">
   <a class="current reference internal" href="#">
    Evitando mínimos locais e
    <em>
     overfitting
    </em>
   </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="hiperparametros_exercicio_jupyter.html">
+     Exercício 4
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="medidas.html">
@@ -617,13 +629,13 @@ $}
 <div class="section" id="funcao-custo">
 <h2>Função custo<a class="headerlink" href="#funcao-custo" title="Link permanente para este título">¶</a></h2>
 <p>A escolha da função custo depende da finalidade da rede neural. Quando empregada em problemas de regressão, é comum usar o erro quadrático médio (<em>Mean Squared Error</em> - MSE) definido por</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1e4951d8-912b-47b4-a23c-cb7d02cd8778">
-<span class="eqno">(1)<a class="headerlink" href="#equation-1e4951d8-912b-47b4-a23c-cb7d02cd8778" title="Link permanente para essa equação">¶</a></span>\[\begin{equation}\label{mse}
+<div class="amsmath math notranslate nohighlight" id="equation-17facb07-d243-4db8-a9af-3246b27a4883">
+<span class="eqno">(1)<a class="headerlink" href="#equation-17facb07-d243-4db8-a9af-3246b27a4883" title="Link permanente para essa equação">¶</a></span>\[\begin{equation}\label{mse}
 J_{\rm MSE} = \frac{1}{N_L} \sum_{\ell=1}^{N_L} e_{\ell}^2(n),
 \end{equation}\]</div>
 <p>em que</p>
-<div class="amsmath math notranslate nohighlight" id="equation-74e3d6e0-c2f3-49f3-8f20-8f5f25631e4f">
-<span class="eqno">(2)<a class="headerlink" href="#equation-74e3d6e0-c2f3-49f3-8f20-8f5f25631e4f" title="Link permanente para essa equação">¶</a></span>\[\begin{equation}\label{e_n}
+<div class="amsmath math notranslate nohighlight" id="equation-47fb188b-f76a-417e-be0d-795629b5d68f">
+<span class="eqno">(2)<a class="headerlink" href="#equation-47fb188b-f76a-417e-be0d-795629b5d68f" title="Link permanente para essa equação">¶</a></span>\[\begin{equation}\label{e_n}
 e_{\ell}(n) = d_{\ell}(n) - y_{\ell}^{(L)}(n)
 \end{equation}\]</div>
 <p>são os erros dos neurônios da camada de saída da rede. Apesar de não ser a função custo mais adequada para problemas de classificação, o MSE foi utilizado nos problemas das meias-luas apresentados até o momento.</p>
@@ -1009,6 +1021,8 @@ e o processo é repetido.</p></li>
 </dd>
 </dl>
 </div>
+<div class="toctree-wrapper compound">
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -1043,10 +1057,10 @@ e o processo é repetido.</p></li>
             <p class="prev-next-title">Exercício 3</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="medidas.html" title="próximo página">
+    <a class='right-next' id="next-link" href="hiperparametros_exercicio_jupyter.html" title="próximo página">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">próximo</p>
-        <p class="prev-next-title">Medidas de desempenho</p>
+        <p class="prev-next-title">Exercício 4</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
