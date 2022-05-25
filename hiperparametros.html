@@ -191,6 +191,11 @@ const thebe_selector_output = ".output, .cell_output"
    Medidas de desempenho
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="avaliacao_ecg_jupyter.html">
+   Avaliação - Parte Prática
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -629,13 +634,13 @@ $}
 <div class="section" id="funcao-custo">
 <h2>Função custo<a class="headerlink" href="#funcao-custo" title="Link permanente para este título">¶</a></h2>
 <p>A escolha da função custo depende da finalidade da rede neural. Quando empregada em problemas de regressão, é comum usar o erro quadrático médio (<em>Mean Squared Error</em> - MSE) definido por</p>
-<div class="amsmath math notranslate nohighlight" id="equation-17facb07-d243-4db8-a9af-3246b27a4883">
-<span class="eqno">(1)<a class="headerlink" href="#equation-17facb07-d243-4db8-a9af-3246b27a4883" title="Link permanente para essa equação">¶</a></span>\[\begin{equation}\label{mse}
+<div class="amsmath math notranslate nohighlight" id="equation-2d2a1891-1da9-4c3c-9194-ba160ecdac8b">
+<span class="eqno">(1)<a class="headerlink" href="#equation-2d2a1891-1da9-4c3c-9194-ba160ecdac8b" title="Link permanente para essa equação">¶</a></span>\[\begin{equation}\label{mse}
 J_{\rm MSE} = \frac{1}{N_L} \sum_{\ell=1}^{N_L} e_{\ell}^2(n),
 \end{equation}\]</div>
 <p>em que</p>
-<div class="amsmath math notranslate nohighlight" id="equation-47fb188b-f76a-417e-be0d-795629b5d68f">
-<span class="eqno">(2)<a class="headerlink" href="#equation-47fb188b-f76a-417e-be0d-795629b5d68f" title="Link permanente para essa equação">¶</a></span>\[\begin{equation}\label{e_n}
+<div class="amsmath math notranslate nohighlight" id="equation-1741ac20-c451-45bb-8f32-230d6ff3ee62">
+<span class="eqno">(2)<a class="headerlink" href="#equation-1741ac20-c451-45bb-8f32-230d6ff3ee62" title="Link permanente para essa equação">¶</a></span>\[\begin{equation}\label{e_n}
 e_{\ell}(n) = d_{\ell}(n) - y_{\ell}^{(L)}(n)
 \end{equation}\]</div>
 <p>são os erros dos neurônios da camada de saída da rede. Apesar de não ser a função custo mais adequada para problemas de classificação, o MSE foi utilizado nos problemas das meias-luas apresentados até o momento.</p>

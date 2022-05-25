@@ -1,0 +1,1018 @@
+
+<!DOCTYPE html>
+
+<html lang="pt_BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avaliação - Parte Prática &#8212; PSI3471 - Fundamentos de Sistemas Eletrônicos Inteligentes</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/translations.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Buscar" href="search.html" />
+    <link rel="prev" title="Medidas de desempenho" href="medidas.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="pt_BR">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">PSI3471 - Fundamentos de Sistemas Eletrônicos Inteligentes</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Pesquise este livro ..." aria-label="Pesquise este livro ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Home
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference external" href="https://edisciplinas.usp.br/course/view.php?id=97671">
+   Página no Moodle
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="introducao.html">
+   Introdução
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="regressao_linear.html">
+   Regressão linear
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="regressao_linear_exercicio_jupyter.html">
+     Exercício 1
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lms.html">
+   O algoritmo LMS
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="neuronio.html">
+   O modelo do neurônio
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="neuronio_exercicio_jupyter.html">
+     Exercício 2
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="mlp.html">
+   A rede perceptron multicamada
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="mlp_exercicio_jupyter.html">
+     Exercício 3
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="hiperparametros.html">
+   Evitando mínimos locais e
+   <em>
+    overfitting
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="hiperparametros_exercicio_jupyter.html">
+     Exercício 4
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="medidas.html">
+   Medidas de desempenho
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Avaliação - Parte Prática
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Alternar de navegação" aria-controls="site-navigation"
+                title="Alternar de navegação" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Baixe esta página"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/avaliacao_ecg_jupyter.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Baixar arquivo fonte" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Imprimir em PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Modo tela cheia"
+        title="Modo tela cheia"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Conteúdo
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sinal-de-ecg">
+   Sinal de ECG
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dados-disponibilizados">
+   Dados disponibilizados
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#objetivo">
+   Objetivo
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Avaliação - Parte Prática</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Conteúdo </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sinal-de-ecg">
+   Sinal de ECG
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dados-disponibilizados">
+   Dados disponibilizados
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#objetivo">
+   Objetivo
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="avaliacao-parte-pratica">
+<h1>Avaliação - Parte Prática<a class="headerlink" href="#avaliacao-parte-pratica" title="Link permanente para este título">¶</a></h1>
+<p>Na parte prática da avaliação, você vai trabalhar com um projeto de uma aplicação com redes neurais de ponta a ponta. O objetivo é obter um modelo para classificação de tipos de arritmias cardíacas usando sinais de eletrocardiograma (ECG) como entrada. Neste projeto, você vai trabalhar não só com a proposta da arquitetura do modelo para classificação mas também com a preparação dos dados, necessária em qualquer aplicação prática de aprendizado de máquinas.</p>
+<div class="section" id="sinal-de-ecg">
+<h2>Sinal de ECG<a class="headerlink" href="#sinal-de-ecg" title="Link permanente para este título">¶</a></h2>
+<p>O sinal de ECG registra a atividade elétrica do coração, por meio de eletrodos que são colocados nos membros ou no tórax do paciente. De forma simplificada, o sinal referente a um batimento cardíaco tem a seguinte forma:</p>
+<p><img alt="ECG" src="_images/ecg_beat.png" /></p>
+<p>Como mostrado na figura, o sinal referente a um batimento cardíaco tem formas de onda características, identificadas pelos pontos P, Q, R, S e T e tem alguns intervalos e segmentos que são utilizados por especialistas para fazer o diagnóstico de doenças cardíacas. Além disso, em geral, em um exame de ECG são registrados vários sinais chamados de <em>derivações</em> que representam a diferença de potencial entre diferentes pares ou combinações de eletrodos. Neste projeto, você vai trabalhar com uma única derivação do sinal de ECG e não é necessário um entendimento em detalhes sobre a morfologia dos sinais. No entanto, caso queira se aprofundar, uma boa referência é o artigo <a class="reference external" href="https://ieeexplore.ieee.org/document/29327">Geselowitz - On the theory of the electrocardiogram, 1989</a></p>
+</div>
+<div class="section" id="dados-disponibilizados">
+<h2>Dados disponibilizados<a class="headerlink" href="#dados-disponibilizados" title="Link permanente para este título">¶</a></h2>
+<p>Para os fins do projeto, considere apenas que um sinal é uma série temporal, composta por amostras de vários batimentos cardíacos sequenciais e que cada batimento cardíaco tem uma classificação que pode ser normal ou com algum tipo de arritimia. Você vai trabalhar com o sinais contidos no <a class="reference external" href="https://physionet.org/content/mitdb/1.0.0/">banco de dados de arritimia do MIT</a> mas, para facilitar o trabalho de carregamento dos sinais, estamos disponibilizando os <a href="./assets/datasets/ecg/dados_ecg.zip">dados no formato CSV </a>no repositório de materiais.</p>
+<p>Dentro do arquivo compactado, são disponibilizados os seguintes arquivos para treinamento do modelo:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ecg_treino.csv</span></code>: amostras dos sinais de ECG para treinamento do modelo</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rotulos_treino.csv</span></code>: rótulos para cada batimento cardíaco, representando a classificação normal (N) ou com algum tipo de arritmia (F, Q, S ou V)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_rotulos_treino.csv</span></code>: cada rótulo é localizado sobre o ponto R de um batimento cardíaco (note na forma de onda que o ponto R é onde geralmente ocorre o pico do sinal) e neste arquivo são armazenados os índices onde se localizam os pontos R dos batimentos</p></li>
+</ul>
+<p>E os seguintes arquivos para teste, com conteúdo análogo:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ecg_teste.csv</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rotulos_teste.csv</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_rotulos_teste.csv</span></code></p></li>
+</ul>
+<p>Para entender melhor a estrutura dos arquivos, vamos analisar alguns batimentos. Para carregar os arquivos CSV, você pode utilizar a biblioteca Pandas:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">ecg_treino</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;ecg_treino.csv&quot;</span><span class="p">)</span>
+<span class="n">rotulos_treino</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;rotulos_treino.csv&quot;</span><span class="p">)</span>
+<span class="n">n_rotulos_treino</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;n_rotulos_treino.csv&quot;</span><span class="p">)</span>  
+</pre></div>
+</div>
+</div>
+</div>
+<p>O DataFrame com as amostras dos sinais tem a seguinte estrutura:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ecg_treino</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>...</th>
+      <th>649990</th>
+      <th>649991</th>
+      <th>649992</th>
+      <th>649993</th>
+      <th>649994</th>
+      <th>649995</th>
+      <th>649996</th>
+      <th>649997</th>
+      <th>649998</th>
+      <th>649999</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Paciente101</td>
+      <td>-0.345</td>
+      <td>-0.345</td>
+      <td>-0.345</td>
+      <td>-0.345</td>
+      <td>-0.345</td>
+      <td>-0.345</td>
+      <td>-0.345</td>
+      <td>-0.345</td>
+      <td>-0.330</td>
+      <td>...</td>
+      <td>-0.300</td>
+      <td>-0.295</td>
+      <td>-0.285</td>
+      <td>-0.280</td>
+      <td>-0.285</td>
+      <td>-0.290</td>
+      <td>-0.295</td>
+      <td>-0.295</td>
+      <td>-0.290</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Paciente106</td>
+      <td>-0.310</td>
+      <td>-0.310</td>
+      <td>-0.310</td>
+      <td>-0.310</td>
+      <td>-0.310</td>
+      <td>-0.310</td>
+      <td>-0.310</td>
+      <td>-0.310</td>
+      <td>-0.290</td>
+      <td>...</td>
+      <td>1.970</td>
+      <td>1.900</td>
+      <td>1.785</td>
+      <td>1.690</td>
+      <td>1.550</td>
+      <td>1.355</td>
+      <td>1.040</td>
+      <td>0.635</td>
+      <td>0.265</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Paciente108</td>
+      <td>-0.125</td>
+      <td>-0.125</td>
+      <td>-0.125</td>
+      <td>-0.125</td>
+      <td>-0.125</td>
+      <td>-0.125</td>
+      <td>-0.125</td>
+      <td>-0.125</td>
+      <td>-0.135</td>
+      <td>...</td>
+      <td>-0.135</td>
+      <td>-0.110</td>
+      <td>-0.095</td>
+      <td>-0.110</td>
+      <td>-0.155</td>
+      <td>-0.165</td>
+      <td>-0.095</td>
+      <td>-0.010</td>
+      <td>0.040</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Paciente109</td>
+      <td>0.175</td>
+      <td>0.175</td>
+      <td>0.175</td>
+      <td>0.175</td>
+      <td>0.175</td>
+      <td>0.175</td>
+      <td>0.175</td>
+      <td>0.175</td>
+      <td>0.175</td>
+      <td>...</td>
+      <td>-0.885</td>
+      <td>-0.885</td>
+      <td>-0.885</td>
+      <td>-0.875</td>
+      <td>-0.900</td>
+      <td>-0.900</td>
+      <td>-0.910</td>
+      <td>-0.920</td>
+      <td>-0.910</td>
+      <td>-1.28</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Paciente112</td>
+      <td>-0.750</td>
+      <td>-0.750</td>
+      <td>-0.750</td>
+      <td>-0.750</td>
+      <td>-0.750</td>
+      <td>-0.750</td>
+      <td>-0.750</td>
+      <td>-0.760</td>
+      <td>-0.770</td>
+      <td>...</td>
+      <td>-0.940</td>
+      <td>-0.925</td>
+      <td>-0.915</td>
+      <td>-0.890</td>
+      <td>-0.885</td>
+      <td>-0.845</td>
+      <td>-0.820</td>
+      <td>-0.825</td>
+      <td>-0.810</td>
+      <td>-1.28</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 650001 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ecg_treino</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(22, 650001)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note que cada linha corresponde às amostras do sinal de ECG de um paciente diferente, identificado pela coluna <code class="docutils literal notranslate"><span class="pre">Unnamed:</span> <span class="pre">0</span></code>. Além disso, ao todo são armazenados dados de 22 pacientes no arquivo <code class="docutils literal notranslate"><span class="pre">ecg_treino.csv</span></code>. Segue um gráfico com as primeiras 600 amostras do sinal de ECG do paciente identificado como <code class="docutils literal notranslate"><span class="pre">Paciente101</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ecg_treino</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[:</span><span class="mi">600</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f8cdb463820&gt;]
+</pre></div>
+</div>
+<img alt="_images/avaliacao_ecg_jupyter_10_1.png" src="_images/avaliacao_ecg_jupyter_10_1.png" />
+</div>
+</div>
+<p>Note que nesse trecho podemos identificar dois batimentos cardíacos. Os índices referentes aos pontos R de cada batimento cardíaco dos sinais foram carregados no DataFrame <code class="docutils literal notranslate"><span class="pre">n_rotulos_treino</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_rotulos_treino</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>...</th>
+      <th>3353</th>
+      <th>3354</th>
+      <th>3355</th>
+      <th>3356</th>
+      <th>3357</th>
+      <th>3358</th>
+      <th>3359</th>
+      <th>3360</th>
+      <th>3361</th>
+      <th>3362</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Paciente101</td>
+      <td>83</td>
+      <td>396</td>
+      <td>711</td>
+      <td>1032</td>
+      <td>1368</td>
+      <td>1712</td>
+      <td>2036</td>
+      <td>2349</td>
+      <td>2662</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Paciente106</td>
+      <td>351</td>
+      <td>724</td>
+      <td>1086</td>
+      <td>1448</td>
+      <td>1829</td>
+      <td>2197</td>
+      <td>2571</td>
+      <td>2918</td>
+      <td>3234</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Paciente108</td>
+      <td>88</td>
+      <td>442</td>
+      <td>789</td>
+      <td>1155</td>
+      <td>1493</td>
+      <td>1821</td>
+      <td>2157</td>
+      <td>2517</td>
+      <td>2889</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Paciente109</td>
+      <td>111</td>
+      <td>343</td>
+      <td>571</td>
+      <td>807</td>
+      <td>1048</td>
+      <td>1287</td>
+      <td>1523</td>
+      <td>1765</td>
+      <td>1994</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Paciente112</td>
+      <td>124</td>
+      <td>382</td>
+      <td>644</td>
+      <td>892</td>
+      <td>1149</td>
+      <td>1393</td>
+      <td>1648</td>
+      <td>1891</td>
+      <td>2147</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 3364 columns</p>
+</div></div></div>
+</div>
+<p>Para o paciente identificado como <code class="docutils literal notranslate"><span class="pre">Paciente101</span></code>, note que os pontos R dos dois primeiros batimentos estão situados nos índices 83 e 396, conforme mostrado na figura abaixo:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="_images/avaliacao_ecg_jupyter_14_0.png" src="_images/avaliacao_ecg_jupyter_14_0.png" />
+</div>
+</div>
+<p>Cada batimento é rotulado com a classificação normal (N) ou com algum tipo de arritmia (F, Q, S ou V) e os rótulos foram carregados no DataFrame <code class="docutils literal notranslate"><span class="pre">rotulos_treino</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rotulos_treino</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>...</th>
+      <th>3353</th>
+      <th>3354</th>
+      <th>3355</th>
+      <th>3356</th>
+      <th>3357</th>
+      <th>3358</th>
+      <th>3359</th>
+      <th>3360</th>
+      <th>3361</th>
+      <th>3362</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Paciente101</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Paciente106</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Paciente108</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Paciente109</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Paciente112</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 3364 columns</p>
+</div></div></div>
+</div>
+<p>Nesse caso, os dois primeiros batimentos para o paciente identificado como <code class="docutils literal notranslate"><span class="pre">Paciente101</span></code> são to tipo normais (N).</p>
+<p>Note que os DataFrames <code class="docutils literal notranslate"><span class="pre">n_rotulos_treino</span></code> e <code class="docutils literal notranslate"><span class="pre">rotulos_treino</span></code> possuem diversos valores <code class="docutils literal notranslate"><span class="pre">NaN</span></code> nas últimas colunas. Isso acontece pois, apesar dos sinais de ECG dos diversos pacientes terem o mesmo número de amostras, o número de batimentos cardíacos em cada um é diferente, já que o ritmo cardíaco é diferente entre os pacientes. Nesse banco de dados de treinamento, o sinal com maior número de batimentos cardíacos contém 3362, que é igual ao número de colunas do DataFrame. Para os demais sinais, mais curtos, o excedente de colunas do DataFrame é preenchido com valores <code class="docutils literal notranslate"><span class="pre">NaN</span></code>.</p>
+</div>
+<div class="section" id="objetivo">
+<h2>Objetivo<a class="headerlink" href="#objetivo" title="Link permanente para este título">¶</a></h2>
+<p>O objetivo do projeto é obter um modelo que receba a informação de um batimento cardíaco e forneça a classificação de arritmia. Você deve trabalhar com dois modelos:</p>
+<ol class="simple">
+<li><p>Classificador binário, com o objetivo de dizer se um batimento tem algum tipo de arritmia (1) ou é um batimento normal (0);</p></li>
+<li><p>Classificador multiclasse, com o objetivo de classificar um batimento entre as classes N, S e V (desconsidere as demais classes, nesse caso).</p></li>
+</ol>
+<p>A definição da entrada que será utilizada no modelo é parte do projeto e tem grande relevância no desempenho do classificador. Seguem algumas sugestões:</p>
+<ul class="simple">
+<li><p>A forma mais simples é considerar como entrada do modelo as amostras de um batimento cardíaco. No entanto, é necessário levar em conta que o comprimento de cada batimento cardíaco é diferente, variando com o ritmo cardíaco do paciente. Para contornar esse problema, uma ideia é calcular o comprimento médio dos batimentos e usar esse resultado para o número de amostras que serão utilizadas como entrada do modelo. O comprimento de cada batimento em termos do número de amostras pode ser medido como a diferença entre o índice de um pico R o índice do pico R seguinte. Para segmentação de um batimento cardíaco, pode-se considerar amostras em torno do pico R;</p></li>
+<li><p>O problema de arritimia está muito relacionado com a cadência entre os batimentos. Assim, informações adicionais como o valor em amostras do intervalo RR entre batimentos pode ajudar;</p></li>
+<li><p>Outra ideia que pode ajudar na classificação de arritmia é considerar mais de um batimento cardíaco na entrada da rede incluindo, de forma implícita, informação sobre a cadência dos batimentos. Nesse caso você pode, por exemplo, considerar as amostras de 3 batimentos cardíacos na entrada da rede para a classificação do batimento central;</p></li>
+<li><p>Também é comum encontrar abordagens que utilizam transformadas do sinal na entrada do modelo, usando a transformada de Fourier ou transformada wavelet, por exemplo.</p></li>
+</ul>
+<p>Após a definição da entrada, projete o modelo, considerando as arquiteturas e as técnicas que foram vistas no curso. Note que este problema tem dados altamente desbalanceados, assim como ocorre na maioria dos problemas de detecção de anomalia. Nesse caso, a maioria dos batimentos cardíacos são do tipo normal (N) e há um número bem menor de exemplos que apresentam classificação de algum tipo de arritmia. Para contornar esse problema seguem algumas sugestões:</p>
+<ul class="simple">
+<li><p>Fazer sobreamostragem das classes menos representativas. Nesse caso, a ideia mais simples é aumentar o número de repetições dos exemplos no conjunto de treinamento. Entretanto, a simples repetição dos exemplos pode fazer com que o modelo sofra <em>overfitting</em> aos dados de treinamento. Para evitar esse problema, é comum utilizar técnicas de aumento de dados (<em>data augmentation</em>) como o <a class="reference external" href="https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/">SMOTE</a>, que pode ser implementado com o auxílio da biblioteca <a class="reference external" href="https://github.com/scikit-learn-contrib/imbalanced-learn">imbalanced-learn</a>;</p></li>
+<li><p>Usar uma função custo ponderada por pesos inversamente proporcionais ao número de elementos das classes. Dessa forma, um erro de classificação para um exemplo com poucos elementos no conjunto de treinamento é mais penalizado que um erro para um elemento de uma classe mais frequente. No caso do PyTorch, os pesos para cada classe podem ser configurados por meio do argumento <code class="docutils literal notranslate"><span class="pre">weights</span></code> (veja, por exemplo, o caso da entropia cruzada com a função <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.functional.nll_loss.html">nll_loss</a>). Para o cálculo dos valores dos pesos, o scikit-learn oferece uma <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.utils.class_weight.compute_class_weight.html">função que implementa uma das abordagens mais utilizadas</a>.</p></li>
+</ul>
+<p>O modelo deve ser treinado com dados do conjunto de treinamento e, após o treinamento, testado fazendo inferência para o conjunto de teste. Note que os pacientes do conjunto de treinamento são diferentes dos pacientes do conjunto de teste, conforme esperado em uma aplicação prática.</p>
+<p>Para implementação do modelo e treinamento da rede, você pode utilizar um framework de redes neurais, como PyTorch ou Keras.</p>
+<p>No final do exercício, você deve apresentar para ambos os classificadores, binário e multiclasse:</p>
+<ol class="simple">
+<li><p>Sua escolha para a entrada da rede e os motivos que o levaram a fazer essa escolha;</p></li>
+<li><p>Sua escolha para a arquitetura do modelo e os motivos que o levaram a fazer essa escolha;</p></li>
+<li><p>Os códigos utilizados para treinamento e teste;</p></li>
+<li><p>A curva de aprendizado em termos da função custo ao longo das épocas e a matriz de confusão obtida com os dados de teste;</p></li>
+<li><p>Métricas de desempenho no conjunto de teste que julgarem adequadas para o problema.</p></li>
+</ol>
+<p>Algumas referências que podem ser úteis:</p>
+<ul class="simple">
+<li><p>P. de Chazal, M. O’Dwyer, and R. B. Reilly, “Automatic classification of heartbeats using ECG morphology and heartbeat interval features,” IEEE Trans. Biomed. Eng., vol. 51, pp. 1196–1206, 2004</p></li>
+<li><p>T. Mar et al., “Optimization of ECG classification by means of feature selection”, IEEE Trans. Biomed. Eng., vol. 58, pp. 2168–2177, 2011.</p></li>
+<li><p>M. Llamedo and J. P. Martínez, “Heartbeat classification using feature selection driven by database generalization criteria”, IEEE Trans. Biomed. Eng., vol. 58, pp. 616–625, 2011.</p></li>
+<li><p>C. Lin and C. Yang, “Heartbeat classification using normalized RR intervals and morphological features”, Mathematical Problems in Engineering, 2014.</p></li>
+<li><p>G. Garcia et al., “Improving automatic cardiac arrhythmia classification: Joining temporal-VCG, complex networks and SVM classifier,” in 2016 International Joint Conference on Neural Networks (IJCNN). IEEE, 2016, pp. 3896–3900.</p></li>
+<li><p>G. Garcia et al., “Inter-patient ECG heartbeat classification with temporal VCG optimized by PSO,” Scientific Reports, vol. 7, pp. 1–11, 2017.</p></li>
+</ul>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "miniconda-main"
+        },
+        kernelOptions: {
+            kernelName: "miniconda-main",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'miniconda-main'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="medidas.html" title="anterior página">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">anterior</p>
+            <p class="prev-next-title">Medidas de desempenho</p>
+        </div>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      De Magno T. M. Silva e Renato Candido<br/>
+    
+        &copy; direito autoral 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
