@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>PSI3471 - O algoritmo LMS</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">PSI3471</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-teoria" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Teoria</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-teoria">    
+        <li>
+    <a class="dropdown-item" href="./introducao.html">
+ <span class="dropdown-text">Introdução</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./regressao_linear.html">
+ <span class="dropdown-text">Regressão linear</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-exercícios-para-aula" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Exercícios para aula</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-exercícios-para-aula">    
+        <li>
+    <a class="dropdown-item" href="./ex_aula_1.html">
+ <span class="dropdown-text">Exercício 1 - Regressão Linear</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-material-de-apoio" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Material de apoio</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-material-de-apoio">    
+        <li>
+    <a class="dropdown-item" href="./python_videos.html">
+ <span class="dropdown-text">Tópicos de programação com Python</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./exemplo_pytorch.html">
+ <span class="dropdown-text">Exemplo MLP com PyTorch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./exemplo_pytorch_cnn.html">
+ <span class="dropdown-text">Exemplo CNN com PyTorch</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://edisciplinas.usp.br/course/view.php?id=116758"> 
+<span class="menu-text">Moodle</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">O algoritmo LMS</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="justify">
+<section id="o-algoritmo-steepest-descent" class="level2">
+<h2 class="anchored" data-anchor-id="o-algoritmo-steepest-descent">O algoritmo <em>steepest descent</em></h2>
+<p>Na regressão linear multivariada, conhecendo-se o conjunto de dados de treinamento</p>
+<p><span class="math display">\[
+\{(x_{11}, x_{21}, \cdots, x_{M1} ,d_1), (x_{12}, x_{22}, \cdots, x_{M2} ,d_2),\cdots, (x_{1N_t}, x_{2N_t}, \cdots, x_{MN_t} ,d_{N_t})\},
+\]</span></p>
+<p>obtém-se um modelo de hiperplano do tipo</p>
+<p><span class="math display">\[
+y=b+w_1x_1+w_2x_2+\cdots+w_Mx_M\approx d,
+\]</span></p>
+<p>em que <span class="math inline">\(N_t\)</span> é o número de dados utilizados no treinamento, <span class="math inline">\(b\)</span> o viés (<em>bias</em>), <span class="math inline">\(d\)</span> o sinal desejado, <span class="math inline">\(y\)</span> a estimativa de <span class="math inline">\(d\)</span>, <span class="math inline">\(x\)</span> o sinal de entrada e <span class="math inline">\(w_k\)</span>, <span class="math inline">\(k=1,\cdots, M\)</span> os pesos do regressor.</p>
+<p>Para obter o modelo, utilizamos os dados de treinamento e calculamos a solução</p>
+<p><span class="math display">\[\begin{equation*}
+\fbox{$\displaystyle
+\mathbf{w}^{\rm o}=(\mathbf{X}^{\rm T}\mathbf{X})^{-1}\mathbf{X}^{\rm T}\mathbf{d}
+$}
+\end{equation*}\]</span></p>
+<p>em que</p>
+<p><span class="math display">\[
+\mathbf{w}^{\rm o}=\left[
+  \begin{array}{c}
+    b^{\rm o} \\
+    w_1^{\rm o} \\
+    \vdots \\
+    w_M^{\rm o} \\
+  \end{array}
+\right],\;\;\;\;
+\mathbf{X}=\left[
+  \begin{array}{ccccc}
+    1      &amp; x_{11} &amp; x_{21} &amp; \cdots &amp; x_{M1} \\
+    1      &amp; x_{12} &amp; x_{22} &amp; \cdots &amp; x_{M2} \\
+    \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    1      &amp; x_{1N_t} &amp; x_{2N_t} &amp; \cdots &amp; x_{MN_t} \\
+  \end{array}
+\right]\;\;\;\;\text{e}\;\;\;\;
+\mathbf{d}
+=\left[
+  \begin{array}{c}
+    d_1 \\
+    d_2 \\
+    \vdots \\
+    d_{N_t} \\
+  \end{array}
+\right].
+\]</span></p>
+<p>A solução <span class="math inline">\(\mathbf{w}^{\rm o}\)</span> minimiza a norma ao quadrado do vetor de erros, que aqui vamos denotar por <span class="math inline">\(J(\mathbf{w})\)</span>, ou seja,</p>
+<p><span class="math display">\[
+J(\mathbf{w})=\|\mathbf{e}\|^2=\|\mathbf{d}-\mathbf{X}\mathbf{w}\|^2,
+\]</span></p>
+<p>de modo que <span class="math inline">\(\mathbf{w}^{\rm o}={\rm argmin}_{\mathbf{w}} J(\mathbf{w})\)</span>.</p>
+<p>O vetor de pesos <span class="math inline">\(\mathbf{w}^{\rm o}\)</span> pode ser obtido a partir de um treinamento iterativo, em que cada amostra <span class="math inline">\((x_{1k}, x_{2k}, \cdots, x_{Mk} ,d_k),\)</span> <span class="math inline">\(k=1,2,\cdots, N_t\)</span> é apresentada a um algoritmo por vez. Para obter esse algoritmo, vamos primeiramente denotar o vetor de pesos da iteração <span class="math inline">\(n\)</span> por</p>
+<p><span class="math display">\[
+\mathbf{w}(n) = [\,b(n)\;w_1(n)\;\cdots\;w_M(n)\,]^{\rm T}.
+\]</span></p>
+<p>Fazendo o mesmo com os dados de treinamento, teremos na iteração <span class="math inline">\(n\)</span> o sinal desejado <span class="math inline">\(d(n)=d_n\)</span>, <span class="math inline">\(n=1,2,\cdots,N_t\)</span> e o vetor de entrada</p>
+<p><span class="math display">\[
+\mathbf{x}(n)=[\,1\;x_{1n}\; x_{2n}\; \cdots\; x_{Mn}\,]^{\rm T}.
+\]</span></p>
+<p>O sinal de “saída” desse regressor iterativo é então calculado como</p>
+<p><span class="math display">\[
+y(n)=\mathbf{x}^{\rm T}(n)\mathbf{w}(n-1)=b(n-1)+\sum_{k=1}^{M}x_{kn}w_k(n-1),
+\]</span></p>
+<p>em que <span class="math inline">\(\mathbf{w}(0)=\mathbf{0}\)</span>. É importante observar que como se trata de um algoritmo iterativo, precisamos inicializar o vetor de pesos. Uma possibilidade é considerar o vetor nulo, embora também seja possível inicializar os pesos de forma aleatória.</p>
+<p>Na regressão linear multivariada, o melhor hiperplano é obtido ao se minimizar o quadrado da norma do vetor de erros, ou seja, deve-se minimizar <span class="math inline">\(J(\mathbf{w})=\|\mathbf{e}\|^2\)</span>, que é comumente chamada de <em>função custo</em>. Aqui, devemos fazer algo semelhante. No entanto, não dispomos de um vetor de erros, pois estamos buscando a solução de forma iterativa, mas podemos calcular o erro de “estimação” em cada iteração, ou seja,</p>
+<p><span class="math display">\[
+e(n)=d(n)-y(n)=d(n)-\mathbf{x}^{\rm T}(n)\mathbf{w}(n-1)=d(n)- b(n-1)-\sum_{k=1}^{M}x_{kn}w_k(n-1).
+\]</span></p>
+<p>Assim, podemos ajustar os pesos para minimizar o erro quadrático médio (do inglês, <em>mean-square error</em> - MSE), definido como</p>
+<p><span class="math display">\[
+J_{\rm MSE}(\mathbf{w})={\rm E}\{e^2(n)\},
+\]</span></p>
+<p>em que <span class="math inline">\({\rm E}\{\cdot\}\)</span> representa o operador esperança matemática. Para minimizar essa função, como no caso da regressão linear multivariada, devemos primeiramente derivá-la em relação ao vetor de pesos, o que leva ao vetor gradiente</p>
+<p><span class="math display">\[
+\begin{align*}
+\boldsymbol{\nabla}_{\mathbf{w}}J_{\rm MSE}(\mathbf{w}(n-1))&amp;=\frac{\partial {\rm E}\{e^2(n)\}}{\partial \mathbf{w}(n-1)}=2{\rm E}\left\{e(n)\frac{\partial e(n)}{\partial \mathbf{w}(n-1)}\right\}=
+2{\rm E}\left\{e(n)\left[\begin{array}{c}
+        \frac{de(n)}{db(n-1)} \\
+        \\
+        \frac{de(n)}{dw_1(n-1)} \\
+                \vdots \\
+        \frac{de(n)}{dw_M(n-1)}
+      \end{array}
+\right]\right\}\nonumber\\
+&amp;=2{\rm E}\left\{e(n)\left[\begin{array}{c}
+        -1 \\
+         -x_{1n} \\
+                \vdots \\
+        -x_{Mn}
+      \end{array}
+\right]\right\}
+=-2{\rm E}\{e(n)\mathbf{x}(n)\}.
+\end{align*}
+\]</span></p>
+<p>Igualando o vetor gradiente ao vetor nulo, obtemos</p>
+<p><span class="math display">\[
+{\rm E}\{e(n)\mathbf{x}(n)\}={\rm E}\{\mathbf{x}(n)[d(n)-y(n)]\}=\boldsymbol{0},
+\]</span></p>
+<p>ou ainda</p>
+<p><span class="math display">\[
+{\rm E}\{\mathbf{x}(n)[d(n)-\mathbf{x}^{\rm T}(n)\mathbf{w}(n-1)]\}=\boldsymbol{0}\Rightarrow
+\underbrace{{\rm E}\{\mathbf{x}(n)\mathbf{x}^{\rm T}(n)\}}_{\mathbf{R}}\mathbf{w}^{\rm wiener}=\underbrace{{\rm E}\{d(n)\mathbf{x}(n)\}}_{\mathbf{p}}.
+\]</span></p>
+<p>A solução dessa equação leva ao MSE mínimo e é conhecida na literatura como solução de Wiener-Hopf, ou simplesmente, solução de Wiener. Por isso, vamos denotá-la como <span class="math inline">\(\mathbf{w}^{\rm wiener}\)</span>, ou seja,</p>
+<p><span class="math display">\[\begin{equation*}
+\fbox{$\displaystyle
+\mathbf{w}^{\rm wiener}=\mathbf{R}^{-1}\mathbf{p},
+$}
+\end{equation*}\]</span></p>
+<p>em que <span class="math inline">\(\mathbf{R}\)</span> é a matriz de autocorrelação dos dados de entrada e <span class="math inline">\(\mathbf{p}\)</span> o vetor de correlação cruzada entre o sinal desejado <span class="math inline">\(d(n)\)</span> e os dados de entrada. Tanto a matriz <span class="math inline">\(\mathbf{R}\)</span> como o vetor <span class="math inline">\(\mathbf{p}\)</span> têm em suas definições o operador esperança matemática. Podemos estimar <span class="math inline">\(\mathbf{R}\)</span> e <span class="math inline">\(\mathbf{p}\)</span> utilizando todos os dados de treinamento, o que leva respectivamente a</p>
+<p><span class="math display">\[
+\widehat{\mathbf{R}}=\frac{1}{N_t}\sum_{n=1}^{N_t}\mathbf{x}(n)\mathbf{x}^{\rm T}(n)\;\;\;\text{e}\;\;\;\widehat{\mathbf{p}}=\frac{1}{N_t}\sum_{n=1}^{N_t}d(n)\mathbf{x}(n).
+\]</span></p>
+<p>Neste caso, a solução obtida com a regressão linear multivariada coincide com a solução de Wiener, ou seja, <span class="math inline">\(\mathbf{w}^{\rm o}=\mathbf{w}^{\rm wiener}\)</span>. Além disso, essa solução é única para um dado conjunto de treinamento.</p>
+<p>Ao acompanhar esse cálculo, você pode estar se perguntando: onde está o algoritmo iterativo para o cálculo dos pesos? Ele pode ser obtido utilizando o método do gradiente. Em Cálculo, aprendemos que o gradiente de uma função aponta para a direção de maior variação da mesma. Como a solução é única, basta considerar o sentido contrário do gradiente, o que leva a</p>
+<p><span class="math display">\[
+\mathbf{w}(n)=\mathbf{w}(n-1)-\frac{\eta}{2}\boldsymbol{\nabla}_{\mathbf{w}}J_{\rm MSE}(\mathbf{w}(n-1)),
+\]</span></p>
+<p>em que <span class="math inline">\(\eta\)</span> é um passo de adaptação. Substituindo a expressão do gradiente, chega-se a</p>
+<p><span class="math display">\[
+\mathbf{w}(n)=\mathbf{w}(n-1)+\eta{\rm E}\{e(n)\mathbf{x}(n)\},
+\]</span></p>
+<p>ou ainda</p>
+<p><span class="math display">\[
+\mathbf{w}(n)=\mathbf{w}(n-1)+\eta{\rm E}\{\mathbf{x}(n)[d(n)-\mathbf{x}^{\rm T}(n)\mathbf{w}(n-1)]\}.
+\]</span></p>
+<p>Identificando a matriz <span class="math inline">\(\mathbf{R}\)</span> e o vetor <span class="math inline">\(\mathbf{p}\)</span> na equação acima, obtemos</p>
+<p><span class="math display">\[\begin{equation*}
+\fbox{$\displaystyle
+\mathbf{w}(n)=\mathbf{w}(n-1)+\eta\left[\mathbf{p}-\mathbf{R}\mathbf{w}(n-1)\right].
+$}
+\end{equation*}\]</span></p>
+<p>Esse algoritmo iterativo é conhecido na literatura como <em>steepest descent algorithm</em> ou algoritmo do gradiente exato. O passo de adaptação <span class="math inline">\(\eta\)</span> tem um papel fundamental em sua convergência. É possível demonstrar que se o intervalo <span class="math inline">\(0&lt;\eta&lt;2/{\lambda_{\max}}\)</span> for atendido, em que <span class="math inline">\(\lambda_{\max}\)</span> é o autovalor máximo da matriz <span class="math inline">\(\mathbf{R}\)</span>, essa equação converge exatamente para a solução de Wiener <span class="citation" data-cites="CapituloVitor">(<a href="#ref-CapituloVitor" role="doc-biblioref">Nascimento e Silva 2014</a>)</span>,<span class="citation" data-cites="Haykin_AFT2014">(<a href="#ref-Haykin_AFT2014" role="doc-biblioref">Haykin 2014</a>)</span>,<span class="citation" data-cites="SayedL2008">(<a href="#ref-SayedL2008" role="doc-biblioref">Sayed 2008</a>)</span>. Apesar de chegar exatamente à solução que minimiza o MSE, ele não é adequado porque é necessário conhecer <span class="math inline">\(\mathbf{R}\)</span> e <span class="math inline">\(\mathbf{p}\)</span>. A única vantagem é evitar calcular a inversa da matriz <span class="math inline">\(\mathbf{R}\)</span>, o que representa uma economia em custo computacional. Apesar de ser pouco utilizado na prática, esse algoritmo é fundamental para entendermos o algoritmo LMS a seguir.</p>
+</section>
+<section id="o-algoritmo-lms" class="level2">
+<h2 class="anchored" data-anchor-id="o-algoritmo-lms">O algoritmo LMS</h2>
+<p>Uma maneira de simplificar os cálculos para evitar ter de conhecer <span class="math inline">\(\mathbf{R}\)</span> e <span class="math inline">\(\mathbf{p}\)</span>, é estimar essas grandezas instantâneamente, o que leva respectivamente a</p>
+<p><span class="math display">\[
+\widehat{\mathbf{R}}(n)=\mathbf{x}(n)\mathbf{x}^{{\rm T}}(n)\;\;\;\text{e}\;\;\;\widehat{\mathbf{p}}(n)=d(n)\mathbf{x}(n).
+\]</span></p>
+<p>Substituindo essas aproximações no algoritmo <em>steepest descent</em>, chega-se a</p>
+<p><span class="math display">\[\begin{equation*}
+\fbox{$\displaystyle
+\mathbf{w}(n)=\mathbf{w}(n-1)+\eta e(n)\mathbf{x}(n),
+$}
+\end{equation*}\]</span></p>
+<p>que é a equação de atualização do conhecido algoritmo LMS (<em>least-mean-square</em>), cujo pseudocódigo está mostrado no <a href="#exm-lms" class="quarto-xref">Algoritmo&nbsp;1</a>. O fluxo de sinal do LMS é mostrado na <a href="#fig-lms" class="quarto-xref">Figura&nbsp;1</a>. Novamente, o passo de adaptação <span class="math inline">\(\eta\)</span> tem um papel fundamental na convergência desse algoritmo. Quanto menor o valor de <span class="math inline">\(\eta\)</span>, mais próximo da solução de Wiener o algoritmo LMS estará quando atingir o regime estacionário. No entanto, quanto menor o passo, mais lentamente o algoritmo atingirá o regime. Em contrapartida, passos grandes podem representar convergências rápidas, mas também podem levar o algoritmo à divergência. Neste caso, os pesos podem ir para infinito<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Diante disso, deve-se atentar ao compromisso entre precisão da solução e velocidade de convergência. O problema é que o intervalo <span class="math inline">\(0&lt;\eta&lt;2/{\lambda_{\max}}\)</span> que vale para o algoritmo exato, é em geral maior do que o intervalo de passo admitido no algoritmo aproximado. Pode-se demonstrar que <span class="math inline">\(0&lt;\eta&lt;2/(3{\lambda_{\max}})\)</span> é um intervalo mais razoável para o algoritmo LMS, mas ainda não garante sua convergência. Devido à sua simplicidade, ele é muito usado em diversas aplicações de filtragem adaptativa que exigem solução em tempo real. As principais aplicações incluem cancelamento de eco acústico, equalização de canais de comunicação, controle ativo de ruído e identificação de sistemas <span class="citation" data-cites="CapituloVitor">(<a href="#ref-CapituloVitor" role="doc-biblioref">Nascimento e Silva 2014</a>)</span>,<span class="citation" data-cites="Haykin_AFT2014">(<a href="#ref-Haykin_AFT2014" role="doc-biblioref">Haykin 2014</a>)</span>,<span class="citation" data-cites="SayedL2008">(<a href="#ref-SayedL2008" role="doc-biblioref">Sayed 2008</a>)</span>.</p>
+<p>Para finalizar esta seção, é importante observar que em várias aplicações de filtragem adaptativa não se considera o <em>bias</em>. Além disso, o vetor de entrada <span class="math inline">\(\mathbf{x}(n)\)</span> muitas vezes é extraído de uma sequência de números, considerando uma linha de atrasos. Neste caso, ele é chamado de vetor regressor. Para exemplificar, vamos supor que temos a seguinte sequência de números</p>
+<p><span class="math display">\[
+\begin{array}{c}
+\vdots\\
+x(n+1)=9\\
+    \;\;\;\;\;\;x(n)=1 \\
+    x(n-1)=2 \\
+    x(n-2)=3 \\
+    x(n-3)=4 \\
+\!\!\!\!\!\vdots
+  \end{array},
+\]</span></p>
+<p>em que <span class="math inline">\(n\)</span> representa um instante de tempo ou uma posição. Considerando <span class="math inline">\(M=3\)</span> e levando em conta a linha de atrasos sem o <em>bias</em>, os vetores de entrada do LMS nos instantes <span class="math inline">\(n-1\)</span>, <span class="math inline">\(n\)</span> e <span class="math inline">\(n+1\)</span> são dados respectivamente por</p>
+<p><span class="math display">\[
+\mathbf{x}(n-1)=[\,2\;\; 3\;\;4\,]^{{\rm T}},\;\;\;\mathbf{x}(n)=[\,1\;\; 2\;\;3\,]^{{\rm T}}\;\;\;\text{e}\;\;\;\mathbf{x}(n+1)=[\,9\;\; 1\;\;2\,]^{{\rm T}}.
+\]</span></p>
+<p>Generalizando, tem-se</p>
+<p><span class="math display">\[
+\mathbf{x}(n)=[\,x(n)\;\;x(n-1)\;\;\cdots\;\;x(n-M+1)\,]^{{\rm T}}.
+\]</span></p>
+<p>Para quem já estudou Processamento de Sinais, o LMS com esse vetor de entrada é um filtro com resposta ao impulso de duração finita (FIR - <em>finite impulse response</em>), cujos coeficientes variam ao longo do tempo.</p>
+<div class="box">
+<div id="exm-lms" class="custom theorem example">
+<p><span class="theorem-title"><strong>Exemplo 1</strong></span> Sumário do algoritmo LMS.</p>
+<p>Inicialização: <span class="math inline">\(\mathbf{w}(0)=\boldsymbol{0}\)</span><br>    Para <span class="math inline">\(n=1,2,\ldots,\)</span> calcule:<br>      <span class="math inline">\({y}(n)=\mathbf{x}^{{\rm T}}(n)\mathbf{w}(n-1)\)</span><br>      <span class="math inline">\(e(n)=d(n)-y(n)\)</span><br>      <span class="math inline">\(\mathbf{w}(n)=\mathbf{w}(n-1)+\eta e(n)\mathbf{x}(n)\)</span><br>    Fim</p>
+</div>
+</div>
+<div id="fig-lms" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/lms.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:65.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Fluxo de sinal do algoritmo LMS.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="exemplo-de-classificação-com-o-lms" class="level2">
+<h2 class="anchored" data-anchor-id="exemplo-de-classificação-com-o-lms">Exemplo de classificação com o LMS</h2>
+<p>Considere o exemplo de classificação das “meias-luas” da <a href="#fig-meiasluas" class="quarto-xref">Figura&nbsp;2</a>. A meia-lua chamada de “Região A” está posicionada simetricamente em relação ao eixo <span class="math inline">\(y\)</span>, enquanto a meia-lua chamada de “Região B” está deslocada de <span class="math inline">\(r_1\)</span> à direita do eixo <span class="math inline">\(y\)</span> e de <span class="math inline">\(r_2\)</span> abaixo do eixo <span class="math inline">\(x\)</span>. As duas meias-luas têm raio <span class="math inline">\(r_1\)</span> e largura <span class="math inline">\(r_3\)</span> idênticos. A distância vertical <span class="math inline">\(r_2\)</span> que separa as duas meias-luas é ajustável e medida em relação ao eixo <span class="math inline">\(x\)</span>. Para <span class="math inline">\(r_2&gt;0\)</span>, quanto maior o valor de <span class="math inline">\(r_2\)</span>, maior a separação entre as meias-luas. Já para <span class="math inline">\(r_2&lt;0\)</span>, quando mais negativo for <span class="math inline">\(r_2\)</span>, mais próximas ficam as meias-luas <span class="citation" data-cites="Haykin2009">(<a href="#ref-Haykin2009" role="doc-biblioref">Haykin 2009</a>)</span>.</p>
+<div id="fig-meiasluas" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-meiasluas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/meiasluas.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:65.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-meiasluas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: O problema de classificação das meias-luas <span class="citation" data-cites="Haykin2009">(<a href="#ref-Haykin2009" role="doc-biblioref">Haykin 2009</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>O conjunto de treinamento consiste em 1000 pontos, 500 pertencentes à Região A e 500 à Região B. Esses pontos são sorteados aleatoriamente. Assim, os pontos da Região A são sorteados considerando</p>
+<p><span class="math display">\[
+(\rho\cos\theta,\;\rho\,{\rm sen\,}\theta),
+\]</span></p>
+<p>em que <span class="math inline">\(\theta\)</span> é uma variável aleatória uniformemente distribuída no intervalo <span class="math inline">\([0,\;\pi]\)</span> e <span class="math inline">\(\rho\)</span> é outra variável aleatória uniformemente distribuída no intervalo <span class="math inline">\([r_1-r_3/2,\;\;r_1+r_3/2]\)</span>. Para essa região, considera-se que o sinal desejado é igual a um (<span class="math inline">\(d=1\)</span>). Para gerar os pontos da Região B, basta considerar os deslocamentos, ou seja,</p>
+<p><span class="math display">\[
+(\rho\cos\theta+r_1,\;\;-\rho\,{\rm sen}\theta-r_2)
+\]</span></p>
+<p>e <span class="math inline">\(d=-1\)</span> como sinal desejado. O conjunto de teste consiste em 2000 pontos, 1000 pontos de cada região, gerados de forma independente do conjunto de treinamento.</p>
+<p>Para <span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=1\)</span> e <span class="math inline">\(r_3=6\)</span>, considerou-se o algoritmo LMS com passo <span class="math inline">\(\eta=10^{-4}\)</span> e <span class="math inline">\(M=2\)</span>. Neste caso, não foi considerado o <em>bias</em>. Os dados de treinamento estão mostrados na <a href="#fig-mld1fig1" class="quarto-xref">Figura&nbsp;3</a>. Na Figura <a href="#fig-mld1fig2" class="quarto-xref">Figura&nbsp;4</a>, são mostrados a saída do algoritmo, o erro quadrático em dB e os pesos ao longo das iterações. São mostrados também os pesos da solução de Wiener (retas tracejadas em vermelho). É possível observar que, como esperado, os pesos do algoritmo LMS se aproximam da solução de Wiener, mas não convergem exatamente para ela. A saída do LMS no treinamento não mostra uma separação clara entre os dois valores possíveis para o sinal desejado (<span class="math inline">\(\pm 1\)</span>). Apesar disso, é possível verificar na <a href="#fig-mld1fig3" class="quarto-xref">Figura&nbsp;5</a> com os dados de teste que há apenas uma pequena quantidade de dados da Região A que foram classificados erroneamente como pertencentes à Região B, o que leva a uma taxa de erro de aproximadamente 2,5%. Considerando os pesos da última iteração do LMS (<span class="math inline">\(n=1000\)</span>), obtém-se a solução “linear” dada pela reta de separação das regiões, mostrada na <a href="#fig-mld1fig3" class="quarto-xref">Figura&nbsp;5</a>.</p>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>NA<span class="op">=</span><span class="dv">500</span> <span class="co"># número de pontos de treinamento da Região A</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>NB<span class="op">=</span><span class="dv">500</span> <span class="co"># número de pontos de treinamento da Região B</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Nt<span class="op">=</span>NA<span class="op">+</span>NB <span class="co"># total de dados de treinamento</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># dados das meia luas </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>r1<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>r3<span class="op">=</span><span class="dv">6</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>r2<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>rmin<span class="op">=</span>r1<span class="op">-</span>r3<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>rmax<span class="op">=</span>r1<span class="op">+</span>r3<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Pontos da Região A</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>a<span class="op">=</span>np.pi<span class="op">*</span>np.random.rand(NA, <span class="dv">1</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>rxy<span class="op">=</span>np.random.uniform(rmin,rmax,(NA,<span class="dv">1</span>))</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>xA<span class="op">=</span>rxy<span class="op">*</span>np.cos(a)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>yA<span class="op">=</span>rxy<span class="op">*</span>np.sin(a)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>dA<span class="op">=</span>np.ones((NA, <span class="dv">1</span>))</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>pontosA<span class="op">=</span>np.hstack((xA, yA, dA))</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Pontos da Região B</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>a<span class="op">=</span>np.pi<span class="op">*</span>np.random.rand(NB, <span class="dv">1</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>rxy<span class="op">=</span>np.random.uniform(rmin,rmax,(NB, <span class="dv">1</span>))</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>xB<span class="op">=</span>rxy<span class="op">*</span>np.cos(a)<span class="op">+</span>r1</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>yB<span class="op">=-</span>rxy<span class="op">*</span>np.sin(a)<span class="op">-</span>r2</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>dB<span class="op">=-</span>np.ones((NB, <span class="dv">1</span>))</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>pontosB<span class="op">=</span>np.hstack((xB, yB, dB))</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co">#Concatenando e embaralhando os dados de treinamento</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>dados_treino<span class="op">=</span>np.vstack((pontosA, pontosB))</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>np.random.shuffle(dados_treino)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Figura para mostrar os dados de treino</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>fig, ax1 <span class="op">=</span> plt.subplots()</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>ax1.plot(xA,yA,<span class="st">'.b'</span>)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>ax1.plot(xB,yB,<span class="st">'.r'</span>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'y'</span>)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>plt.grid(axis<span class="op">=</span><span class="st">'x'</span>, color<span class="op">=</span><span class="st">'0.5'</span>)</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>plt.grid(axis<span class="op">=</span><span class="st">'y'</span>, color<span class="op">=</span><span class="st">'0.5'</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="cell-fig-mld1fig1" class="cell quarto-layout-panel" data-execution_count="1" data-layout-ncol="1">
+<div class="quarto-layout-row">
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-mld1fig1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mld1fig1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="lms_files/figure-html/fig-mld1fig1-output-1.png" width="596" height="429" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mld1fig1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: O problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=1\)</span> e <span class="math inline">\(r_3=6\)</span>). Dados de treinamento (<span class="math inline">\(N_t=1000\)</span>).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="fig-mld1fig2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mld1fig2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/MLd1_fig2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mld1fig2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: O problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=1\)</span> e <span class="math inline">\(r_3=6\)</span>). Algoritmo LMS (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=10^{-4}\)</span>): saída do algoritmo, erro quadrático em dB e pesos ao longo das iterações. As retas vermelhas tracejadas representam os valores dos pesos da solução de Wiener.
+</figcaption>
+</figure>
+</div>
+<div id="fig-mld1fig3" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mld1fig3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/MLd1_fig3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mld1fig3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5: O problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=1\)</span> e <span class="math inline">\(r_3=6\)</span>). Dados de teste (<span class="math inline">\(N_{\rm teste}=2000\)</span>) e reta de separação das duas regiões obtida com o LMS (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=10^{-4}\)</span>).
+</figcaption>
+</figure>
+</div>
+<p>Ao diminuir o passo do algoritmo LMS para <span class="math inline">\(\eta=10^{-5}\)</span>, é possível observar na <a href="#fig-mld1fig2mumenor22" class="quarto-xref">Figura&nbsp;6</a> que o algoritmo tem uma convergência mais lenta. Neste caso, foram considerados <span class="math inline">\(N_t=10^4\)</span> dados de treinamento para que o algoritmo atingisse o regime permanente. Em contrapartida, a solução do algoritmo se torna mais próxima da de Wiener, como esperado. Assim, o projetista deve sempre ter em mente o compromisso entre passo de adaptação e precisão da solução. Apesar de mais precisa, a solução atingida ainda leva a erros na classificação como ocorre na <a href="#fig-mld1fig3" class="quarto-xref">Figura&nbsp;5</a>.</p>
+<div id="fig-mld1fig2mumenor22" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mld1fig2mumenor22-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/MLd1_fig2mu_menor22.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mld1fig2mumenor22-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6: O problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=1\)</span> e <span class="math inline">\(r_3=6\)</span>). Algoritmo LMS (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=10^{-5}\)</span>): pesos ao longo das iterações. As retas vermelhas tracejadas representam os valores dos pesos da solução de Wiener.
+</figcaption>
+</figure>
+</div>
+<p>Considerando agora <span class="math inline">\(r_2=-4\)</span>, as meias-luas se tornam mais próximas, o que faz com que o algoritmo LMS chegue a uma solução que leva a mais erros: pontos da Região A são classificados erroneamente como pertencentes à Região B e vice-versa, como é possível observar na <a href="#fig-mld4fig3" class="quarto-xref">Figura&nbsp;7</a>. Neste caso, a taxa de erro aumenta para aproximadamente 12%. Para se obter uma solução sem erros para <span class="math inline">\(r_2=-4\)</span>, é necessário considerar um classificador não linear.</p>
+<div id="fig-mld4fig3" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mld4fig3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/MLdm4_fig3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mld4fig3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7: O problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=-4\)</span> e <span class="math inline">\(r_3=6\)</span>). Dados de teste (<span class="math inline">\(N_{\rm teste}=2000\)</span>) e reta de separação das duas regiões obtida com o LMS (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=10^{-4}\)</span>).
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="época-batch-mini-batch-e-iteração" class="level2">
+<h2 class="anchored" data-anchor-id="época-batch-mini-batch-e-iteração">Época, <em>batch</em>, <em>mini-batch</em> e iteração</h2>
+<p>Em diversas aplicações, o banco de dados é limitado. Esse é o caso, por exemplo, do problema de classificação de arritmias cardíacas utilizando sinais de eletrocardiograma (ECG). A aquisição de novos sinais deve seguir o padrão do banco de dados existente: os sinais precisam ser amostrados com a mesma frequência, os sensores devem ser os mesmos, o exame deve seguir o mesmo protocolo etc. Vamos supor que seja possível garantir o mesmo padrão de aquisição dos sinais. Depois de serem adquiridos, os novos sinais de ECG precisam ser classificados por especialistas. Para manter o padrão, é ideal ter os mesmos especialistas que trabalharam na classificação dos sinais do banco de dados existente. Dá para notar que o aumento de alguns bancos de dados é complexo. Deve ser por isso que o banco de dados de ECG do MIT-BIH (<em>Massachusetts Institute of Technology - Boston’s Beth Israel Hospital Arrhythmia Database</em>) não recebe novos sinais desde 1980.</p>
+<p>O que fazer quando a quantidade de dados é limitada e insuficiente para possibilitar a convergência dos algoritmos no treinamento? A solução é utilizar os dados de treinamento mais de uma vez. O treinamento realizado com o conjunto completo dos dados é chamado de <strong>época</strong>. Os algoritmos podem levar várias épocas até convergir. Como os dados utilizados em cada época são os mesmos, para gerar diversidade entre épocas, os dados de treinamento são misturados antes de se iniciar uma nova época <span class="citation" data-cites="Haykin2009">(<a href="#ref-Haykin2009" role="doc-biblioref">Haykin 2009</a>)</span>.</p>
+<p>O ajuste dos pesos do algoritmo LMS, descrito no <a href="#exm-lms" class="quarto-xref">Algoritmo&nbsp;1</a>, ocorre de maneira estocástica. O gradiente da função custo é estimado de maneira instantânea, a cada dado de treinamento. Assim, considerando uma época, haverá <span class="math inline">\(N_t\)</span> atualizações dos pesos do LMS e o algoritmo minimiza o erro quadrático instantâneo, ou seja, <span class="math inline">\(\widehat{J}_{MSE}(\mathbf{w}(n-1))=e^2(n)\)</span>. Cabe definir aqui o conceito de <strong>iteração</strong>. A iteração do algoritmo ocorre toda vez que os pesos são atualizados. No caso estocástico, temos <span class="math inline">\(N_t\)</span> iterações por época. Note que neste caso, o índice <span class="math inline">\(n\)</span> coincide com iteração, pois o vetor de pesos é atualizado a cada <span class="math inline">\(n\)</span>, ou seja, a cada dado de treinamento. Essa forma de atualização estocástica é útil em problemas de tempo real, uma vez que a cada dado de entrada se deseja ter o dado de saída correspondente com o menor atraso possível. Em cancelamento de eco acústico, por exemplo, é essencial que isso ocorra para não gerar atrasos indesejados no sinal de voz. Neste tipo de aplicação, o treinamento ocorre junto com a inferência, ou seja, a saída e o erro calculados no treinamento são utilizados para atualizar os pesos e ao mesmo tempo para se obter a estimativa ou classificação desejada. No entanto, problemas de tempo real não são a maioria entre os problemas de aprendizado de máquina.</p>
+<p>Em aprendizado de máquina, geralmente não estamos interessados em fazer a inferência durante o treinamento. A saída e o erro são utilizados no treinamento apenas para atualizar os pesos do algoritmo. Depois do treinamento, fixam-se os pesos para então se fazer a inferência e testar o classificador ou regressor. Por isso, vamos agora analisar outro caso extremo, em que todos os dados de treinamento são utilizados para estimar o vetor gradiente. Neste caso, o vetor de pesos será atualizado apenas uma vez a cada época. Portanto, teremos apenas uma iteração por época. Vamos supor que o vetor de pesos do LMS acabou de ser atualizado no final da época <span class="math inline">\(k-1\)</span>, ou seja, dispomos de <span class="math inline">\(\mathbf{w}(k-1)\)</span>. Assim, ele será atualizado novamente apenas no final da época <span class="math inline">\(k\)</span>. Durante a época <span class="math inline">\(k\)</span>, estima-se o vetor gradiente como</p>
+<p><span class="math display">\[
+\widehat{\boldsymbol{\nabla}}_{\mathbf{w}}J_{\rm MSE}(\mathbf{w}(k-1))=-\frac{2}{N_t}\sum_{n=1}^{N_t}\left[d(n)-\mathbf{x}^{{\rm T}}(n)\mathbf{w}(k-1)\right]\mathbf{x}(n).
+\]</span></p>
+<p>Esse gradiente deve ser então utilizado no final da época <span class="math inline">\(k\)</span> para atualizar <span class="math inline">\(\mathbf{w}(k-1)\)</span>, ou seja,</p>
+<p><span class="math display">\[
+\mathbf{w}(k)=\mathbf{w}(k-1)-\frac{\eta}{2}\widehat{\boldsymbol{\nabla}}_{\mathbf{w}}J_{\rm MSE}(\mathbf{w}(k-1)).
+\]</span></p>
+<p>Na sequência, o vetor <span class="math inline">\(\mathbf{w}(k)\)</span> é utilizado para estimar o gradiente na época <span class="math inline">\(k+1\)</span> e assim sucessivamente. Essa forma de atualização do vetor de pesos é chamada de modo <strong><em>batch</em></strong>. Neste caso, o algoritmo LMS busca minimizar em cada época a seguinte aproximação da função custo:</p>
+<p><span class="math display">\[
+\widehat{J}_{MSE}(\mathbf{w}(k-1))=\frac{1}{N_t}\sum_{n=1}^{N_t}{e_{k-1}^2(n)}=\frac{1}{N_t}\sum_{n=1}^{N_t}[d(n)-\mathbf{x}^{{\rm T}}(n)\mathbf{w}(k-1)]^2,
+\]</span></p>
+<p>em que <span class="math inline">\(k=1,2,\cdots,N_e\)</span>, sendo <span class="math inline">\(N_e\)</span> o número de épocas.</p>
+<p>Cabem aqui algumas observações:</p>
+<ol type="1">
+<li>O treinamento em modo <em>batch</em> não é utilizado em aplicações de tempo real, pois gera um atraso inaceitável em aplicações desse tipo.</li>
+<li>O índice <span class="math inline">\(n\)</span> neste modo de treinamento não representa iteração e sim a posição do dado no conjunto de treinamento. Dessa forma, para <span class="math inline">\(n=5\)</span> temos <span class="math inline">\(\mathbf{x}(5)\)</span>, que representa o quinto dado do conjunto de treinamento, que por sua vez, contém ao todo <span class="math inline">\(N_t\)</span> dados.</li>
+<li>Como os dados são misturados de uma época para outra, o vetor <span class="math inline">\(\mathbf{x}(5)\)</span> da época <span class="math inline">\(k\)</span> pode ser o vetor <span class="math inline">\(\mathbf{x}(200)\)</span> da época <span class="math inline">\(k-1\)</span>.</li>
+<li>Na formulação anterior, a iteração foi representada por <span class="math inline">\(k\)</span>, que coincide com as épocas do treinamento.</li>
+<li>Os índices <span class="math inline">\(k-1\)</span> e <span class="math inline">\(n\)</span> no erro <span class="math inline">\(e_{k-1}(n)\)</span> foram utilizados para indicar que ele é calculado com o vetor de pesos <span class="math inline">\(\mathbf{w}(k-1)\)</span> e com os dados de treinamento <span class="math inline">\(\mathbf{x}(n)\)</span> e <span class="math inline">\(d(n)\)</span> da posição <span class="math inline">\(n\)</span>, respectivamente.</li>
+</ol>
+<p>Dadas essas observações, na formulação do modo de treinamento <em>batch</em>, é mais conveniente usar a notação matricial, similar à da regressão linear multivariada. Assim, definindo-se na iteração (ou época) <span class="math inline">\(k\)</span> os vetores</p>
+<p><span class="math display">\[
+\mathbf{w}(k-1)=\left[
+  \begin{array}{c}
+    b(k-1) \\
+    w_1(k-1) \\
+    \vdots \\
+    w_M(k-1) \\
+  \end{array}
+\right],\;\;\;\;
+\mathbf{d}(k)
+=\left[
+  \begin{array}{c}
+    d(1) \\
+    d(2) \\
+    \vdots \\
+    d(N_t) \\
+  \end{array}
+\right],
+\;\;\;\;
+\mathbf{e}(k)
+=\left[
+  \begin{array}{c}
+    e_{k-1}(1) \\
+    e_{k-1}(2) \\
+    \vdots \\
+    e_{k-1}(N_t) \\
+  \end{array}
+\right]
+\]</span></p>
+<p>e a matriz</p>
+<p><span class="math display">\[
+\mathbf{X}(k)=\left[\begin{array}{c}
+                   \mathbf{x}^{{\rm T}}(1) \\
+                   \mathbf{x}^{{\rm T}}(2) \\
+                   \vdots \\
+                   \mathbf{x}^{{\rm T}}(N_t)
+                 \end{array}
+\right]=
+\left[
+  \begin{array}{ccccc}
+    1      &amp; x_{11} &amp; x_{21} &amp; \cdots &amp; x_{M1} \\
+    1      &amp; x_{12} &amp; x_{22} &amp; \cdots &amp; x_{M2} \\
+    \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    1      &amp; x_{1N_t} &amp; x_{2N_t} &amp; \cdots &amp; x_{MN_t} \\
+  \end{array}
+\right],
+\]</span></p>
+<p>pode-se calcular o vetor de erros <span class="math inline">\(\mathbf{e}(k)\)</span> como</p>
+<p><span class="math display">\[
+\mathbf{e}(k)=\mathbf{d}(k)-\mathbf{X}(k)\mathbf{w}(k-1),
+\]</span></p>
+<p>e a estimativa do vetor gradiente como</p>
+<p><span class="math display">\[
+\widehat{\boldsymbol{\nabla}}_{\mathbf{w}}J_{\rm MSE}(\mathbf{w}(k-1))=-\frac{2}{N_t}\mathbf{X}^{{\rm T}}(k)\mathbf{e}(k).
+\]</span></p>
+<p>Essa estimativa do gradiente leva à seguinte atualização dos pesos:</p>
+<p><span class="math display">\[\begin{equation*}
+\fbox{$\displaystyle
+\mathbf{w}(k)=\mathbf{w}(k-1)+\frac{\eta}{N_t}\mathbf{X}^{{\rm T}}(k)\mathbf{e}(k).
+$}
+\end{equation*}\]</span></p>
+<p>Com essa notação, a aproximação da função custo que o LMS busca minimizar neste modo pode ser reescrita como</p>
+<p><span class="math display">\[
+\widehat{J}_{MSE}(\mathbf{w}(k-1))=\frac{1}{N_t}\|\mathbf{e}(k)\|^2.
+\]</span></p>
+<p>Como o treinamento em modo <em>batch</em> não é utilizado em aplicações de tempo real e todos os dados de treinamento estão disponíveis, é mais eficiente atualizar os pesos de forma matricial, o que permite que as contas sejam feitas em paralelo. Na formulação não matricial, o erro <span class="math display">\[e_{k-1}(n)=d(n)-\mathbf{x}^{{\rm T}}(n)\mathbf{w}(k-1)\]</span></p>
+<p>é calculado para cada dado de treinamento e utilizado no cálculo <span class="math inline">\(e_{k-1}(n)\mathbf{x}(n)\)</span> para estimar o gradiente em um <em>loop</em>, o que torna o cálculo não eficiente.</p>
+<p>Ainda é possível encontrar uma solução intermediária. Considere que, em toda época, os dados de treinamento sejam divididos em conjuntos de tamanho <span class="math inline">\(N_b&lt;N_t\)</span>, que é chamado na literatura de tamanho do <strong><em>mini-batch</em></strong>. Neste caso, teremos <span class="math inline">\(N_{mb}\triangleq \lfloor N_t/N_b \rfloor\)</span> conjuntos de dados a cada época<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Considere que o algoritmo utilize cada um desses conjuntos para estimar o vetor gradiente e com essa estimativa atualize os pesos. Dessa forma, os pesos serão atualizados <span class="math inline">\(N_{mb}\)</span> vezes por época,<br>
+a cada <span class="math inline">\(N_b\)</span> dados de treinamento. Em outras palavras, o algoritmo terá <span class="math inline">\(N_{mb}\)</span> iterações por época. Apesar dos pesos serem atualizados mais vezes<br>
+por época que no modo de treinamento <em>batch</em>, o modo <em>mini-batch</em> também não é usado em aplicações de tempo real, o que faz com que a formulação matricial seja mais eficiente. Assim, na iteração <span class="math inline">\(m\)</span>, vamos definir os vetores</p>
+<p><span class="math display">\[
+\mathbf{w}(m-1)=\left[
+  \begin{array}{c}
+    b(m-1) \\
+    w_1(m-1) \\
+    \vdots \\
+    w_M(m-1) \\
+  \end{array}
+\right],\;\;\;\;
+\mathbf{d}(\ell)
+=\left[
+  \begin{array}{c}
+    d({\ell N_b+1}) \\
+    d({\ell N_b+2}) \\
+    \vdots \\
+    d({\ell N_b+ N_b}) \\
+  \end{array}
+\right],
+\;\;\;\;
+\mathbf{e}_{m-1}(\ell)
+=\left[
+  \begin{array}{c}
+    e_{m-1}({\ell N_b+1}) \\
+    e_{m-1}({\ell N_b+2}) \\
+    \vdots \\
+    e_{m-1}({\ell N_b+N_b}) \\
+  \end{array}
+\right]
+\]</span></p>
+<p>e a matriz</p>
+<p><span class="math display">\[
+\mathbf{X}(\ell)=\left[\begin{array}{c}
+                   \mathbf{x}^{{\rm T}}(\ell N_b+1) \\
+                   \mathbf{x}^{{\rm T}}(\ell N_b+2) \\
+                   \vdots \\
+                   \mathbf{x}^{{\rm T}}(\ell N_b+N_b)
+                 \end{array}
+\right]=
+\left[
+  \begin{array}{ccccc}
+    1      &amp; x_{1(\ell N_b+1)} &amp; x_{2(\ell N_b+1)} &amp; \cdots &amp; x_{M(\ell N_b+1)} \\
+    1      &amp; x_{1(\ell N_b+2)} &amp; x_{2(\ell N_b+2)} &amp; \cdots &amp; x_{M(\ell N_b+2)} \\
+    \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    1      &amp; x_{1(\ell N_b+N_b)} &amp; x_{2(\ell N_b+N_b)} &amp; \cdots &amp; x_{M(\ell N_b+N_b)} \\
+  \end{array}
+\right],
+\]</span></p>
+<p>em que <span class="math inline">\(m=1, 2, \cdots, N_eN_{mb}\)</span> e <span class="math inline">\(\ell=0, 1, 2, \cdots, N_{mb}-1\)</span>. Diferente do modo de treinamento <em>batch</em>, iteração no modo <em>mini-batch</em> não coincide com época. Em cada época, temos <span class="math inline">\(N_{mb}\)</span> iterações. Portanto, considerando <span class="math inline">\(N_e\)</span> épocas, teremos <span class="math inline">\(N_eN_{mb}\)</span> iterações no total<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p>Utilizando essas definições, o vetor de erros é dado por</p>
+<p><span class="math display">\[
+\mathbf{e}_{m-1}(\ell)=\mathbf{d}(\ell)-\mathbf{X}(\ell)\mathbf{w}(m-1)
+\]</span></p>
+<p>e a estimativa do vetor gradiente por</p>
+<p><span class="math display">\[
+\widehat{\boldsymbol{\nabla}}_{\mathbf{w}}J_{\rm MSE}(\mathbf{w}(m-1))=-\frac{2}{N_b}\mathbf{X}^{{\rm T}}(\ell)\mathbf{e}_{m-1}(\ell).
+\]</span></p>
+<p>Essa estimativa do gradiente leva à seguinte atualização dos pesos:</p>
+<p><span class="math display">\[\begin{equation*}
+\fbox{$\displaystyle
+\mathbf{w}(m)=\mathbf{w}(m-1)+\frac{\eta}{N_b}\mathbf{X}^{{\rm T}}(\ell)\mathbf{e}_{m-1}(\ell).
+$}
+\end{equation*}\]</span></p>
+<p>Por fim, a aproximação da função custo que o LMS busca minimizar a cada <em>mini-batch</em> pode ser escrita como</p>
+<p><span class="math display">\[
+\widehat{J}_{MSE}(\mathbf{w}(m-1))=\frac{1}{N_b}\|\mathbf{e}_{m-1}(\ell)\|^2.
+\]</span></p>
+<p>É muito comum na literatura usar o modo <em>mini-batch</em>, já que se obtém uma melhor estimativa do gradiente e consequentemente uma melhor precisão para se alcançar o mínimo da função custo em comparação com o caso estocástico e um menor custo computacional em comparação com o modo <em>batch</em>. O pseudocódigo do algoritmo LMS no modo <em>mini-batch</em> está no <a href="#exm-lmsmbatch" class="quarto-xref">Algoritmo&nbsp;2</a>. Observe que <span class="math inline">\(N_b=1\)</span> leva ao modo de treinamento estocástico e <span class="math inline">\(N_b=N_t\)</span> ao modo <em>batch</em>.</p>
+<div class="box">
+<div id="exm-lmsmbatch" class="custom theorem example">
+<p><span class="theorem-title"><strong>Exemplo 2</strong></span> Sumário do algoritmo LMS com <em>mini-batch</em>. <span class="math inline">\(N_e\)</span> é o número de épocas, <span class="math inline">\(N_b\)</span> o tamanho do mini-batch, <span class="math inline">\(N_t\)</span> o número de dados de treinamento e <span class="math inline">\(N_{mb}= \lfloor N_t/N_b \rfloor\)</span> o número de <em>mini-batches</em> por época.</p>
+<p>Inicialização: <span class="math inline">\(\mathbf{w}(0)=\boldsymbol{0}\)</span><br>    Para <span class="math inline">\(k=1,2,\ldots, N_e\)</span>, calcule:<br>      Misture os dados de treinamento<br>      Organize os dados na matriz <span class="math inline">\(\mathbf{X}(\ell)\)</span> e no vetor <span class="math inline">\(\mathbf{d}(\ell)\)</span> para <span class="math inline">\(\ell=0, 1,2,\ldots, N_{mb}-1\)</span><br>      Para <span class="math inline">\(\ell=0, 1,2,\ldots, N_{mb} - 1\)</span> calcule:<br>       <span class="math inline">\(m=(k-1)N_{mb}+\ell+1\)</span><br>       <span class="math inline">\(\mathbf{e}_{m-1}(\ell)=\mathbf{d}(\ell)-\mathbf{X}(\ell)\mathbf{w}(m-1)\)</span><br>       <span class="math inline">\(\mathbf{w}(m)=\mathbf{w}(m-1)+\displaystyle\frac{\eta}{N_b}\mathbf{X}^{\rm T}(\ell)\mathbf{e}_{m-1}(\ell)\)</span><br>      Fim<br>    Fim</p>
+</div>
+</div>
+</section>
+<section id="exemplo-do-lms-nos-três-modos-de-treinamento" class="level2">
+<h2 class="anchored" data-anchor-id="exemplo-do-lms-nos-três-modos-de-treinamento">Exemplo do LMS nos três modos de treinamento</h2>
+<p>Para exemplificar os três modos de treinamento do LMS, vamos considerar a identificação do seguinte sistema</p>
+<p><span class="math display">\[
+\mathbf{w}^{\text{wiener}}=[\,w_0^{\text{wiener}}\;\;w_1^{\text{wiener}}\,]^{\rm T}=[\,2\;\;-3\,]^{\rm T}.
+\]</span></p>
+<p>Como entrada, considerou-se um ruído branco gaussiano, com média zero e variância unitária. Uma sequência com <span class="math inline">\(N_t\)</span> amostras desse sinal é gerada, ou seja,</p>
+<p><span class="math display">\[
+\{x(0),\; x(1),\:x(2),\;\cdots,\;x(N_t-1)\}.
+\]</span></p>
+<p>Neste caso, não é necessário o <em>bias</em> e apenas dois pesos são suficientes para identificar o sistema. Dessa forma, dada essa sequência de entrada, podemos organizar as amostras na matriz</p>
+<p><span class="math display">\[
+\mathbf{X}=\left[\begin{array}{cc}
+                    x(0) &amp; 0\\
+                     x(1) &amp; x(0)\\
+                     x(2) &amp; x(1) \\
+                     \vdots &amp; \vdots \\
+                     x(N_t-2) &amp; x(N_t-3) \\
+                     x(N_t-1) &amp; x(N_t-2)
+                   \end{array}
+\right].
+\]</span></p>
+<p>Cada linha dessa matriz representa um dado de treinamento do algoritmo. O sinal desejado é calculado como</p>
+<p><span class="math display">\[
+d(n)=w_0^{\text{wiener}}x(n)+w_1^{\text{wiener}}x(n-1)+v(n)=2x(n)-3x(n-1)+v(n),
+\]</span></p>
+<p>em que <span class="math inline">\(n=0, 1, 2, \cdots, N_t-1\)</span>, <span class="math inline">\(v(n)\)</span> é um ruído de medida, que também é ruído branco gaussiano, com média zero e variância <span class="math inline">\(\sigma_v^2=0,01\)</span>. Observe que para cada linha da matriz <span class="math inline">\(\mathbf{X}\)</span> temos um valor de sinal desejado, que é calculado a partir das amostras de cada linha e da amostra do ruído <span class="math inline">\(v(n)\)</span>.</p>
+<p>Primeiramente, vamos considerar o algoritmo LMS no modo de treinamento estocástico com <span class="math inline">\(\eta=0,25\)</span>, <span class="math inline">\(N_t=500\)</span>, <span class="math inline">\(N_e=1\)</span> e <span class="math inline">\(N_b=1\)</span>. Os pesos ao longo das iterações estão mostrados na <a href="#fig-we" class="quarto-xref">Figura&nbsp;8</a>. Pode-se observar que os pesos se aproximam dos valores <span class="math inline">\(2\)</span> e <span class="math inline">\(-3\)</span>, mas como a estimativa do gradiente é instantânea, ocorrem variações em torno desses valores ótimos. No caso, como consideramos apenas uma época, temos <span class="math inline">\(500\)</span> iterações, valor que coincide com o número de dados de treinamento.</p>
+<div id="fig-we" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-we-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/we.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-we-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8: Pesos do algoritmo LMS no modo de treinamento estocástico (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=0,25\)</span>, <span class="math inline">\(N_t=500\)</span>, <span class="math inline">\(N_e=1\)</span> e <span class="math inline">\(N_b=1\)</span>). Identificação do sistema <span class="math inline">\(\mathbf{w}^{\text{wiener}}=[\,2\;\;-3\,]^{\rm T}\)</span> com <span class="math inline">\(\sigma_v^2=0,01\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Vamos agora considerar o algoritmo LMS no modo de treinamento <em>mini-batch</em> com <span class="math inline">\(\eta=0,25\)</span>, <span class="math inline">\(N_t=500\)</span>, <span class="math inline">\(N_e=10\)</span> e <span class="math inline">\(N_b=10\)</span>. Os pesos ao longo das iterações estão mostrados na <a href="#fig-wmb" class="quarto-xref">Figura&nbsp;9</a>. Pode-se observar que os pesos variam menos em torno dos valores ótimos em comparação com o caso estocástico. Isso ocorre, pois a estimativa do gradiente é feita a cada <span class="math inline">\(N_b=10\)</span> dados do conjunto de treinamento. Como foram consideradas <span class="math inline">\(10\)</span> épocas, temos <span class="math inline">\(N_e\lfloor N_t/N_b\rfloor=500\)</span> iterações.</p>
+<div id="fig-wmb" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wmb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/wmb.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wmb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9: Pesos do algoritmo LMS no modo de treinamento <em>mini-batch</em> (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=0,25\)</span>, <span class="math inline">\(N_e=10\)</span> e <span class="math inline">\(N_b=10\)</span>). Identificação do sistema <span class="math inline">\(\mathbf{w}^{\text{wiener}}=[\,2\;\;-3\,]^{\rm T}\)</span> com <span class="math inline">\(\sigma_v^2=0,01\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Considerando agora o algoritmo LMS no modo de treinamento <em>batch</em> com <span class="math inline">\(\eta=0,25\)</span>, <span class="math inline">\(N_t=500\)</span>, <span class="math inline">\(N_e=40\)</span> e <span class="math inline">\(N_b=500\)</span>, os pesos ao longo das iterações estão mostrados na <a href="#fig-wb" class="quarto-xref">Figura&nbsp;10</a>. Como o gradiente é estimado a cada época com todos os dados de treinamento, os pesos convergem exatamente para os valores ótimos. Como foram consideradas <span class="math inline">\(40\)</span> épocas, temos <span class="math inline">\(40\)</span> iterações.</p>
+<div id="fig-wb" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/wb.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;10: Pesos do algoritmo LMS no modo de treinamento <em>batch</em> (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=0,25\)</span>, <span class="math inline">\(N_t=500\)</span>, <span class="math inline">\(N_e=40\)</span> e <span class="math inline">\(N_b=N_t=500\)</span>). Identificação do sistema <span class="math inline">\(\mathbf{w}^{\text{wiener}}=[\,2\;\;-3\,]^{\rm T}\)</span> com <span class="math inline">\(\sigma_v^2=0,01\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>As trajetórias dos pesos do algoritmo LMS nesses três modos de treinamento estão mostradas na <a href="#fig-caminho" class="quarto-xref">Figura&nbsp;11</a>. Pelas trajetórias, é possível ver que o caminho do <em>batch</em> é mais direto e atinge exatamente a solução ótima. Já o caminho do <em>mini-batch</em> é menos direto e varia mais em torno da solução ótima. Por fim, o estocástico é o que mais varia ao longo do caminho e também quando se aproxima da solução ótima. Comparando esses três modos de treinamento, o modo <em>mini-batch</em> é o que apresenta o melhor compromisso entre custo computacional e precisão da resposta e por isso é o mais utilizado em aplicações de aprendizado de máquina.</p>
+<div id="fig-caminho" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-caminho-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/caminho.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-caminho-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;11: Trajetória dos pesos do algoritmo LMS (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=0,25\)</span>) nos três modos de treinamento (<span class="math inline">\(N_t=500\)</span>): estocástico (<span class="math inline">\(N_e=1\)</span> e <span class="math inline">\(N_b=1\)</span>), <em>mini-batch</em> (<span class="math inline">\(N_e=10\)</span> e <span class="math inline">\(N_b=10\)</span>) e <em>batch</em> (<span class="math inline">\(N_e=40\)</span> e <span class="math inline">\(N_b=500\)</span>). Identificação do sistema <span class="math inline">\(\mathbf{w}^{\text{wiener}}=[\,2\;\;-3\,]^{\rm T}\)</span> com <span class="math inline">\(\sigma_v^2=0,01\)</span>.
+</figcaption>
+</figure>
+</div>
+</section>
+</div>
+
+
+
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Haykin2009" class="csl-entry" role="listitem">
+Haykin, Simon. 2009. <em>Neural networks and learning machines</em>. 3rd ed. Pearson.
+</div>
+<div id="ref-Haykin_AFT2014" class="csl-entry" role="listitem">
+———. 2014. <em>Adaptive Filter Theory</em>. 5th ed. Pearson.
+</div>
+<div id="ref-CapituloVitor" class="csl-entry" role="listitem">
+Nascimento, Vı́tor H., e Magno T. M. Silva. 2014. <span>“Adaptive Filters”</span>. Em <em>Academic Press Library in Signal Processing: Signal Processing Theory and Machine Learning</em>, editado por R. Chellapa e S. Theodoridis, 1:619–761. Academic Press.
+</div>
+<div id="ref-SayedL2008" class="csl-entry" role="listitem">
+Sayed, Ali H. 2008. <em>Adaptive Filters</em>. John Wiley &amp; Sons.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Notas de rodapé</h2>
+
+<ol>
+<li id="fn1"><p>Infinito aqui significa valor acima do maior valor representável em um software numérico ou hardware.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Considera-se o arredondamento para baixo para que o número de conjuntos de dados por época seja sempre inteiro. Assim, por exemplo, se <span class="math inline">\(N_t=1233\)</span> e <span class="math inline">\(N_b=50\)</span>, consideram-se <span class="math inline">\(N_{mb}=24\)</span> conjuntos com <span class="math inline">\(50\)</span> dados por época. Como os dados são misturados a dada época, os <span class="math inline">\(33\)</span> dados desprezados em uma determinada época aparecerão em outras.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Diferente também do caso <em>batch</em>, inserimos aqui o índice <span class="math inline">\(m-1\)</span> ao vetor de erros <span class="math inline">\(\mathbf{e}_{m-1}(\ell)\)</span>. Isso foi feito porque o índice <span class="math inline">\(\ell\)</span> se repete em cada época e não coincide com a iteração. Por exemplo, podemos ter <span class="math inline">\(\mathbf{e}_{200}(5)\)</span> e <span class="math inline">\(\mathbf{e}_{50}(5)\)</span>. No cálculo do primeiro vetor se utiliza <span class="math inline">\(\mathbf{w}(200)\)</span>, enquanto no do segundo se utiliza <span class="math inline">\(\mathbf{w}(50)\)</span>. Ambos os vetores são calculados com dados da posição <span class="math inline">\(5N_b+1\)</span> à posição <span class="math inline">\(5N_b+N_b\)</span>. Apesar disso, os dados não são necessariamente os mesmos porque eles são misturados antes do início de cada época.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script>
+var custom_title = document.querySelectorAll('.custom .theorem-title');
+
+for (let i = 0; i < custom_title.length; i++ ) {
+   var mod_name = custom_title[i].innerHTML;
+   custom_title[i].innerHTML = mod_name.replace("Exemplo", "Algoritmo");
+};
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiada");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiada");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

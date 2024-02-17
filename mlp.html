@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>PSI3471 - A rede perceptron multicamada</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">PSI3471</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-teoria" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Teoria</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-teoria">    
+        <li>
+    <a class="dropdown-item" href="./introducao.html">
+ <span class="dropdown-text">Introdução</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./regressao_linear.html">
+ <span class="dropdown-text">Regressão linear</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-exercícios-para-aula" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Exercícios para aula</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-exercícios-para-aula">    
+        <li>
+    <a class="dropdown-item" href="./ex_aula_1.html">
+ <span class="dropdown-text">Exercício 1 - Regressão Linear</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-material-de-apoio" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Material de apoio</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-material-de-apoio">    
+        <li>
+    <a class="dropdown-item" href="./python_videos.html">
+ <span class="dropdown-text">Tópicos de programação com Python</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./exemplo_pytorch.html">
+ <span class="dropdown-text">Exemplo MLP com PyTorch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./exemplo_pytorch_cnn.html">
+ <span class="dropdown-text">Exemplo CNN com PyTorch</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://edisciplinas.usp.br/course/view.php?id=116758"> 
+<span class="menu-text">Moodle</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">A rede perceptron multicamada</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="justify">
+<p>Apesar do perceptron de Rosenblatt ter sido proposto no final da década de 1950, o algoritmo de retropropagação (<em>backpropagation</em>), utilizado no treinamento das redes neurais, surgiu apenas em 1986 no artigo <span class="citation" data-cites="RumelhartNature86">(<a href="#ref-RumelhartNature86" role="doc-biblioref">Rumelhart, Hinton, e Williams 1986</a>)</span>. Desde então, ele tem sido abordado em diferentes livros de redes neurais e aprendizado de máquina como, por exemplo, <span class="citation" data-cites="Haykin2009">(<a href="#ref-Haykin2009" role="doc-biblioref">Haykin 2009</a>)</span>, <span class="citation" data-cites="Bishop_book2006">(<a href="#ref-Bishop_book2006" role="doc-biblioref">Bishop 2006</a>)</span>, <span class="citation" data-cites="Goodfellow2016">(<a href="#ref-Goodfellow2016" role="doc-biblioref">Goodfellow, Bengio, e Courville 2016</a>)</span>, <span class="citation" data-cites="TheodoridisBook2003">(<a href="#ref-TheodoridisBook2003" role="doc-biblioref">Theodoridis e Koutroubas 2003</a>)</span>, <span class="citation" data-cites="WittenBook2017">(<a href="#ref-WittenBook2017" role="doc-biblioref">Witten et al. 2017</a>)</span>, <span class="citation" data-cites="AlanBook2008">(<a href="#ref-AlanBook2008" role="doc-biblioref">Izenman 2008</a>)</span>, <span class="citation" data-cites="DudaBook2001">(<a href="#ref-DudaBook2001" role="doc-biblioref">Duda, Hart, e Stork 2001</a>)</span>, <span class="citation" data-cites="HarrisonKukielaBook2020">(<a href="#ref-HarrisonKukielaBook2020" role="doc-biblioref">Kinsley e Kukie​la 2020</a>)</span>, <span class="citation" data-cites="BenBook96">(<a href="#ref-BenBook96" role="doc-biblioref">Kröse e Smagt 1996</a>)</span>, entre muitos outros. A seguir, vamos tratar da rede percepton multicamada (<em>multilayer perceptron</em> - MLP) e do algoritmo <em>backpropagation</em> em detalhes.</p>
+<section id="o-modelo-da-rede-e-o-cálculo-progressivo" class="level2">
+<h2 class="anchored" data-anchor-id="o-modelo-da-rede-e-o-cálculo-progressivo">O modelo da rede e o cálculo progressivo</h2>
+<p>O modelo do neurônio proposto por Rosenblatt é usado até hoje nas redes neurais. A diferença está apenas na função não linear, chamada de função de ativação. No modelo de Rosenblatt, utilizou-se a função sinal que não é derivável em todos os pontos. Em vez dessa função, é comum utilizar funções de ativação deriváveis em todos os pontos, como a função sigmoidal, a tangente hiperbólica, entre outras. Essas funções permitem chegar ao algoritmo de retropropagação (<em>backpropagation</em>) como veremos mais adiante.</p>
+<p>Considerando o <span class="math inline">\(n\)</span>-ésimo vetor dos dados de treinamento</p>
+<p><span class="math display">\[
+\mathbf{x}(n)=[\,1\;x_{1n}\; x_{2n}\; \cdots\; x_{Mn}\,]^{\rm T}
+\]</span></p>
+<p>e o vetor de pesos com dimensão <span class="math inline">\(M+1\)</span></p>
+<p><span class="math display">\[
+\mathbf{w}(n) = [\,b(n)\;w_1(n)\;\cdots\;w_M(n)\,]^{\rm T},
+\]</span></p>
+<p>a saída do combinador linear pode ser escrita como</p>
+<p><span class="math display">\[
+v(n) = \mathbf{x}^{\rm T}(n)\mathbf{w}(n-1)
+\]</span></p>
+<p>e a saída do neurônio é dada por</p>
+<p><span class="math display">\[
+y(n)=\varphi(v(n)),
+\]</span></p>
+<p>em que <span class="math inline">\(\varphi(\cdot)\)</span> é a função de ativação. Cabe observar que nesta formulação, o <em>bias</em> aparece na primeira posição do vetor de pesos <span class="math inline">\(\mathbf{w}\)</span> e por isso, o vetor de entrada <span class="math inline">\(\mathbf{x}\)</span> tem sempre o valor <span class="math inline">\(1\)</span> em sua primeira posição. O diagrama de fluxo de sinal do neurônio está mostrado na <a href="#fig-neuronio" class="quarto-xref">Figura&nbsp;1</a>.</p>
+<div id="fig-neuronio" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-neuronio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/neuronio.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-neuronio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Fluxo de sinal do modelo de neurônio.
+</figcaption>
+</figure>
+</div>
+<p>O neurônio da <a href="#fig-neuronio" class="quarto-xref">Figura&nbsp;1</a> é a unidade básica da rede perceptron multicamada (<em>multilayer perceptron</em> - MLP). Na maior parte das aplicações, um único neurônio não é suficiente para se obter bons resultados. Dessa forma, a rede MLP organiza os neurônios em camadas, havendo uma ou mais camadas ocultas (<em>hidden layers</em>) e a camada de saída<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. As camadas ocultas são camadas intermediárias entre a entrada e a saída da rede neural. Cada neurônio pertencente a uma camada oculta possui sinapses associadas a pesos, ligando-o a todos os neurônios da camada anterior. No caso da primeira camada oculta, em cada neurônio, os valores da entrada da rede são ponderados pelos pesos, que junto com o <em>bias</em>, permitem o cálculo da combinação linear, representada na <a href="#fig-neuronio" class="quarto-xref">Figura&nbsp;1</a> por <span class="math inline">\(v(n)\)</span>. Na <a href="#fig-mlpdia" class="quarto-xref">Figura&nbsp;2</a>, esquematizamos o fluxo de sinal de uma rede MLP com <span class="math inline">\(L=3\)</span> camadas, em que cada círculo representa um neurônio. Denotando o número de neurônios da camada <span class="math inline">\(j\)</span> por <span class="math inline">\(N_{j}\)</span>, é conveniente introduzir uma notação para a configuração da rede. Assim, uma rede MLP de 3 camadas apresenta configuração <span class="math inline">\(N_1\)</span>-<span class="math inline">\(N_2\)</span>-<span class="math inline">\(N_3\)</span>. Especificamente, a rede da <a href="#fig-mlpdia" class="quarto-xref">Figura&nbsp;2</a> tem configuração 3-2-1, ou seja, 3 neurônios na primeira camada oculta, 2 na segunda camada oculta e 1 na camada de saída. Também vamos denotar o número de neurônios da camada de saída por <span class="math inline">\(N_L\)</span>. Assim, no exemplo, <span class="math inline">\(N_L=N_3=1\)</span>.</p>
+<div id="fig-mlpdia" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mlpdia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/MLPdia.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mlpdia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Representação de uma rede MLP com <span class="math inline">\(L=3\)</span> camadas (<span class="math inline">\(L-1=2\)</span> camadas ocultas), cada círculo representa um neurônio.
+</figcaption>
+</figure>
+</div>
+<p>Vamos usar o exemplo da rede MLP da <a href="#fig-mlpdia" class="quarto-xref">Figura&nbsp;2</a> para calcular a saída da Camada Oculta 2, cujos pesos estão indicados. É importante atentar para a notação: <span class="math inline">\(\omega_{k\ell}^{(j)}\)</span> representa o peso que liga o Neurônio <span class="math inline">\(\ell\)</span> da camada <span class="math inline">\(j-1\)</span> ao Neurônio <span class="math inline">\(k\)</span> da camada <span class="math inline">\(j\)</span>. Se o Neurônio <span class="math inline">\(k\)</span> pertencer à primeira camada oculta, devemos trocar “Neurônio <span class="math inline">\(\ell\)</span>” na frase anterior por “Entrada <span class="math inline">\(\ell\)</span>”. Voltando à <a href="#fig-mlpdia" class="quarto-xref">Figura&nbsp;2</a>, observe que a entrada da rede é dada pelo vetor</p>
+<p><span class="math display">\[
+[x_{1n}\;\; x_{2n}\;\;\cdots\;\; x_{Mn}]^{\rm T},
+\]</span></p>
+<p>que corresponde ao <span class="math inline">\(n\)</span>-ésimo dado do conjunto de treinamento, em que <span class="math inline">\(M\)</span> é o número de entradas (<span class="math inline">\(M=3\)</span> no exemplo). É conveniente usar a notação <span class="math inline">\(y_k^{(0)}\triangleq x_{kn}\)</span>, <span class="math inline">\(k=1,2,\ldots, M\)</span> para denotar os elementos do vetor de entrada e <span class="math inline">\(N_0\triangleq M\)</span> para denotar o número de entradas da rede. Dessa forma, podemos definir o vetor de entrada da rede como</p>
+<p><span class="math display">\[
+\mathbf{y}^{(0)} \triangleq \begin{bmatrix}
+                        y^{(0)}_1 \\
+                        y^{(0)}_2 \\
+                        \vdots \\
+                        y^{(0)}_{N_0}
+                        \end{bmatrix}.
+\]</span></p>
+<p>Para simplificar a notação, o índice <span class="math inline">\(n\)</span> relacionado ao <span class="math inline">\(n\)</span>-ésimo dado de treinamento não será levado em conta nesta seção. Em cada neurônio da primeira camada oculta, esse vetor é ponderado e somado ao <em>bias</em>. A saída de cada neurônio é então calculada aplicando-se a função de ativação <span class="math inline">\(\varphi(\cdot)\)</span> ao resultado dessa combinação linear. Reunindo as saídas dos neurônios da primeira camada oculta em um vetor, temos</p>
+<p><span class="math display">\[
+\mathbf{y}^{(1)} = \begin{bmatrix}
+                        y^{(1)}_1 \\
+                        y^{(1)}_2 \\
+                        \vdots \\
+                        y^{(1)}_{N_{1}}
+                        \end{bmatrix},
+\]</span></p>
+<p>em que <span class="math inline">\(N_1\)</span> representa o número de neurônios dessa camada (<span class="math inline">\(N_1=3\)</span> no exemplo). Para levar em conta os <em>biases</em> e obter uma formulação matricial, é conveniente definir</p>
+<p><span class="math display">\[
+\mathbf{x}^{(2)}=\left[\begin{array}{c}
+                           1 \\
+                           \mathbf{y}^{(1)}
+                         \end{array}
+\right]
+\]</span></p>
+<p>para denotar o vetor de entrada da Camada 2. A seguir, detalhamos o cálculo do vetor de saída da Camada 2, ou seja, <span class="math inline">\(\mathbf{y}^{(2)}\)</span>.</p>
+<p>Vamos reunir os <em>biases</em> e os pesos da Camada 2 na seguinte matriz</p>
+<p><span class="math display">\[\begin{align*}
+\mathbf{W}^{(2)} = \begin{bmatrix}
+    {\color{blue}b^{(2)}_1} &amp; {\color{blue}w_{11}^{(2)}}     &amp; {\color{blue}w_{12}^{(2)}}              &amp; {\color{blue}w_{13}^{(2)}}\\
+    {\color{red}b^{(2)}_2} &amp; {\color{red}w_{21}^{(2)}}     &amp; {\color{red}w_{22}^{(2)}}             &amp;  {\color{red}w_{23}^{(2)}}\\
+    \end{bmatrix}_{2\times 4}
+\triangleq \begin{bmatrix}
+    {\color{blue}\mathbf{w}_{1}^{(2)}} \\ {\color{red}\mathbf{w}_{2}^{(2)}}\\
+    \end{bmatrix}.
+\end{align*}\]</span></p>
+<p>O <em>bias</em> e os pesos em azul da primeira linha da matriz <span class="math inline">\(\mathbf{W}^{(2)}\)</span>, que correspondem aos elementos do vetor linha <span class="math inline">\({\mathbf{w}_{1}^{(2)}}\)</span>, são utilizados no cálculo da saída do Neurônio 1 dessa camada. Já o <em>bias</em> e os pesos em vermelho da segunda linha são utilizados no cálculo da saída do Neurônio 2. Observe que, diferente da formulação do neurônio utilizada até o momento, definimos os vetores contendo o <em>bias</em> e pesos de cada neurônio da camada <span class="math inline">\(j\)</span>, ou seja, <span class="math inline">\(\mathbf{w}_k^{(j)}\)</span>, <span class="math inline">\(k=1, 2, \ldots, N_j\)</span>, como vetores linha e não como vetores coluna. Dessa forma, podemos escrever</p>
+<p><span class="math display">\[\begin{align*}
+\mathbf{v}^{(2)} = \begin{bmatrix}
+                        {\color{blue}v^{(2)}_1} \\
+                        {\color{red}v^{(2)}_2}\\
+                        \end{bmatrix} =
+                        \begin{bmatrix}
+                        {\color{blue}\mathbf{w}_1^{(2)}}\mathbf{x}^{(2)} \\
+                        {\color{red}\mathbf{w}_2^{(2)}}\mathbf{x}^{(2)}\\
+                        \end{bmatrix}
+                         =\mathbf{W}^{(2)}\mathbf{x}^{(2)}
+                                        \;\;\textnormal{e}\;\;
+\mathbf{y}^{(2)} = \varphi(\mathbf{v}^{(2)})=\begin{bmatrix}
+                        {\color{blue}\varphi(v^{(2)}_1)} \\
+                        {\color{red}\varphi(v^{(2)}_2)}\\
+                        \end{bmatrix}= \begin{bmatrix}
+                        {\color{blue}y^{(2)}_1} \\
+                        {\color{red}y^{(2)}_2} \\
+                        \end{bmatrix}.
+\end{align*}\]</span></p>
+<p>Generalizando, temos</p>
+<p><span class="math display">\[\begin{align*}
+\mathbf{v}^{(j)} \triangleq \begin{bmatrix}
+                        v^{(j)}_1 \\
+                        v^{(j)}_2 \\
+                        \vdots \\
+                        v^{(j)}_{N_{j}}
+                        \end{bmatrix},\;\;\;
+\mathbf{y}^{(j)} \triangleq \begin{bmatrix}
+                        y^{(j)}_1 \\
+                        y^{(j)}_2 \\
+                        \vdots \\
+                        y^{(j)}_{N_{j}}
+                        \end{bmatrix}
+                        \;\; \text{e} \;\;
+\mathbf{x}^{(j)}\triangleq \begin{bmatrix}
+                        1 \\
+                        \mathbf{y}^{(j-1)}
+                        \end{bmatrix},             
+\end{align*}\]</span></p>
+<p>em que <span class="math inline">\(j=1, 2, \ldots, L\)</span>, <span class="math inline">\(L\)</span> é o número de camadas a rede e <span class="math inline">\(\mathbf{y}^{(0)}\)</span> o vetor de entradas da rede. Definindo agora a matriz de pesos associados à camada <span class="math inline">\(j\)</span> como</p>
+<p><span class="math display">\[\begin{align*}
+\mathbf{W}^{(j)} \triangleq \begin{bmatrix}
+    b^{(j)}_1 &amp; w_{11}^{(j)}     &amp; w_{12}^{(j)}             &amp; \dots  &amp; w_{1N_{j - 1}}^{(j)}\\
+    b^{(j)}_2 &amp; w_{21}^{(j)}     &amp; w_{22}^{(j)}             &amp; \dots  &amp; w_{2N_{j - 1}}^{(j)}\\
+    \vdots           &amp;  \vdots           &amp; \vdots                   &amp; \ddots &amp; \vdots\\
+    b_{N_j}^{(j)} &amp; w_{N_{j}1}^{(j)} &amp; w_{N_{j}2}^{(j)}         &amp; \dots  &amp; w_{N_{j}N_{j - 1}}^{(j)}
+    \end{bmatrix}_{(N_{j})\times (N_{j - 1}+1)}
+= \begin{bmatrix}
+    \mathbf{w}_{1}^{(j)} \\ \mathbf{w}_{2}^{(j)} \\ \vdots \\ \mathbf{w}_{N_{j}}^{(j)}\\
+    \end{bmatrix}.
+\end{align*}\]</span></p>
+<p>o vetor de saída dos combinadores lineares da camada <span class="math inline">\(j\)</span> é dado por</p>
+<p><span class="math display">\[\begin{equation*}
+    \mathbf{v}^{(j)} = \left[\begin{array}{c}
+                               \mathbf{w}_1^{(j)}\mathbf{x}^{(j)} \\
+                               \mathbf{w}_2^{(j)}\mathbf{x}^{(j)} \\
+                               \vdots \\
+                               \mathbf{w}_{N_j}^{(j)}\mathbf{x}^{(j)}
+                             \end{array}
+    \right]= \mathbf{W}^{(j)}\mathbf{x}^{(j)}.
+\end{equation*}\]</span></p>
+<p>Por fim, o vetor de saída dessa camada é calculado como</p>
+<p><span class="math display">\[\begin{equation*}
+    \mathbf{y}^{(j)} = \varphi\left(\mathbf{v}^{(j)}\right),
+\end{equation*}\]</span></p>
+<p>em que a função de ativação <span class="math inline">\(\varphi\left(\cdot\right)\)</span> é aplicada a cada elemento do vetor <span class="math inline">\(\mathbf{v}^{(j)}\)</span>.</p>
+<p>O cálculo apresentado até aqui é utilizado para obter as saídas dos neurônios de cada camada da rede. Como o cálculo das saídas da camada <span class="math inline">\(j\)</span> depende das saídas da camada <span class="math inline">\((j-1)\)</span>, dizemos que o cálculo é progressivo. Uma vez calculada a saída da rede, podemos compará-la com o sinal desejado e utilizar esse resultado para atualizar os pesos e os <em>biases</em> a fim de minimizar uma função custo, como veremos a seguir.</p>
+</section>
+<section id="o-algoritmo-de-retropropagação" class="level2">
+<h2 class="anchored" data-anchor-id="o-algoritmo-de-retropropagação">O algoritmo de retropropagação</h2>
+<p>O algoritmo de retropropagação (<em>backpropagation</em>) é o mais utilizado no processo de aprendizado supervisionado das redes neurais. Ele é dividido em duas etapas, descritas a seguir.</p>
+<section id="cálculo-progressivo" class="level3">
+<h3 class="anchored" data-anchor-id="cálculo-progressivo">Cálculo progressivo</h3>
+<p>Nessa etapa, os pesos e <em>biases</em> são mantidos fixos e o cálculo é realizado progressivamente até se obter o vetor de saída <span class="math inline">\(\textbf{y}^{(L)}\)</span>. Nesse cálculo, a entrada é propagada ao longo da rede, camada por camada, como detalhado na seção anterior.</p>
+</section>
+<section id="cálculo-regressivo" class="level3">
+<h3 class="anchored" data-anchor-id="cálculo-regressivo">Cálculo regressivo</h3>
+<p>Nessa etapa, os pesos e <em>biases</em> são atualizados com o objetivo de minimizar uma função custo. Apesar de existirem diferentes funções custo, vamos nos concentrar por ora apenas no erro quadrático médio (MSE - <em>mean square error</em>), definido como</p>
+<p><span class="math display">\[
+J_{\rm MSE}=\frac{1}{N_L}\sum_{\ell=1}^{N_L}e^2_\ell(n)
+\]</span></p>
+<p>em que</p>
+<p><span class="math display">\[
+e_\ell(n)=d_\ell(n)-y_\ell^{(L)}(n)
+\]</span></p>
+<p>são os erros dos neurônios da camada de saída da rede. Para simplificar a dedução, vamos considerar o modo de treinamento estocástico em que os pesos e <em>biases</em> são atualizados a cada dado de treinamento <span class="math inline">\(n=1, 2, \ldots, N_t\)</span>.</p>
+<p>Utilizando o método do gradiente estocástico, a matriz de pesos da camada <span class="math inline">\(j\)</span> pode ser atualizada como</p>
+<p><span class="math display">\[\begin{equation*}
+  \textbf{W}^{(j)}(n) = \textbf{W}^{(j)}(n-1) - \eta \frac{\partial J_{MSE}}{\partial \textbf{W}^{(j)}(n-1)},
+\end{equation*}\]</span></p>
+<p>em que <span class="math inline">\(\eta\)</span> é um passo de adaptação e</p>
+<p><span class="math display">\[
+\frac{\partial J_{MSE}}{\partial \textbf{W}^{(j)}(n\!-\!1)}= \begin{bmatrix}
+    \frac{\partial J_{MSE}}{\partial b^{(j)}_1(n\!-\!1)} &amp; \frac{\partial J_{MSE}}{\partial w_{11}^{(j)}(n\!-\!1)}     &amp; \frac{\partial J_{MSE}}{\partial w_{12}^{(j)}(n\!-\!1)}             &amp; \dots  &amp; \frac{\partial J_{MSE}}{\partial w_{1N_{j - 1}}^{(j)}(n\!-\!1)}\\
+    \frac{\partial J_{MSE}}{\partial b^{(j)}_2(n\!-\!1)} &amp; \frac{\partial J_{MSE}}{\partial w_{21}^{(j)}(n\!-\!1)}     &amp; \frac{\partial J_{MSE}}{\partial w_{22}^{(j)}(n\!-\!1)}             &amp; \dots  &amp; \frac{\partial J_{MSE}}{\partial  w_{2N_{j - 1}}^{(j)}(n\!-\!1)}\\
+    \vdots           &amp;  \vdots           &amp; \vdots                   &amp; \ddots &amp; \vdots\\
+    \frac{\partial J_{MSE}}{\partial  b_{N_j}^{(j)}(n\!-\!1)} &amp; \frac{\partial J_{MSE}}{\partial  w_{N_{j}1}^{(j)}(n\!-\!1)} &amp; \frac{\partial J_{MSE}}{\partial w_{N_{j}2}^{(j)}(n\!-\!1)}         &amp; \dots  &amp; \frac{\partial J_{MSE}}{\partial w_{N_{j}N_{j - 1}}^{(j)}(n\!-\!1)}
+    \end{bmatrix}.
+\]</span></p>
+<p>Observe que na <span class="math inline">\(k\)</span>-ésima linha da matriz <span class="math inline">\(\frac{\partial J_{MSE}}{\partial \textbf{W}^{(j)}(n\!-\!1)}\)</span> temos o vetor gradiente</p>
+<p><span class="math display">\[
+\boldsymbol{\nabla}_{\mathbf{w}_k^{(j)}}J_{\rm MSE}=
+\frac{\partial J_{\rm MSE}}{\partial \mathbf{w}_k^{(j)}(n-1)}=
+\begin{bmatrix}
+    \frac{\partial J_{MSE}}{\partial b^{(j)}_k(n\!-\!1)} &amp; \frac{\partial J_{MSE}}{\partial w_{k1}^{(j)}(n\!-\!1)}     &amp; \frac{\partial J_{MSE}}{\partial w_{k2}^{(j)}(n\!-\!1)}             &amp; \dots  &amp; \frac{\partial J_{MSE}}{\partial w_{kN_{j - 1}}^{(j)}(n\!-\!1)}\end{bmatrix}.
+\]</span></p>
+<p>Assim, podemos escrever</p>
+<p><span class="math display">\[
+\frac{\partial J_{MSE}}{\partial \textbf{W}^{(j)}(n\!-\!1)}=\begin{bmatrix} \boldsymbol{\nabla}_{\mathbf{w}_1^{(j)}}J_{MSE} \\ \boldsymbol{\nabla}_{\mathbf{w}_2^{(j)}}J_{MSE} \\ \vdots \\ \boldsymbol{\nabla}_{\mathbf{w}_{N_j}^{(j)}}J_{MSE} \end{bmatrix}.
+\]</span></p>
+<p>Vamos calcular os vetores gradientes considerando os neurônios da camada de saída, ou seja, <span class="math inline">\(j=L\)</span>. Usando a regra da cadeia sucessivas vezes, obtemos</p>
+<p><span class="math display">\[\begin{equation*}
+        \begin{aligned}[b]
+            \boldsymbol{\nabla}_{\mathbf{w}_k^{(L)}}J_{MSE}&amp; = \frac{\partial J_{\rm MSE}}{\partial \textbf{w}_k^{(L)}(n-1)}=\frac{1}{N_L}\sum_{\ell=1}^{N_L}\frac{\partial e_{\ell}^2(n)}{\partial \textbf{w}_k^{(L)}(n-1)}=\frac{1}{N_L}\frac{\partial e_{k}^2(n)}{\partial \textbf{w}_k^{(L)}(n-1)}\\
+             &amp;= \frac{1}{N_L}\;\frac{\partial e_k^2(n)}{\partial y_k^{(L)}(n)}\; \frac{\partial y_k^{(L)}(n)}{\partial v^{(L)}_k(n)}\; \frac{\partial v^{(L)}_k(n)}{\partial \textbf{w}_k^{(L)}(n-1)} \\
+            &amp; = \frac{1}{N_L}\; 2 e_k(n)\; \frac{\partial [d_k(n)-y_k^{(L)}(n)]}{\partial y_k^{(L)}(n)}\; \frac{\partial \varphi\left(v^{(L)}_k(n)\right)}{\partial v^{(L)}_k(n)}\; \frac{\partial \textbf{w}^{(L)}_k(n-1)\,\textbf{x}^{(L)}(n)}{\partial \textbf{w}^{(L)}_k(n-1)} \\
+            &amp; = -\frac{2}{N_L}\; e_k(n)\; \varphi'\!\left(v^{(L)}_k(n)\right) \; [\textbf{x}^{(L)}(n)]^{\rm T},
+        \end{aligned}\nonumber
+        \label{chain_rule_w}
+  \end{equation*}\]</span></p>
+<p>em que <span class="math inline">\(\varphi'(\cdot)\)</span> representa a derivada da função de ativação <span class="math inline">\(\varphi(\cdot)\)</span>, o que justifica a importância dessa função ser derivável em todos os pontos. Definindo o gradiente local da Camada <span class="math inline">\(L\)</span> como</p>
+<p><span class="math display">\[
+  \delta_{k}^{(L)}(n)\triangleq \varphi'(v_{k}^{(L)}(n))e_{k}(n),
+  \]</span></p>
+<p>o vetor gradiente pode ser reescrito como</p>
+<p><span class="math display">\[
+  \boldsymbol{\nabla}_{\mathbf{w}_k^{(L)}}J_{MSE}= -\frac{2}{N_L}\; \delta_{k}^{(L)}(n) \; [\textbf{x}^{(L)}(n)]^{\rm T}.
+\]</span></p>
+<p>Uma vez calculados os gradientes da camada de saída <span class="math inline">\(L\)</span>, podemos calcular os gradientes da última camada oculta, ou seja, para <span class="math inline">\(j=L-1\)</span>. Assim,</p>
+<p><span class="math display">\[
+\boldsymbol{\nabla}_{\mathbf{w}_k^{(L-1)}}J_{\rm MSE} = \frac{\partial J_{\rm MSE}}{\partial \mathbf{w}_k^{(L-1)}(n-1)}= \frac{1}{N_L}\;\sum_{\ell=1}^{N_L}\frac{\partial  e_\ell^2(n)}{\partial \mathbf{w}_k^{(L-1)}(n-1)}.
+\]</span></p>
+<p>Novamente, usando a regra da cadeia sucessivas vezes, obtemos</p>
+<p><span class="math display">\[\begin{align*}
+\frac{\partial  e_\ell^2(n)}{\partial \textbf{w}_k^{(L-1)}(n-1)}&amp;=2 e_{\ell}(n)\frac{\partial  [d_{\ell}(n)-y_{\ell}^{(L)}(n)]}{\partial y_{\ell}^{(L)}(n)}
+\frac{\partial y_{\ell}^{(L)}(n)}{\partial \textbf{w}_k^{(L-1)}(n-1)}\\
+&amp;=-2e_{\ell}(n)\frac{\partial \varphi(v_{\ell}^{(L)}(n))}{\partial v_{\ell}^{(L)}(n)}\frac{\partial v_{\ell}^{(L)}(n)}{\partial \textbf{w}_k^{(L-1)}(n-1)}.
+\end{align*}\]</span></p>
+<p>Observe que</p>
+<p><span class="math display">\[
+v_{\ell}^{(L)}(n)=\mathbf{w}_{\ell}^{(L)}(n-1)\mathbf{x}^{(L)}(n)=b_{\ell}^{(L)}(n-1)+\sum_{m=1}^{N_{L-1}}w_{\ell m}^{(L)}(n-1)y_m^{(L-1)}(n).
+\]</span></p>
+<p>No cálculo de <span class="math inline">\(v_{\ell}^{(L)}(n)\)</span>, o único termo que depende de <span class="math inline">\(\textbf{w}_k^{(L-1)}(n-1)\)</span> é <span class="math inline">\(w_{\ell k}^{(L)}(n-1)y_k^{(L-1)}(n)\)</span>, já que a saída <span class="math inline">\(y_k^{(L-1)}(n)\)</span> é calculada utilizando os pesos <span class="math inline">\(\textbf{w}_k^{(L-1)}(n-1)\)</span>. Assim, obtemos</p>
+<p><span class="math display">\[\begin{align*}
+\frac{\partial  e_\ell^2(n)}{\partial \textbf{w}_k^{(L-1)}(n-1)}&amp;=-2e_{\ell}(n)\varphi'(v_{\ell}^{(L)}(n))w_{\ell k}^{(L)}(n-1)\frac{\partial y_{k}^{(L-1)}(n)}{\partial \textbf{w}_k^{(L-1)}(n-1)}\\
+&amp;=-2e_{\ell}(n)\varphi'(v_{\ell}^{(L)}(n))w_{\ell k}^{(L)}(n-1)\frac{\partial \varphi(v_{k}^{(L-1)}(n))}{\partial v_{k}^{(L-1)}(n)}\frac{\partial v_{k}^{(L-1)}(n)}{\partial \textbf{w}_k^{(L-1)}(n-1)}\\
+&amp;=-2e_{\ell}(n)\varphi'(v_{\ell}^{(L)}(n))w_{\ell k}^{(L)}(n-1)\varphi'(v_{k}^{(L-1)}(n))\frac{\partial \mathbf{w}_{k}^{(L-1)}(n-1)\mathbf{x}^{(L-1)}(n)} {\partial \textbf{w}_k^{(L-1)}(n-1)}.\\
+&amp;=-2e_{\ell}(n)\varphi'(v_{\ell}^{(L)}(n))w_{\ell k}^{(L)}(n-1)\varphi'(v_{k}^{(L-1)}(n))[\mathbf{x}^{(L-1)}(n)]^{\rm T}.
+\end{align*}\]</span></p>
+<p>Identificando <span class="math inline">\(\delta^{(L)}_{\ell}(n)\)</span> na expressão anterior e substituindo o resultado na expressão do gradiente, obtém-se</p>
+<p><span class="math display">\[
+\boldsymbol{\nabla}_{\mathbf{w}_k^{(L-1)}}J_{\rm MSE} =  -\frac{2}{N_L}\;\varphi'(v_{k}^{(L-1)}(n))\;\sum_{\ell=1}^{N_L}\delta_{\ell}^{(L)}(n)w_{\ell k}^{(L)}(n-1)[\mathbf{x}^{(L-1)}(n)]^{\rm T}.
+\]</span></p>
+<p>Definindo agora o gradiente local da Camada <span class="math inline">\(L-1\)</span> como</p>
+<p><span class="math display">\[
+\delta_{k}^{(L-1)}(n)\triangleq \varphi'(v_{k}^{(L-1)}(n))\;\sum_{\ell=1}^{N_L}\delta_{\ell}^{(L)}(n)w_{\ell k}^{(L)}(n-1),
+\]</span></p>
+<p>o vetor gradiente pode ser reescrito como</p>
+<p><span class="math display">\[
+\boldsymbol{\nabla}_{\mathbf{w}_k^{(L-1)}}J_{\rm MSE} =  -\frac{2}{N_L}\delta_{k}^{(L-1)}(n)[\mathbf{x}^{(L-1)}(n)]^{\rm T}.
+\]</span></p>
+<p>Comparando a expressão do gradiente local <span class="math inline">\(\delta_{k}^{(L-1)}(n)\)</span> da Camada <span class="math inline">\(L-1\)</span> com a expressão do gradiente local <span class="math inline">\(\delta_{k}^{(L)}(n)\)</span> da Camada <span class="math inline">\(L\)</span>, o somatório</p>
+<p><span class="math display">\[
+\sum_{\ell=1}^{N_L}\delta_{\ell}^{(L)}(n)w_{\ell k}^{(L)}(n-1)
+\]</span></p>
+<p>faz o papel de erro do Neurônio <span class="math inline">\(k\)</span> da Camada <span class="math inline">\(L-1\)</span>. Essa retropropagação dos erros deve continuar até a primeira camada oculta. O fluxo do sinal na retropropagação considerando as camadas <span class="math inline">\(L\)</span> e <span class="math inline">\(L-1\)</span> está esquematizado na <a href="#fig-fluxobp" class="quarto-xref">Figura&nbsp;3</a>. O erro do Neurônio <span class="math inline">\(k\)</span> da Camada <span class="math inline">\(L-1\)</span> é o sinal obtido no ponto indicado pelo círculo azul na figura.</p>
+<div id="fig-fluxobp" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fluxobp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/FluxoBP.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fluxobp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Fluxo do sinal na retropropagação considerando as camadas <span class="math inline">\(L\)</span> e <span class="math inline">\(L-1\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Generalizando, define-se o gradiente local para qualquer camada oculta <span class="math inline">\(j\)</span> como</p>
+<p><span class="math display">\[\begin{equation*}
+\fbox{$\displaystyle
+\delta_{k}^{(j)}(n)\triangleq \varphi'(v_{k}^{(j)}(n))\;\sum_{\ell=1}^{N_{j+1}}\delta_{\ell}^{(j+1)}(n)w_{\ell k}^{(j+1)}(n-1).
+$}
+\end{equation*}\]</span></p>
+<p>e para a camada de saída <span class="math inline">\(L\)</span> como</p>
+<p><span class="math display">\[\begin{equation*}
+\fbox{$\displaystyle
+\delta_{k}^{(L)}(n)\triangleq \varphi'(v_{k}^{(L)}(n))e_k(n).
+$}
+\end{equation*}\]</span></p>
+<p>Definindo os vetores</p>
+<p><span class="math display">\[
+\boldsymbol{\delta}^{(j)}(n)\triangleq
+\left[\begin{array}{c}
+                                    \delta_{1}^{(j)}(n) \\
+                                    \delta_{2}^{(j)}(n) \\
+                                    \vdots \\
+                                    \delta_{N_j}^{(j)}(n)
+                                  \end{array}
+\right],\;\;\;
+\mathbf{e}(n)\triangleq
+\left[\begin{array}{c}
+                                    e_{1}(n) \\
+                                    e_{2}(n) \\
+                                    \vdots \\
+                                    e_{N_L}(n)
+                                  \end{array}\right],\;\;\;
+\mathbf{d}_{\varphi}^{(j)}(n)\triangleq
+\left[\begin{array}{c}
+                                    \varphi'(v_1^{(j)}(n)) \\
+                                    \varphi'(v_2^{(j)}(n)) \\
+                                    \vdots \\
+                                    \varphi'(v_{N_j}^{(j)}(n))
+                                  \end{array}\right]
+\]</span></p>
+<p>e a matriz <span class="math inline">\(\mathbf{W}^{(j+1)}(n-1)\)</span> excluído a coluna de <em>biases</em>, ou seja,</p>
+<p><span class="math display">\[
+\overline{\mathbf{W}}^{(j+1)}(n-1)\triangleq \begin{bmatrix}
+     w_{11}^{(j+1)}(n-1)     &amp; w_{12}^{(j+1)}(n-1)            &amp; \dots  &amp; w_{1N_{j}}^{(j+1)}(n-1)\\
+     w_{21}^{(j+1)}(n-1)     &amp; w_{22}^{(j+1)}(n-1)            &amp; \dots  &amp; w_{2N_{j}}^{(j+1)}(n-1)\\
+      \vdots           &amp; \vdots                   &amp; \ddots &amp; \vdots\\
+     w_{N_{j+1}1}^{(j+1)}(n-1) &amp; w_{N_{j+1}2}^{(j+1)}(n-1)         &amp; \dots  &amp; w_{N_{j+1}N_{j}}^{(j+1)}(n-1)
+    \end{bmatrix}_{N_{j+1}\times N_{j}}
+\]</span> podemos escrever para a camada de saída</p>
+<p><span class="math display">\[\begin{equation*}
+\fbox{$\displaystyle
+\boldsymbol{\delta}^{(L)}(n)=\nonumber\mathbf{d}_{\varphi}^{(L)}(n)\odot\mathbf{e}(n)
+$}
+\end{equation*}\]</span></p>
+<p>e para as camadas ocultas</p>
+<p><span class="math display">\[\begin{equation*}
+\fbox{$\displaystyle
+\boldsymbol{\delta}^{(j)}(n)=\nonumber\mathbf{d}_{\varphi}^{(j)}(n)\odot\left\{\left[\overline{\mathbf{W}}^{(j+1)}(n-1)\right]^{\rm T}\;\boldsymbol{\delta}^{(j+1)}(n)\right\}\nonumber
+$}
+\end{equation*}\]</span></p>
+<p>em que <span class="math inline">\(\odot\)</span> representa a multiplicação elemento por elemento entre dois vetores. Essa forma de calcular os vetores de gradientes locais é mais eficiente, já que todos os elementos são calculados de uma vez em cada camada.</p>
+<p>É comum incorporar a constante <span class="math inline">\(2/N_L\)</span> que aparece nos cálculos dos gradientes ao passo de adaptação <span class="math inline">\(\eta\)</span>. Dessa forma, as equações de atualização dos vetores de pesos do Neurônio <span class="math inline">\(k\)</span> da Camada <span class="math inline">\(j\)</span> podem ser escritas como</p>
+<p><span class="math display">\[\begin{equation*}
+\fbox{$\displaystyle
+\mathbf{w}_{k}^{(j)}(n)=\mathbf{w}_{k}^{(j)}(n-1)+\eta\delta_{k}^{(j)}(n)[\mathbf{x}^{(j)}(n)]^{\rm T}
+$}
+\end{equation*}\]</span></p>
+<p><span class="math inline">\(k=1, 2, \ldots, N_j\)</span>,; <span class="math inline">\(j=1, 2 \ldots, L\)</span>. Definindo a matriz</p>
+<p><span class="math display">\[
+\boldsymbol{\Delta}_{\delta}^{(j)}(n)=\boldsymbol{\delta}^{(j)}(n)[\mathbf{x}^{(j)}(n)]^{\rm T}
+\]</span></p>
+<p>podemos atualizar a matriz de pesos da camada <span class="math inline">\(j\)</span> como</p>
+<p><span class="math display">\[\begin{equation*}
+\fbox{$\displaystyle
+\mathbf{W}^{(j)}(n)=\mathbf{W}^{(j)}(n-1)+\eta\boldsymbol{\Delta}_{\delta}^{(j)}(n).
+$}
+\end{equation*}\]</span></p>
+<p>Como a implementação matricial é mais eficiente, essa forma de atualização é preferida. Os pesos e <em>biases</em> precisam ser inicializados. No LMS, esses parâmetros são geralmente inicializados com zero. No entanto, se fizermos o mesmo no algoritmo <em>backpropagation</em>, dependendo da função de ativação, esses parâmetros não serão atualizados. Para exemplificar, vamos considerar a tangente hiperbólica como função de ativação. Essa função é definida como</p>
+<p><span class="math display">\[
+\varphi(v)={\rm tanh}(v)=\frac{e^v-e^{-v}}{e^v+e^{-v}}.
+\]</span></p>
+<p>Note que se inicializarmos os pesos e <em>biases</em> com zero, as saídas dos combinadores lineares dos neurônios também serão iguais zero e como <span class="math inline">\({\rm tanh}(0)=0\)</span>, as saídas dos neurônios e consequentemente os gradientes serão nulos. Dessa forma, não ocorre atualização dos pesos e <em>biases</em>. Em geral, não temos nenhuma informação prévia sobre a solução “ótima” dos pesos e <em>biases</em>. Por isso, costuma-se inicializar esses parâmetros a partir de uma distribuição uniforme. O intervalo da distribuição depende do problema. Podemos considerar, por exemplo, valores uniformemente distribuídos no intervalo <span class="math inline">\([-10^{-2}, 10^{-2}]\)</span>.</p>
+<p>Diferente do que acontece no algoritmo LMS, a função custo minimizada pelo algoritmo <em>backpropagation</em> tem inúmeros mínimos locais devido às não linearidades inseridas pelas funções de ativação. Suponha hipoteticamente que temos apenas dois parâmetros <span class="math inline">\(w_0\)</span> e <span class="math inline">\(w_1\)</span> a serem ajustados. Na <a href="#fig-custo" class="quarto-xref">Figura&nbsp;4</a> (a) temos o MSE a ser minimizado pelo LMS, que apresenta um único ponto de mínimo, que é a solução de Wiener como vimos anteriormente. Já na <a href="#fig-custo" class="quarto-xref">Figura&nbsp;4</a> (b), temos uma função custo com inúmeros mínimos locais. Não temos mais uma função convexa e o gradiente é nulo nesses pontos de mínimo. Isso faz com que o algoritmo pare de atualizar e atinja uma solução subótima, que por sua vez, pode estar muito distante do mínimo global da função custo. Vários fatores fazem com que o algoritmo <em>backpropagation</em> pare em um mínimo local: o passo de adaptação, a inicialização, determinadas funções de ativação, etc. A solução subótima nem sempre é adequada. Por isso, várias soluções para fazer com que o algoritmo saia dos mínimos locais foram propostas na literatura como veremos posteriormente.</p>
+<div id="fig-custo" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-custo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/Custo.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-custo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: a) Função custo do MSE a ser minimizada pelo LMS; b) Função custo do MSE, a ser minimizada pelo <em>backpropagation</em> <a href="https://www.youtube.com/watch?v=Suevq-kZdIw">[Fonte]</a>.
+</figcaption>
+</figure>
+</div>
+<p>No <a href="#exm-tabbp" class="quarto-xref">Algoritmo&nbsp;1</a>, é apresentado o pseudocódigo do algoritmo <em>backpropagation</em> no modo de treinamento estocástico. Apesar da dedução ter sido feita neste modo, ele raramente é utilizado de forma estocástica. Em vez disso, é mais comum considerar os modos de treinamento <em>batch</em> e <em>mini-batch</em>. Como fizemos a formulação desses modos no algoritmo LMS, sua extensão para o <em>backpropagation</em> é direta e deixaremos a cargo do leitor.</p>
+<div class="box">
+<div id="exm-tabbp" class="custom theorem example">
+<p><span class="theorem-title"><strong>Exemplo 1</strong></span> Sumário do algoritmo <em>backpropagation</em> para treinamento da rede MLP no modo estocástico. <span class="math inline">\(N_t\)</span> é o número de dados de treinamento.</p>
+<p>Inicialização: as matrizes <span class="math inline">\(\mathbf{W}^{(j)}(0),\;j=1,2,\ldots, L\)</span> devem ser inicializadas com número aleatórios uniformemente distribuídos<br>    Para <span class="math inline">\(n=1,2,\ldots,\)</span> calcule:<br>      <span style="color:blue">Cálculo progressivo</span><br>      <span class="math inline">\(\mathbf{y}^{(0)} = [y_{1}\; y_{2}\;\cdots\; y_{N_0}]^{\rm T} = [x_{1n}\; x_{2n}\;\cdots\; x_{N_0n}]^{\rm T}\)</span><br>      <span style="color:blue">Para <span class="math inline">\(j=1,2,\ldots, L,\)</span> calcule:</span><br>        <span class="math inline">\(\mathbf{x}^{(j)}(n)=\left[\begin{array}{c}
+                                                      1 \\
+                                                      \mathbf{y}^{(j-1)}(n)\\
+                                                    \end{array}
+                                      \right]\)</span><br>        <span class="math inline">\(\mathbf{v}^{(j)}(n)=\mathbf{W}^{(j)}(n-1)\mathbf{x}^{(j)}(n)\)</span><br>        <span class="math inline">\(\mathbf{y}^{(j)}(n)=\varphi(\mathbf{v}^{(j)}(n))\)</span><br>        <span class="math inline">\(\mathbf{d}_{\varphi}^{(j)}(n)=\varphi'(\mathbf{v}^{(j)}(n))\)</span><br>      <span style="color:blue">Fim</span><br>      <span class="math inline">\(\mathbf{e}(n)=\mathbf{d}(n)-\mathbf{y}^{(L)}(n)\)</span><br>      <span style="color:red">Cálculo regressivo</span><br>      <span style="color:red">Para <span class="math inline">\(j=L,L-1,\ldots, 1,\)</span> calcule:</span><br>        Se <span class="math inline">\(j=L\)</span><br>          <span class="math inline">\(\boldsymbol{\delta}^{(L)}(n)=\mathbf{d}_{\varphi}^{(j)}(n)\odot \mathbf{e}(n)\)</span><br>          <span class="math inline">\(\boldsymbol{\Delta}^{(L)}_{\delta}(n)=\boldsymbol{\delta}^{(L)}(n) [\mathbf{x}^{(L)}(n)]^{T}\)</span><br>          <span class="math inline">\(\mathbf{W}^{(L)}(n)=\mathbf{W}^{(L)}(n-1)+\eta\boldsymbol{\Delta}_{\delta}^{(L)}(n)\)</span><br>        Caso contrário<br>          <span class="math inline">\(\boldsymbol{\delta}^{(j)}(n)=\mathbf{d}_{\varphi}^{(j)}(n)\odot\left\{\left[\overline{\mathbf{W}}^{(j+1)}(n-1)\right]^{\rm T}\;\boldsymbol{\delta}^{(j+1)}(n)\right\}\)</span><br>          <span class="math inline">\(\boldsymbol{\Delta}_{\delta}^{(j)}(n)=\boldsymbol{\delta}^{(j)}(n) [\mathbf{x}^{(j)}(n)]^{T}\)</span><br>          <span class="math inline">\(\mathbf{W}^{(j)}(n)=\mathbf{W}^{(j)}(n-1)+ \eta\boldsymbol{\Delta}_{\delta}^{(j)}(n)\)</span><br>        Fim<br>      <span style="color:red">Fim</span><br>    Fim<br></p>
+</div>
+</div>
+</section>
+</section>
+<section id="utilizando-a-rede-mlp-no-problema-das-meias-luas" class="level2">
+<h2 class="anchored" data-anchor-id="utilizando-a-rede-mlp-no-problema-das-meias-luas">Utilizando a rede MLP no problema das meias-luas</h2>
+<p>Vamos voltar ao exemplo de classificação das meias-luas com <span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=-4\)</span> e <span class="math inline">\(r_3=6\)</span>. Vimos que essa situação exigia uma curva de separação não linear que tanto o algoritmo LMS quanto o perceptron de Rosenblatt não são capazes de fornecer. Vamos considerar agora a solução obtida por uma rede MLP com três camadas (3-2-1) no modo de treinamento <em>mini-batch</em> (<span class="math inline">\(N_0=2\)</span>, <span class="math inline">\(N_t=10^3\)</span>, <span class="math inline">\(N_b=50\)</span> e <span class="math inline">\(N_e=10^4\)</span>). Os pesos e <em>biases</em> foram inicializados com números aleatórios gerados a partir de uma distribuição uniforme no intervalo <span class="math inline">\([-10^{-2}, 10^{-2}]\)</span> e o passo de adaptação foi considerado fixo e igual a <span class="math inline">\(\eta=0,\!1\)</span>. Considerou-se ainda a tangente hiperbólica como função de ativação de todos os neurônios e a função custo do erro quadrático médio (MSE).</p>
+<p>Na <a href="#fig-mlpboa" class="quarto-xref">Figura&nbsp;5</a> são mostradas a função custo ao longo das épocas, a classificação dos dados de teste e a curva de separação das regiões. Observa-se que a função custo não terminou de convergir apesar das <span class="math inline">\(N_e=10^4\)</span> épocas. No entanto, o valor que ela atinge na última época é de aproximadamente <span class="math inline">\(J_{\rm MSE}\approx 7 \times 10^{-6}\)</span>, o que corresponde a <span class="math inline">\(-51,\!5\)</span> dB. Caso não tenha ocorrido <em>overfitting</em>, esse valor é baixo o suficiente para conseguir separar adequadamente as regiões. Para comprovar, foram gerados <span class="math inline">\(N_{\rm teste}=2\times 10^3\)</span> dados de teste que foram classificados pela MLP considerando os pesos e e <em>biases</em> da última iteração. Podemos observar na figura que não há erros de classificação (taxa de erros igual a zero) e a curva de separação obtida é não linear, como esperado.</p>
+<div id="fig-mlpboa" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mlpboa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/MLPBoa.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mlpboa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5: O problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=-4\)</span> e <span class="math inline">\(r_3=6\)</span>). Função custo ao longo das épocas de treinamento (figura à esquerda); Dados de teste (<span class="math inline">\(N_{\text{teste}}=2\times 10^3\)</span>) e curva de separação das regiões (figura à direita) obtida com uma rede MLP (3–2–1) treinada em <em>mini-batch</em> com o algoritmo <em>backpropagation</em> (<span class="math inline">\(N_0=2\)</span>, <span class="math inline">\(\eta=0,1\)</span>, <span class="math inline">\(N_t=10^3\)</span>, <span class="math inline">\(N_b=50\)</span> e <span class="math inline">\(N_e=10^4\)</span>); função de ativação tangente hiperbólica e pesos e <em>biases</em> inicializados com números aleatórios gerados a partir de uma distribuição uniforme no intervalo <span class="math inline">\([-10^{-2}, 10^{-2}]\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Para ilustrar a evolução da fronteira de decisão ao longo das épocas, a classificação dos dados de teste e a curva de separação das regiões são mostradas na <a href="#fig-mlpboas" class="quarto-xref">Figura&nbsp;6</a> para diferentes valores de <span class="math inline">\(N_e\)</span>. Para cada caso, os pesos obtidos na época em questão foram considerados fixos e usados para classificação dos dados de teste. As respectivas taxas de erro estão mostradas na <a href="#tbl-mlpboas" class="quarto-xref">Tabela&nbsp;1</a>. Nota-se que <span class="math inline">\(N_e=5\)</span> épocas é muito pouco para que a MLP consiga classificar os dados. A medida que o número de épocas aumenta, a curva de separação vai tomando uma forma mais adequada, o que faz com que a taxa de erros diminua, como esperado. Para <span class="math inline">\(N_e=100\)</span>, a taxa de erros é de 1,55% e para <span class="math inline">\(N_e=500\)</span> não há mais erros de classificação. Diante disso, <span class="math inline">\(500\)</span> épocas são suficientes para que a MLP consiga classificar corretamente os dados.</p>
+<div id="fig-mlpboas" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mlpboas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/MLPBoas.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mlpboas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6: O problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=-4\)</span> e <span class="math inline">\(r_3=6\)</span>). Classificação dos dados de teste (<span class="math inline">\(N_{\text{teste}}=2\times 10^3\)</span>) e curva de separação das regiões ao longo das épocas obtidas com uma rede MLP (3–2–1) treinada em <em>mini-batch</em> com o algoritmo <em>backpropagation</em> (<span class="math inline">\(N_0=2\)</span>, <span class="math inline">\(\eta=0,1\)</span>, <span class="math inline">\(N_t=10^3\)</span>, <span class="math inline">\(N_b=50\)</span>); função de ativação tangente hiperbólica e pesos e <em>biases</em> inicializados com números aleatórios gerados a partir de uma distribuição uniforme no intervalo <span class="math inline">\([-10^{-2}, 10^{-2}]\)</span>.
+</figcaption>
+</figure>
+</div>
+<div id="tbl-mlpboas" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mlpboas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;1: Taxas de erro das classificações da <a href="#fig-mlpboas" class="quarto-xref">Figura&nbsp;6</a>.
+</figcaption>
+<div aria-describedby="tbl-mlpboas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(N_e\)</span></th>
+<th style="text-align: center;">Taxa de erro (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">50,00</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">50</td>
+<td style="text-align: center;">10,20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">75</td>
+<td style="text-align: center;">9,35</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">77</td>
+<td style="text-align: center;">4,85</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">2,85</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">90</td>
+<td style="text-align: center;">2,20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">100</td>
+<td style="text-align: center;">1,55</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">500</td>
+<td style="text-align: center;">0,00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Apesar do excelente resultado da <a href="#fig-mlpboa" class="quarto-xref">Figura&nbsp;5</a>, nenhuma técnica foi utilizada para fazer com que o algoritmo <em>backpropagation</em> não ficasse parado em mínimos locais. Ao inicializar os pesos e <em>biases</em> considerando a mesma distribuição mas sorteando valores diferentes, é possível que o algoritmo fique parado em mínimos locais que levam a soluções subótimas. Essa situação pode ser observada na <a href="#fig-mlpruim" class="quarto-xref">Figura&nbsp;7</a>. Na <a href="#fig-mlpruim" class="quarto-xref">Figura&nbsp;7</a> (a) e na <a href="#fig-mlpruim" class="quarto-xref">Figura&nbsp;7</a> (c), observa-se que a função custo atinge aproximadamente <span class="math inline">\(J_{\rm MSE}\approx 5\)</span>, o que corresponde a <span class="math inline">\(-7\)</span> dB. As respectivas curvas de separação e as classificações dos dados de teste estão mostradas na <a href="#fig-mlpruim" class="quarto-xref">Figura&nbsp;7</a> (b) e na <a href="#fig-mlpruim" class="quarto-xref">Figura&nbsp;7</a> (d). No caso da <a href="#fig-mlpruim" class="quarto-xref">Figura&nbsp;7</a> (b), a MLP obteve uma curva de separação que é uma reta, semelhante às soluções obtidas com o LMS e o perceptron de Rosenblatt, o que leva a uma taxa de erros de <span class="math inline">\(10,\!4\%\)</span>. Já no caso da <a href="#fig-mlpruim" class="quarto-xref">Figura&nbsp;7</a> (d), a MLP obteve uma curva de separação não linear. No entanto, há vários pontos da Região A (azul) classificados erroneamente como pertencentes à Região B (vermelha), o que leva a uma taxa de erros de <span class="math inline">\(7,\!6\%\)</span>.</p>
+<div id="fig-mlpruim" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mlpruim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/MLPRuim.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mlpruim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7: O problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=-4\)</span> e <span class="math inline">\(r_3=6\)</span>). (a) e (c) Função custo ao longo das épocas de treinamento; (b) e (d) Dados de teste (<span class="math inline">\(N_{\text{teste}}=2\times 10^3\)</span>) e curva de separação das regiões (correspondentes às curvas do custo à esquerda) obtida com uma rede MLP (3–2–1) treinada em <em>mini-batch</em> com o algoritmo <em>backpropagation</em> (<span class="math inline">\(N_0=2\)</span>, <span class="math inline">\(\eta=0,1\)</span>, <span class="math inline">\(N_t=10^3\)</span>, <span class="math inline">\(N_b=50\)</span> e <span class="math inline">\(N_e=10^4\)</span>); função de ativação tangente hiperbólica e pesos e <em>biases</em> inicializados com números aleatórios gerados a partir de uma distribuição uniforme no intervalo <span class="math inline">\([-10^{-2}, 10^{-2}]\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>A conclusão desse exemplo é que a rede MLP é capaz de proporcionar soluções não lineares que podem ser adequadas a vários problemas de classificação e regressão. No entanto, é importante utilizar técnicas que façam com que o algoritmo <em>backpropagation</em> não fique parado em mínimos locais. Antes de discutirmos essas técnicas, vamos abordar a seguir o Teorema de Cybenko que diz que a MLP é um aproximador universal de funções.</p>
+</section>
+<section id="mlp-como-aproximador-universal-de-funções" class="level2">
+<h2 class="anchored" data-anchor-id="mlp-como-aproximador-universal-de-funções">MLP como aproximador universal de funções</h2>
+<p>Uma rede MLP treinada com o algoritmo <em>backpropagation</em> pode ser vista como um sistema capaz de realizar um mapeamento entrada-saída de forma não linear. Considere uma rede MLP com <span class="math inline">\(N_0\)</span> entradas e <span class="math inline">\(N_L\)</span> saídas. A relação entrada-saída da rede define um mapeamento de um espaço Euclidiano de entrada de dimensão <span class="math inline">\(N_0\)</span> a um espaço Euclidiano de saída de dimensão <span class="math inline">\(N_L\)</span>, que é infinitamente e continuamente diferenciável desde que a função de ativação também seja. Neste contexto, cabe a seguinte pergunta: qual o número mínimo de camadas ocultas que a rede MLP precisa ter para fornecer uma aproximação de qualquer mapeamento contínuo? A resposta para essa pergunta envolve o Teorema da Aproximação Universal, enunciado a seguir.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Teorema da Aproximação Universal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Seja <span class="math inline">\(\varphi(\cdot)\)</span> uma função contínua, não constante, limitada e monotônica crescente. Vamos, utilizar, <span class="math inline">\(I_{N_0}\)</span> para denotar o hipercubo unitário <span class="math inline">\([0,\;1]^{N_0}\)</span> de dimensão <span class="math inline">\(N_0\)</span>. O espaço de funções contínuas em <span class="math inline">\(I_{N_0}\)</span> é denotado por <span class="math inline">\(C(I_{N_0})\)</span>. Então, dada qualquer função <span class="math inline">\(f \in C(I_{N_0})\)</span> e <span class="math inline">\(\varepsilon&gt;0\)</span>, existe um inteiro <span class="math inline">\(N_1\)</span> e conjuntos de constantes, reais <span class="math inline">\(\alpha_i\)</span>, <span class="math inline">\(b_i\)</span> e <span class="math inline">\(w_{ij}\)</span>, <span class="math inline">\(i=1, 2, \ldots, N_1\)</span> e <span class="math inline">\(j=1, 2, \ldots,N_0\)</span> tal que se pode definir</p>
+<p><span class="math display">\[
+F(x_1, x_2, \ldots, x_{N_0})=\displaystyle\sum_{i=1}^{N_1}\alpha_i\varphi\left(\displaystyle\sum_{j=1}^{N_0}w_{ij}x_j+b_i\right)
+\]</span></p>
+<p>como uma aproximação da função <span class="math inline">\(f(\cdot)\)</span>, ou seja,</p>
+<p><span class="math display">\[
+|F(x_1, x_2, \ldots, x_{N_0})-f(x_1, x_2, \ldots, x_{N_0})|&lt;\varepsilon
+\]</span></p>
+<p>para todos <span class="math inline">\(x_1, x_2, \ldots, x_{N_0}\)</span> do espaço de entrada.</p>
+</div>
+</div>
+<p>O Teorema da Aproximação Universal é diretamente aplicável à rede MLP. Primeiramente, cabe observar que a tangente hiperbólica, comumente usada como função de ativação, é não constante, limitada e monotonicamente crescente. Portanto, ela satisfaz as condições impostas para a função <span class="math inline">\(\varphi(\cdot)\)</span>. Além disso,</p>
+<p><span class="math display">\[
+\displaystyle\sum_{i=1}^{N_1}\alpha_i\varphi\left(\displaystyle\sum_{j=1}^{N_0}w_{ij}x_j+b_i\right)
+\]</span></p>
+<p>representa a saída de uma MLP descrita a seguir:</p>
+<ol type="1">
+<li>a rede possui <span class="math inline">\(N_0\)</span> entradas, indicadas por <span class="math inline">\(x_1, x_2, \ldots, x_{N_0}\)</span>, e uma única camada oculta composta por <span class="math inline">\(N_1\)</span> neurônios;</li>
+<li>o neurônio oculto <span class="math inline">\(i\)</span> tem pesos <span class="math inline">\(w_{i1}, w_{i2}, \ldots, w_{iN_0}\)</span> e <em>bias</em> <span class="math inline">\(b_i\)</span>;</li>
+<li>a saída da rede é uma combinação linear das saídas dos neurônios ocultos, com <span class="math inline">\(\alpha_1\)</span>, <span class="math inline">\(\alpha_2, \ldots,\)</span> <span class="math inline">\(\alpha_{N_1}\)</span> sendo os pesos da saída.</li>
+</ol>
+<p>A partir desse teorema, pode-se afirmar que uma única camada oculta é suficiente para que uma rede MLP obtenha uma aproximação uniforme para um determinado conjunto de treinamento, representado pelas entradas <span class="math inline">\(x_1, x_2, \ldots, x_{N_0}\)</span>, e uma saída desejada <span class="math inline">\(f(x_1, x_2, \ldots, x_{N_0})\)</span>. Por isso, as redes MLP são conhecidas como <strong>aproximadores universais de funções</strong>. Esse resultado foi demonstrado pela primeira vez por Cybenko em 1988 e por isso, também é chamado de Teorema de Cybenko na literatura de redes neurais. Apesar desse resultado interessante, o teorema não nos diz que uma única camada oculta é ótima no sentido de tempo de aprendizado, simplicidade de implementação ou capacidade de generalização. Mais detalhes podem ser encontrados, por exemplo, em <span class="citation" data-cites="Haykin2009">(<a href="#ref-Haykin2009" role="doc-biblioref">Haykin 2009</a>)</span>.</p>
+</section>
+</div>
+
+
+
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Bishop_book2006" class="csl-entry" role="listitem">
+Bishop, C. M. 2006. <em>Pattern recognition and machine learning</em>. Springer.
+</div>
+<div id="ref-DudaBook2001" class="csl-entry" role="listitem">
+Duda, Richard O., Peter E. Hart, e David G. Stork. 2001. <em>Pattern Classification</em>. 2nd ed. Wiley.
+</div>
+<div id="ref-Goodfellow2016" class="csl-entry" role="listitem">
+Goodfellow, Ian, Yoshua Bengio, e Aaron Courville. 2016. <em>Deep Learning</em>. MIT Press,&nbsp;<a href="http://www.deeplearningbook.org" class="uri">http://www.deeplearningbook.org</a>.
+</div>
+<div id="ref-Haykin2009" class="csl-entry" role="listitem">
+Haykin, Simon. 2009. <em>Neural networks and learning machines</em>. 3rd ed. Pearson.
+</div>
+<div id="ref-AlanBook2008" class="csl-entry" role="listitem">
+Izenman, Alan Julian. 2008. <em>Modern Multivariate Statistical Techniques</em>. Springer.
+</div>
+<div id="ref-HarrisonKukielaBook2020" class="csl-entry" role="listitem">
+Kinsley, Harrison, e Daniel Kukie​la. 2020. <em>Neural Networks from Scratch in Python</em>. Harrison Kinsley,&nbsp;<a href="https://nnfs.io" class="uri">https://nnfs.io</a>.
+</div>
+<div id="ref-BenBook96" class="csl-entry" role="listitem">
+Kröse, Ben, e Patrick van der Smagt. 1996. <em>An Introduction to Neural Networks</em>. The University of Amsterdam.
+</div>
+<div id="ref-RumelhartNature86" class="csl-entry" role="listitem">
+Rumelhart, David E., Geoffrey E. Hinton, e Ronald J. Williams. 1986. <span>“Learning representations of backpropagation errors”</span>. <em>Nature</em> 323: 533–36.
+</div>
+<div id="ref-TheodoridisBook2003" class="csl-entry" role="listitem">
+Theodoridis, Sergios, e Konstantinos Koutroubas. 2003. <em>Pattern Recognition</em>. 2nd ed. Elsevier.
+</div>
+<div id="ref-WittenBook2017" class="csl-entry" role="listitem">
+Witten, Ian H., Eibe Frank, Mark A. Hall, e Christopher J. Pal. 2017. <em>Data Mining: Practical Machine Learning Tools and Techniques</em>. 4th ed. Morgan Kaufmann.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Notas de rodapé</h2>
+
+<ol>
+<li id="fn1"><p>Em alguns livros, considera-se também a entrada como uma camada, como é o caso, por exemplo, da formulação de <span class="citation" data-cites="Haykin2009">(<a href="#ref-Haykin2009" role="doc-biblioref">Haykin 2009</a>)</span>. Aqui, vamos considerar camadas apenas as que possuem neurônios. Dessa forma, a primeira camada da rede MLP será sempre oculta.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script>
+var custom_title = document.querySelectorAll('.custom .theorem-title');
+
+for (let i = 0; i < custom_title.length; i++ ) {
+   var mod_name = custom_title[i].innerHTML;
+   custom_title[i].innerHTML = mod_name.replace("Exemplo", "Algoritmo");
+};
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiada");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiada");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
