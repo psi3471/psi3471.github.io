@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.551">
@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>PSI3471 - Tópicos de programação com Python para aplicações de aprendizado de máquina</title>
+<title>PSI3471 - Exercício 1 - Regressão Linear</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,10 +20,44 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -53,20 +87,52 @@ ul.task-list li input[type="checkbox"] {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Nenhum resultado",
-    "search-matching-documents-text": "documentos correspondentes",
-    "search-copy-link-title": "Copiar link para a busca",
-    "search-hide-matches-text": "Esconder correspondências adicionais",
-    "search-more-match-text": "mais correspondência neste documento",
-    "search-more-matches-text": "mais correspondências neste documento",
-    "search-clear-button-title": "Limpar",
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Enviar",
-    "search-label": "Procurar"
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -82,8 +148,8 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">PSI3471</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Procurar"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -168,20 +234,14 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Nesta página</h2>
-   
-  <ul>
-  <li><a href="#google-colab" id="toc-google-colab" class="nav-link active" data-scroll-target="#google-colab">Google Colab</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Tópicos de programação com Python para aplicações de aprendizado de máquina</h1>
+<h1 class="title">Exercício 1 - Regressão Linear</h1>
 </div>
 
 
@@ -198,23 +258,212 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="google-colab" class="level2 justify">
-<h2 class="anchored" data-anchor-id="google-colab">Google Colab</h2>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/MaUzPMCTolg" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="justify">
+<p>Neste exercício, você vai construir um modelo usando a técnica de mínimos quadrados para prever o preço de carros usados usando os dados do <a href="https://www.kaggle.com/austinreese/craigslist-carstrucks-data"><em>Used Cars Dataset</em></a>. Este banco de dados é uma enorme lista com 957 MB de informações de veículos anunciados no site <em>Craigslist.org</em>, incluindo diversos tipos de veículos.</p>
+<p>Ao trabalhar com dados reais, muitas vezes é necessário realizar algumas etapas de filtragem e limpeza para usar os dados para construir um modelo. No caso desse banco de dados, é necessário restringir os tipos de veículos que serão considerados, para obter melhores resultados com o modelo.</p>
+<p>Como o foco principal do exercício é usar a técnica de mínimos quadrados para construir o modelo, você vai trabalhar com um conjunto de dados limpo, que é um pequeno subconjunto do banco de dados original. Dessa forma, antes de começar a trabalhar no código, certifique-se de ter baixado o <a href="https://media.githubusercontent.com/media/psi3471/datasets/main/used_cars_dataset/vehicles_cleaned_train.csv">arquivo CSV de dados limpos</a> do repositório de materiais.</p>
+<p>Para carregar um arquivo CSV e processar os dados, você pode usar a biblioteca <a href="https://pandas.pydata.org/">Pandas</a>. Após a instalação da biblioteca e o download do arquivo CSV, é possível carregar os dados com os seguintes comandos:</p>
+<div id="cell-5" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>cars_data <span class="op">=</span> pd.read_csv(<span class="st">"vehicles_cleaned_train.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Com esses comandos, você vai criar um <em>DataFrame</em> do Pandas chamado <code>cars_data</code> contendo os dados do arquivo CSV. A partir deste <em>DataFrame</em>, você pode gerar os <em>arrays</em> NumPy que serão usados para calcular os parâmtros do modelo de regressão linear.</p>
+<p>Para ver algumas linhas do banco de dados, você pode usar o método <code>.head()</code>:</p>
+<div id="cell-7" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cars_data.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">condition</th>
+<th data-quarto-table-cell-role="th">cylinders</th>
+<th data-quarto-table-cell-role="th">fuel</th>
+<th data-quarto-table-cell-role="th">odometer</th>
+<th data-quarto-table-cell-role="th">transmission</th>
+<th data-quarto-table-cell-role="th">size</th>
+<th data-quarto-table-cell-role="th">type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>10400</td>
+<td>2011</td>
+<td>excellent</td>
+<td>4 cylinders</td>
+<td>gas</td>
+<td>81300</td>
+<td>automatic</td>
+<td>mid-size</td>
+<td>sedan</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>6900</td>
+<td>2007</td>
+<td>excellent</td>
+<td>6 cylinders</td>
+<td>gas</td>
+<td>79000</td>
+<td>automatic</td>
+<td>full-size</td>
+<td>sedan</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>18900</td>
+<td>2018</td>
+<td>like new</td>
+<td>4 cylinders</td>
+<td>gas</td>
+<td>5000</td>
+<td>automatic</td>
+<td>full-size</td>
+<td>sedan</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>6000</td>
+<td>2010</td>
+<td>excellent</td>
+<td>4 cylinders</td>
+<td>gas</td>
+<td>97600</td>
+<td>automatic</td>
+<td>mid-size</td>
+<td>hatchback</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>19995</td>
+<td>2013</td>
+<td>good</td>
+<td>6 cylinders</td>
+<td>gas</td>
+<td>95782</td>
+<td>automatic</td>
+<td>mid-size</td>
+<td>sedan</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<p>Conforme você pode notar pela saída do comando acima, o banco de dados tem 9 colunas. A descrição dos dados é a seguinte:</p>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 87%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Coluna</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>price</code></td>
+<td>O preço do carro. É o dado que você deseja obter com o modelo.</td>
+</tr>
+<tr class="even">
+<td><code>year</code></td>
+<td>O ano do carro.</td>
+</tr>
+<tr class="odd">
+<td><code>condition</code></td>
+<td>Variável categórica que indica a condição do carro. Pode ter os valores <code>good</code>, <code>fair</code>, <code>excellent</code>, <code>like new</code>, <code>salvage</code>, ou <code>new</code>.</td>
+</tr>
+<tr class="even">
+<td><code>cylinders</code></td>
+<td>Variável categórica que indica o número de cilindros do motor. Pode ter os valores <code>4 cylinders</code> ou <code>6 cylinders</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>fuel</code></td>
+<td>Variável categórica que indica o combustível do carro. Pode ter os valores <code>gas</code> ou <code>diesel</code>.</td>
+</tr>
+<tr class="even">
+<td><code>odometer</code></td>
+<td>Valor registrado no odômetro, em milhas.</td>
+</tr>
+<tr class="odd">
+<td><code>transmission</code></td>
+<td>Variável categórica que indica o tipo de transmissão. Pode ter os valores <code>automatic</code> ou <code>manual</code>.</td>
+</tr>
+<tr class="even">
+<td><code>size</code></td>
+<td>Variável categórica que indica o tamanho do carro. Pode ter os valores <code>compact</code>, <code>mid-size</code>, <code>sub-compact</code> ou <code>full-size</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>type</code></td>
+<td>Variável categórica que indica o tipo do carro. Pode ter os valores <code>sedan</code>, <code>coupe</code>, <code>wagon</code>, or <code>hatchback</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Para usar esses dados para construir o modelo, você vai precisar representar os dados categóricos de forma numérica. Na maioria dos casos, cada variável categórica é transformada em um conjunto de <a href="https://en.wikipedia.org/wiki/Dummy_variable_(statistics)">variáveis <em>dummy</em></a>, que são variáveis que podem assumir o valor 0 ou 1. Como exemplo dessa transformação, considere a coluna <code>fuel</code>, que pode assumir os valores <code>gas</code> ou <code>diesel</code>. Nesse caso, a variável categórica pode ser transformada em uma variável <em>dummy</em> chamada <code>fuel_gas</code> que assume o valor 1, quando <code>fuel</code> for igual a <code>gas</code> e 0, quando <code>fuel</code> for igual a <code>diesel</code>. Vale notar que você vai precisar de apenas uma variável <em>dummy</em> para representar uma variável categórica que pode assumir dois valores diferentes. Da mesma forma, para uma variável categórica que pode assumir <span class="math inline">\(N\)</span> valores distintos, você precisará de <span class="math inline">\(N-1\)</span> variáveis <em>dummy</em>, pois um dos valores será assumido como o padrão.</p>
+<p>Além disso, lembre-se que você também pode criar outras variáveis, a partir de transformações e combinações das variáveis originais. Por exemplo, você poderia calcular o <span class="math inline">\(\rm log\)</span> ou a raiz quadrada de alguma variável numérica, ou ainda calcular uma nova variável que é igual ao produto de duas variáveis originais. Uma prática comum é considerar uma variável adicional, sempre igual a <span class="math inline">\(1\)</span>, o que faz com que o modelo inclua um termo constante, independente dos dados de entrada, conhecida como <em>intercepto</em> na terminologia de estatística ou <em>bias</em> no contexto de redes neurais.</p>
+<p>A proposta do exercício é que você construa um modelo de regressão linear para prever o valor da coluna <code>price</code> a partir dos dados das demais variáveis. Para tanto, você pode gerar novas variáveis a partir das originais e/ou descartar variáveis caso julgue que não contribuam para o modelo.</p>
+<p>Em resumo, para obter o vetor <span class="math inline">\(\mathbf{w}_o\)</span> com os coeficientes do modelo de regressão linear, você deve seguir os seguintes passos:</p>
+<ol type="1">
+<li><p>Selecionar o conjunto de variáveis originais que vocễ vai utilizar no modelo. Lembre-se que a variável <code>price</code> não pode ser utilizada pois é a variável que você deseja prever com o modelo;</p></li>
+<li><p>Substituir cada variável categórica de sua seleção por um conjunto de variáveis <em>dummy</em>, conforme descrito anteriormente. Para tanto, você pode usar a função <a href="https://pandas.pydata.org/docs/reference/api/pandas.get_dummies.html">get_dummies() do Pandas</a> ou escrever a sua própria função para fazer a transformação;</p></li>
+<li><p>Transformar as variáveis originais de sua seleção e / ou incluir combinações, caso julgue necessário;</p></li>
+<li><p>A partir de sua seleção de dados, obter a matriz <span class="math inline">\(\mathbf{X}\)</span> e o vetor <span class="math inline">\(\mathbf{d}\)</span>, que podem ser representados como <em>arrays</em> do NumPy. Caso você tenha usado um <em>DataFrame</em> do Pandas para organizar a sua seleção de variáveis, você pode obter um <em>array</em> do NumPy usando o método <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_numpy.html">.to_numpy()</a>.</p></li>
+<li><p>Usando a matriz <span class="math inline">\(\mathbf{X}\)</span> e o vetor <span class="math inline">\(\mathbf{d}\)</span>, calcular o vetor <span class="math inline">\(\mathbf{w}_o\)</span> conforme mostrado na aula.</p></li>
+</ol>
+<p>Após obter os coeficientes <span class="math inline">\(\mathbf{w}_o\)</span> do modelo de regressão linear, você vai utilizá-los para prever o valor de venda de carros de um <a href="https://media.githubusercontent.com/media/psi3471/datasets/main/used_cars_dataset/vehicles_cleaned_test.csv">conjunto de dados de teste disponível em um arquivo CSV</a> do repositório de materiais. Após fazer o download do arquivo, repita as transformações que você fez no conjunto de treinamento, obtendo a matriz <span class="math inline">\(\mathbf{X}_{\rm teste}\)</span> e o vetor <span class="math inline">\(\mathbf{d}_{\rm teste}\)</span>.</p>
+<p>Para cada carro do banco de dados de teste, calcule o valor predito pelo seu modelo e o erro em relação ao valor da coluna <code>price</code>. Calcule também o erro quadrático médio considerando todo o banco de dados de teste.</p>
+<p>Ao final do exercício, você deverá apresentar:</p>
+<ol type="1">
+<li><p>Uma descrição das variáveis de entrada que você utilizou como entrada e as justificativas para descartar variáveis ou utilizar transformações e combinações;</p></li>
+<li><p>Os códigos utilizados para calcular o vetor <span class="math inline">\(\mathbf{w}_o\)</span> e o erro quadrático médio de seu modelo, considerando os dados de treinamento;</p></li>
+<li><p>O valor obtido para o erro quadrático médio de seu modelo, considerando os dados de teste. Esse valor será utilizado para fazer um <em>ranking</em> dos melhores modelos.</p></li>
+</ol>
+<p>A sugestão é que seja apresentado um Jupyter Notebook usando a linguagem Python, já que essas são as ferramentas que estamos utilizando nesta parte do curso. No entanto, isso não é obrigatório e você pode usar outra linguagem de programação, caso queira.</p>
+<section id="instruções-para-entrega" class="level2">
+<h2 class="anchored" data-anchor-id="instruções-para-entrega">Instruções para entrega</h2>
 <ul>
-<li>0:00 Introdução</li>
-<li>0:40 Entrando no Google Colab</li>
-<li>1:40 Usando a integração com o Github</li>
-<li>4:15 Salvando o notebook</li>
-<li>5:30 Vantagens e desvantagens do Google Colab</li>
-<li>9:45 Carregando dados</li>
-<li>11:30 Usando o Google Drive</li>
-<li>14:00 Instalando pacotes pip</li>
-<li>15:22 Instalando pacotes conda</li>
+<li><p>O exercício pode ser feito em dupla ou individualmente;</p></li>
+<li><p>A entrega deve incluir:</p>
+<ul>
+<li>Um vídeo de no <strong>máximo 40s</strong>, mostrando a resolução do exercício;</li>
+<li>Os <strong>códigos-fontes</strong> dos programas, preferencialmente organizados em um Jupyter Notebook, descrevendo o experimento e mostrando como foram obtidos os resultados solicitados.</li>
+</ul></li>
+<li><p><strong>A correção será feita baseada no vídeo</strong>. Quando o professor/pesquisador ficar com alguma dúvida, serão consultados os códigos-fonte;</p></li>
+<li><p>Sobre o vídeo:</p>
+<ul>
+<li><strong>Deve incluir áudio</strong> descrevendo o experimento;</li>
+<li>Gravem a tela do computador usando celular ou usando algum programa de captura de tela (por exemplo Zoom, Google Meet, ou OBS Studio);</li>
+<li>No início, <strong>deve aparecer o rosto e algum documento do aluno que gravou o vídeo</strong> (como a carteira USP, RG, CNH, etc);</li>
+<li>No caso de entrega em dupla, <strong>não é necessário que os dois componentes apareçam no vídeo</strong>. No entanto, alternem o apresentador ao longo das entregas dos exercícios e <strong>não esqueçam de incluir os dois nomes no início do vídeo</strong>.</li>
+<li>Procurem convencer o espectador do vídeo, que vai corrigir o exercício que fizeram os exercícios computacionais solicitados e que eles estão funcionando corretamente. Tentem fazer um bom aproveitamento do tempo para apresentar os resultados solicitados, <strong>respeitando o limite de 40s e não acelerem a velocidade do vídeo</strong>;</li>
+</ul></li>
+<li><p>Sobre os códigos-fonte:</p>
+<ul>
+<li><strong>Incluir o nome do(s) aluno(s)</strong> no início do programa;</li>
+</ul></li>
+<li><p>Sobre o envio no Moodle:</p>
+<ul>
+<li>Apenas um aluno de cada dupla deve enviar o vídeo no Moodle;</li>
+<li>Podem ser enviados o arquivo de vídeo (.mkv, .mp4, .avi, etc.) ou um link para o vídeo (Youtube, Google Drive, etc);
+<ul>
+<li>No segundo caso, certifiquem-se que todos os professores/pesquisadores (magno.silva@usp.br, hae.kim@usp.br, renatocan@lps.usp.br, wesleybeccaro@usp.br) tenham acesso ao seu vídeo.</li>
+</ul></li>
+<li>Não se esqueçam de escrever o nome dos componentes da dupla (ou do único aluno, escrevendo: “exercício feito individualmente”) em três lugares diferentes: <strong>no campo “comentários sobre o envio” no Moodle</strong>, <strong>no início do vídeo</strong> e no <strong>início dos códigos-fonte</strong>.</li>
+</ul></li>
 </ul>
-<p><a href="https://github.com/psi3471/topicos_python/blob/main/04-google_colab.ipynb">Jupyter Notebook com referência aos comandos utilizados</a></p>
-<p><a href="./python_videos.html">Índice de vídeos</a></p>
 </section>
+</div>
 
 
 
@@ -281,12 +530,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copiada");
+    button.setAttribute("title", "Copied!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copiada");
+      button.setAttribute("data-bs-title", "Copied!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
