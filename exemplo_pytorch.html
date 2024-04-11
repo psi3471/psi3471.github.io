@@ -397,16 +397,16 @@ window.Quarto = {
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>eta <span class="op">=</span> <span class="fl">0.5</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Tamanho do mini-batch</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>Nb <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>Nb <span class="op">=</span> <span class="dv">100</span></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Número de épocas</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>Ne <span class="op">=</span> <span class="dv">1000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>Ne <span class="op">=</span> <span class="dv">10000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>O PyTorch utiliza um elemento chamado de <code>DataLoader</code> para facilitar o carregamento dos dados, embaralhamento e geração dos mini <em>batches</em>. Ele é criado a partir de um iterador, que contém pares de dados no formato <code>(entrada, saída)</code>:</p>
 <div id="65d773f5-2b09-44b3-9c16-36dba61ac7ce" class="cell" data-tags="[]" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dados_treino <span class="op">=</span> torch.tensor(dados_treino_np, dtype<span class="op">=</span>torch.float32)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>train_set <span class="op">=</span> [</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    (dados_treino[:, [<span class="dv">0</span>, <span class="dv">1</span>]], dados_treino[:, [<span class="dv">2</span>]])</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    (dados_treino[i, [<span class="dv">0</span>, <span class="dv">1</span>]], dados_treino[i, [<span class="dv">2</span>]])</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(dados_treino.shape[<span class="dv">0</span>])</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -519,7 +519,7 @@ window.Quarto = {
 <span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>        losses.append(loss.item())</span>
 <span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Mostra o valor da função custo a cada 100 épocas        </span></span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> epoch <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span> <span class="kw">and</span> n <span class="op">==</span> dados_treino.shape[<span class="dv">0</span>]<span class="op">//</span>Nb <span class="op">-</span> <span class="dv">1</span>:</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> epoch <span class="op">%</span> <span class="dv">500</span> <span class="op">==</span> <span class="dv">0</span> <span class="kw">and</span> n <span class="op">==</span> dados_treino.shape[<span class="dv">0</span>]<span class="op">//</span>Nb <span class="op">-</span> <span class="dv">1</span>:</span>
 <span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Época: </span><span class="sc">{</span>epoch<span class="sc">}</span><span class="ss"> Loss: </span><span class="sc">{</span>loss<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
@@ -527,16 +527,26 @@ window.Quarto = {
 <span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Batch"</span>)</span>
 <span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Loss"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>Época: 0 Loss: 0.41760480403900146
-Época: 100 Loss: 8.947559399530292e-05
-Época: 200 Loss: 2.1382862541940995e-05
-Época: 300 Loss: 1.2412538126227446e-05
-Época: 400 Loss: 8.778717528912239e-06
-Época: 500 Loss: 6.800942173867952e-06
-Época: 600 Loss: 5.554730705625843e-06
-Época: 700 Loss: 4.696663381764665e-06
-Época: 800 Loss: 4.069476290169405e-06
-Época: 900 Loss: 3.590661208363599e-06</code></pre>
+<pre data-code-line-numbers=""><code>Época: 0 Loss: 0.7539945840835571
+Época: 500 Loss: 0.0003208783164154738
+Época: 1000 Loss: 1.0246196325169876e-05
+Época: 1500 Loss: 5.569074801314855e-06
+Época: 2000 Loss: 3.858567197312368e-06
+Época: 2500 Loss: 2.9008722322032554e-06
+Época: 3000 Loss: 2.3132092792366166e-06
+Época: 3500 Loss: 1.960377858267748e-06
+Época: 4000 Loss: 1.72843181189819e-06
+Época: 4500 Loss: 1.5078306887517101e-06
+Época: 5000 Loss: 1.387525685458968e-06
+Época: 5500 Loss: 1.1053163007090916e-06
+Época: 6000 Loss: 1.1061830491598812e-06
+Época: 6500 Loss: 1.003904003482603e-06
+Época: 7000 Loss: 9.989685167965945e-07
+Época: 7500 Loss: 8.669725275467499e-07
+Época: 8000 Loss: 8.007504561646783e-07
+Época: 8500 Loss: 8.064585585998429e-07
+Época: 9000 Loss: 7.04885906088748e-07
+Época: 9500 Loss: 6.891851853652042e-07</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre data-code-line-numbers=""><code>Text(0, 0.5, 'Loss')</code></pre>
@@ -709,7 +719,7 @@ window.Quarto = {
 <span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Mostra os valores da função custo de treinamento e validação</span></span>
 <span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a>        <span class="co"># a cada 100 épocas        </span></span>
-<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> epoch <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span> <span class="kw">and</span> n <span class="op">==</span> dados_treino.shape[<span class="dv">0</span>]<span class="op">//</span>Nb <span class="op">-</span> <span class="dv">1</span>:</span>
+<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> epoch <span class="op">%</span> <span class="dv">500</span> <span class="op">==</span> <span class="dv">0</span> <span class="kw">and</span> n <span class="op">==</span> dados_treino.shape[<span class="dv">0</span>]<span class="op">//</span>Nb <span class="op">-</span> <span class="dv">1</span>:</span>
 <span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Epoch: </span><span class="sc">{</span>epoch<span class="sc">}</span><span class="ss"> Loss: </span><span class="sc">{</span>loss<span class="sc">}</span><span class="ss"> Val. Loss: </span><span class="sc">{</span>val_loss<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
@@ -719,16 +729,26 @@ window.Quarto = {
 <span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Batch"</span>)</span>
 <span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Loss"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>Epoch: 0 Loss: 0.40469396114349365 Val. Loss: 0.29747310280799866
-Epoch: 100 Loss: 8.472112676827237e-05 Val. Loss: 0.0033634896390140057
-Epoch: 200 Loss: 2.1236559405224398e-05 Val. Loss: 0.004362466745078564
-Epoch: 300 Loss: 1.240493747900473e-05 Val. Loss: 0.003933875355869532
-Epoch: 400 Loss: 8.795979738351889e-06 Val. Loss: 0.003536301665008068
-Epoch: 500 Loss: 6.824049705755897e-06 Val. Loss: 0.0031932394485920668
-Epoch: 600 Loss: 5.5786572374927346e-06 Val. Loss: 0.002903312910348177
-Epoch: 700 Loss: 4.719800017483067e-06 Val. Loss: 0.0026560407131910324
-Epoch: 800 Loss: 4.0911822907219175e-06 Val. Loss: 0.0024554224219173193
-Epoch: 900 Loss: 3.611161218941561e-06 Val. Loss: 0.0023117116652429104</code></pre>
+<pre data-code-line-numbers=""><code>Epoch: 0 Loss: 0.4288952946662903 Val. Loss: 0.4373363256454468
+Epoch: 500 Loss: 0.1020800769329071 Val. Loss: 0.1234327182173729
+Epoch: 1000 Loss: 0.18264535069465637 Val. Loss: 0.36254554986953735
+Epoch: 1500 Loss: 0.18082109093666077 Val. Loss: 0.2632644772529602
+Epoch: 2000 Loss: 0.2237672060728073 Val. Loss: 0.3758035898208618
+Epoch: 2500 Loss: 0.1505267173051834 Val. Loss: 0.07806681096553802
+Epoch: 3000 Loss: 0.10975215584039688 Val. Loss: 0.06523850560188293
+Epoch: 3500 Loss: 0.12872742116451263 Val. Loss: 0.07306171208620071
+Epoch: 4000 Loss: 0.19222404062747955 Val. Loss: 0.08486053347587585
+Epoch: 4500 Loss: 0.07514382153749466 Val. Loss: 0.07600489258766174
+Epoch: 5000 Loss: 0.10347875207662582 Val. Loss: 0.06272117793560028
+Epoch: 5500 Loss: 0.07646853476762772 Val. Loss: 0.06404448300600052
+Epoch: 6000 Loss: 0.07575170695781708 Val. Loss: 0.06895849108695984
+Epoch: 6500 Loss: 0.09453247487545013 Val. Loss: 0.06083502247929573
+Epoch: 7000 Loss: 0.08741973340511322 Val. Loss: 0.07605186849832535
+Epoch: 7500 Loss: 0.22517231106758118 Val. Loss: 0.05372380092740059
+Epoch: 8000 Loss: 0.12835191190242767 Val. Loss: 0.05745967850089073
+Epoch: 8500 Loss: 0.11189435422420502 Val. Loss: 0.0843060091137886
+Epoch: 9000 Loss: 0.08424719423055649 Val. Loss: 0.12814004719257355
+Epoch: 9500 Loss: 0.07224565744400024 Val. Loss: 0.12872619926929474</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre data-code-line-numbers=""><code>Text(0, 0.5, 'Loss')</code></pre>
@@ -741,6 +761,7 @@ Epoch: 900 Loss: 3.611161218941561e-06 Val. Loss: 0.0023117116652429104</code></
 </div>
 </div>
 </div>
+<p>Nesse caso, note que o valor da função custo utilizando o conjunto de validação aumenta por volta da iteração 80000, o que indica <em>overfitting</em>.</p>
 </section>
 <section id="utilizando-outras-funções-de-ativação" class="level2">
 <h2 class="anchored" data-anchor-id="utilizando-outras-funções-de-ativação">Utilizando outras funções de ativação</h2>
