@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>PSI3471 - Exercício 3 - MLP</title>
+<title>PSI3471 - Exercício 4 - CNN</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -67,35 +101,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -256,7 +261,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exercício 3 - MLP</h1>
+<h1 class="title">Exercício 4 - CNN</h1>
 </div>
 
 
@@ -274,29 +279,50 @@ window.Quarto = {
 
 
 <div class="justify">
-<p>Implemente uma rede neural e utilize o treinamento com o algoritmo de retropropagação para modelar as seguintes funções:</p>
-<ol type="a">
-<li><p><span class="math inline">\(\displaystyle f(x) = \frac{1}{x},\;\; 1\le x \le 100\)</span></p></li>
-<li><p><span class="math inline">\(f(x) = {\rm log}_{10}x,\;\; 1\le x \le 10\)</span></p></li>
-<li><p><span class="math inline">\(f(x) = {\rm exp}(-x),\;\; 1\le x \le 10\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle f(x) = {\rm sen}(x),\;\; 0\le x \le \frac{\pi}{2}\)</span></p></li>
-</ol>
-<ul>
-<li>Implemente uma rede neural com uma entrada, um número variável de neurônios na camada oculta e uma saída. Para tanto, uma sugestão é implementar duas funções:
-<ul>
-<li><em>Treinamento</em>, que recebe o sinal de entrada, o passo de adaptação, o número de épocas e o número de neurônios da camada oculta e retorna os pesos da rede treinada e um sinal com o valor da função custo ao longo das épocas;</li>
-<li><em>Inferência</em>: que recebe os pesos da rede, o número de neurônios na camada oculta (também poderia obter essa informação a partir dos pesos) e uma entrada e retorna a saída da rede.</li>
-</ul></li>
-<li>Utilize uma função sigmoidal como função de ativação para os neurônios da camada oculta e da camada de saída (note que as funções sempre retornam valores entre 0 e 1 nos intervalos indicados);</li>
-<li>Faça a implementação <strong>usando apenas vetores, tensores e operações aritméticas</strong>, sem utilizar recursos de <em>frameworks</em> para redes neurais como Keras ou PyTorch;</li>
-<li>Crie dois conjuntos de dados, um deles para treinamento da rede e outro para o teste. Considere entre 1000 a 10000 pontos para treinamento e 1000 para teste;</li>
-<li>Avalie o desempenho da rede para cada caso, calculando o erro quadrático médio obtido no conjunto de teste e plotando gráficos da funções e das aproximações obtidas com a rede, considerando os seguintes números de neurônios na camada oculta: 3, 4, 5, 10, 15, 20, 50, 100.</li>
-</ul>
+<p>Neste exercício, você vai trabalhar com o banco de dados <a href="https://arxiv.org/abs/1708.07747">Fashion MNIST</a> e implementar um classificador multiclasse usando uma CNN. Esse dataset contem 70000 imagens 28x28 de peças de vestuário distribuídas em 10 classes, divididas em um conjunto de treinamento com 60000 imagens e um de teste com 10000.</p>
+<p>O banco de dados Fashion MNIST tem as mesmas características do banco de dados MNIST (imagens 28x28 e 10 classes), sendo possível substituí-lo diretamente. A sugestão é que seja usado o exemplo da <a href="./exemplo_pytorch_cnn.html">CNN com PyTorch</a>, substituindo a parte de carregamento de dados do MNIST, para o Fashion MNIST, como no exemplo:</p>
+<div id="cell-4" class="cell" data-tags="[]" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torchvision <span class="im">import</span> datasets, transforms</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Nb <span class="op">=</span> <span class="dv">64</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>dir_data <span class="op">=</span> <span class="st">"~/temp"</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>train_loader <span class="op">=</span> torch.utils.data.DataLoader(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    datasets.FashionMNIST(</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        dir_data,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        train<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        download<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        transform<span class="op">=</span>transforms.Compose(            </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>            [transforms.ToTensor()]</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span>Nb,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    shuffle<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">6</span>))</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">2</span>, <span class="dv">5</span>, i <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    image, _ <span class="op">=</span> train_loader.dataset.<span class="fu">__getitem__</span>(i)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    plt.imshow(image.squeeze().numpy())</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    plt.axis(<span class="st">'off'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex_entrega_4_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Você deve implementar uma rede CNN, com a etapa de treinamento e teste, de forma que o resultado de acurácia da classificação seja <strong>superior à 90%</strong> considerando os dados de teste. Para tanto, faça simulações alterando a arquitetura da rede ou ajustando os hiperparâmetros, até conseguir o desempenho desejado.</p>
 <p>Ao final do exercício, você deverá apresentar:</p>
 <ol type="1">
-<li><p>Os códigos utilizados para treinar e fazer a inferência com os seus modelos;</p></li>
-<li><p>Um conjunto de gráficos das aproximações obtidas para cada função usando dados de teste, com os diferentes números de neurônios na camada oculta;</p></li>
-<li><p>Uma tabela com o erro quadrático médio obtido no teste, para cada função, com diferentes números de neurônios na camada oculta.</p></li>
+<li><p>Os códigos utilizados para treinar o modelo e avaliá-lo com os conjuntos de teste;</p></li>
+<li><p>O valor obtido para a acurácia considerando os dados de teste.</p></li>
 </ol>
 <p>A sugestão é que o relatório seja elaborado utilizando um Jupyter Notebook e a linguagem Python, já que essas são as ferramentas que estamos utilizando neste bloco do curso. No entanto, isso não é obrigatório e você pode usar outra linguagem de programação, caso queira.</p>
 <section id="instruções-para-entrega" class="level2">
