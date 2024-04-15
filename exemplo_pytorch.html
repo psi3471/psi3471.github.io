@@ -530,7 +530,7 @@ window.Quarto = {
 <span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Armazena o valor da função custo</span></span>
 <span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>        losses.append(loss.item())</span>
 <span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Mostra o valor da função custo a cada 100 épocas        </span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Mostra o valor da função custo a cada 500 épocas        </span></span>
 <span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> epoch <span class="op">%</span> <span class="dv">500</span> <span class="op">==</span> <span class="dv">0</span> <span class="kw">and</span> n <span class="op">==</span> dados_treino.shape[<span class="dv">0</span>]<span class="op">//</span>Nb <span class="op">-</span> <span class="dv">1</span>:</span>
 <span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Época: </span><span class="sc">{</span>epoch<span class="sc">}</span><span class="ss"> Loss: </span><span class="sc">{</span>loss<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a></span>
@@ -730,7 +730,7 @@ window.Quarto = {
 <span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a>        val_losses.append(val_loss.item())</span>
 <span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Mostra os valores da função custo de treinamento e validação</span></span>
-<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a>        <span class="co"># a cada 100 épocas        </span></span>
+<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a>        <span class="co"># a cada 500 épocas        </span></span>
 <span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> epoch <span class="op">%</span> <span class="dv">500</span> <span class="op">==</span> <span class="dv">0</span> <span class="kw">and</span> n <span class="op">==</span> dados_treino.shape[<span class="dv">0</span>]<span class="op">//</span>Nb <span class="op">-</span> <span class="dv">1</span>:</span>
 <span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Epoch: </span><span class="sc">{</span>epoch<span class="sc">}</span><span class="ss"> Loss: </span><span class="sc">{</span>loss<span class="sc">}</span><span class="ss"> Val. Loss: </span><span class="sc">{</span>val_loss<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a></span>
