@@ -233,13 +233,13 @@ Figura&nbsp;1: Diagrama indicando o subcampo das redes neurais profundas dentro 
 <ol type="1">
 <li>Um problema de classificação requer que os exemplos sejam classificados em uma de duas ou mais classes;</li>
 <li>Uma classificação pode ter variáveis de entrada discretas ou contínuas. Variáveis contínuas são aquelas que assumem qualquer valor em um intervalo da reta real, e.g.&nbsp;qualquer valor real do intervalo <span class="math inline">\([-1,\; 1]\)</span>;</li>
-<li>Um problema com duas classes é frequentemente chamado de problema de classificação binária;</li>
-<li>Um problema com mais de duas classes é frequentemente chamado de problema de classificação multiclasse;</li>
-<li>Um problema em que um exemplo é atribuído a várias classes é chamado de problema de classificação multirrótulo.</li>
+<li>Um problema com duas classes é chamado de classificação binária;</li>
+<li>Um problema com mais de duas classes é chamado de classificação multiclasse;</li>
+<li>Um problema em que um exemplo é atribuído a várias classes é chamado de classificação multirrótulo.</li>
 </ol>
 <p>É comum que os modelos de classificação prevejam um valor contínuo como a probabilidade de um dado exemplo pertencer a cada classe de saída. Uma probabilidade prevista pode ser convertida em um valor de classe selecionando o rótulo da classe que tem a probabilidade mais alta. Por exemplo, um e-mail específico de texto pode receber as probabilidades de <span class="math inline">\(0,1\)</span> de ser “<em>spam</em>” e <span class="math inline">\(0,9\)</span> de ser “não <em>spam</em>”. Podemos converter essas probabilidades em um rótulo de classe selecionando o rótulo “não <em>spam</em>”, pois ele tem a maior probabilidade prevista.</p>
 <p>Existem muitas maneiras de estimar a habilidade do classificador, sendo a mais comum calcular a acurácia da classificação. A acurácia da classificação é a porcentagem de exemplos classificados corretamente de todas as previsões feitas. Por exemplo, se um modelo preditivo de classificação fizer 5 previsões e 3 delas estiverem corretas e 2 incorretas, a acurácia da classificação do modelo com base apenas nessas previsões seria <span class="math inline">\((3/5)\times 100= 60\%\)</span>.</p>
-<p>Como exemplo de problema de classificação, considere as 20 imagens da <a href="#fig-gato-cachorro" class="quarto-xref">Figura&nbsp;2</a>. Observe que cada imagem contém a foto de um gato ou de um cachorro. Pode-se usar uma técnica de aprendizado de máquina para classificar cada uma dessas imagens entre as duas classes possíveis: gato ou cachorro. Esse problema de classificação binária foi abordado em um exercício da disciplina “PSI3472 - Concepção e implementação de Sistemas Eletrônicos Inteligentes”.</p>
+<p>Como exemplo de problema de classificação, considere as 20 imagens da <a href="#fig-gato-cachorro" class="quarto-xref">Figura&nbsp;2</a>. Observe que cada imagem contém a foto de um gato ou de um cachorro. Pode-se usar uma técnica de aprendizado de máquina para classificar cada uma dessas imagens entre as duas classes possíveis: gato ou cachorro.</p>
 <div id="fig-gato-cachorro" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gato-cachorro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -258,8 +258,8 @@ Figura&nbsp;2: Imagens de gatos e cachorros.
 <ol type="1">
 <li>Um problema de regressão requer a previsão de uma quantidade;</li>
 <li>Uma regressão pode ter variáveis de entrada discretas ou contínuas;</li>
-<li>Um problema com múltiplas variáveis de entrada é frequentemente chamado de problema de regressão multivariada;</li>
-<li>Um problema de regressão em que as variáveis de entrada são ordenadas por tempo é chamado de problema de previsão de séries temporais.</li>
+<li>Um problema com múltiplas variáveis de entrada é chamado regressão multivariada;</li>
+<li>Um problema de regressão em que as variáveis de entrada são ordenadas por tempo é chamado de previsão de séries temporais.</li>
 </ol>
 <p>Como o modelo preditivo de regressão prevê uma quantidade, a habilidade do modelo deve ser descrita pelo erro de predição calculado como a diferença entre a previsão do regressor e o valor desejado. Existem muitas maneiras de estimar a habilidade do regressor, sendo a mais comum calcular a raiz quadrada do erro quadrático médio (<em>root mean squared error</em> - RMSE), que tem a mesma unidade do valor predito. Por exemplo, se um modelo preditivo de regressão fez 2 previsões, uma de 1,5 em que o valor esperado é 1,0 e outra de 3,3 em que o valor esperado é 3,0, então o RMSE seria</p>
 <p><span class="math display">\[
