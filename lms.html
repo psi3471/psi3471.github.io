@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -424,7 +458,7 @@ Figura&nbsp;1: Fluxo de sinal do algoritmo LMS.
 </section>
 <section id="exemplo-de-classificação-com-o-lms" class="level2">
 <h2 class="anchored" data-anchor-id="exemplo-de-classificação-com-o-lms">Exemplo de classificação com o LMS</h2>
-<p>Considere o exemplo de classificação das “meias-luas” da <a href="#fig-meiasluas" class="quarto-xref">Figura&nbsp;2</a>. A meia-lua chamada de “Região A” está posicionada simetricamente em relação ao eixo <span class="math inline">\(y\)</span>, enquanto a meia-lua chamada de “Região B” está deslocada de <span class="math inline">\(r_1\)</span> à direita do eixo <span class="math inline">\(y\)</span> e de <span class="math inline">\(r_2\)</span> abaixo do eixo <span class="math inline">\(x\)</span>. As duas meias-luas têm raio <span class="math inline">\(r_1\)</span> e largura <span class="math inline">\(r_3\)</span> idênticos. A distância vertical <span class="math inline">\(r_2\)</span> que separa as duas meias-luas é ajustável e medida em relação ao eixo <span class="math inline">\(x\)</span>. Para <span class="math inline">\(r_2&gt;0\)</span>, quanto maior o valor de <span class="math inline">\(r_2\)</span>, maior a separação entre as meias-luas. Já para <span class="math inline">\(r_2&lt;0\)</span>, quando mais negativo for <span class="math inline">\(r_2\)</span>, mais próximas ficam as meias-luas <span class="citation" data-cites="Haykin2009">(<a href="#ref-Haykin2009" role="doc-biblioref">Haykin 2009</a>)</span>.</p>
+<p>Considere o exemplo de classificação das “meias-luas” da <a href="#fig-meiasluas" class="quarto-xref">Figura&nbsp;2</a>. A meia-lua chamada de “Região A” está posicionada simetricamente em relação ao eixo <span class="math inline">\(x_2\)</span>, enquanto a meia-lua chamada de “Região B” está deslocada de <span class="math inline">\(r_1\)</span> à direita do eixo <span class="math inline">\(x_2\)</span> e de <span class="math inline">\(r_2\)</span> abaixo do eixo <span class="math inline">\(x_1\)</span>. As duas meias-luas têm raio <span class="math inline">\(r_1\)</span> e largura <span class="math inline">\(r_3\)</span> idênticos. A distância vertical <span class="math inline">\(r_2\)</span> que separa as duas meias-luas é ajustável e medida em relação ao eixo <span class="math inline">\(x_1\)</span>. Para <span class="math inline">\(r_2&gt;0\)</span>, quanto maior o valor de <span class="math inline">\(r_2\)</span>, maior a separação entre as meias-luas. Já para <span class="math inline">\(r_2&lt;0\)</span>, quando mais negativo for <span class="math inline">\(r_2\)</span>, mais próximas ficam as meias-luas <span class="citation" data-cites="Haykin2009">(<a href="#ref-Haykin2009" role="doc-biblioref">Haykin 2009</a>)</span>.</p>
 <div id="fig-meiasluas" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-meiasluas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -435,7 +469,7 @@ Figura&nbsp;2: O problema de classificação das meias-luas <span class="citatio
 </figcaption>
 </figure>
 </div>
-<p>O conjunto de treinamento consiste em 1000 pontos, 500 pertencentes à Região A e 500 à Região B. Esses pontos são sorteados aleatoriamente. Assim, os pontos da Região A são sorteados considerando</p>
+<p>O conjunto de treinamento consiste em 5000 pontos, 2500 pertencentes à Região A e 2500 à Região B. Esses pontos são sorteados aleatoriamente. Assim, os pontos da Região A são sorteados considerando</p>
 <p><span class="math display">\[
 (\rho\cos\theta,\;\rho\,{\rm sen\,}\theta),
 \]</span></p>
@@ -444,10 +478,53 @@ Figura&nbsp;2: O problema de classificação das meias-luas <span class="citatio
 (\rho\cos\theta+r_1,\;\;-\rho\,{\rm sen}\theta-r_2)
 \]</span></p>
 <p>e <span class="math inline">\(d=-1\)</span> como sinal desejado. O conjunto de teste consiste em 2000 pontos, 1000 pontos de cada região, gerados de forma independente do conjunto de treinamento.</p>
-<p>Para <span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=1\)</span> e <span class="math inline">\(r_3=6\)</span>, considerou-se o algoritmo LMS com passo <span class="math inline">\(\eta=10^{-4}\)</span> e <span class="math inline">\(M=2\)</span>. Neste caso, não foi considerado o <em>bias</em>. Os dados de treinamento estão mostrados na <a href="#fig-mld1fig1" class="quarto-xref">Figura&nbsp;3</a>. Na Figura <a href="#fig-mld1fig2" class="quarto-xref">Figura&nbsp;4</a>, são mostrados a saída do algoritmo, o erro quadrático em dB e os pesos ao longo das iterações. São mostrados também os pesos da solução de Wiener (retas tracejadas em vermelho). É possível observar que, como esperado, os pesos do algoritmo LMS se aproximam da solução de Wiener, mas não convergem exatamente para ela. A saída do LMS no treinamento não mostra uma separação clara entre os dois valores possíveis para o sinal desejado (<span class="math inline">\(\pm 1\)</span>). Apesar disso, é possível verificar na <a href="#fig-mld1fig3" class="quarto-xref">Figura&nbsp;5</a> com os dados de teste que há apenas uma pequena quantidade de dados da Região A que foram classificados erroneamente como pertencentes à Região B, o que leva a uma taxa de erro de aproximadamente 2,5%. Considerando os pesos da última iteração do LMS (<span class="math inline">\(n=1000\)</span>), obtém-se a solução “linear” dada pela reta de separação entre as regiões, mostrada na <a href="#fig-mld1fig3" class="quarto-xref">Figura&nbsp;5</a>.</p>
-<div>
-
-</div>
+<p>Para <span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=1\)</span> e <span class="math inline">\(r_3=6\)</span>, considerou-se o algoritmo LMS com passo <span class="math inline">\(\eta=10^{-3}\)</span> e <span class="math inline">\(M=2\)</span>. Os dados de treinamento estão mostrados na <a href="#fig-mld1fig1" class="quarto-xref">Figura&nbsp;3</a>. Na Figura <a href="#fig-mld1fig2" class="quarto-xref">Figura&nbsp;4</a>, são mostrados a saída do algoritmo, o erro quadrático em dB e os pesos e <em>bias</em> ao longo das iterações. São mostrados também os pesos e <em>bias</em> da solução de Wiener (retas tracejadas em vermelho). Como esperado, os pesos e <em>bias</em> do algoritmo LMS se aproximam dos valores obtidos com a solução de Wiener, mas não convergem exatamente para eles. É possível observar que a velocidade de convergência dos pesos e <em>bias</em> do LMS são diferentes. O <em>bias</em> do LMS só atinge um valor próximo de<br>
+<span class="math inline">\(b=-0,086\)</span> (<em>bias</em> da solução de Wiener) perto de <span class="math inline">\(n=5000\)</span>, enquanto os pesos chegam próximos dos de Wiener perto de <span class="math inline">\(n=200\)</span>. Em geral, não se usa o <em>bias</em> em aplicações de filtragem adaptativa. Considera-se esse parâmetro aqui apenas para obter um modelo de neurônio linear. A saída do LMS no treinamento não mostra uma separação clara entre os dois valores possíveis para o sinal desejado (<span class="math inline">\(\pm 1\)</span>). Apesar disso, é possível verificar na <a href="#fig-mld1fig3" class="quarto-xref">Figura&nbsp;5</a> com os dados de teste que há apenas uma pequena quantidade de dados da Região B que foram classificados erroneamente como pertencentes à Região A, o que leva a uma taxa de erro de aproximadamente 0,6%. Considerando os pesos da última iteração do LMS (<span class="math inline">\(n=5000\)</span>), obtém-se a solução “linear” dada pela separação das regiões, mostrada na <a href="#fig-mld1fig3" class="quarto-xref">Figura&nbsp;5</a>.</p>
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>NA<span class="op">=</span><span class="dv">2500</span> <span class="co"># número de pontos de treinamento da Região A</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>NB<span class="op">=</span><span class="dv">2500</span> <span class="co"># número de pontos de treinamento da Região B</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Nt<span class="op">=</span>NA<span class="op">+</span>NB <span class="co"># total de dados de treinamento</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># dados das meia luas </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>r1<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>r3<span class="op">=</span><span class="dv">6</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>r2<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>rmin<span class="op">=</span>r1<span class="op">-</span>r3<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>rmax<span class="op">=</span>r1<span class="op">+</span>r3<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Pontos da Região A</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>a<span class="op">=</span>np.pi<span class="op">*</span>np.random.rand(NA, <span class="dv">1</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>rxy<span class="op">=</span>np.random.uniform(rmin,rmax,(NA,<span class="dv">1</span>))</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>xA<span class="op">=</span>rxy<span class="op">*</span>np.cos(a)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>yA<span class="op">=</span>rxy<span class="op">*</span>np.sin(a)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>dA<span class="op">=</span>np.ones((NA, <span class="dv">1</span>))</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>pontosA<span class="op">=</span>np.hstack((xA, yA, dA))</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Pontos da Região B</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>a<span class="op">=</span>np.pi<span class="op">*</span>np.random.rand(NB, <span class="dv">1</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>rxy<span class="op">=</span>np.random.uniform(rmin,rmax,(NB, <span class="dv">1</span>))</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>xB<span class="op">=</span>rxy<span class="op">*</span>np.cos(a)<span class="op">+</span>r1</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>yB<span class="op">=-</span>rxy<span class="op">*</span>np.sin(a)<span class="op">-</span>r2</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>dB<span class="op">=-</span>np.ones((NB, <span class="dv">1</span>))</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>pontosB<span class="op">=</span>np.hstack((xB, yB, dB))</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co">#Concatenando e embaralhando os dados de treinamento</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>dados_treino<span class="op">=</span>np.vstack((pontosA, pontosB))</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>np.random.shuffle(dados_treino)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Figura para mostrar os dados de treino</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>fig, ax1 <span class="op">=</span> plt.subplots()</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>ax1.plot(xA,yA,<span class="st">'.b'</span>)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>ax1.plot(xB,yB,<span class="st">'.r'</span>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'$x_1$'</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'$x_2$'</span>)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>plt.grid(axis<span class="op">=</span><span class="st">'x'</span>, color<span class="op">=</span><span class="st">'0.5'</span>)</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>plt.grid(axis<span class="op">=</span><span class="st">'y'</span>, color<span class="op">=</span><span class="st">'0.5'</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div id="cell-fig-mld1fig1" class="cell quarto-layout-panel" data-execution_count="1" data-layout-ncol="1">
 <div class="quarto-layout-row">
 <div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: flex-start;">
@@ -470,7 +547,7 @@ Figura&nbsp;3: O problema de classificação das meias-luas (<span class="math i
 <img src="./images/MLd1_fig2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mld1fig2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;4: O problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=1\)</span> e <span class="math inline">\(r_3=6\)</span>). Algoritmo LMS (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=10^{-4}\)</span>): saída do algoritmo, erro quadrático em dB e pesos ao longo das iterações. As retas vermelhas tracejadas representam os valores dos pesos da solução de Wiener.
+Figura&nbsp;4: O problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=1\)</span> e <span class="math inline">\(r_3=6\)</span>). Algoritmo LMS (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=10^{-3}\)</span>): saída do algoritmo, erro quadrático em dB e pesos e <em>bias</em> ao longo das iterações. As retas vermelhas tracejadas representam os valores dos pesos e <em>bias</em> da solução de Wiener.
 </figcaption>
 </figure>
 </div>
@@ -480,11 +557,11 @@ Figura&nbsp;4: O problema de classificação das meias-luas (<span class="math i
 <img src="./images/MLd1_fig3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mld1fig3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;5: O problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=1\)</span> e <span class="math inline">\(r_3=6\)</span>). Dados de teste (<span class="math inline">\(N_{\rm teste}=2000\)</span>) e reta de separação das duas regiões obtida com o LMS (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=10^{-4}\)</span>).
+Figura&nbsp;5: O problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=1\)</span> e <span class="math inline">\(r_3=6\)</span>). Dados de teste (<span class="math inline">\(N_{\rm teste}=2000\)</span>) e separação das duas regiões obtida com o LMS (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=10^{-3}\)</span>). Os dados da Região B classificados erroneamente são os pontos vermelhos sob o fundo azul (próximos de <span class="math inline">\(x_2=1\)</span>), que neste caso leva a uma taxa de erro de 0,6%.
 </figcaption>
 </figure>
 </div>
-<p>Ao diminuir o passo do algoritmo LMS para <span class="math inline">\(\eta=10^{-5}\)</span>, é possível observar na <a href="#fig-mld1fig2mumenor22" class="quarto-xref">Figura&nbsp;6</a> que o algoritmo tem uma convergência mais lenta. Neste caso, foram considerados <span class="math inline">\(N_t=10^4\)</span> dados de treinamento para que o algoritmo atingisse o regime permanente. Em contrapartida, a solução do algoritmo se torna mais próxima da de Wiener, como esperado. Assim, o projetista deve sempre ter em mente o compromisso entre passo de adaptação e precisão da solução. Apesar de mais precisa, a solução atingida ainda leva a erros na classificação como ocorre na <a href="#fig-mld1fig3" class="quarto-xref">Figura&nbsp;5</a>.</p>
+<p>Ao diminuir o passo do algoritmo LMS para <span class="math inline">\(\eta=5\times 10^{-5}\)</span>, é possível observar na <a href="#fig-mld1fig2mumenor22" class="quarto-xref">Figura&nbsp;6</a> que o algoritmo LMS tem uma convergência mais lenta: os pesos levam cerca de <span class="math inline">\(n=10^3\)</span> iterações para convergir enquanto o <em>bias</em> leva cerca de <span class="math inline">\(n=10^5\)</span> iterações. Neste caso, foram considerados <span class="math inline">\(N_t=10^5\)</span> dados de treinamento para que o algoritmo atingisse o regime permanente. Em contrapartida, a solução do algoritmo se torna mais próxima da de Wiener, como esperado. Assim, o projetista deve sempre ter em mente o compromisso entre passo de adaptação e precisão da solução. Apesar de mais precisa, a solução atingida ainda leva a erros na classificação como ocorre na <a href="#fig-mld1fig3" class="quarto-xref">Figura&nbsp;5</a>.</p>
 <div id="fig-mld1fig2mumenor22" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-mld1fig2mumenor22-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -495,14 +572,14 @@ Figura&nbsp;6: O problema de classificação das meias-luas (<span class="math i
 </figcaption>
 </figure>
 </div>
-<p>Considerando agora <span class="math inline">\(r_2=-4\)</span>, as meias-luas se tornam mais próximas, o que faz com que o algoritmo LMS chegue a uma solução que leva a mais erros: pontos da Região A são classificados erroneamente como pertencentes à Região B e vice-versa, como é possível observar na <a href="#fig-mld4fig3" class="quarto-xref">Figura&nbsp;7</a>. Neste caso, a taxa de erro aumenta para aproximadamente 12%. Para se obter uma solução sem erros para <span class="math inline">\(r_2=-4\)</span>, é necessário considerar um classificador não linear.</p>
+<p>Considerando agora <span class="math inline">\(r_2=-4\)</span>, as meias-luas se tornam mais próximas, o que faz com que o algoritmo LMS chegue a uma solução que leva a mais erros: pontos da Região A são classificados erroneamente como pertencentes à Região B e vice-versa, como é possível observar na <a href="#fig-mld4fig3" class="quarto-xref">Figura&nbsp;7</a>. Neste caso, a taxa de erro aumenta para aproximadamente 11,5%. Para se obter uma solução sem erros para <span class="math inline">\(r_2=-4\)</span>, é necessário considerar um classificador não linear.</p>
 <div id="fig-mld4fig3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-mld4fig3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/MLdm4_fig3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mld4fig3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;7: O problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=-4\)</span> e <span class="math inline">\(r_3=6\)</span>). Dados de teste (<span class="math inline">\(N_{\rm teste}=2000\)</span>) e reta de separação das duas regiões obtida com o LMS (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=10^{-4}\)</span>).
+Figura&nbsp;7: O problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=-4\)</span> e <span class="math inline">\(r_3=6\)</span>). Dados de teste (<span class="math inline">\(N_{\rm teste}=2000\)</span>) e separação das duas regiões obtida com o LMS (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=10^{-3}\)</span>). Os dados classificados erroneamente são os pontos azuis sob o fundo vermelho e os pontos vermelhos sob o fundo azul, que neste caso leva a uma taxa de erro de 11,5%.
 </figcaption>
 </figure>
 </div>
@@ -678,61 +755,36 @@ $}
 </section>
 <section id="exemplo-do-lms-nos-três-modos-de-treinamento" class="level2">
 <h2 class="anchored" data-anchor-id="exemplo-do-lms-nos-três-modos-de-treinamento">Exemplo do LMS nos três modos de treinamento</h2>
-<p>Para exemplificar os três modos de treinamento do LMS, vamos considerar a identificação do seguinte sistema</p>
-<p><span class="math display">\[
-\mathbf{w}^{\text{wiener}}=[\,w_0^{\text{wiener}}\;\;w_1^{\text{wiener}}\,]^{\rm T}=[\,2\;\;-3\,]^{\rm T}.
-\]</span></p>
-<p>Como entrada, considerou-se um ruído branco gaussiano, com média zero e variância unitária. Uma sequência com <span class="math inline">\(N_t\)</span> amostras desse sinal é gerada, ou seja,</p>
-<p><span class="math display">\[
-\{x(0),\; x(1),\:x(2),\;\cdots,\;x(N_t-1)\}.
-\]</span></p>
-<p>Neste caso, não é necessário o <em>bias</em> e apenas dois pesos são suficientes para identificar o sistema. Dessa forma, dada essa sequência de entrada, podemos organizar as amostras na matriz</p>
-<p><span class="math display">\[
-\mathbf{X}=\left[\begin{array}{cc}
-                    x(0) &amp; 0\\
-                     x(1) &amp; x(0)\\
-                     x(2) &amp; x(1) \\
-                     \vdots &amp; \vdots \\
-                     x(N_t-2) &amp; x(N_t-3) \\
-                     x(N_t-1) &amp; x(N_t-2)
-                   \end{array}
-\right].
-\]</span></p>
-<p>Cada linha dessa matriz representa um dado de treinamento do algoritmo. O sinal desejado é calculado como</p>
-<p><span class="math display">\[
-d(n)=w_0^{\text{wiener}}x(n)+w_1^{\text{wiener}}x(n-1)+v(n)=2x(n)-3x(n-1)+v(n),
-\]</span></p>
-<p>em que <span class="math inline">\(n=0, 1, 2, \cdots, N_t-1\)</span>, <span class="math inline">\(v(n)\)</span> é um ruído de medida, que também é ruído branco gaussiano, com média zero e variância <span class="math inline">\(\sigma_v^2=0,01\)</span>. Observe que para cada linha da matriz <span class="math inline">\(\mathbf{X}\)</span> temos um valor de sinal desejado, que é calculado a partir das amostras de cada linha e da amostra do ruído <span class="math inline">\(v(n)\)</span>.</p>
-<p>Primeiramente, vamos considerar o algoritmo LMS no modo de treinamento estocástico com <span class="math inline">\(\eta=0,25\)</span>, <span class="math inline">\(N_t=500\)</span>, <span class="math inline">\(N_e=1\)</span> e <span class="math inline">\(N_b=1\)</span>. Os pesos ao longo das iterações estão mostrados na <a href="#fig-we" class="quarto-xref">Figura&nbsp;8</a>. Pode-se observar que os pesos se aproximam dos valores <span class="math inline">\(2\)</span> e <span class="math inline">\(-3\)</span>, mas como a estimativa do gradiente é instantânea, ocorrem variações em torno desses valores ótimos. No caso, como consideramos apenas uma época, temos <span class="math inline">\(500\)</span> iterações, valor que coincide com o número de dados de treinamento.</p>
+<p>Para exemplificar os três modos de treinamento do LMS, vamos considerar novamente o problema de classificação das meias-luas. No modo de treinamento estocástico com <span class="math inline">\(\eta=10^{-3}\)</span>, <span class="math inline">\(N_t=5000\)</span>, <span class="math inline">\(N_e=1\)</span> e <span class="math inline">\(N_b=1\)</span>. Os pesos e <em>bias</em> ao longo das iterações estão mostrados na <a href="#fig-we" class="quarto-xref">Figura&nbsp;8</a>. Pode-se observar que esses parâmetros se aproximam dos valores obtidos com a solução de Wiener, mas como a estimativa do gradiente é instantânea, ocorrem variações em torno desses valores ótimos. No caso, como consideramos apenas uma época, temos <span class="math inline">\(5000\)</span> iterações, valor que coincide com o número de dados de treinamento.</p>
 <div id="fig-we" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-we-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/we.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-we-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;8: Pesos do algoritmo LMS no modo de treinamento estocástico (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=0,25\)</span>, <span class="math inline">\(N_t=500\)</span>, <span class="math inline">\(N_e=1\)</span> e <span class="math inline">\(N_b=1\)</span>). Identificação do sistema <span class="math inline">\(\mathbf{w}^{\text{wiener}}=[\,2\;\;-3\,]^{\rm T}\)</span> com <span class="math inline">\(\sigma_v^2=0,01\)</span>.
+Figura&nbsp;8: Pesos e <em>bias</em> do algoritmo LMS no modo de treinamento estocástico (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=10^{-3}\)</span>, <span class="math inline">\(N_t=5000\)</span>, <span class="math inline">\(N_e=1\)</span> e <span class="math inline">\(N_b=1\)</span>). Problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=-4\)</span> e <span class="math inline">\(r_3=6\)</span>).
 </figcaption>
 </figure>
 </div>
-<p>Vamos agora considerar o algoritmo LMS no modo de treinamento <em>mini-batch</em> com <span class="math inline">\(\eta=0,25\)</span>, <span class="math inline">\(N_t=500\)</span>, <span class="math inline">\(N_e=10\)</span> e <span class="math inline">\(N_b=10\)</span>. Os pesos ao longo das iterações estão mostrados na <a href="#fig-wmb" class="quarto-xref">Figura&nbsp;9</a>. Pode-se observar que os pesos variam menos em torno dos valores ótimos em comparação com o caso estocástico. Isso ocorre, pois a estimativa do gradiente é feita a cada <span class="math inline">\(N_b=10\)</span> dados do conjunto de treinamento. Como foram consideradas <span class="math inline">\(10\)</span> épocas, temos <span class="math inline">\(N_e\lfloor N_t/N_b\rfloor=500\)</span> iterações.</p>
+<p>Vamos agora considerar o algoritmo LMS no modo de treinamento <em>mini-batch</em> com <span class="math inline">\(\eta=10^{-3}\)</span>, <span class="math inline">\(N_t=5000\)</span>, <span class="math inline">\(N_e=100\)</span> e <span class="math inline">\(N_b=20\)</span>. Os pesos e <em>bias</em> ao longo das iterações estão mostrados na <a href="#fig-wmb" class="quarto-xref">Figura&nbsp;9</a>. Pode-se observar que os pesos variam menos em torno dos valores ótimos em comparação com o caso estocástico. Isso ocorre, pois a estimativa do gradiente é feita a cada <span class="math inline">\(N_b=20\)</span> dados do conjunto de treinamento. Como foram consideradas <span class="math inline">\(100\)</span> épocas, temos <span class="math inline">\(N_e\lfloor N_t/N_b\rfloor=25000\)</span> iterações.</p>
 <div id="fig-wmb" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wmb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/wmb.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wmb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;9: Pesos do algoritmo LMS no modo de treinamento <em>mini-batch</em> (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=0,25\)</span>, <span class="math inline">\(N_e=10\)</span> e <span class="math inline">\(N_b=10\)</span>). Identificação do sistema <span class="math inline">\(\mathbf{w}^{\text{wiener}}=[\,2\;\;-3\,]^{\rm T}\)</span> com <span class="math inline">\(\sigma_v^2=0,01\)</span>.
+Figura&nbsp;9: Pesos e <em>bias</em> do algoritmo LMS no modo de treinamento <em>mini-batch</em> (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=10^{-3}\)</span>, <span class="math inline">\(N_t=5000\)</span>, <span class="math inline">\(N_e=100\)</span> e <span class="math inline">\(N_b=20\)</span>). Problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=-4\)</span> e <span class="math inline">\(r_3=6\)</span>).
 </figcaption>
 </figure>
 </div>
-<p>Considerando agora o algoritmo LMS no modo de treinamento <em>batch</em> com <span class="math inline">\(\eta=0,25\)</span>, <span class="math inline">\(N_t=500\)</span>, <span class="math inline">\(N_e=40\)</span> e <span class="math inline">\(N_b=500\)</span>, os pesos ao longo das iterações estão mostrados na <a href="#fig-wb" class="quarto-xref">Figura&nbsp;10</a>. Como o gradiente é estimado a cada época com todos os dados de treinamento, os pesos convergem exatamente para os valores ótimos. Como foram consideradas <span class="math inline">\(40\)</span> épocas, temos <span class="math inline">\(40\)</span> iterações.</p>
+<p>Considerando agora o algoritmo LMS no modo de treinamento <em>batch</em> com <span class="math inline">\(\eta=10^{-2}\)</span>, <span class="math inline">\(N_t=5000\)</span>, <span class="math inline">\(N_e=1000\)</span> e <span class="math inline">\(N_b=5000\)</span>, os pesos e <em>bias</em> ao longo das iterações estão mostrados na <a href="#fig-wb" class="quarto-xref">Figura&nbsp;10</a>. Como o gradiente é estimado a cada época com todos os dados de treinamento, os pesos convergem exatamente para os valores ótimos. Como foram consideradas <span class="math inline">\(1000\)</span> épocas, temos <span class="math inline">\(1000\)</span> iterações.</p>
 <div id="fig-wb" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/wb.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;10: Pesos do algoritmo LMS no modo de treinamento <em>batch</em> (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=0,25\)</span>, <span class="math inline">\(N_t=500\)</span>, <span class="math inline">\(N_e=40\)</span> e <span class="math inline">\(N_b=N_t=500\)</span>). Identificação do sistema <span class="math inline">\(\mathbf{w}^{\text{wiener}}=[\,2\;\;-3\,]^{\rm T}\)</span> com <span class="math inline">\(\sigma_v^2=0,01\)</span>.
+Figura&nbsp;10: Pesos e <em>bias</em> do algoritmo LMS no modo de treinamento <em>batch</em> (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=10^{-2}\)</span>, <span class="math inline">\(N_e=1000\)</span> e <span class="math inline">\(N_b=N_t=5000\)</span>). Problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=-4\)</span> e <span class="math inline">\(r_3=6\)</span>).
 </figcaption>
 </figure>
 </div>
@@ -743,7 +795,7 @@ Figura&nbsp;10: Pesos do algoritmo LMS no modo de treinamento <em>batch</em> (<s
 <img src="./images/caminho.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-caminho-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;11: Trajetória dos pesos do algoritmo LMS (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta=0,25\)</span>) nos três modos de treinamento (<span class="math inline">\(N_t=500\)</span>): estocástico (<span class="math inline">\(N_e=1\)</span> e <span class="math inline">\(N_b=1\)</span>), <em>mini-batch</em> (<span class="math inline">\(N_e=10\)</span> e <span class="math inline">\(N_b=10\)</span>) e <em>batch</em> (<span class="math inline">\(N_e=40\)</span> e <span class="math inline">\(N_b=500\)</span>). Identificação do sistema <span class="math inline">\(\mathbf{w}^{\text{wiener}}=[\,2\;\;-3\,]^{\rm T}\)</span> com <span class="math inline">\(\sigma_v^2=0,01\)</span>.
+Figura&nbsp;11: Trajetória dos pesos do algoritmo LMS (<span class="math inline">\(M=2\)</span>, <span class="math inline">\(\eta\)</span> epecificado na <a href="#fig-we" class="quarto-xref">Figura&nbsp;8</a>, <a href="#fig-wmb" class="quarto-xref">Figura&nbsp;9</a> e <a href="#fig-wb" class="quarto-xref">Figura&nbsp;10</a>) nos três modos de treinamento (<span class="math inline">\(N_t=5000\)</span>): estocástico (<span class="math inline">\(N_e=1\)</span> e <span class="math inline">\(N_b=1\)</span>), <em>mini-batch</em> (<span class="math inline">\(N_e=100\)</span> e <span class="math inline">\(N_b=20\)</span>) e <em>batch</em> (<span class="math inline">\(N_e=1000\)</span> e <span class="math inline">\(N_b=5000\)</span>). Problema de classificação das meias-luas (<span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=-4\)</span> e <span class="math inline">\(r_3=6\)</span>).
 </figcaption>
 </figure>
 </div>
