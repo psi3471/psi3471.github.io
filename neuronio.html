@@ -166,6 +166,10 @@ window.Quarto = {
     <a class="dropdown-item" href="./mlp.html">
  <span class="dropdown-text">A rede perceptron multicamada</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./hiperparametros.html">
+ <span class="dropdown-text">Evitando mínimos locais e <em>overfitting</em></span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -445,7 +449,7 @@ Figura&nbsp;8: Função tangente hiperbólica e sua derivada.
 &amp;\text{EC, tanh:}\;\;\;\;\, \mathbf{w}(n)=\mathbf{w}(n-1)+\eta e(n)\!\left(1+\frac{1}{y(n)}\right)\mathbf{x}(n).
 \end{align*}
 \]</span> A equação obtida com EC e sgm é conhecida na literatura como <strong>regressão logística</strong> para o caso binário. As demais podem ser interpretadas como variantes. Cabe observar que na equação obtida com EC e tanh aparece o termo <span class="math inline">\(1/y(n)\)</span>, o que pode levar a divisão por <span class="math inline">\(0\)</span>. Para evitar isso, pode-se somar uma constante pequena em <span class="math inline">\(y(n),\)</span> o que acaba alterando a dinâmica do algoritmo. Por isso, essa equação não é muito utilizada e o que se faz é mapear os rótulos iguais a <span class="math inline">\(-1\)</span> em <span class="math inline">\(0\)</span> para se utilizar as versões do algoritmo obtidas com a função logística.</p>
-<p>Para exemplificar, vamos considerar novamente o problema de classificação binária com as meias-luas com <span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=-4\)</span> e <span class="math inline">\(r_3=6\)</span>, mas agora os rótulos da Região B foram mapeados de <span class="math inline">\(-1\)</span> para <span class="math inline">\(0\)</span> a fim de se utilizar as equações obtidas anteriormente com a função logística. Os resultados utilizando o modo de treinamento podem ser vistos na <a href="#fig-RLog1" class="quarto-xref">Figura&nbsp;9</a> e na <a href="#fig-RLog2" class="quarto-xref">Figura&nbsp;10</a>, considerando a minimização do MSE e da EC, respectivamente. Os pesos e <em>bias</em> obtidos na minimização de cada função custo são diferentes, mas a separação das regiões são similares e levam a uma taxa de erro de aproximadamente <span class="math inline">\(8\%\)</span>. Apesar dessa taxa ser um pouco menor que a obtida com o neurônio de Rosenblatt, a separação continua linear.</p>
+<p>Para exemplificar, vamos considerar novamente o problema de classificação binária com as meias-luas com <span class="math inline">\(r_1=10\)</span>, <span class="math inline">\(r_2=-4\)</span> e <span class="math inline">\(r_3=6\)</span>, mas agora os rótulos da Região B foram mapeados de <span class="math inline">\(-1\)</span> para <span class="math inline">\(0\)</span> a fim de se utilizar as equações obtidas anteriormente com a função logística. Os resultados utilizando o modo de treinamento <em>mini-batch</em> podem ser vistos na <a href="#fig-RLog1" class="quarto-xref">Figura&nbsp;9</a> e na <a href="#fig-RLog2" class="quarto-xref">Figura&nbsp;10</a>, considerando a minimização do MSE e da EC, respectivamente. Os pesos e <em>bias</em> obtidos na minimização de cada função custo são diferentes, mas a separação das regiões são similares e levam a uma taxa de erro de aproximadamente <span class="math inline">\(8\%\)</span>. Apesar dessa taxa ser um pouco menor que a obtida com o neurônio de Rosenblatt, a separação continua linear.</p>
 <div id="fig-RLog1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-RLog1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
