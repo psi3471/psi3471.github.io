@@ -193,6 +193,10 @@ window.Quarto = {
     <a class="dropdown-item" href="./ex_aula_4.html">
  <span class="dropdown-text">Exercício 4 - MLP e <em>backpropagation</em></span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./ex_aula_5.html">
+ <span class="dropdown-text">Exercício 5 - MLP e o otimizador Adam</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -207,6 +211,10 @@ window.Quarto = {
         <li>
     <a class="dropdown-item" href="./ex_entrega_2.html">
  <span class="dropdown-text">Exercício 2 - Perceptron de Rosenblatt</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ex_entrega_3.html">
+ <span class="dropdown-text">Exercício 3 - MLP</span></a>
   </li>  
     </ul>
   </li>
@@ -304,7 +312,7 @@ Figura&nbsp;2: Representação de uma rede MLP com <span class="math inline">\(L
 </figcaption>
 </figure>
 </div>
-<p>Vamos usar o exemplo da rede MLP da <a href="#fig-mlpdia" class="quarto-xref">Figura&nbsp;2</a> para calcular a saída da Camada Oculta 2, cujos pesos estão indicados. É importante atentar para a notação: <span class="math inline">\(\omega_{k\ell}^{(j)}\)</span> representa o peso que liga o Neurônio <span class="math inline">\(\ell\)</span> da camada <span class="math inline">\(j-1\)</span> ao Neurônio <span class="math inline">\(k\)</span> da camada <span class="math inline">\(j\)</span>. Se o Neurônio <span class="math inline">\(k\)</span> pertencer à primeira camada oculta, devemos trocar “Neurônio <span class="math inline">\(\ell\)</span>” na frase anterior por “Entrada <span class="math inline">\(\ell\)</span>”. Voltando à <a href="#fig-mlpdia" class="quarto-xref">Figura&nbsp;2</a>, observe que a entrada da rede é dada pelo vetor</p>
+<p>Vamos usar o exemplo da rede MLP da <a href="#fig-mlpdia" class="quarto-xref">Figura&nbsp;2</a> para calcular a saída da camada oculta 2, cujos pesos estão indicados. É importante atentar para a notação: <span class="math inline">\(\omega_{k\ell}^{(j)}\)</span> representa o peso que liga o neurônio <span class="math inline">\(\ell\)</span> da camada <span class="math inline">\(j-1\)</span> ao neurônio <span class="math inline">\(k\)</span> da camada <span class="math inline">\(j\)</span>. Se o neurônio <span class="math inline">\(k\)</span> pertencer à primeira camada oculta, devemos trocar “neurônio <span class="math inline">\(\ell\)</span>” na frase anterior por “entrada <span class="math inline">\(\ell\)</span>”. Voltando à <a href="#fig-mlpdia" class="quarto-xref">Figura&nbsp;2</a>, observe que a entrada da rede é dada pelo vetor</p>
 <p><span class="math display">\[
 [x_{1n}\;\; x_{2n}\;\;\cdots\;\; x_{N_0n}]^{\rm T},
 \]</span></p>
@@ -334,8 +342,8 @@ Figura&nbsp;2: Representação de uma rede MLP com <span class="math inline">\(L
                          \end{array}
 \right]
 \]</span></p>
-<p>para denotar o vetor de entrada da Camada 2. A seguir, detalhamos o cálculo do vetor de saída da Camada 2, ou seja, <span class="math inline">\(\mathbf{y}^{(2)}\)</span>.</p>
-<p>Vamos reunir os <em>biases</em> e os pesos da Camada 2 na seguinte matriz</p>
+<p>para denotar o vetor de entrada da camada 2. A seguir, detalhamos o cálculo do vetor de saída da camada 2, ou seja, <span class="math inline">\(\mathbf{y}^{(2)}\)</span>.</p>
+<p>Vamos reunir os <em>biases</em> e os pesos da camada 2 na seguinte matriz</p>
 <p><span class="math display">\[\begin{align*}
 \mathbf{W}^{(2)} = \begin{bmatrix}
     {\color{blue}b^{(2)}_1} &amp; {\color{blue}w_{11}^{(2)}}     &amp; {\color{blue}w_{12}^{(2)}}              &amp; {\color{blue}w_{13}^{(2)}}\\
@@ -345,7 +353,7 @@ Figura&nbsp;2: Representação de uma rede MLP com <span class="math inline">\(L
     {\color{blue}\mathbf{w}_{1}^{(2)}} \\ {\color{red}\mathbf{w}_{2}^{(2)}}\\
     \end{bmatrix}.
 \end{align*}\]</span></p>
-<p>O <em>bias</em> e os pesos em azul da primeira linha da matriz <span class="math inline">\(\mathbf{W}^{(2)}\)</span>, que correspondem aos elementos do vetor linha <span class="math inline">\({\mathbf{w}_{1}^{(2)}}\)</span>, são utilizados no cálculo da saída do Neurônio 1 dessa camada. Já o <em>bias</em> e os pesos em vermelho da segunda linha são utilizados no cálculo da saída do Neurônio 2. Observe que, diferente da formulação do neurônio utilizada até o momento, definimos os vetores contendo o <em>bias</em> e os pesos de cada neurônio da camada <span class="math inline">\(j\)</span>, ou seja, <span class="math inline">\(\mathbf{w}_k^{(j)}\)</span>, <span class="math inline">\(k=1, 2, \ldots, N_j\)</span>, como vetores linha e não como vetores coluna. Dessa forma, podemos escrever</p>
+<p>O <em>bias</em> e os pesos em azul da primeira linha da matriz <span class="math inline">\(\mathbf{W}^{(2)}\)</span>, que correspondem aos elementos do vetor linha <span class="math inline">\({\mathbf{w}_{1}^{(2)}}\)</span>, são utilizados no cálculo da saída do neurônio 1 dessa camada. Já o <em>bias</em> e os pesos em vermelho da segunda linha são utilizados no cálculo da saída do neurônio 2. Observe que, diferente da formulação do neurônio utilizada até o momento, definimos os vetores contendo o <em>bias</em> e os pesos de cada neurônio da camada <span class="math inline">\(j\)</span>, ou seja, <span class="math inline">\(\mathbf{w}_k^{(j)}\)</span>, <span class="math inline">\(k=1, 2, \ldots, N_j\)</span>, como vetores linha e não como vetores coluna. Dessa forma, podemos escrever</p>
 <p><span class="math display">\[\begin{align*}
 \mathbf{v}^{(2)} = \begin{bmatrix}
                         {\color{blue}v^{(2)}_1} \\
@@ -385,7 +393,7 @@ Figura&nbsp;2: Representação de uma rede MLP com <span class="math inline">\(L
                         \mathbf{y}^{(j-1)}
                         \end{bmatrix},             
 \end{align*}\]</span></p>
-<p>em que <span class="math inline">\(j=1, 2, \ldots, L\)</span>, <span class="math inline">\(L\)</span> é o número de camadas a rede e <span class="math inline">\(\mathbf{y}^{(0)}\)</span> o vetor de entradas da rede. Definindo agora a matriz de pesos associados à camada <span class="math inline">\(j\)</span> como</p>
+<p>em que <span class="math inline">\(j=1, 2, \ldots, L\)</span>, <span class="math inline">\(L\)</span> é o número de camadas da rede e <span class="math inline">\(\mathbf{y}^{(0)}\)</span> o vetor de entradas da rede. Definindo agora a matriz de pesos associados à camada <span class="math inline">\(j\)</span> como</p>
 <p><span class="math display">\[\begin{align*}
 \mathbf{W}^{(j)} \triangleq \begin{bmatrix}
     b^{(j)}_1 &amp; w_{11}^{(j)}     &amp; w_{12}^{(j)}             &amp; \dots  &amp; w_{1N_{j - 1}}^{(j)}\\
@@ -467,7 +475,7 @@ e_\ell(n)=d_\ell(n)-y_\ell^{(L)}(n)
         \label{chain_rule_w}
   \end{equation*}\]</span></p>
 <p>em que <span class="math inline">\(\varphi_L'(\cdot)\)</span> representa a derivada da função de ativação <span class="math inline">\(\varphi_L(\cdot)\)</span>, o que justifica a importância dessa função ser derivável em todos os pontos.<br>
-Definindo o gradiente local da Camada <span class="math inline">\(L\)</span> como</p>
+Definindo o gradiente local da camada <span class="math inline">\(L\)</span> como</p>
 <p><span class="math display">\[
   \delta_{k}^{(L)}(n)\triangleq \varphi_L'(v_{k}^{(L)}(n))e_{k}(n),
   \]</span></p>
@@ -500,7 +508,7 @@ v_{\ell}^{(L)}(n)=\mathbf{w}_{\ell}^{(L)}(n-1)\mathbf{x}^{(L)}(n)=b_{\ell}^{(L)}
 <p><span class="math display">\[
 \boldsymbol{\nabla}_{\mathbf{w}_k^{(L-1)}}J_{\rm MSE} =  -\frac{2}{N_L}\;\varphi_{L-1}'(v_{k}^{(L-1)}(n))\;\sum_{\ell=1}^{N_L}\delta_{\ell}^{(L)}(n)w_{\ell k}^{(L)}(n-1)[\mathbf{x}^{(L-1)}(n)]^{\rm T}.
 \]</span></p>
-<p>Definindo agora o gradiente local da Camada <span class="math inline">\(L-1\)</span> como</p>
+<p>Definindo agora o gradiente local da camada <span class="math inline">\(L-1\)</span> como</p>
 <p><span class="math display">\[
 \delta_{k}^{(L-1)}(n)\triangleq \varphi_{L-1}'(v_{k}^{(L-1)}(n))\;\sum_{\ell=1}^{N_L}\delta_{\ell}^{(L)}(n)w_{\ell k}^{(L)}(n-1),
 \]</span></p>
@@ -508,11 +516,11 @@ v_{\ell}^{(L)}(n)=\mathbf{w}_{\ell}^{(L)}(n-1)\mathbf{x}^{(L)}(n)=b_{\ell}^{(L)}
 <p><span class="math display">\[
 \boldsymbol{\nabla}_{\mathbf{w}_k^{(L-1)}}J_{\rm MSE} =  -\frac{2}{N_L}\delta_{k}^{(L-1)}(n)[\mathbf{x}^{(L-1)}(n)]^{\rm T}.
 \]</span></p>
-<p>Comparando a expressão do gradiente local <span class="math inline">\(\delta_{k}^{(L-1)}(n)\)</span> da Camada <span class="math inline">\(L-1\)</span> com a expressão do gradiente local <span class="math inline">\(\delta_{k}^{(L)}(n)\)</span> da Camada <span class="math inline">\(L\)</span>, o somatório</p>
+<p>Comparando a expressão do gradiente local <span class="math inline">\(\delta_{k}^{(L-1)}(n)\)</span> da camada <span class="math inline">\(L-1\)</span> com a expressão do gradiente local <span class="math inline">\(\delta_{k}^{(L)}(n)\)</span> da camada <span class="math inline">\(L\)</span>, o somatório</p>
 <p><span class="math display">\[
 \sum_{\ell=1}^{N_L}\delta_{\ell}^{(L)}(n)w_{\ell k}^{(L)}(n-1)
 \]</span></p>
-<p>faz o papel de erro do Neurônio <span class="math inline">\(k\)</span> da Camada <span class="math inline">\(L-1\)</span>. Essa retropropagação dos erros deve continuar até a primeira camada oculta. O fluxo do sinal na retropropagação para as camadas <span class="math inline">\(L\)</span> e <span class="math inline">\(L-1\)</span> está esquematizado na <a href="#fig-fluxobp" class="quarto-xref">Figura&nbsp;3</a>. O erro do Neurônio <span class="math inline">\(k\)</span> da Camada <span class="math inline">\(L-1\)</span> é o sinal obtido no ponto indicado pelo círculo azul na figura.</p>
+<p>faz o papel de erro do neurônio <span class="math inline">\(k\)</span> da camada <span class="math inline">\(L-1\)</span>. Essa retropropagação dos erros deve continuar até a primeira camada oculta. O fluxo do sinal na retropropagação para as camadas <span class="math inline">\(L\)</span> e <span class="math inline">\(L-1\)</span> está esquematizado na <a href="#fig-fluxobp" class="quarto-xref">Figura&nbsp;3</a>. O erro do neurônio <span class="math inline">\(k\)</span> da camada <span class="math inline">\(L-1\)</span> é o sinal obtido no ponto indicado pelo círculo azul na figura.</p>
 <div id="fig-fluxobp" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-fluxobp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -580,8 +588,8 @@ $}
 \boldsymbol{\delta}^{(j)}(n)=\nonumber\mathbf{d}_{\varphi}^{(j)}(n)\odot\left\{\left[\overline{\mathbf{W}}^{(j+1)}(n-1)\right]^{\rm T}\;\boldsymbol{\delta}^{(j+1)}(n)\right\}\nonumber
 $}
 \end{equation*}\]</span></p>
-<p>em que <span class="math inline">\(\odot\)</span> representa a multiplicação elemento por elemento entre dois vetores. Essa forma de calcular os vetores de gradientes locais é mais eficiente, já que todos os elementos são calculados de uma vez em cada camada.</p>
-<p>É comum incorporar a constante <span class="math inline">\(2/N_L\)</span> que aparece nos cálculos dos gradientes ao passo de adaptação <span class="math inline">\(\eta\)</span>. Dessa forma, as equações de atualização dos vetores de pesos do Neurônio <span class="math inline">\(k\)</span> da Camada <span class="math inline">\(j\)</span> podem ser escritas como</p>
+<p>em que <span class="math inline">\(\odot\)</span> representa a multiplicação elemento por elemento entre dois vetores. Essa forma de calcular os vetores de gradientes locais é mais eficiente, já que todos os elementos são calculados de uma vez em cada camada .</p>
+<p>É comum incorporar a constante <span class="math inline">\(2/N_L\)</span> que aparece nos cálculos dos gradientes ao passo de adaptação <span class="math inline">\(\eta\)</span>. Dessa forma, as equações de atualização dos vetores de pesos do neurônio <span class="math inline">\(k\)</span> da camada <span class="math inline">\(j\)</span> podem ser escritas como</p>
 <p><span class="math display">\[\begin{equation*}
 \fbox{$\displaystyle
 \mathbf{w}_{k}^{(j)}(n)=\mathbf{w}_{k}^{(j)}(n-1)+\eta\delta_{k}^{(j)}(n)[\mathbf{x}^{(j)}(n)]^{\rm T}
