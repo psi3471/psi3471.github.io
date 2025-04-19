@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Rede neural convolucional – PSI3471</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-22f499c531288631e9533b028f54e3fd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">PSI3471</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-teoria" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Teoria</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-teoria">    
+        <li>
+    <a class="dropdown-item" href="./introducao.html">
+ <span class="dropdown-text">Introdução</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./regressao_linear.html">
+ <span class="dropdown-text">Regressão linear</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lms.html">
+ <span class="dropdown-text">O algoritmo LMS</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./neuronio.html">
+ <span class="dropdown-text">O modelo do neurônio</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./mlp.html">
+ <span class="dropdown-text">A rede perceptron multicamada</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./hiperparametros.html">
+ <span class="dropdown-text">Evitando mínimos locais e <em>overfitting</em></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./medidas.html">
+ <span class="dropdown-text">Medidas de desempenho</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cnn.html">
+ <span class="dropdown-text">Rede neural convolucional</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pca.html">
+ <span class="dropdown-text">Análise de Componentes Principais</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-exercícios-para-aula" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Exercícios para aula</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-exercícios-para-aula">    
+        <li>
+    <a class="dropdown-item" href="./ex_aula_1.html">
+ <span class="dropdown-text">Exercício 1 - Regressão Linear</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ex_aula_2.html">
+ <span class="dropdown-text">Exercício 2 - O algoritmo LMS</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ex_aula_3.html">
+ <span class="dropdown-text">Exercício 3 - Perceptron de Rosenblatt e Regressão Logística</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ex_aula_4.html">
+ <span class="dropdown-text">Exercício 4 - MLP e <em>backpropagation</em></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ex_aula_5.html">
+ <span class="dropdown-text">Exercício 5 - MLP e o otimizador Adam</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ex_aula_6.html">
+ <span class="dropdown-text">Exercício 6 - MLP com PyTorch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ex_aula_7.html">
+ <span class="dropdown-text">Exercício 7 - CNN com PyTorch</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-exercícios-para-entrega" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Exercícios para entrega</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-exercícios-para-entrega">    
+        <li>
+    <a class="dropdown-item" href="./ex_entrega_1.html">
+ <span class="dropdown-text">Exercício 1 - Regressão Linear</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ex_entrega_2.html">
+ <span class="dropdown-text">Exercício 2 - Perceptron de Rosenblatt</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ex_entrega_3.html">
+ <span class="dropdown-text">Exercício 3 - MLP</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-material-de-apoio" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Material de apoio</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-material-de-apoio">    
+        <li>
+    <a class="dropdown-item" href="./python_videos.html">
+ <span class="dropdown-text">Tópicos de programação com Python</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./exemplo_pytorch.html">
+ <span class="dropdown-text">Exemplo MLP com PyTorch</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://edisciplinas.usp.br/course/view.php?id=128122"> 
+<span class="menu-text">Moodle</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Rede neural convolucional</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="justify">
+<p>A rede neural convolucional (<em>convolutional neural network</em> - CNN) é um tipo de rede neural especializada no processamento e classificação de dados organizados em matrizes. Ela pode ser interpretada como uma rede MLP, modificada para trabalhar com dados bidimensionais. Seu nome deriva de uma operação semelhante à convolução, que é usada no lugar da simples multiplicação de matrizes em pelo menos uma de suas camadas.</p>
+<p>Da mesma forma que a MLP, a CNN atualiza os pesos e <em>biases</em> por meio do algoritmo <em>backpropagation</em>. Ela é composta por camadas convolucionais para a extração de características, que servem como entrada para uma rede MLP totalmente conectada, responsável pela classificação. As camadas convolucionais também possuem estágios com operações de subamostragem, conhecidas como agrupamento (<em>pooling</em>). A subamostragem reduz a resolução do mapa de características e diminui a sensibilidade da saída a translações e outras formas de distorção.</p>
+<p>A seguir, vamos detalhar essa rede.</p>
+<section id="convolução-e-camadas-convolucionais" class="level2">
+<h2 class="anchored" data-anchor-id="convolução-e-camadas-convolucionais">Convolução e camadas convolucionais</h2>
+<p>Seja <span class="math inline">\(w(n)\)</span> a resposta impulsiva de um filtro de tempo discreto. A relação entrada-saída desse filtro é dada pela operação de convolução entre a sequência de entrada <span class="math inline">\(x(n)\)</span> e sua resposta impulsiva <span class="math inline">\(w(n)\)</span>, ou seja, <span class="math display">\[
+y(n)=x(n)\ast w(n)=\sum_{k=-\infty}^{\infty}x(k)w(n-k)=\sum_{k=-\infty}^{\infty}w(k)x(n-k)
+\]</span></p>
+<p>para qualquer inteiro <span class="math inline">\(n\)</span>. A última igualdade vem do fato da convolução ser comutativa. Se o filtro for causal e com resposta impulsiva finita (FIR – <em>finite impulse response</em>) com <span class="math inline">\(M\)</span> coeficientes, <span class="math inline">\(\{w(n)\}_{n=0}^{M-1}\)</span>, e a sequência de entrada tiver <span class="math inline">\(N\)</span> amostras, <span class="math inline">\(\{x(n)\}_{n=0}^{N-1}\)</span>, o resultado da convolução se reduz a <span class="math display">\[
+y(n)=\sum_{k=0}^{M-1}w(k)x(n-k).
+\]</span></p>
+<p>Neste caso, a sequência de saída <span class="math inline">\(y(n)\)</span> terá <span class="math inline">\(N+M-1\)</span> amostras.</p>
+<p>No caso bidimensional, a convolução entre uma imagem <span class="math inline">\(\mathbf{I}(i,j)\)</span> e um filtro <span class="math inline">\(\mathbf{K}(i,j)\)</span> é dada por <span class="math display">\[
+\mathbf{S}(i,j)=\mathbf{I}(i,j)\ast \mathbf{K}(i,j)=\sum_{m}\sum_{n}\mathbf{I}(m,n)\mathbf{K}(i-m,j-n).
+\]</span></p>
+<p>Novamente, devido à propriedade comutativa, podemos escrever <span class="math display">\[
+\mathbf{S}(i,j)=\mathbf{K}(i,j)\ast \mathbf{I}(i,j)=\sum_{m}\sum_{n}\mathbf{I}(i-m,j-n)\mathbf{K}(m,n).
+\]</span></p>
+<p>Em aprendizado de máquina, é comum considerar a <strong>correlação cruzada</strong> no lugar da convolução, o que leva a <span class="math display">\[
+\mathbf{S}(i,j)=\mathbf{K}(i,j)\star \mathbf{I}(i,j)=\sum_{m}\sum_{n}\mathbf{I}(i+m,j+n)\mathbf{K}(m,n),
+\]</span></p>
+<p>em que usamos o símbolo <span class="math inline">\(\star\)</span> em vez do símbolo <span class="math inline">\(\ast\)</span> para indicar essa operação. Esse cálculo é semelhante ao da convolução, a menos do fato de que não se considera o rebatimento da entrada (ou do filtro).</p>
+<p>Na <a href="#fig-convcross" class="quarto-xref">Figura&nbsp;1</a>, é mostrado um exemplo de cálculo da convolução e da correlação cruzada para uma dimensão, considerando duas funções de tempo contínuo <span class="math inline">\(f\)</span> e <span class="math inline">\(g\)</span>. Muitas bibliotecas de aprendizado de máquina implementam a correlação cruzada e chamam essa operação de convolução sem rebatimento ou simplesmente de convolução. Diante disso, também vamos chamar essa operação aqui de <strong>convolução</strong>.</p>
+<div id="fig-convcross" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-convcross-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/convcross.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:65.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-convcross-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Diferença entre convolução e correlação cruzada em uma dimensão <a href="https://towardsdatascience.com/a-comprehensive-introduction-to-different-types-of-convolutions-in-deep-learning-669281e58215">[Fonte]</a>.
+</figcaption>
+</figure>
+</div>
+<p>Na <a href="#fig-conv" class="quarto-xref">Figura&nbsp;2</a>, é exemplificada a convolução da imagem <span class="math inline">\(\mathbf{I}\)</span> de dimensões <span class="math inline">\((n_1 \times n_2)=(3\times 3)\)</span> com o filtro <span class="math inline">\(\mathbf{K}\)</span> de dimensões <span class="math inline">\((f_1 \times f_2)=(2\times 2)\)</span>, que gera a saída <span class="math inline">\(\mathbf{S}\)</span> de dimensões <span class="math inline">\((o_1 \times o_2)=(2\times 2)\)</span>. De forma geral, as dimensões de <span class="math inline">\(\mathbf{S}\)</span> são iguais a <span class="math display">\[
+(o_1 \times o_2) = (n_1-f_1+1\;\times\; n_2-f_2+1).
+\]</span></p>
+<div id="fig-conv" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-conv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/conv.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-conv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Operação de convolução (sem rebatimento) da imagem <span class="math inline">\(\mathbf{I}\)</span> de dimensões <span class="math inline">\((n_1 \times n_2)=(3\times 3)\)</span> com o filtro <span class="math inline">\(\mathbf{K}\)</span> de dimensões <span class="math inline">\((f_1 \times f_2)=(2\times 2)\)</span>, que gera a saída <span class="math inline">\(\mathbf{S}\)</span> de dimensões <span class="math inline">\((o_1 \times o_2)=(2\times 2)\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>A convolução pode ser implementada por meio da multiplicação de matrizes. Para isso, vamos definir a matriz de convolução do filtro denotada por <span class="math inline">\(\mathbf{C}\)</span>, como ilustrado na <a href="#fig-conv_mult" class="quarto-xref">Figura&nbsp;3</a>. A convolução de uma entrada <span class="math inline">\(4\times 4\)</span> com um filtro <span class="math inline">\(3\times 3\)</span> leva à saída <span class="math inline">\(2\times 2\)</span>. Essa convolução pode ser implementada pela multiplicação da matriz de convolução <span class="math inline">\(\mathbf{C}\)</span> de dimensões <span class="math inline">\(4\times 16\)</span> pelo vetor <span class="math inline">\(16\times 1\)</span>, o que leva ao vetor de saída <span class="math inline">\(4\times 1\)</span>. Na sequência, o vetor resultante <span class="math inline">\(4\times 1\)</span> deve então ser transformado de volta para uma saída <span class="math inline">\(2\times 2\)</span>.</p>
+<div id="fig-conv_mult" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-conv_mult-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/conv_mult.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-conv_mult-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Exemplo da convolução realizada por meio da multiplicação de matrizes: entrada <span class="math inline">\(4\times 4\)</span>, filtro <span class="math inline">\(3\times 3\)</span> e saída <span class="math inline">\(2\times 2\)</span>. <a href="https://towardsdatascience.com/a-comprehensive-introduction-to-different-types-of-convolutions-in-deep-learning-669281e58215">[Fonte]</a>.
+</figcaption>
+</figure>
+</div>
+<p>Em cada estágio de convolução de uma camada convolucional, é comum considerar <span class="math inline">\(k\)</span> filtros, com <span class="math inline">\(k\geq 1\)</span>. Para cada filtro, calcula-se a convolução entre a entrada e o filtro e a esse resultado soma-se o <em>bias</em>. Os elementos da matriz resultante entram em uma função de ativação não linear e uma das matrizes da saída é obtida. A saída terá uma dimensão a mais, igual ao número de filtros da camada (<span class="math inline">\(k\)</span>). É comum considerar filtros quadrados (<span class="math inline">\(f_1=f_2=f\)</span>) e de mesmo tamanho para uma dada camada. A consequência é que as dimensões da saída de uma camada convolucional serão dadas por</p>
+<p><span class="math display">\[
+(n_1-f+1)\times(n_2-f+1)\times k.
+\]</span></p>
+<p>Na <a href="#fig-camadaconv" class="quarto-xref">Figura&nbsp;4</a>-(a), esse processo é ilustrado considerando uma entrada de dimensões <span class="math inline">\(4 \times 4\)</span> e uma camada convolucional com quatro filtros de dimensões <span class="math inline">\(3\times 3\)</span>, o que gera a saída de dimensões <span class="math inline">\(2\times 2\times 4\)</span>. Na <a href="#fig-camadaconv" class="quarto-xref">Figura&nbsp;4</a>-(b), a soma do <em>bias</em> e a aplicação da função linear são ilustradas para uma das matrizes resultantes da convolução. Os filtros das camadas convolucionais são matrizes de pesos. Assim, considerando os quatro filtros de dimensões <span class="math inline">\(3\times 3\)</span> da <a href="#fig-camadaconv" class="quarto-xref">Figura&nbsp;4</a>-(a), há <span class="math inline">\(4 \times 3 \times  3  = 36\)</span> pesos e <span class="math inline">\(4\)</span> <em>biases</em> (um <em>bias</em> por filtro).</p>
+<div id="fig-camadaconv" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-camadaconv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/camadaconv.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-camadaconv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: (a) Entrada e saída de um estágio de convolução da camada convolucional: entrada de dimensões <span class="math inline">\(4 \times 4\)</span>, quatro filtros de dimensões <span class="math inline">\(3\times 3\)</span> e saída de dimensões <span class="math inline">\(2\times 2\times 4\)</span>; (b) Soma do <em>bias</em> e aplicação da função de ativação à uma das matrizes resultantes da convolução.
+</figcaption>
+</figure>
+</div>
+<p>Caso a entrada de um estágio de convolução da camada convolucional seja um tensor, como a saída de dimensões <span class="math inline">\(2\times 2 \times 4\)</span> da <a href="#fig-camadaconv" class="quarto-xref">Figura&nbsp;4</a>, os filtros dessa camada devem ter sua terceira dimensão igual à terceira dimensão da entrada, denotada por <span class="math inline">\(n_3\)</span>. Neste caso, a convolução deve levar em conta as <span class="math inline">\(n_3\)</span> matrizes que compõem o tensor de entrada e as <span class="math inline">\(n_3\)</span> matrizes que compõem cada filtro, como ilustrado na <a href="#fig-conv3d" class="quarto-xref">Figura&nbsp;5</a> para <span class="math inline">\(n_3=3\)</span>. No exemplo dessa figura, note que a entrada tem dimensões <span class="math inline">\((4\times 4 \times 3)\)</span>, há apenas um filtro de dimensões <span class="math inline">\((2\times 2\times 3)\)</span>, o que leva à saída da convolução com dimensões <span class="math inline">\((3\times 3 \times 1)\)</span>. Para uma entrada de dimensões <span class="math inline">\(n_1\times n_2\times n_3\)</span> e <span class="math inline">\(k\)</span> filtros de dimensões <span class="math inline">\(f\times f\times n_3\)</span>, a saída terá dimensões <span class="math inline">\((n_1-f+1)\times (n_2-f+1) \times k\)</span>. Na <a href="#fig-camadaconv3" class="quarto-xref">Figura&nbsp;6</a>, é ilustrado um estágio de convolução com entrada de dimensões <span class="math inline">\((4 \times 4 \times 4)\)</span> e seis filtros de dimensões <span class="math inline">\((3\times 3 \times 4)\)</span>, que levam à saída de dimensões <span class="math inline">\((2\times 2\times 6)\)</span>. Há <span class="math inline">\(6\times 3 \times 3 \times 4 =216\)</span> pesos e <span class="math inline">\(6\)</span> <em>biases</em> nesta camada.</p>
+<div id="fig-conv3d" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-conv3d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/conv3dfig.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-conv3d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5: Exemplo de convolução considerando um tensor de entrada com <span class="math inline">\(n_3=3\)</span>.
+</figcaption>
+</figure>
+</div>
+<div id="fig-camadaconv3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-camadaconv3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/camadaconv3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-camadaconv3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6: Entrada e saída de um estágio de convolução de uma camada convolucional: entrada de dimensões <span class="math inline">\(4 \times 4 \times 4\)</span>, seis filtros de dimensões <span class="math inline">\(3\times 3 \times 4\)</span> e saída de dimensões <span class="math inline">\(2\times 2\times 6\)</span>.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="zero-padding-e-stride" class="level2">
+<h2 class="anchored" data-anchor-id="zero-padding-e-stride"><em>Zero padding</em> e <em>stride</em></h2>
+<p>Ao se calcular a convolução da entrada <span class="math inline">\(\mathbf{I}\)</span> com o filtro <span class="math inline">\(\mathbf{K}\)</span>, a matriz de saída <span class="math inline">\(\mathbf{S}\)</span> fica com dimensões menores que as da entrada. Se houver uma cascata de filtros, as dimensões da matriz de saída de cada filtro vão diminuindo ao longo da cascata. Isso faz com a matriz de saída se torne quase sem sentido depois de várias convoluções devido às suas dimensões muito reduzidas. Além disso, pode-se perder informações valiosas ao se descartar completamente as bordas da entrada.</p>
+<p>Para que a matriz <span class="math inline">\(\mathbf{S}\)</span> fique com as mesmas dimensões da entrada <span class="math inline">\(\mathbf{I}\)</span>, adicionam-se bordas preenchidas com zeros à matriz <span class="math inline">\(\mathbf{I}\)</span>. Essa prática é conhecida como <em>zero padding</em>. Para exemplificar, considere a matriz de entrada <span class="math inline">\(\mathbf{I}\)</span> com dimensões <span class="math inline">\((n_1 \times n_2)=(9\times 9)\)</span> indicada no quadrado vermelho da <a href="#fig-zeropad" class="quarto-xref">Figura&nbsp;7</a>. Preenchendo a matriz <span class="math inline">\(\mathbf{I}\)</span> com <span class="math inline">\(p\)</span> bordas de zeros, suas dimensões se tornam iguais a</p>
+<p><span class="math display">\[
+(n_1+2p\times n_2+2p).
+\]</span></p>
+<p>No exemplo da <a href="#fig-zeropad" class="quarto-xref">Figura&nbsp;7</a>, <span class="math inline">\(p=2\)</span> e as dimensões de <span class="math inline">\(\mathbf{I}\)</span> ficam <span class="math inline">\((n_1+2p\times n_2+2p)=(13\times 13)\)</span>. As dimensões da matriz <span class="math inline">\(\mathbf{S}\)</span>, por sua vez, ficam iguais a</p>
+<p><span class="math display">\[
+(o_1 \times o_2) = (n_1+2p-f_1+1 \;\times\; n_2+2p-f_2+1).
+\]</span></p>
+<div id="fig-zeropad" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-zeropad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/zeropad.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-zeropad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7: Exemplo de <em>zero-padding</em>: a matriz <span class="math inline">\(\mathbf{I}\)</span> está indicada no quadrado vermelho e tem dimensões <span class="math inline">\((n_1 \times n_2)=(9\times 9)\)</span> e neste exemplo <span class="math inline">\(p=2\)</span>. Fonte: adaptado de <a href="https://salfade.com/tutorials/layers-of-a-convolutional-neural-network-part-1">https://salfade.com/tutorials/layers-of-a-convolutional-neural-network-part-1</a>.
+</figcaption>
+</figure>
+</div>
+<p>Para que as dimensões da saída sejam as mesmas da entrada, deve-se considerar</p>
+<p><span class="math display">\[
+p=\frac{f_1-1}{2}=\frac{f_2-1}{2}.
+\]</span></p>
+<p>Dessa forma, conclui-se que para manter as dimensões da saída iguais às da entrada, o filtro deve ser quadrado, ou seja <span class="math inline">\(f_1=f_2=f\)</span>, o que leva a <span class="math inline">\(p=({f-1})/{2}\)</span>. Note que para que <span class="math inline">\(p\)</span> seja inteiro, <span class="math inline">\(f\)</span> deve ser ímpar. Se <span class="math inline">\(f\)</span> for par, uma possibilidade é adicionar <span class="math inline">\(\lceil (f-1)/2 \rceil\)</span> linhas de zeros no topo e <span class="math inline">\(\lfloor (f-1)/2 \rfloor\)</span> linhas de zeros na parte inferior da matriz <span class="math inline">\(\mathbf{I}\)</span>. Devemos fazer o mesmo para as colunas à esquerda e à direita. Geralmente, os filtros usados nas CNNs têm dimensões ímpares, o que facilita o <em>zero padding</em>. Apesar da entrada na <a href="#fig-zeropad" class="quarto-xref">Figura&nbsp;7</a> ser quadrada, não existe restrições para as dimensões dessa matriz, ou seja, podemos ter <span class="math inline">\(n_1\neq n_2\)</span>.</p>
+<p>No cálculo da convolução, começamos com a janela do filtro no canto superior esquerdo da matriz de entrada e deslocamos essa janela para baixo e para a direita. No exemplo da <a href="#fig-conv" class="quarto-xref">Figura&nbsp;2</a>, deslocamos uma linha ou coluna por vez. No entanto, podemos deslocar o filtro sobre a matriz de entrada mais de uma linha ou coluna por vez. Isso é vantajoso em termos computacionais e reduz a resolução, o que é desejável em alguns casos. Esse método é conhecido como <em>stride</em>. A quantidade de linhas ou colunas percorridas de uma só vez pelo filtro é denotada por <span class="math inline">\(s\)</span>. Ao considerar <em>zero padding</em> <span class="math inline">\(p\)</span> e <em>stride</em> <span class="math inline">\(s\)</span>, as dimensões da matriz <span class="math inline">\(\mathbf{S}\)</span> ficam iguais a</p>
+<p><span class="math display">\[
+(o_1 \times o_2) = \left(\left\lfloor \frac{n_1+2p-f_1}{s}+1\right\rfloor \;\times\; \left\lfloor \frac{n_2+2p-f_2}{s}+1\right\rfloor \right).
+\]</span></p>
+<p>Na <a href="#fig-stride" class="quarto-xref">Figura&nbsp;8</a>, é mostrado um exemplo de convolução com <em>stride</em> e sem <em>zero padding</em> (<span class="math inline">\(p=0\)</span>), considerando <span class="math inline">\(s=1\)</span> e <span class="math inline">\(s=2\)</span>. Neste exemplo, a matriz de entrada <span class="math inline">\(\mathbf{I}\)</span> tem dimensões <span class="math inline">\((n_1 \times n_2)=(5\times 5)\)</span> e o filtro <span class="math inline">\(\mathbf{K}\)</span> tem dimensões <span class="math inline">\((f_1 \times f_2)=(3\times 3)\)</span>. O resultado com <span class="math inline">\(s=1\)</span> é uma matriz de saída com dimensões <span class="math inline">\((o_1 \times o_2)=(3\times 3)\)</span>. Já com <span class="math inline">\(s=2\)</span>, a matriz de saída passa a ter dimensões <span class="math inline">\((o_1 \times o_2)=(2\times 2)\)</span>.</p>
+<div id="fig-stride" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-stride-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/stride.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-stride-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8: Exemplo de convolução com <em>stride</em>, considerando <span class="math inline">\(s=1\)</span> e <span class="math inline">\(s=2\)</span>; entrada <span class="math inline">\(\mathbf{I}\)</span> com dimensões <span class="math inline">\((n_1 \times n_2)=(5\times 5)\)</span> e filtro <span class="math inline">\(\mathbf{K}\)</span> com dimensões <span class="math inline">\((f \times f)=(3\times 3)\)</span>. Fonte: adaptado de <a href="https://zephyrnet.com/basics-of-cnn-in-deep-learning/">https://zephyrnet.com/basics-of-cnn-in-deep-learning/</a>.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="pooling" class="level2">
+<h2 class="anchored" data-anchor-id="pooling"><em>Pooling</em></h2>
+<p>As camadas convolucionais são os blocos básicos de uma CNN. Uma camada convolucional desloca um filtro sobre a imagem e extrai características, resultando em um mapa de características. Esse mapa de características, por sua vez, pode ser alimentado para a próxima camada convolucional para extrair características em um nível superior e assim sucessivamente. Empilhar várias camadas convolucionais permite que uma CNN reconheça estruturas e objetos cada vez mais complexos em uma imagem.</p>
+<p>Um problema que surge é que o mapa de características produzido pelo filtro é dependente da localização. Isso significa que durante o treinamento, a CNN aprende a associar a presença de uma determinada característica a um local específico na imagem de entrada, o que pode prejudicar seu desempenho. Em vez disso, deseja-se que o mapa de características e a rede sejam invariantes à translação para que a localização da característica deixe de importar.</p>
+<p>Uma das técnicas usadas para tornar as CNNs invariantes à translação é o agrupamento (<em>pooling</em>), também chamado de subamostragem. Existem diferentes abordagens para o agrupamento, sendo o agrupamento máximo (<em>max-pooling</em>) e o agrupamento médio (<em>average pooling</em>) os mais utilizados. Além de tornar as CNNs invariantes à translação, o <em>pooling</em> reduz as dimensões das matrizes. Na <a href="#fig-pooling" class="quarto-xref">Figura&nbsp;9</a>, é mostrado um exemplo numérico de <em>pooling</em>, considerando (a) <em>max-pooling</em> e (b) <em>average pooling</em>. Uma imagem de dimensões <span class="math inline">\(6\times 6\)</span> foi transformada em uma imagem <span class="math inline">\(3\times 3\)</span>. No caso do <em>max-pooling</em> (<a href="#fig-pooling" class="quarto-xref">Figura&nbsp;9</a>-(a)), os quatro pixels da região azul foram substituídos pelo valor máximo, <span class="math inline">\(9\)</span> no caso. O mesmo aconteceu com os pixels da região laranja, que foram substituídos pelo valor <span class="math inline">\(7\)</span>. No caso do <em>average pooling</em> (<a href="#fig-pooling" class="quarto-xref">Figura&nbsp;9</a>-(b)), a média dos pixels da região azul dá 4,5, que arredondando leva ao valor <span class="math inline">\(5\)</span>. Já a média dos pixels da região laranja dá <span class="math inline">\(4\)</span>.</p>
+<div id="fig-pooling" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pooling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/pooling.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pooling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9: Exemplo numérico de (a) <em>max-pooling</em> e (b) <em>average pooling</em>. <a href="https://programmathically.com/what-is-pooling-in-a-convolutional-neural-network-cnn-pooling-layers-explained/">[Fonte]</a>.
+</figcaption>
+</figure>
+</div>
+<p>Se a rede neural dependesse apenas do mapa de características original, sua capacidade de detectar uma característica dependeria da localização no mapa. Por exemplo, se o valor <span class="math inline">\(9\)</span> fosse encontrado apenas no quadrante superior esquerdo, a rede aprenderia a associar a característica relativa ao número 9 com o quadrante superior esquerdo. Ao aplicar o agrupamento, essa característica é extraída em um mapa menor e mais geral que indica apenas se uma característica está presente naquele quadrante específico ou não. A cada camada adicional, o mapa se torna menor, preservando apenas as informações importantes sobre a presença das características de interesse. À medida que o mapa se torna menor, torna-se cada vez mais independente da localização da característica. O <em>pooling</em> é especialmente útil para classificação de imagem em que se deseja detectar a presença de um determinado objeto em uma imagem, mas não se importa onde exatamente ele está localizado.</p>
+</section>
+<section id="convolução-transposta" class="level2">
+<h2 class="anchored" data-anchor-id="convolução-transposta">Convolução transposta</h2>
+<p>Em algumas aplicações, deseja-se fazer transformações que vão na direção oposta de uma convolução tradicional, ou seja, deseja-se realizar uma sobreamostragem. Este é o caso, por exemplo, de redes usadas para geração de imagens de alta resolução e redes usadas para extração de características por meio de <em>autoencoders</em>.</p>
+<p>Tradicionalmente, a sobreamostragem é obtida aplicando-se esquemas de interpolação ou criando regras manualmente. No entanto, as redes neurais podem aprender a transformação adequada automaticamente por meio da <strong>convolução transposta</strong>. Essa operação também é chamada na literatura de desconvolução. No entanto, esse termo não é adequado uma vez que desconvolução em processamento de sinais é a operação inversa da convolução, cujo objetivo é desfazer a convolução, ou seja obter a imagem original a partir de uma imagem que é fruto da convolução da original com um filtro.</p>
+<p>É possível implementar uma convolução transposta utilizando a convolução. Para exemplificar, é mostrado na <a href="#fig-convt" class="quarto-xref">Figura&nbsp;10</a> uma convolução transposta considerando um filtro <span class="math inline">\(3\times 3\)</span> sobre uma entrada <span class="math inline">\(2\times 2\)</span> modificada com <em>zero padding</em> de <span class="math inline">\(p=2\)</span> e <em>stride</em> de passo unitário, <span class="math inline">\(s=1\)</span>. A saída sobreamostrada tem dimensões <span class="math inline">\(4 \times 4\)</span>. Neste caso, as dimensões da saída são maiores que as da entrada devido ao <em>zero padding</em>. Cabe observar que a convolução transposta gera o mesmo resultado da convolução tradicional ao considerarmos a entrada aumentada com zeros. Pode-se mapear a mesma imagem de dimensões <span class="math inline">\(2\times 2\)</span> em uma imagem de dimensões ainda maiores, aplicando um <em>zero padding</em> mais sofisticado. Na <a href="#fig-convt2" class="quarto-xref">Figura&nbsp;11</a>, a convolução transposta é aplicada sobre a mesma entrada <span class="math inline">\(2\times 2\)</span> com <span class="math inline">\(p=2\)</span> e <span class="math inline">\(s=1\)</span>, além de um zero inserido entre os pixels. Neste caso, a saída fica com dimensões <span class="math inline">\(5 \times 5\)</span>.</p>
+<div id="fig-convt" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-convt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/convT.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-convt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;10: Exemplo da convolução transposta: entrada <span class="math inline">\(2\times 2\)</span> com <span class="math inline">\(p=2\)</span> e <span class="math inline">\(s=1\)</span>, filtro <span class="math inline">\(3\times 3\)</span> e saída <span class="math inline">\(4\times 4.\)</span> <a href="https://towardsdatascience.com/a-comprehensive-introduction-to-different-types-of-convolutions-in-deep-learning-669281e58215/">[Fonte]</a>.
+</figcaption>
+</figure>
+</div>
+<div id="fig-convt2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-convt2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/convT2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-convt2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;11: Exemplo da convolução transposta: entrada <span class="math inline">\(2\times 2\)</span> com <span class="math inline">\(p=2\)</span> e <span class="math inline">\(s=1\)</span> e com preenchimento de um zero entre os pixels, filtro <span class="math inline">\(3\times 3\)</span> e saída <span class="math inline">\(5\times 5\)</span>. <a href="https://towardsdatascience.com/a-comprehensive-introduction-to-different-types-of-convolutions-in-deep-learning-669281e58215/">[Fonte]</a>.
+</figcaption>
+</figure>
+</div>
+<p>Outra forma de implementar a convolução transposta é seguindo os passos exemplificados a seguir <a href="https://towardsdatascience.com/transposed-convolution-demystified-84ca81b4baba">[Fonte]</a>:</p>
+<ul>
+<li>Considere um mapa de características <span class="math inline">\(2\times 2\)</span> que precisa ser sobreamostrado para um mapa de características <span class="math inline">\(3\times 3\)</span>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/TC1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+<ul>
+<li>Considere o filtro <span class="math inline">\(2\times 2\)</span></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/TC2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+<ul>
+<li>Multiplique o elemento superior esquerdo do mapa de características de entrada por cada elemento do filtro:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/TC3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+<ul>
+<li>Repita o Item 3 para cada elemento do mapa de características de entrada:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/TC4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+<ul>
+<li>Alguns dos elementos dos mapas de características resultantes da sobreamostragem ficam sobrepostos. Para resolver esse problema, os elementos das posições sobrepostas devem ser adicionados. Assim, obtém-se a saída final.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/TC5.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+<p>Para finalizar, considere a implementação da convolução por meio da multiplicação de matrizes, exemplificada na <a href="#fig-conv_mult" class="quarto-xref">Figura&nbsp;3</a>. Multiplicando a matriz do filtro transposta de dimensões <span class="math inline">\(16\times 4\)</span> pelo vetor de entrada <span class="math inline">\(4\times 1\)</span>, que inclusive pode ser a saída vetorizada de uma camada convolucional anterior, obtém-se um vetor de dimensões <span class="math inline">\(16\times 1\)</span>. Comparando com a entrada que continha apenas 4 pixels, esse procedimento levou a uma saída aumentada com dimensões <span class="math inline">\(4\times 4\)</span>, como mostrado na <a href="#fig-conv_mult2" class="quarto-xref">Figura&nbsp;12</a>. Não podemos esquecer que os pesos devem ser atualizados para que a sobreamostragem se adéque à aplicação. O fato de usarmos a matriz do filtro transposta <span class="math inline">\(\mathbf{C}^{\rm T}\)</span> justifica o nome dessa operação.</p>
+<div id="fig-conv_mult2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-conv_mult2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/conv_mult2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-conv_mult2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;12: Exemplo da convolução transposta realizada por meio da multiplicação de matrizes: entrada <span class="math inline">\(2\times 2\)</span> transformada no vetor <span class="math inline">\(4\times 1\)</span> e filtro <span class="math inline">\(3\times 3\)</span> com elementos reorganizados na matriz transposta <span class="math inline">\(\mathbf{C}^{\rm T}\)</span>, o que leva à saída aumentada (sobreamostrada) <span class="math inline">\(4\times 4\)</span>. <a href="https://towardsdatascience.com/a-comprehensive-introduction-to-different-types-of-convolutions-in-deep-learning-669281e58215/">[Fonte]</a>.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="estrutura-de-uma-cnn" class="level2">
+<h2 class="anchored" data-anchor-id="estrutura-de-uma-cnn">Estrutura de uma CNN</h2>
+<p>Depois de aprendermos como é feita a convolução nas camadas convolucionais em conjunto com os métodos de <em>zero padding</em> (preenchimento com zeros), <em>stride</em> (passo largo) e <em>pooling</em> (subamostragem), podemos agora analisar a estrutura completa de uma CNN típica, como ilustrado na <a href="#fig-estrutura" class="quarto-xref">Figura&nbsp;13</a>. Uma CNN típica é composta de camadas convolucionais para extração de características, seguida de uma MLP totalmente conectada para classificação. Suponha que se deseja identificar se a imagem de entrada da rede corresponde ao Pato Donald, ao Pateta (Goofy) ou ao Piu-Piu (Tweety). Nas camadas convolucionais é comum alternar estágios de convolução e subamostragem (<em>pooling</em>). Como vimos, a subamostragem é importante para que o mapa de características se torne invariante à translação. O mapa de características subamostrado da última camada convolucional deve ser vetorizado. Em seguida, esse vetor entra na MLP. No exemplo da <a href="#fig-estrutura" class="quarto-xref">Figura&nbsp;13</a>, a MLP é composta de uma camada oculta e uma camada de saída. No entanto, em muitos problemas é comum considerar uma MLP profunda, com várias camadas ocultas. Para classificação multiclasse, considera-se a entropia cruzada como função custo e a função de ativação <em>softmax</em>, que fornece a probabilidade da classificação. No caso da <a href="#fig-estrutura" class="quarto-xref">Figura&nbsp;13</a>, há três neurônios de saída e com os valores obtidos pela <em>softmax</em> que estão indicados na figura, decide-se que a imagem é do Piu-Piu.</p>
+<div id="fig-estrutura" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-estrutura-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/estrutura.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-estrutura-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;13: Estrutura de uma CNN. <a href="https://www.analyticsvidhya.com/blog/2022/01/convolutional-neural-network-an-overview/">[Fonte]</a>.
+</figcaption>
+</figure>
+</div>
+<p>Os pesos dos filtros das camadas convolucionais e dos neurônios da MLP são atualizados com o algoritmo <em>backpropagation</em></p>
+</section>
+<section id="exemplo-de-aplicação" class="level2">
+<h2 class="anchored" data-anchor-id="exemplo-de-aplicação">Exemplo de aplicação</h2>
+<p>Esse exemplo foi explorado em <a href="https://atcold.github.io/pytorch-Deep-Learning/en/week03/03-3/">https://atcold.github.io/pytorch-Deep-Learning/en/week03/03-3/</a>. Nesse exemplo, uma rede MLP e uma CNN foram treinadas para classificação do conjunto de dados MNIST, disponível em <a href="http://yann.lecun.com/exdb/mnist/">http://yann.lecun.com/exdb/mnist/</a>. Trata-se de um banco de dados de dígitos manuscritos, que possui um conjunto de treinamento de 60000 exemplos e um conjunto de teste de 10000 exemplos.</p>
+<p>As redes MLP e CNN treinadas têm o mesmo número de parâmetros. Na <a href="#fig-mnist1" class="quarto-xref">Figura&nbsp;14</a>, são mostrados exemplos de treinamento do banco de dados MNIST original. Antes do treinamento, os dados foram normalizados para que a inicialização da rede corresponda à distribuição de dados. Além disso, as cinco etapas foram usadas no treinamento:</p>
+<ul>
+<li>Alimentação dos dados no modelo;</li>
+<li>Cálculo da função custo;</li>
+<li>Limpeza do <em>cache</em> de gradientes acumulados;</li>
+<li>Cálculo dos gradientes;</li>
+<li>Execução do método de otimização.</li>
+</ul>
+<div id="fig-mnist1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mnist1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/Mnist1.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mnist1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;14: Exemplos de treinamento do banco de dados MNIST original. <a href="https://atcold.github.io/pytorch-Deep-Learning/en/week03/03-3/">[Fonte]</a>.
+</figcaption>
+</figure>
+</div>
+<p>Primeiramente, ambas as redes foram treinadas com os dados MNIST normalizados. A MLP atingiu uma acurácia de 87% enquanto a acurácia da CNN ficou igual a 95%. Dado o mesmo número de parâmetros, a CNN conseguiu treinar muito mais filtros. Na rede MLP, os neurônios tentam obter algumas dependências entre pixels mais distantes com pixels próximos, o que acaba sendo desperdiçado. Em vez disso, na CNN, os parâmetros se concentram no relacionamento entre os pixels vizinhos.</p>
+<p>Em seguida, foi feita uma permutação aleatória de todos os pixels em todas as imagens do conjunto de dados MNIST. Isso transforma a <a href="#fig-mnist1" class="quarto-xref">Figura&nbsp;14</a> na <a href="#fig-mnist2" class="quarto-xref">Figura&nbsp;15</a>. Ambas as redes foram treinadas com esse conjunto de dados modificado.</p>
+<div id="fig-mnist2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mnist2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/Mnist2.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mnist2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;15: Exemplos de treinamento do banco de dados MNIST permutado. <a href="https://atcold.github.io/pytorch-Deep-Learning/en/week03/03-3/">[Fonte]</a>.
+</figcaption>
+</figure>
+</div>
+<p>O desempenho da rede MLP quase se manteve inalterado (85%), mas a acurácia da CNN caiu para 83%. Isso ocorre porque, após uma permutação aleatória, as imagens não possuem mais as três propriedades de localidade, estacionariedade e composicionalidade, que são exploradas por uma CNN.</p>
+</section>
+</div>
+
+
+
+</main> <!-- /main -->
+<script>
+var custom_title = document.querySelectorAll('.custom .theorem-title');
+
+for (let i = 0; i < custom_title.length; i++ ) {
+   var mod_name = custom_title[i].innerHTML;
+   custom_title[i].innerHTML = mod_name.replace("Exemplo", "Algoritmo");
+};
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiada");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiada");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
