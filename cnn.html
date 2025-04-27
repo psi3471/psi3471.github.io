@@ -216,6 +216,10 @@ window.Quarto = {
     <a class="dropdown-item" href="./ex_entrega_3.html">
  <span class="dropdown-text">Exercício 3 - MLP</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./ex_entrega_4.html">
+ <span class="dropdown-text">Exercício 4 - CNN</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -230,6 +234,10 @@ window.Quarto = {
         <li>
     <a class="dropdown-item" href="./exemplo_pytorch.html">
  <span class="dropdown-text">Exemplo MLP com PyTorch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./exemplo_pytorch_cnn.html">
+ <span class="dropdown-text">Exemplo CNN com PyTorch</span></a>
   </li>  
     </ul>
   </li>
@@ -335,7 +343,7 @@ Figura&nbsp;3: Exemplo da convolução realizada por meio da multiplicação de 
 <p><span class="math display">\[
 (n_1-f+1)\times(n_2-f+1)\times k.
 \]</span></p>
-<p>Na <a href="#fig-camadaconv" class="quarto-xref">Figura&nbsp;4</a>-(a), esse processo é ilustrado considerando uma entrada de dimensões <span class="math inline">\(4 \times 4\)</span> e uma camada convolucional com quatro filtros de dimensões <span class="math inline">\(3\times 3\)</span>, o que gera a saída de dimensões <span class="math inline">\(2\times 2\times 4\)</span>. Na <a href="#fig-camadaconv" class="quarto-xref">Figura&nbsp;4</a>-(b), a soma do <em>bias</em> e a aplicação da função linear são ilustradas para uma das matrizes resultantes da convolução. Os filtros das camadas convolucionais são matrizes de pesos. Assim, considerando os quatro filtros de dimensões <span class="math inline">\(3\times 3\)</span> da <a href="#fig-camadaconv" class="quarto-xref">Figura&nbsp;4</a>-(a), há <span class="math inline">\(4 \times 3 \times  3  = 36\)</span> pesos e <span class="math inline">\(4\)</span> <em>biases</em> (um <em>bias</em> por filtro).</p>
+<p>Na <a href="#fig-camadaconv" class="quarto-xref">Figura&nbsp;4</a>-(a), esse processo é ilustrado considerando uma entrada de dimensões <span class="math inline">\(4 \times 4\)</span> e uma camada convolucional com quatro filtros de dimensões <span class="math inline">\(3\times 3\)</span>, o que gera a saída de dimensões <span class="math inline">\(2\times 2\times 4\)</span>. Na <a href="#fig-camadaconv" class="quarto-xref">Figura&nbsp;4</a>-(b), a soma do <em>bias</em> e a aplicação da função de ativação são ilustradas para uma das matrizes resultantes da convolução. Os filtros das camadas convolucionais são matrizes de pesos. Assim, considerando os quatro filtros de dimensões <span class="math inline">\(3\times 3\)</span> da <a href="#fig-camadaconv" class="quarto-xref">Figura&nbsp;4</a>-(a), há <span class="math inline">\(4 \times 3 \times  3  = 36\)</span> pesos e <span class="math inline">\(4\)</span> <em>biases</em> (um <em>bias</em> por filtro).</p>
 <div id="fig-camadaconv" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-camadaconv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
