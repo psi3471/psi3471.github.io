@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.29">
@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Exercício 4 - CNN – PSI3471</title>
+<title>Autoencoders – PSI3471</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -89,20 +54,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -118,8 +112,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <span class="navbar-title">PSI3471</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -275,7 +269,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exercício 4 - CNN</h1>
+<h1 class="title"><em>Autoencoders</em></h1>
 </div>
 
 
@@ -293,84 +287,88 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="justify">
-<p>Neste exercício, você vai trabalhar com o banco de dados <a href="https://arxiv.org/abs/1708.07747">Fashion MNIST</a> e implementar um classificador multiclasse usando uma CNN. Esse dataset contem 70000 imagens 28x28 de peças de vestuário distribuídas em 10 classes, divididas em um conjunto de treinamento com 60000 imagens e um de teste com 10000.</p>
-<p>O banco de dados Fashion MNIST tem as mesmas características do banco de dados MNIST (imagens 28x28 e 10 classes), sendo possível substituí-lo diretamente. A sugestão é que seja usado o exemplo da <a href="./exemplo_pytorch_cnn.html">CNN com PyTorch</a>, substituindo a parte de carregamento de dados do MNIST, para o Fashion MNIST, como no exemplo:</p>
-<div id="cell-4" class="cell" data-tags="[]" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torchvision <span class="im">import</span> datasets, transforms</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Nb <span class="op">=</span> <span class="dv">64</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>dir_data <span class="op">=</span> <span class="st">"~/temp"</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>train_loader <span class="op">=</span> torch.utils.data.DataLoader(</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    datasets.FashionMNIST(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        dir_data,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        train<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        download<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        transform<span class="op">=</span>transforms.Compose(            </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>            [transforms.ToTensor()]</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span>Nb,</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    shuffle<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">6</span>))</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">2</span>, <span class="dv">5</span>, i <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    image, _ <span class="op">=</span> train_loader.dataset.<span class="fu">__getitem__</span>(i)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    plt.imshow(image.squeeze().numpy())</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    plt.axis(<span class="st">'off'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="ex_entrega_4_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+<p><em>Autoencoders</em> são redes neurais que tem sido usadas para redução de ruído em imagens (<em>denoising</em>) e também para redução de dimensionalidade. Eles são redes neurais em que a saída é uma estimativa da própria entrada. Eles comprimem a entrada em um código de menor dimensão e, em seguida, reconstroem a saída a partir dessa representação. O código gerado também é chamado de <strong>representação do espaço latente</strong>.</p>
+<p>Um <em>autoencoder</em> é composto por três componentes: codificador, código e decodificador, como mostrado na <a href="#fig-auto1" class="quarto-xref">Figura&nbsp;1</a>. O codificador comprime a entrada e produz o código, o decodificador então reconstrói a entrada usando apenas esse código.</p>
+<div id="fig-auto1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-auto1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="././images/auto1.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-auto1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Componentes de um <em>autoencoder</em>: codificador, código e decodificador. Fonte: <a href="https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798">https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798</a>
+</figcaption>
 </figure>
 </div>
-</div>
-</div>
-<p>Você deve implementar uma rede CNN, com a etapa de treinamento e teste, de forma que o resultado de acurácia da classificação seja <strong>superior à 90%</strong> considerando os dados de teste. Para tanto, faça simulações alterando a arquitetura da rede ou ajustando os hiperparâmetros, até conseguir o desempenho desejado.</p>
-<p>Ao final do exercício, você deverá apresentar:</p>
-<ol type="1">
-<li><p>Os códigos utilizados para treinar o modelo e avaliá-lo com os conjuntos de teste;</p></li>
-<li><p>O valor obtido para a acurácia considerando os dados de teste.</p></li>
-</ol>
-<p>A sugestão é que o relatório seja elaborado utilizando um Jupyter Notebook e a linguagem Python, já que essas são as ferramentas que estamos utilizando neste bloco do curso. No entanto, isso não é obrigatório e você pode usar outra linguagem de programação, caso queira.</p>
-<section id="instruções-para-entrega" class="level2">
-<h2 class="anchored" data-anchor-id="instruções-para-entrega">Instruções para entrega</h2>
+<p>Para construir um <em>autoencoder</em>, precisamos de um método de codificação, um método de decodificação e uma função de perda para comparar a saída com a entrada. <em>Autoencoders</em> são usados principalmente para redução de dimensionalidade (ou compressão) com algumas propriedades importantes:</p>
 <ul>
-<li><p>O exercício pode ser feito em dupla ou individualmente;</p></li>
-<li><p>A entrega deve incluir:</p>
-<ul>
-<li>Um vídeo de no <strong>máximo 40s</strong>, mostrando a resolução do exercício;</li>
-<li>Os <strong>códigos-fontes</strong> dos programas, preferencialmente organizados em um Jupyter Notebook, descrevendo o experimento e mostrando como foram obtidos os resultados solicitados.</li>
-</ul></li>
-<li><p><strong>A correção será feita baseada no vídeo</strong>. Quando o professor/pesquisador ficar com alguma dúvida, serão consultados os códigos-fonte;</p></li>
-<li><p>Sobre o vídeo:</p>
-<ul>
-<li><strong>Deve incluir áudio</strong> descrevendo o experimento;</li>
-<li>Gravem a tela do computador usando celular ou usando algum programa de captura de tela (por exemplo Zoom, Google Meet, ou OBS Studio);</li>
-<li>No início, <strong>deve aparecer o rosto e algum documento do aluno que gravou o vídeo</strong> (como a carteira USP, RG, CNH, etc);</li>
-<li>No caso de entrega em dupla, <strong>não é necessário que os dois componentes apareçam no vídeo</strong>. No entanto, alternem o apresentador ao longo das entregas dos exercícios e <strong>não esqueçam de incluir os dois nomes no início do vídeo</strong>.</li>
-<li>Procurem convencer o espectador do vídeo, que vai corrigir o exercício que fizeram os exercícios computacionais solicitados e que eles estão funcionando corretamente. Tentem fazer um bom aproveitamento do tempo para apresentar os resultados solicitados, <strong>respeitando o limite de 40s e não acelerem a velocidade do vídeo</strong>;</li>
-</ul></li>
-<li><p>Sobre os códigos-fonte:</p>
-<ul>
-<li><strong>Incluir o nome do(s) aluno(s)</strong> no início do programa;</li>
-</ul></li>
-<li><p>Sobre o envio no Moodle:</p>
-<ul>
-<li>Apenas um aluno de cada dupla deve enviar o vídeo no Moodle;</li>
-<li>Podem ser enviados o arquivo de vídeo (.mkv, .mp4, .avi, etc.) ou um link para o vídeo (Youtube, Google Drive, etc);
-<ul>
-<li>No segundo caso, certifiquem-se que todos os professores/pesquisadores (magno.silva@usp.br, hae.kim@usp.br, renatocan@lps.usp.br, wesleybeccaro@usp.br) tenham acesso ao seu vídeo.</li>
-</ul></li>
-<li>Não se esqueçam de escrever o nome dos componentes da dupla (ou do único aluno, escrevendo: “exercício feito individualmente”) em três lugares diferentes: <strong>no campo “comentários sobre o envio” no Moodle</strong>, <strong>no início do vídeo</strong> e no <strong>início dos códigos-fonte</strong>.</li>
-</ul></li>
+<li><strong>Dados específicos:</strong> <em>Autoencoders</em> só são capazes de compactar significativamente dados semelhantes aos que foram treinados. Eles aprendem recursos específicos para os dados de treinamento fornecidos. Portanto, não podemos esperar que um <em>autoencoder</em> treinado em dígitos manuscritos comprima fotos de paisagens.</li>
+<li><strong>Com perdas:</strong> A saída do <em>autoencoder</em> não será exatamente igual à entrada, será uma representação próxima, mas degradada. Se você deseja compactação sem perdas, essa não é a melhor solução.</li>
+<li><strong>Não supervisionado:</strong> Para treinar um <em>autoencoder</em>, precisamos apenas lançar os dados brutos de entrada nele. Alguns autores interpretam <em>autoencoders</em> como uma técnica de aprendizagem não supervisionada, uma vez que eles não precisam de rótulos explícitos para treinar. No entanto, o mais correto é dizer que sua aprendizagem é auto supervisionada porque eles geram seus próprios rótulos a partir dos dados de treinamento.</li>
 </ul>
+<section id="arquitetura" class="level2">
+<h2 class="anchored" data-anchor-id="arquitetura">Arquitetura</h2>
+<p>Tanto o codificador quanto o decodificador são redes neurais totalmente conectadas, como uma MLP ou CNN. O código é uma única camada cujo número de neurônios no caso de uma MLP ou de filtros no caso de uma CNN deve ser escolhido. Esse número também chamado de tamanho do código é um hiperparâmetro que deve ser definido antes de treinar o <em>autoencoder</em>. Na <a href="#fig-auto2" class="quarto-xref">Figura&nbsp;2</a>, é mostrada uma visualização mais detalhada de um <em>autoencoder</em>. Primeiro, a entrada passa pelo codificador, que é uma rede neural totalmente conectada, para produzir o código. O decodificador, que possui estrutura de uma rede neural semelhante, produz a saída apenas usando o código. O objetivo é obter uma saída idêntica à entrada. Observe que a arquitetura do decodificador é a imagem espelhada do codificador. No entanto, isso não é um requisito, mas normalmente é o caso. O único requisito é que a dimensionalidade da entrada e da saída seja a mesma.</p>
+<div id="fig-auto2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-auto2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="././images/auto2.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-auto2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Visualização mais detalhada de um <em>autoencoder</em>. Fonte: <a href="https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798">https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798</a>
+</figcaption>
+</figure>
+</div>
+<p>Existem quatro hiperparâmetros que precisamos definir antes de treinar um <em>autoencoder</em>:</p>
+<ul>
+<li><strong>Tamanho do código:</strong> número de nós (ou filtros) na camada intermediária. Quanto menor o esse número maior a compressão.</li>
+<li><strong>Número de camadas:</strong> o <em>autoencoder</em> pode ser tão profundo quanto quisermos. Na <a href="#fig-auto2" class="quarto-xref">Figura&nbsp;2</a> há duas camadas tanto no codificador quanto no decodificador.</li>
+<li><strong>Número de neurônios (ou filtros) por camada:</strong> a arquitetura do <em>autoencoder</em> da Figura~<span class="math inline">\(\ref{Fig:auto2}\)</span> é chamada de <em>autoencoder</em> empilhado, que parece um sanduíche. O número de neurônios (ou filtros) por camada diminui a cada camada subsequente do codificador e aumenta novamente no decodificador. Além disso, o decodificador é simétrico ao codificador em termos de estrutura de camada (mas isso não é necessário).</li>
+<li><strong>Função de perda:</strong> Deve-se considerar as funções custo comumente usadas para regressão (erro quadrático médio) ou classificação (entropia cruzada)</li>
+</ul>
+<p>Autoencoders devem ser treinados da mesma forma que as redes MLP ou CNN, isto é, com o algoritmo <em>backpropagation</em>.</p>
+</section>
+<section id="exemplos" class="level2">
+<h2 class="anchored" data-anchor-id="exemplos">Exemplos</h2>
+<p>Um <em>autoencoder</em> foi construído com uma MLP para estimar imagens de dígitos do banco de dados MNIST. As imagens são vetorizadas em um vetor com 784 elementos. A primeira camada oculta tem 128 neurônios e o código tem 32 neurônios. O decodificador é espelhado, ou seja, possui uma camada oculta com 128 neurônios e uma camada de saída com 784 neurônios. Nas camadas ocultas utilizou-se a ReLU como função de ativação e a função sigmoidal foi usada na camada de saída. A entropia cruzada binária foi utilizada como função custo.</p>
+<p>Na <a href="#fig-auto4" class="quarto-xref">Figura&nbsp;3</a> são mostradas as imagens originais e as imagens reconstruídas com o <em>autoencoder</em> treinado. As imagens reconstruídas são realmente muito parecidas com as originais, mas não exatamente iguais. Podemos notar isso mais claramente no dígito “4”.</p>
+<div id="fig-auto4" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-auto4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="././images/auto4.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-auto4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Imagens originais e reconstruídas de dígitos do banco de dados MNIST com um <em>autoencoder</em> MLP descrito no texto. Fonte: <a href="https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798">https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798</a>
+</figcaption>
+</figure>
+</div>
+<p>Temos total controle sobre a arquitetura do <em>autoencoder</em>. Podemos torná-lo muito poderoso aumentando o número de camadas, neurônios por camada e, mais importante, o tamanho do código. Aumentar esses hiperparâmetros permitirá que o <em>autoencoder</em> aprenda codificações mais complexas. Mas devemos ter cuidado para não torná-lo muito poderoso. Caso contrário, o <em>autoencoder</em> simplesmente aprenderá a copiar suas entradas para a saída, sem aprender nenhuma representação significativa. Ele apenas imitará a função de identidade. O autoencoder reconstruirá os dados de treinamento perfeitamente, mas observaremos <em>overfitting</em> e uma baixa capacidade de generalização.</p>
+<p>É por isso que é comum considerar uma arquitetura do tipo “sanduíche” e o tamanho do código pequeno. Uma vez que a camada de codificação tem uma dimensionalidade menor do que os dados de entrada, o <em>autoencoder</em> é dito incompleto . Ele não poderá copiar diretamente suas entradas para a saída e será forçado a aprender recursos inteligentes. Se os dados de entrada tiverem um padrão, por exemplo, o dígito “1” geralmente contém uma linha reta e o dígito “0” é circular, ele aprenderá esse fato e o codificará de uma forma mais compacta. Se os dados de entrada forem completamente aleatórios sem qualquer correlação ou dependência interna, um <em>autoencoder</em> incompleto não poderá recuperá-los perfeitamente. Felizmente no mundo real há muita dependência.</p>
+</section>
+<section id="denoising-autoencoders" class="level2">
+<h2 class="anchored" data-anchor-id="denoising-autoencoders"><em>Denoising Autoencoders</em></h2>
+<p>Manter a camada de código pequena força o <em>autoencoder</em> a aprender uma representação inteligente dos dados. Existe outra maneira de forçar o <em>autoencoder</em> a aprender recursos úteis, que é adicionar ruído aleatório às suas entradas e fazer com que ele recupere os dados originais sem ruído. Dessa forma, o <em>autoencoder</em> não pode simplesmente copiar a entrada para sua saída porque a entrada também contém ruído aleatório. O objetivo é eliminar o ruído e produzir os dados significativos subjacentes. Isso é chamado de <em>denoising autoencoder</em>. Na <a href="#fig-auto6" class="quarto-xref">Figura&nbsp;4</a>, é mostrado um exemplo desse esquema.</p>
+<div id="fig-auto6" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-auto6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="././images/auto6.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-auto6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: Esquema do <em>denoising autoencoder</em>. Fonte: <a href="https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798">https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798</a>
+</figcaption>
+</figure>
+</div>
+<p>Adicionando ruído gaussiano aos dados de entrada e treinando o <em>autoencoder</em> anterior com os dados ruidosos, obtém-se o resultado da <a href="#fig-auto7" class="quarto-xref">Figura&nbsp;5</a>, o que mostra um desempenho muito bom. O resultado pode ser ainda melhor considerando redes convolucionais.</p>
+<div id="fig-auto7" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-auto7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="././images/auto7.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-auto7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5: Fonte: <a href="https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798">https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798</a>
+</figcaption>
+</figure>
+</div>
+<p>Para forçar o <em>autoencoder</em> a aprender recursos úteis vimos que é importante manter o tamanho do código pequeno e/ou adicionar ruído à entrada. Outra maneira de forçar isso é usar a regularização. Podemos regularizar o <em>autoencoder</em> usando uma restrição de esparsidade tal que apenas uma fração dos neurônios fique ativa a iteração do algoritmo de treinamento, o que pode ser feito adicionando um termo de penalidade à função custo. Isso força o autoencoder a representar cada entrada como uma combinação de um pequeno número de neurônios e exige que ele descubra uma estrutura interessante nos dados. Esse método é chamado de <em>sparse autoencoders</em> e funciona mesmo se o tamanho do código for grande, pois apenas um pequeno subconjunto dos neurônios estará ativo.</p>
 </section>
 </div>
 
@@ -410,12 +408,12 @@ for (let i = 0; i < custom_title.length; i++ ) {
       // flash "checked"
       button.classList.add('code-copy-button-checked');
       var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
+      button.setAttribute("title", "Copiada");
       let tooltip;
       if (window.bootstrap) {
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
+        button.setAttribute("data-bs-title", "Copiada");
         tooltip = new bootstrap.Tooltip(button, 
           { trigger: "manual", 
             customClass: "code-copy-button-tooltip",

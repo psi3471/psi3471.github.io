@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.29">
@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Exercício 4 - CNN – PSI3471</title>
+<title>Como lidar com conjuntos de dados desbalanceados – PSI3471</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,42 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-</style>
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -89,20 +74,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -118,8 +132,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <span class="navbar-title">PSI3471</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -275,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exercício 4 - CNN</h1>
+<h1 class="title">Como lidar com conjuntos de dados desbalanceados</h1>
 </div>
 
 
@@ -293,90 +307,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="justify">
-<p>Neste exercício, você vai trabalhar com o banco de dados <a href="https://arxiv.org/abs/1708.07747">Fashion MNIST</a> e implementar um classificador multiclasse usando uma CNN. Esse dataset contem 70000 imagens 28x28 de peças de vestuário distribuídas em 10 classes, divididas em um conjunto de treinamento com 60000 imagens e um de teste com 10000.</p>
-<p>O banco de dados Fashion MNIST tem as mesmas características do banco de dados MNIST (imagens 28x28 e 10 classes), sendo possível substituí-lo diretamente. A sugestão é que seja usado o exemplo da <a href="./exemplo_pytorch_cnn.html">CNN com PyTorch</a>, substituindo a parte de carregamento de dados do MNIST, para o Fashion MNIST, como no exemplo:</p>
-<div id="cell-4" class="cell" data-tags="[]" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torchvision <span class="im">import</span> datasets, transforms</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Nb <span class="op">=</span> <span class="dv">64</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>dir_data <span class="op">=</span> <span class="st">"~/temp"</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>train_loader <span class="op">=</span> torch.utils.data.DataLoader(</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    datasets.FashionMNIST(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        dir_data,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        train<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        download<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        transform<span class="op">=</span>transforms.Compose(            </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>            [transforms.ToTensor()]</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span>Nb,</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    shuffle<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">6</span>))</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">2</span>, <span class="dv">5</span>, i <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    image, _ <span class="op">=</span> train_loader.dataset.<span class="fu">__getitem__</span>(i)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    plt.imshow(image.squeeze().numpy())</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    plt.axis(<span class="st">'off'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="ex_entrega_4_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Você deve implementar uma rede CNN, com a etapa de treinamento e teste, de forma que o resultado de acurácia da classificação seja <strong>superior à 90%</strong> considerando os dados de teste. Para tanto, faça simulações alterando a arquitetura da rede ou ajustando os hiperparâmetros, até conseguir o desempenho desejado.</p>
-<p>Ao final do exercício, você deverá apresentar:</p>
-<ol type="1">
-<li><p>Os códigos utilizados para treinar o modelo e avaliá-lo com os conjuntos de teste;</p></li>
-<li><p>O valor obtido para a acurácia considerando os dados de teste.</p></li>
-</ol>
-<p>A sugestão é que o relatório seja elaborado utilizando um Jupyter Notebook e a linguagem Python, já que essas são as ferramentas que estamos utilizando neste bloco do curso. No entanto, isso não é obrigatório e você pode usar outra linguagem de programação, caso queira.</p>
-<section id="instruções-para-entrega" class="level2">
-<h2 class="anchored" data-anchor-id="instruções-para-entrega">Instruções para entrega</h2>
+<p>Em muitos problemas, o conjunto de dados é desbalanceado. Por exemplo, quando se deseja detectar transações fraudulentas, a maioria das transações estará na classe “não fraude” e uma minoria na classe “fraude”. Outro exemplo são os conjuntos de dados de rotatividade de clientes, onde a maioria dos clientes permanece com o serviço e uma minoria cancela sua assinatura. Isso também acontece no problema de classificação de arritmias cardíacas utilizando sinais de eletrocardiograma (ECG). O banco de dados de ECG do MIT-BIH (<em>Massachusetts Institute of Technology – Boston’s Beth Israel Hospital Arrhythmia Database</em>), que é o mais utilizado, contém mais de 80000 batimentos normais (N) e apenas 772 batimentos de arritmia com fusão ventricular com normal (F). Ao treinar uma rede neural com essas duas classes apenas, a acurácia pode ser muito elevada: próxima 100% neste caso. Isso não significa que o classificador é bom. Significa apenas que quase 100% dos dados pertencem uma das classes (N, no caso). O classificador de arritmias decide inteligentemente que, para alcançar uma acurácia elevada, a melhor coisa a fazer é sempre prever a classe N. O que fazer quando o conjunto de dados é desbalanceado? A seguir vamos explorar possíveis soluções.</p>
+<section id="métrica-de-desempenho" class="level2">
+<h2 class="anchored" data-anchor-id="métrica-de-desempenho">Métrica de desempenho</h2>
+<p>A acurácia não é uma métrica adequada quando se trabalha com conjuntos de dados desbalanceados. As seguintes medidas de desempenho podem fornecer mais informações sobre a precisão do modelo do que a acurácia:</p>
 <ul>
-<li><p>O exercício pode ser feito em dupla ou individualmente;</p></li>
-<li><p>A entrega deve incluir:</p>
+<li>Matriz de confusão : uma divisão das predições em uma tabela mostrando as predições corretas (a diagonal) e os tipos de predições incorretas (quais classes tiveram o maior número de predições incorretas);</li>
+<li>Precisão: uma medida da exatidão do classificador;</li>
+<li>Sensibilidade: uma medida da completude do classificador;</li>
+<li><span class="math inline">\(F_1\)</span>-score: uma média ponderada de precisão e sensibilidade; e</li>
+<li>Curva ROC: assim como a precisão e a sensibilidade, a acurácia é dividida entre sensibilidade e especificidade e os modelos podem ser escolhidos com base nos limites de equilíbrio desses valores.</li>
+</ul>
+<p>A escolha da métrica não soluciona o problema dos dados desbalanceados, mas ajuda a detectá-lo.</p>
+</section>
+<section id="amostragem" class="level2">
+<h2 class="anchored" data-anchor-id="amostragem">Amostragem</h2>
+<p>O conjunto de dados pode ser alterado com o objetivo de balanceá-lo. Essa alteração é chamada de amostragem do conjunto de dados e há dois métodos principais:</p>
 <ul>
-<li>Um vídeo de no <strong>máximo 40s</strong>, mostrando a resolução do exercício;</li>
-<li>Os <strong>códigos-fontes</strong> dos programas, preferencialmente organizados em um Jupyter Notebook, descrevendo o experimento e mostrando como foram obtidos os resultados solicitados.</li>
-</ul></li>
-<li><p><strong>A correção será feita baseada no vídeo</strong>. Quando o professor/pesquisador ficar com alguma dúvida, serão consultados os códigos-fonte;</p></li>
-<li><p>Sobre o vídeo:</p>
+<li><strong>Sobreamostragem</strong> que consiste na adição de cópias de exemplos da classe sub-representada; e</li>
+<li><strong>Subamostragem</strong> que consiste na exclusão de exemplos da classe sobre-representada.</li>
+</ul>
+<p>Geralmente, essas soluções são fáceis de implementar e, por isso, são um excelente ponto de partida. A subamostragem deve ser usada apenas quando o conjunto de dados for muito grande (mais de centenas de milhares de exemplos) e, por isso, é menos utilizada na prática. Em contrapartida, a sobreamostragem pode ser usada quando não há muitos dados no conjunto (menos de dezenas de milhares de exemplos). Não há necessidade de balancear com exatidão as classes (por exemplo, na proporção 1:1 na classificação binária). Outras proporções podem ser mais interessantes. Vamos explorar a sobreamostragem com mais detalhes a seguir.</p>
+</section>
+<section id="sobreamostragem" class="level2">
+<h2 class="anchored" data-anchor-id="sobreamostragem">Sobreamostragem</h2>
+<p>Uma das formas de realizar a sobreamostragem é gerar amostras sintéticas por meio da amostragem aleatória dos exemplos da classe minoritária. Para isso, pode-se adicionar cópias ruidosas desses exemplos ao conjunto de dados. Neste contexto, o SMOTE (<em>Synthetic Minority Over-sampling Technique</em>) é a técnica mais utilizada. Essa técnica gera amostras sintéticas da classe minoritária, selecionando dois ou mais exemplos semelhantes (usando uma medida de distância) e perturba um exemplo por vez, considerando um ruído dentro da diferença para os exemplos vizinhos. O SMOTE foi proposto no artigo <span class="citation" data-cites="Chawla_2002">(<a href="#ref-Chawla_2002" role="doc-biblioref">Chawla et al. 2002</a>)</span>, disponível em <a href="https://arxiv.org/abs/1106.1813">https://arxiv.org/abs/1106.1813</a>.</p>
+<p>Existem várias implementações do algoritmo SMOTE. No Python, por exemplo, o módulo <em>UnbalancedDataset</em> fornece várias implementações do SMOTE, bem como várias outras técnicas de sobreamostragem.</p>
+</section>
+<section id="inclusão-de-pesos-na-função-custo" class="level2">
+<h2 class="anchored" data-anchor-id="inclusão-de-pesos-na-função-custo">Inclusão de pesos na função custo</h2>
+<p>Uma forma de levar em conta o desbalanceamento das classes é considerar pesos na função custo. No caso multiclasse, considera-se a função custo de entropia cruzada categórica ponderada (<em>weighted categorical cross entropy</em>) definida para <span class="math inline">\(N_L\)</span> classes como <span class="math display">\[
+J_{\rm ECCP}=-\frac{1}{N_L}\sum_{\ell=1}^{N_L}p_{\ell}d_{\ell}(n)\ln\left(y_{\ell}^{(L)}(n)\right),
+\]</span></p>
+<p>em que <span class="math display">\[
+p_{\ell}=\frac{1}{C_{\ell}}
+\]</span></p>
+<p>é o peso da <span class="math inline">\(\ell\)</span>-ésima classe, definido como o inverso de <span class="math inline">\(C_{\ell}\)</span> (quantidade de dados da Classe <span class="math inline">\(\ell\)</span>). Dessa forma, quanto maior o valor de <span class="math inline">\(C_{\ell}\)</span>, menos importância à Classe <span class="math inline">\(\ell\)</span> é dada na função custo. Cabe observar que a utilização dos pesos na função custo deve ser implementada em conjunto com outras técnicas como o SMOTE, por exemplo.</p>
+</section>
+<section id="leitura-adicional" class="level2">
+<h2 class="anchored" data-anchor-id="leitura-adicional">Leitura adicional</h2>
+<p>Há dois livros interessantes que abordam técnicas para lidar com dados desbalanceados:</p>
 <ul>
-<li><strong>Deve incluir áudio</strong> descrevendo o experimento;</li>
-<li>Gravem a tela do computador usando celular ou usando algum programa de captura de tela (por exemplo Zoom, Google Meet, ou OBS Studio);</li>
-<li>No início, <strong>deve aparecer o rosto e algum documento do aluno que gravou o vídeo</strong> (como a carteira USP, RG, CNH, etc);</li>
-<li>No caso de entrega em dupla, <strong>não é necessário que os dois componentes apareçam no vídeo</strong>. No entanto, alternem o apresentador ao longo das entregas dos exercícios e <strong>não esqueçam de incluir os dois nomes no início do vídeo</strong>.</li>
-<li>Procurem convencer o espectador do vídeo, que vai corrigir o exercício que fizeram os exercícios computacionais solicitados e que eles estão funcionando corretamente. Tentem fazer um bom aproveitamento do tempo para apresentar os resultados solicitados, <strong>respeitando o limite de 40s e não acelerem a velocidade do vídeo</strong>;</li>
-</ul></li>
-<li><p>Sobre os códigos-fonte:</p>
-<ul>
-<li><strong>Incluir o nome do(s) aluno(s)</strong> no início do programa;</li>
-</ul></li>
-<li><p>Sobre o envio no Moodle:</p>
-<ul>
-<li>Apenas um aluno de cada dupla deve enviar o vídeo no Moodle;</li>
-<li>Podem ser enviados o arquivo de vídeo (.mkv, .mp4, .avi, etc.) ou um link para o vídeo (Youtube, Google Drive, etc);
-<ul>
-<li>No segundo caso, certifiquem-se que todos os professores/pesquisadores (magno.silva@usp.br, hae.kim@usp.br, renatocan@lps.usp.br, wesleybeccaro@usp.br) tenham acesso ao seu vídeo.</li>
-</ul></li>
-<li>Não se esqueçam de escrever o nome dos componentes da dupla (ou do único aluno, escrevendo: “exercício feito individualmente”) em três lugares diferentes: <strong>no campo “comentários sobre o envio” no Moodle</strong>, <strong>no início do vídeo</strong> e no <strong>início dos códigos-fonte</strong>.</li>
-</ul></li>
+<li><p><span class="citation" data-cites="fernandez_learning_2018">(<a href="#ref-fernandez_learning_2018" role="doc-biblioref">Fernández et al. 2018</a>)</span></p></li>
+<li><p><span class="citation" data-cites="ma_imbalanced_2013">(<a href="#ref-ma_imbalanced_2013" role="doc-biblioref">Ma e He 2013</a>)</span></p></li>
 </ul>
 </section>
 </div>
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Chawla_2002" class="csl-entry" role="listitem">
+Chawla, N. V., K. W. Bowyer, L. O. Hall, e W. P. Kegelmeyer. 2002. <span>“<span>SMOTE</span>: Synthetic Minority Over-sampling Technique”</span>. <em>Journal of Artificial Intelligence Research</em> 16 (junho): 321–57. <a href="https://doi.org/10.1613/jair.953">https://doi.org/10.1613/jair.953</a>.
+</div>
+<div id="ref-fernandez_learning_2018" class="csl-entry" role="listitem">
+Fernández, Alberto, Salvador García, Mikel Galar, Ronaldo C. Prati, Bartosz Krawczyk, e Francisco Herrera. 2018. <em>Learning from <span>Imbalanced</span> <span>Data</span> <span>Sets</span></em>. Cham: Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-98074-4">https://doi.org/10.1007/978-3-319-98074-4</a>.
+</div>
+<div id="ref-ma_imbalanced_2013" class="csl-entry" role="listitem">
+Ma, Yunqian, e Haibo He, orgs. 2013. <em>Imbalanced <span>Learning</span>: <span>Foundations</span>, <span>Algorithms</span>, and <span>Applications</span></em>. 1ª edição. Hoboken, New Jersey: Wiley-IEEE Press.
+</div>
+</div></section></div></main> <!-- /main -->
 <script>
 var custom_title = document.querySelectorAll('.custom .theorem-title');
 
@@ -410,12 +401,12 @@ for (let i = 0; i < custom_title.length; i++ ) {
       // flash "checked"
       button.classList.add('code-copy-button-checked');
       var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
+      button.setAttribute("title", "Copiada");
       let tooltip;
       if (window.bootstrap) {
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
+        button.setAttribute("data-bs-title", "Copiada");
         tooltip = new bootstrap.Tooltip(button, 
           { trigger: "manual", 
             customClass: "code-copy-button-tooltip",

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Exercício 4 - CNN – PSI3471</title>
+<title>Avaliação - Parte Prática – PSI3471</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,7 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -102,7 +102,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -275,7 +307,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exercício 4 - CNN</h1>
+<h1 class="title">Avaliação - Parte Prática</h1>
 </div>
 
 
@@ -293,82 +325,248 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="justify">
-<p>Neste exercício, você vai trabalhar com o banco de dados <a href="https://arxiv.org/abs/1708.07747">Fashion MNIST</a> e implementar um classificador multiclasse usando uma CNN. Esse dataset contem 70000 imagens 28x28 de peças de vestuário distribuídas em 10 classes, divididas em um conjunto de treinamento com 60000 imagens e um de teste com 10000.</p>
-<p>O banco de dados Fashion MNIST tem as mesmas características do banco de dados MNIST (imagens 28x28 e 10 classes), sendo possível substituí-lo diretamente. A sugestão é que seja usado o exemplo da <a href="./exemplo_pytorch_cnn.html">CNN com PyTorch</a>, substituindo a parte de carregamento de dados do MNIST, para o Fashion MNIST, como no exemplo:</p>
-<div id="cell-4" class="cell" data-tags="[]" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torchvision <span class="im">import</span> datasets, transforms</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Nb <span class="op">=</span> <span class="dv">64</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>dir_data <span class="op">=</span> <span class="st">"~/temp"</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>train_loader <span class="op">=</span> torch.utils.data.DataLoader(</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    datasets.FashionMNIST(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        dir_data,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        train<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        download<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        transform<span class="op">=</span>transforms.Compose(            </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>            [transforms.ToTensor()]</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span>Nb,</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    shuffle<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">6</span>))</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">2</span>, <span class="dv">5</span>, i <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    image, _ <span class="op">=</span> train_loader.dataset.<span class="fu">__getitem__</span>(i)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    plt.imshow(image.squeeze().numpy())</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    plt.axis(<span class="st">'off'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
+<p>Na parte prática da avaliação, você vai trabalhar com um projeto de uma aplicação com redes neurais para a área de veículos autônomos. O objetivo é obter um modelo para a estimação da direção e da velocidade adequadas à partir de dados de sensores do veículo.</p>
+<section id="dados-disponibilizados" class="level2">
+<h2 class="anchored" data-anchor-id="dados-disponibilizados">Dados disponibilizados</h2>
+<p>Os dados para treinamento e teste do modelo estão disponíveis no formato CSV, em um arquivo zip disponível <a href="./www/data.zip">neste link</a>.</p>
+<p>Após extrair os arquivos, utilize a biblioteca Pandas para carregar os <code>DataFrames</code> <code>X_train</code>, <code>y_train</code>, <code>X_test</code> e <code>y_test</code>, como mostrado a seguir:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.read_csv(<span class="st">'X_train.csv'</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> pd.read_csv(<span class="st">'y_train.csv'</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> pd.read_csv(<span class="st">'X_test.csv'</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>y_test <span class="op">=</span> pd.read_csv(<span class="st">'y_test.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Considere que os <code>DataFrames</code> <code>X_train</code> e <code>y_train</code> se referem aos dados de entrada e saída para treinamento e <code>X_test</code> e <code>y_test</code> se referem aos dados para validação.</p>
+<div id="47e2fe36-7c00-4edf-b19a-9d66eb164b4e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="05add7e9-28c3-4a76-808a-d1f224c3c235" data-tags="[]" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>X_train.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>(19628, 11)</code></pre>
+</div>
+</div>
+<div id="fa559a86-de48-4cf0-815e-6f1da4a43677" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="a552801f-d5da-4421-efa6-effe6f1abff3" data-tags="[]" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>y_train.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>(19628, 2)</code></pre>
+</div>
+</div>
+<div id="9c1daa02-37d6-4b96-9224-6afdf012ea99" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>X_test.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>(4907, 11)</code></pre>
+</div>
+</div>
+<div id="2e673571-4f08-46a7-ace8-17635f23cd3f" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>y_test.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>(4907, 2)</code></pre>
+</div>
+</div>
+<div id="c54a5771-9e98-40c7-997b-439fa1bf3635" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:206}}" data-outputid="b75c6ae5-493b-49bf-ed47-365bcd874cf4" data-tags="[]" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>X_train.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
 <div>
-<figure class="figure">
-<p><img src="ex_entrega_4_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
-</figure>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+<th data-quarto-table-cell-role="th">4</th>
+<th data-quarto-table-cell-role="th">5</th>
+<th data-quarto-table-cell-role="th">6</th>
+<th data-quarto-table-cell-role="th">7</th>
+<th data-quarto-table-cell-role="th">8</th>
+<th data-quarto-table-cell-role="th">9</th>
+<th data-quarto-table-cell-role="th">10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>-0.990604</td>
+<td>0.029382</td>
+<td>0.016550</td>
+<td>0.132531</td>
+<td>0.040647</td>
+<td>0.053851</td>
+<td>9.4</td>
+<td>1.7</td>
+<td>10.565004</td>
+<td>2.466</td>
+<td>742.599976</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>-0.993563</td>
+<td>0.024949</td>
+<td>0.060397</td>
+<td>0.092524</td>
+<td>0.125051</td>
+<td>0.038410</td>
+<td>9.8</td>
+<td>2.1</td>
+<td>10.545004</td>
+<td>2.416</td>
+<td>742.599976</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>-0.942432</td>
+<td>-0.064063</td>
+<td>0.026580</td>
+<td>0.327124</td>
+<td>0.008266</td>
+<td>-0.138583</td>
+<td>13.6</td>
+<td>1.5</td>
+<td>13.300000</td>
+<td>1.916</td>
+<td>744.600000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>-0.945413</td>
+<td>-0.047786</td>
+<td>0.015528</td>
+<td>0.321976</td>
+<td>-0.001418</td>
+<td>-0.100524</td>
+<td>2.6</td>
+<td>1.0</td>
+<td>15.500000</td>
+<td>2.233</td>
+<td>753.800000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0.536310</td>
+<td>0.101252</td>
+<td>-0.015450</td>
+<td>0.837782</td>
+<td>0.187972</td>
+<td>-0.082812</td>
+<td>45.0</td>
+<td>1.5</td>
+<td>5.850351</td>
+<td>2.743</td>
+<td>745.200012</td>
+</tr>
+</tbody>
+</table>
+
 </div>
 </div>
 </div>
-<p>Você deve implementar uma rede CNN, com a etapa de treinamento e teste, de forma que o resultado de acurácia da classificação seja <strong>superior à 90%</strong> considerando os dados de teste. Para tanto, faça simulações alterando a arquitetura da rede ou ajustando os hiperparâmetros, até conseguir o desempenho desejado.</p>
-<p>Ao final do exercício, você deverá apresentar:</p>
+<div id="0cb2e362-eb20-4789-a80e-6d710dde56f0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:206}}" data-outputid="552e24ce-ad22-4e8b-dece-968e9fcb4f5d" data-tags="[]" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>y_train.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>6.495223</td>
+<td>161.987152</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>7.063543</td>
+<td>172.884491</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>4.123023</td>
+<td>137.942886</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>13.437319</td>
+<td>144.001404</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>4.264773</td>
+<td>243.034912</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Como mostrado, os dados consistem de 19628 exemplos para treinamento e 4907 para validação, cada um contendo 11 características de entrada, representadas pelas colunas de 0 a 10 dos <code>DataFrames</code> <code>X_train</code> e <code>X_test</code> e duas saídas representadas pelas colunas 0 e 1 dos <code>DataFrames</code> <code>y_train</code> e <code>y_test</code>.</p>
+<p>Os dados de entrada são provenientes de diversos sensores que medem informações relativas à posição e ao movimento do veículo, mas não estão identificados em detalhes. Já os dados de saída correspondem aos valores crus fornecidos por sensores de direção e velocidade do veículo, que devem ser estimados pelo modelo.</p>
+</section>
+<section id="objetivo" class="level2">
+<h2 class="anchored" data-anchor-id="objetivo">Objetivo</h2>
+<p>O objetivo do projeto é obter um modelo baseado em uma rede neural, que receba o vetor com o conjunto de características da entrada e forneça uma estimativa para a direção e velocidade do veículo.</p>
+<p>Para fins de avaliação do desempenho do seu modelo, você pode utilizar a métrica <span class="math inline">\(R^2\)</span>, que fornece uma indicação da qualidade ou ajuste de um conjunto de valores de saída previstos aos valores desejados. Essa métrica é calculada como</p>
+<p><span class="math display">\[\begin{equation*}
+\fbox{$\displaystyle
+R^2=1-\displaystyle\frac{\displaystyle\sum_{n=1}^{N_{\text{teste}}}(d_n-y_n)^2}{\displaystyle\sum_{n=1}^{N_{\text{teste}}}(\overline{d}-d_n)^2},
+$}
+\end{equation*}\]</span></p>
+<p>em que</p>
+<p><span class="math display">\[
+\overline{d}=\frac{1}{N_{\text{teste}}}\sum_{n=1}^{N_{\text{teste}}}d_n
+\]</span></p>
+<p>é a média dos valores desejados do conjunto de teste. Note que o denominador da fração que aparece na definição de <span class="math inline">\(R^2\)</span> é proporcional à variância dos dados de teste. No melhor caso, os valores preditos são exatamente iguais aos valores desejados, o que leva a <span class="math inline">\(R^2=1\)</span>. Caso o modelo leve a <span class="math inline">\(y_n=\overline{d}\)</span>, <span class="math inline">\(n=1, 2, \cdots, N_{\text{teste}}\)</span>, que é conhecido como modelo base, teremos <span class="math inline">\(R^2=0\)</span>. Modelos cujas predições são piores que as do modelo base podem levar a <span class="math inline">\(R^2\)</span> negativo. Uma implementação dessa medida pode ser encontrada na biblioteca <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html">scikit-learn</a>.</p>
+<p>Projete o modelo, considerando as arquiteturas e as técnicas que foram vistas no curso e realize o treinamento utilizando os dados de <code>X_train</code> e <code>y_train</code>. Em seguida, teste o modelo fazendo inferência para os dados de <code>X_test</code> e <code>y_test</code>.</p>
+<p>Leve em conta que o treinamento pode sofrer <em>overfitting</em> e use os mecanismos vistos no curso para evitá-lo. Para monitorar o <em>overfitting</em>, utilize os dados de teste para fazer validação e observe as curvas de aprendizagem para os dados de treinamento e validação. Procure salvar o modelo treinado ao final de cada época, de forma que seja possível carregar o melhor modelo com base na escolha da melhor condição de acordo com as curvas de aprendizagem de treinamento e validação.</p>
+<p>Outra forma de se obter melhorias nos resultados do modelo é por meio da exploração do conjunto de dados de treinamento. Busque selecionar as variáveis de entrada mais relevantes e fazer transformações que possam levar a resultados melhores como, por exemplo, a normalização dos dados. É importante lembrar que qualquer transformação feita do banco de dados de treinamento deve ser repetida, de forma idêntica, no banco de dados de teste. Outra transformação comum é o uso da <a href="https://psi3471.github.io/pca.html">análise de componentes principais (PCA - <em>principal component analysis</em>)</a>, para redução de dimensionalidade da entrada. Também é possível desconsiderar algum dado de treinamento que possa estar levando o modelo para uma condição ruim. No entanto, vale notar que <strong>a avaliação com os dados de teste deve levar em conta todos os elementos do banco, sem exceção</strong>.</p>
+<p>Para implementação do modelo e treinamento da rede neural, a sugestão é que seja utilizado um <em>framework</em> de redes neurais, como o PyTorch, conforme exemplo mostrado no <a href="https://psi3471.github.io/exemplo_pytorch.html">material de apoio</a>. No entanto, isso não é obrigatório, podendo ser utilizada outra solução ou mesmo outra linguagem de programação, caso desejado.</p>
+<p>No final do exercício, você deve apresentar:</p>
 <ol type="1">
-<li><p>Os códigos utilizados para treinar o modelo e avaliá-lo com os conjuntos de teste;</p></li>
-<li><p>O valor obtido para a acurácia considerando os dados de teste.</p></li>
+<li>Sua escolha para a arquitetura do modelo e os valores dos hiperparâmetros;</li>
+<li>Os códigos utilizados para treinamento e teste;</li>
+<li>A curva de aprendizado de treinamento e validação ao longo das épocas;</li>
+<li>Usando os dados de teste, o erro quadrático médio e o valor do <span class="math inline">\(R^2\)</span> para cada uma das saídas.</li>
 </ol>
-<p>A sugestão é que o relatório seja elaborado utilizando um Jupyter Notebook e a linguagem Python, já que essas são as ferramentas que estamos utilizando neste bloco do curso. No entanto, isso não é obrigatório e você pode usar outra linguagem de programação, caso queira.</p>
+<p>No PyTorch, para salvar os pesos de um modelo representado pelo objeto <code>model</code> no arquivo <code>model01.pt</code>, pode-se usar a linha:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>torch.save(model.state_dict(), <span class="st">"./model01.pt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E, depois, para carregar os pesos do modelo, pode ser usada a linha:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model.load_state_dict(torch.load(<span class="st">"./model01.pt"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 <section id="instruções-para-entrega" class="level2">
 <h2 class="anchored" data-anchor-id="instruções-para-entrega">Instruções para entrega</h2>
 <ul>
-<li><p>O exercício pode ser feito em dupla ou individualmente;</p></li>
+<li><p>O exercício deve ser feito <strong>individualmente</strong>;</p></li>
 <li><p>A entrega deve incluir:</p>
 <ul>
-<li>Um vídeo de no <strong>máximo 40s</strong>, mostrando a resolução do exercício;</li>
+<li>Um vídeo de no <strong>máximo 1m30s</strong>, mostrando a resolução do exercício;</li>
 <li>Os <strong>códigos-fontes</strong> dos programas, preferencialmente organizados em um Jupyter Notebook, descrevendo o experimento e mostrando como foram obtidos os resultados solicitados.</li>
 </ul></li>
-<li><p><strong>A correção será feita baseada no vídeo</strong>. Quando o professor/pesquisador ficar com alguma dúvida, serão consultados os códigos-fonte;</p></li>
 <li><p>Sobre o vídeo:</p>
 <ul>
 <li><strong>Deve incluir áudio</strong> descrevendo o experimento;</li>
 <li>Gravem a tela do computador usando celular ou usando algum programa de captura de tela (por exemplo Zoom, Google Meet, ou OBS Studio);</li>
 <li>No início, <strong>deve aparecer o rosto e algum documento do aluno que gravou o vídeo</strong> (como a carteira USP, RG, CNH, etc);</li>
-<li>No caso de entrega em dupla, <strong>não é necessário que os dois componentes apareçam no vídeo</strong>. No entanto, alternem o apresentador ao longo das entregas dos exercícios e <strong>não esqueçam de incluir os dois nomes no início do vídeo</strong>.</li>
-<li>Procurem convencer o espectador do vídeo, que vai corrigir o exercício que fizeram os exercícios computacionais solicitados e que eles estão funcionando corretamente. Tentem fazer um bom aproveitamento do tempo para apresentar os resultados solicitados, <strong>respeitando o limite de 40s e não acelerem a velocidade do vídeo</strong>;</li>
+<li>Tentem fazer um bom aproveitamento do tempo para apresentar os resultados solicitados, <strong>respeitando o limite de 1m30s e não acelerem a velocidade do vídeo</strong>;</li>
 </ul></li>
 <li><p>Sobre os códigos-fonte:</p>
 <ul>
-<li><strong>Incluir o nome do(s) aluno(s)</strong> no início do programa;</li>
+<li><strong>Incluir o nome do aluno</strong> no início do programa;</li>
 </ul></li>
 <li><p>Sobre o envio no Moodle:</p>
 <ul>
-<li>Apenas um aluno de cada dupla deve enviar o vídeo no Moodle;</li>
 <li>Podem ser enviados o arquivo de vídeo (.mkv, .mp4, .avi, etc.) ou um link para o vídeo (Youtube, Google Drive, etc);
 <ul>
 <li>No segundo caso, certifiquem-se que todos os professores/pesquisadores (magno.silva@usp.br, hae.kim@usp.br, renatocan@lps.usp.br, wesleybeccaro@usp.br) tenham acesso ao seu vídeo.</li>
 </ul></li>
-<li>Não se esqueçam de escrever o nome dos componentes da dupla (ou do único aluno, escrevendo: “exercício feito individualmente”) em três lugares diferentes: <strong>no campo “comentários sobre o envio” no Moodle</strong>, <strong>no início do vídeo</strong> e no <strong>início dos códigos-fonte</strong>.</li>
+<li>Não se esqueçam de escrever o nome do aluno em três lugares diferentes: <strong>no campo “comentários sobre o envio” no Moodle</strong>, <strong>no início do vídeo</strong> e no <strong>início dos códigos-fonte</strong>.</li>
 </ul></li>
 </ul>
 </section>
