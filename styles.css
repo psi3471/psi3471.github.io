@@ -1,0 +1,19 @@
+/* css styles */
+
+.justify {
+    text-align: justify;
+}
+
+.center {
+    text-align: center;
+}
+
+.figure-caption {
+    text-align: center;
+}
+
+.box {
+    border-width:1px;
+    border-style:solid;
+    border-color:black;
+}
