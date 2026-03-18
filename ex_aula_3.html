@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Tópicos de programação com Python – PSI3471</title>
+<title>Exercício 3 - Perceptron de Rosenblatt e Regressão Logística – PSI3471</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +23,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b909e6188975eac0673a28dfaa05bb4d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-b909e6188975eac0673a28dfaa05bb4d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,7 +70,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -80,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">PSI3471</span>
     </a>
   </div>
@@ -91,7 +91,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -100,19 +100,19 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-teoria">    
         <li>
-    <a class="dropdown-item" href="../t_introducao.html">
+    <a class="dropdown-item" href="./t_introducao.html">
  <span class="dropdown-text">Introdução</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../t_regressao_linear.html">
+    <a class="dropdown-item" href="./t_regressao_linear.html">
  <span class="dropdown-text">Regressão linear</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../t_lms.html">
+    <a class="dropdown-item" href="./t_lms.html">
  <span class="dropdown-text">O algoritmo LMS</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../t_neuronio.html">
+    <a class="dropdown-item" href="./t_neuronio.html">
  <span class="dropdown-text">O modelo do neurônio</span></a>
   </li>  
     </ul>
@@ -123,15 +123,15 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-exercícios-para-aula">    
         <li>
-    <a class="dropdown-item" href="../ex_aula_1.html">
+    <a class="dropdown-item" href="./ex_aula_1.html">
  <span class="dropdown-text">Exercício 1 - Regressão Linear</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../ex_aula_2.html">
+    <a class="dropdown-item" href="./ex_aula_2.html">
  <span class="dropdown-text">Exercício 2 - O algoritmo LMS</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../ex_aula_3.html">
+    <a class="dropdown-item" href="./ex_aula_3.html">
  <span class="dropdown-text">Exercício 3 - Perceptron de Rosenblatt e Regressão Logística</span></a>
   </li>  
     </ul>
@@ -142,7 +142,7 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-exercícios-para-entrega">    
         <li>
-    <a class="dropdown-item" href="../ex_entrega_1_co.html">
+    <a class="dropdown-item" href="./ex_entrega_1_co.html">
  <span class="dropdown-text">Exercício 1</span></a>
   </li>  
     </ul>
@@ -153,7 +153,7 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-material-de-apoio">    
         <li>
-    <a class="dropdown-item" href="../ap_python_topicos.html">
+    <a class="dropdown-item" href="./ap_python_topicos.html">
  <span class="dropdown-text">Tópicos de programação com Python</span></a>
   </li>  
     </ul>
@@ -173,21 +173,15 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Nesta página</h2>
-   
-  <ul>
-  <li><a href="#configurando-o-ambiente" id="toc-configurando-o-ambiente" class="nav-link active" data-scroll-target="#configurando-o-ambiente">Configurando o ambiente</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Tópicos de programação com Python</h1>
+<h1 class="title">Exercício 3 - Perceptron de Rosenblatt e Regressão Logística</h1>
 </div>
 
 
@@ -204,23 +198,9 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="configurando-o-ambiente" class="level2 justify">
-<h2 class="anchored" data-anchor-id="configurando-o-ambiente">Configurando o ambiente</h2>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/7PncrmDlN1Q" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<ul>
-<li>0:00 Introdução</li>
-<li>3:26 Instalação da distribuição Python Miniconda</li>
-<li>6:44 Abrindo o shell do Anaconda</li>
-<li>8:26 Listando e criando ambientes conda</li>
-<li>10:06 Instalando pacote conda do Jupyter</li>
-<li>12:26 Iniciando o Jupyter Notebook</li>
-<li>17:36 Instalando pacotes em um ambiente, com pip</li>
-<li>20:26 Iniciando o Jupyter Lab</li>
-<li>23:18 Desativando e removendo um ambiente conda</li>
-</ul>
-<p><a href="https://github.com/psi3471/topicos_python/blob/main/01-ambiente.ipynb">Jupyter Notebook com referência aos comandos utilizados</a></p>
-<p><a href="../ap_python_topicos.html">Índice de vídeos</a></p>
-</section>
+<div class="justify">
+<p><a href="https://github.com/psi3471/exercicios_aula_publico/blob/main/ex_aula_3/ex_aula_3.ipynb">Jupyter Notebook do exercício</a></p>
+</div>
 
 
 
