@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>A rede perceptron multicamada – PSI3471</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -24,7 +27,6 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -52,15 +54,14 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e0b2e4e5c4db31b3b64fdef51415d7d2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-c358b9901060b956bfae1ea62c5513f0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -90,7 +91,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -167,6 +168,10 @@ window.Quarto = {
         <li>
     <a class="dropdown-item" href="./t_mlp.html">
  <span class="dropdown-text">A rede perceptron multicamada</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./t_hiperparametros.html">
+ <span class="dropdown-text">Evitando mínimos locais e <em>overfitting</em></span></a>
   </li>  
     </ul>
   </li>
@@ -260,7 +265,7 @@ window.Quarto = {
 
 
 <div class="justify">
-<p>Apesar do perceptron de Rosenblatt ter sido proposto no final da década de 1950, o algoritmo de retropropagação (<em>backpropagation</em>), utilizado no treinamento das redes neurais, surgiu apenas em 1986 no artigo <span class="citation" data-cites="RumelhartNature86">(<a href="#ref-RumelhartNature86" role="doc-biblioref">Rumelhart, Hinton, e Williams 1986</a>)</span>. Desde então, ele tem sido abordado em diferentes livros de redes neurais e aprendizado de máquina como, por exemplo, <span class="citation" data-cites="Haykin2009">(<a href="#ref-Haykin2009" role="doc-biblioref">Haykin 2009</a>)</span>, <span class="citation" data-cites="Bishop_book2006">(<a href="#ref-Bishop_book2006" role="doc-biblioref">Bishop 2006</a>)</span>, <span class="citation" data-cites="Goodfellow2016">(<a href="#ref-Goodfellow2016" role="doc-biblioref">Goodfellow, Bengio, e Courville 2016</a>)</span>, <span class="citation" data-cites="TheodoridisBook2003">(<a href="#ref-TheodoridisBook2003" role="doc-biblioref">Theodoridis e Koutroubas 2003</a>)</span>, <span class="citation" data-cites="WittenBook2017">(<a href="#ref-WittenBook2017" role="doc-biblioref">Witten et al. 2017</a>)</span>, <span class="citation" data-cites="AlanBook2008">(<a href="#ref-AlanBook2008" role="doc-biblioref">Izenman 2008</a>)</span>, <span class="citation" data-cites="DudaBook2001">(<a href="#ref-DudaBook2001" role="doc-biblioref">Duda, Hart, e Stork 2001</a>)</span>, <span class="citation" data-cites="HarrisonKukielaBook2020">(<a href="#ref-HarrisonKukielaBook2020" role="doc-biblioref">Kinsley e Kukie​la 2020</a>)</span>, <span class="citation" data-cites="BenBook96">(<a href="#ref-BenBook96" role="doc-biblioref">Kröse e Smagt 1996</a>)</span>, entre muitos outros. A seguir, vamos tratar da rede percepton multicamada (<em>multilayer perceptron</em> - MLP) e do algoritmo <em>backpropagation</em> em detalhes.</p>
+<p>Apesar do perceptron de Rosenblatt ter sido proposto no final da década de 1950, o algoritmo de retropropagação (<em>backpropagation</em>), utilizado no treinamento das redes neurais, surgiu apenas em 1986 no artigo <span class="citation" data-cites="RumelhartNature86">(<a href="#ref-RumelhartNature86" role="doc-biblioref">Rumelhart et al. 1986</a>)</span>. Desde então, ele tem sido abordado em diferentes livros de redes neurais e aprendizado de máquina como, por exemplo, <span class="citation" data-cites="Haykin2009">(<a href="#ref-Haykin2009" role="doc-biblioref">Haykin 2009</a>)</span>, <span class="citation" data-cites="Bishop_book2006">(<a href="#ref-Bishop_book2006" role="doc-biblioref">Bishop 2006</a>)</span>, <span class="citation" data-cites="Goodfellow2016">(<a href="#ref-Goodfellow2016" role="doc-biblioref">Goodfellow et al. 2016</a>)</span>, <span class="citation" data-cites="TheodoridisBook2003">(<a href="#ref-TheodoridisBook2003" role="doc-biblioref">Theodoridis e Koutroubas 2003</a>)</span>, <span class="citation" data-cites="WittenBook2017">(<a href="#ref-WittenBook2017" role="doc-biblioref">Witten et al. 2017</a>)</span>, <span class="citation" data-cites="AlanBook2008">(<a href="#ref-AlanBook2008" role="doc-biblioref">Izenman 2008</a>)</span>, <span class="citation" data-cites="DudaBook2001">(<a href="#ref-DudaBook2001" role="doc-biblioref">Duda et al. 2001</a>)</span>, <span class="citation" data-cites="HarrisonKukielaBook2020">(<a href="#ref-HarrisonKukielaBook2020" role="doc-biblioref">Kinsley e Kukie​la 2020</a>)</span>, <span class="citation" data-cites="BenBook96">(<a href="#ref-BenBook96" role="doc-biblioref">Kröse e Smagt 1996</a>)</span>, entre muitos outros. A seguir, vamos tratar da rede percepton multicamada (<em>multilayer perceptron</em> - MLP) e do algoritmo <em>backpropagation</em> em detalhes.</p>
 <section id="o-modelo-da-rede-e-o-cálculo-progressivo" class="level2">
 <h2 class="anchored" data-anchor-id="o-modelo-da-rede-e-o-cálculo-progressivo">O modelo da rede e o cálculo progressivo</h2>
 <p>O modelo do neurônio proposto por Rosenblatt é usado até hoje nas redes neurais. A diferença está apenas na função não linear, chamada de <strong>função de ativação</strong>. No modelo de Rosenblatt, utilizou-se a função sinal que tem derivada nula em todos os pontos, exceto na origem onde não é definida. Em vez dessa função, é comum utilizar funções de ativação com derivada não nula e definida em todos os pontos, como a função sigmoidal, a tangente hiperbólica, entre outras. Essas funções permitem chegar ao algoritmo de retropropagação (<em>backpropagation</em>) como veremos mais adiante.</p>
@@ -755,7 +760,7 @@ F(x_1, x_2, \ldots, x_{N_0})=\displaystyle\sum_{i=1}^{N_1}\alpha_i\varphi\left(\
 
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-Bishop_book2006" class="csl-entry" role="listitem">
 Bishop, C. M. 2006. <em>Pattern recognition and machine learning</em>. Springer.
 </div>
